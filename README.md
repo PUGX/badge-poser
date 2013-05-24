@@ -8,31 +8,32 @@ is still in ALPHA and if you use it the domain will probably change.
 
 
 
-[![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/pugx/badge-poser) [![Latest Version](version.png)](https://packagist.org/pugx/badge-poser)
+[![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Version](version.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
 (Only the `version` badge is not real)
 
 ## Usage
 
-Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/pugx/badge-poser)
+Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Total Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/symfony/symfony)
+[![Total Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/symfony/symfony)
+Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/symfony/symfony)
+[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/symfony/symfony)
+Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/symfony/symfony)
+[![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
 Latest Version (to do)
 ```md
-[![Latest Version](http://poser.pagodabox.com/symfony/symfony/version.png](https://packagist.org/symfony/symfony)
+[![Latest Version](http://poser.pagodabox.com/symfony/symfony/version.png](https://packagist.org/packages/symfony/symfony)
 ```
 
 ## Todo
