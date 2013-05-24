@@ -5,16 +5,16 @@ Use shields for you GitHub repo,
 documentation or website that show many times your project has been downloaded from Packagist.org or it’s latest stable version.
 
 
-is still in early beta.
+is still in ALPHA and you cannot use it.
 
 [![Downloads](total.png)](https://packagist.org/) [![Last Version](version.png)](https://packagist.org/)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
+(Only the travis badge is real)
 
 
+## Todo
 
-Todo
-----
 
 0. Documentation
 
@@ -23,6 +23,10 @@ Todo
 2. badge for current last version
 
 3. gather feedback about destroy this project or find a domain
+
+4. some love to the image templates
+
+5. cache
 
 
 ## Contribution

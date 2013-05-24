@@ -19,8 +19,10 @@
         "jms/security-extra-bundle": "1.4.*",
         "jms/di-extra-bundle": "1.3.*",
 
-        "knplabs/packagist-api": "dev-master",
-        "guzzle/plugin-mock": "5.3.*"
+        "knplabs/packagist-api": "dev-master"
+    },
+    "require-dev": {
+        "guzzle/plugin-mock": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -44,7 +46,7 @@
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "branch-alias": {
-            "dev-master": "2.2-dev"
+            "dev-master": "0.1-dev"
         }
     }
 }
