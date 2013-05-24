@@ -1,9 +1,8 @@
 Badge-Poser
 ===========
 
-Use shields for you GitHub repo,
-documentation or website that show many times your project has been downloaded from Packagist.org or it’s latest stable version.
-
+Use shields for you packagist.org repository, that shows many times your project has been downloaded from Packagist.org
+or it’s latest stable version.
 
 is still in ALPHA and you cannot use it.
 
@@ -12,9 +11,31 @@ is still in ALPHA and you cannot use it.
 
 (Only the travis badge is real)
 
+## Usage
+
+Total downloads
+```md
+[![Total Downloads](https://poser.io/pugx/badge-poser/d/total.png)](https://packagist.org/pugx/badge-poser)
+```
+
+Latest Version (to do)
+```md
+[![Latest Version](https://poser.io/pugx/badge-poser/version.png)](https://packagist.org/pugx/badge-poser)
+```
+
+Monthly downloads (to do)
+```md
+[![Monthly Downloads](https://poser.io/pugx/badge-poser/d/monthly.png)](https://packagist.org/pugx/badge-poser)
+```
+
+Daily downloads (to do)
+```md
+[![Daily Downloads](https://poser.io/pugx/badge-poser/d/daily.png)](https://packagist.org/pugx/badge-poser)
+```
+
+poser.io doesn't exists!!
 
 ## Todo
-
 
 0. Documentation
 
@@ -28,6 +49,7 @@ is still in ALPHA and you cannot use it.
 
 5. cache
 
+6. test-issue
 
 ## Contribution
 
