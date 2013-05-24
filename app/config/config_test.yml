@@ -1,6 +1,10 @@
 imports:
     - { resource: config_dev.yml }
 
+parameters:
+    # for functional test
+    image_creator.class: PUGX\BadgeBundle\Tests\Controller\FakeImageCreator
+
 framework:
     test: ~
     session:

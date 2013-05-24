@@ -31,7 +31,7 @@ class BadgeController extends Controller
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
         $response->setCallback(function () use ($image) {
-            imagepng($image);
+            $this->get('image_creator')->streamRawData($image);
         });
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set('Content-Disposition', 'inline; filename="'.$filename.'"');

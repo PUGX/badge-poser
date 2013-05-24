@@ -84,11 +84,20 @@ class ImageCreator
     }
 
     /**
+     * Stream the output.
+     *
+     * @param $image
+     */
+    public function streamRawData($image) {
+        imagepng($image);
+    }
+
+    /**
      *
      * @param $text
+     * @param $value
      * @param $imagePath
      * @param $fontPath
-     * @param $color
      * @param $withShadow
      *
      * @return resource
