@@ -1,0 +1,35 @@
+web1:
+    shared_writable_dirs:
+     - app/cache
+     - app/logs
+     - app/sessions
+
+    document_root: web
+    default_gateway: app.php
+    index_list: [app.php]
+
+    php_version: 5.3.10
+    php_extensions:
+     - apc
+     - intl
+     - mbstring
+     - xsl
+     - mysql
+     - pdo_mysql
+     - zip
+
+    php_short_open_tag: "0"
+    php_magic_quotes_gpc: "0"
+    php_register_globals: "0"
+    php_session_autostart: "0"
+    php_date_timezone: Europe/London
+
+    after_build:
+        - "curl -s http://getcomposer.org/installer | php -- --quiet; php composer.phar install -n"
+    before_deploy:
+        - "php app/console --env=prod --no-debug cache:clear --no-warmup"
+        - "php app/console --env=prod --no-debug cache:warmup"
+
+global:
+    env:
+        - USE_INTL_ICU_DATA_VERSION: true
