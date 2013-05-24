@@ -1,0 +1,12 @@
+pugx_badge:
+    path:      /{vendor}/{repository}/downloads.png
+    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads, type: 'total' }
+    methods:  [GET]
+
+pugx_badge_stat:
+    path:      /{vendor}/{repository}/downloads/{type}.png
+    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads, type: 'total' }
+    methods:  [GET]
+    requirements:
+      type: total|daily|monthly
+

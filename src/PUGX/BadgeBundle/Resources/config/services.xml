@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="packagist.client.class">Packagist\Api\Client</parameter>
+        <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
+        <parameter key="badger.class">PUGX\BadgeBundle\Service\Badger</parameter>
+    </parameters>
+
+    <services>
+        <service id="packagist.client" class="%packagist.client.class%">
+        </service>
+
+        <service id="badger" class="%badger.class%">
+            <argument type="service" id="packagist.client" />
+            <argument type="service" id="event_dispatcher" />
+            <argument type="service" id="logger" />
+        </service>
+
+        <service id="image_creator" class="%image_creator.class%">
+            <argument type="service" id="logger" />
+            <argument>%kernel.root_dir%/badge-assets/fonts</argument>
+            <argument>%kernel.root_dir%/badge-assets/images</argument>
+            <argument>DroidSans.ttf</argument>
+            <tag name="monolog.logger" channel="image_creator" />
+        </service>
+    </services>
+
+</container>
