@@ -7,8 +7,9 @@ documentation or website that show many times your project has been downloaded f
 
 is still in early beta.
 
+[![Downloads](total.png)](https://packagist.org/) [![Last Version](version.png)](https://packagist.org/)
 
-[![Downloads](total.png)](https://packagist.org/)
+
 
 Todo
 ----
@@ -19,7 +20,7 @@ Todo
 
 2. badge for current last version
 
-3. gather feedback about destroy project or find a domain
+3. gather feedback about destroy this project or find a domain
 
 
 ## Contribution

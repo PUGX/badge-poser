@@ -1,5 +1,6 @@
 composer.lock
 app/cache
+app/logs
 app/parameter.yml
 vendor
 .idea
