@@ -8,6 +8,8 @@ documentation or website that show many times your project has been downloaded f
 is still in early beta.
 
 [![Downloads](total.png)](https://packagist.org/) [![Last Version](version.png)](https://packagist.org/)
+[![Build Status](https://secure.travis-ci.org/pugx/badge-poser.png)](http://travis-ci.org/pugx/badge-poser)
+
 
 
 
