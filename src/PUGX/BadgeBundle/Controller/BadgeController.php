@@ -27,16 +27,17 @@ class BadgeController extends Controller
             $httpCode = 200;
         }
         // image creation
-        $image = $this->get('image_creator')->createImageDownloads($downloadsText);
+        $image = $this->get('image_creator')->createDownloadsImage($downloadsText);
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
         $response->setCallback(function () use ($image) {
-            $this->get('image_creator')->streamRawData($image);
+            $this->get('image_creator')->streamRawImageData($image);
         });
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set('Content-Disposition', 'inline; filename="'.$filename.'"');
         $response->send();
-        imagedestroy($image);
+        $this->get('image_creator')->destroyImage($image);
+
         return $response;
     }
 }

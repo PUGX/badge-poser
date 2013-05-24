@@ -10,18 +10,18 @@ class ImageCreator
 {
     private $logger;
     protected $dispatcher;
-    protected $imageNames = array('empty'=> 'empty.png', 'downloads' => 'download.png');
+    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'download.png');
     protected $imagePath;
     protected $fontPath;
     protected $defaultFont;
     protected $defaultImage;
 
     //same lenght
-    CONST ERROR_TEXT_GENERIC          = 'ERR 1 ';
-    CONST ERROR_TEXT_NOT_A_NUMBER     = 'ERR 2 ';
+    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
+    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
 
-    public function __construct(Logger $logger, $fontPath, $imagePath , $defaultFont = null, $defaultImage = null)
+    public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = null, $defaultImage = null)
     {
         $this->logger = $logger;
         $this->fontPath = $fontPath;
@@ -86,10 +86,24 @@ class ImageCreator
     /**
      * Stream the output.
      *
-     * @param $image
+     * @param resource $image
+     *
+     * return Boolean
      */
-    public function streamRawData($image) {
-        imagepng($image);
+    public function streamRawImageData($image)
+    {
+        return imagepng($image);
+    }
+
+    /**
+     * @param $image
+     *
+     * @return Boolean
+     *
+     */
+    public function destroyImage($image)
+    {
+        return imagedestroy($image);
     }
 
     /**
@@ -131,7 +145,7 @@ class ImageCreator
      *
      * @return resource
      */
-    public function createImageDownloads($value, $text = 'downloads')
+    public function createDownloadsImage($value, $text = 'downloads')
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['empty'];
         $fontPath = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;

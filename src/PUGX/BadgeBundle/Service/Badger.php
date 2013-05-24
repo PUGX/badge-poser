@@ -37,7 +37,7 @@ class Badger
         try {
             $download = $this->doGetPackageDownloads($repositoryName);
             $this->logger->info(sprintf('download - %s - %d', $repositoryName, $download->getTotal()));
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             // do nothing we want to catch all the exception.
             $this->logger->error(sprintf('error during download of %s', $repositoryName));
         }

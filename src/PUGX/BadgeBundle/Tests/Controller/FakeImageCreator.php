@@ -14,7 +14,12 @@ class FakeImageCreator extends ImageCreator
      *
      * @param $image
      */
-    public function streamRawData($image) {
+    public function streamRawImageData($image) {
         // pass
+       return true;
+    }
+    public function destroyImage($image) {
+        // pass
+        return true;
     }
 }

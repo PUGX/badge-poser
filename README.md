@@ -22,7 +22,7 @@ Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total
 
 Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/symfony/symfony)
 ```md
-[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/symfony/symfony)
+[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/symfony/symfony)
 ```
 
 Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/symfony/symfony)
