@@ -6,34 +6,34 @@ or it’s latest stable version.
 
 is still in ALPHA and you cannot use it.
 
-[![Downloads](total.png)](https://packagist.org/) [![Last Version](version.png)](https://packagist.org/)
+
+
+[![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/pugx/badge-poser) [![Latest Version](version.png)](https://packagist.org/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
-(Only the travis badge is real)
+(Only the `version` badge is not real)
 
 ## Usage
 
-Total downloads
+Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/pugx/badge-poser)
 ```md
-[![Total Downloads](https://poser.io/pugx/badge-poser/d/total.png)](https://packagist.org/pugx/badge-poser)
+[![Total Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/symfony/symfony)
+```
+
+Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/symfony/symfony)
+```md
+[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/symfony/symfony)
+```
+
+Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/symfony/symfony)
+```md
+[![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/symfony/symfony)
 ```
 
 Latest Version (to do)
 ```md
-[![Latest Version](https://poser.io/pugx/badge-poser/version.png)](https://packagist.org/pugx/badge-poser)
+[![Latest Version](http://poser.pagodabox.com/symfony/symfony/version.png](https://packagist.org/symfony/symfony)
 ```
-
-Monthly downloads (to do)
-```md
-[![Monthly Downloads](https://poser.io/pugx/badge-poser/d/monthly.png)](https://packagist.org/pugx/badge-poser)
-```
-
-Daily downloads (to do)
-```md
-[![Daily Downloads](https://poser.io/pugx/badge-poser/d/daily.png)](https://packagist.org/pugx/badge-poser)
-```
-
-poser.io doesn't exists!!
 
 ## Todo
 
