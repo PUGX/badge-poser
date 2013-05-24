@@ -1,6 +1,6 @@
 {
     "name": "pugx/badge-poser",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "add badges on your readme, such as downloads number or latest version.",
     "autoload": {
         "psr-0": { "": "src/" }
     },
