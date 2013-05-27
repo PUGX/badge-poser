@@ -27,6 +27,7 @@ class ImageCreatorTest extends WebTestCase
             array('A',             'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
             array(-1,              'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
 
+            array(0,               '   1  ', null),
             array(1,               '   1  ', null),
             array('16',            '  16  ', null),
             array(199,             ' 199  ', null),

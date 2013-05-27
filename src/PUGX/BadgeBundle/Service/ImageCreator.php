@@ -9,8 +9,8 @@ use PUGX\BadgeBundle\Event\PackageEvent;
 
 class ImageCreator
 {
-    CONST ERROR_TEXT_GENERIC          = 'ERR 1 ';
-    CONST ERROR_TEXT_NOT_A_NUMBER     = 'ERR 2 ';
+    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
+    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
 
     private $logger;
@@ -38,6 +38,35 @@ class ImageCreator
     }
 
     /**
+     * This function transform a number to a float value or raise an Exception.
+     *
+     * @param mixed $number
+     *
+     * @return int
+     * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
+     */
+    private function normalizeNumber($number)
+    {
+        if (!is_numeric($number)) {
+            throw new InvalidArgumentException('Number expected');
+        }
+
+        $number = floatval($number);
+
+        if ($number < 0) {
+            throw new InvalidArgumentException('The number expected was >= 0');
+        }
+
+        // avoid division by 0
+        if ($number == 0) {
+            $number = 1;
+        }
+
+        return $number;
+    }
+
+
+    /**
      * Function that should return a human readable number in a maximum number of chars.
      *
      * @param int $number
@@ -57,12 +86,7 @@ class ImageCreator
             1 => ' ',
         );
 
-        $number = floatval($number);
-        if ($number < 0) {
-            throw new InvalidArgumentException('number should be greater than 0');
-        } else if ($number == 0) {
-            $number++;
-        }
+        $number = $this->normalizeNumber($number);
 
         foreach ($dimensions as $key => $suffix) {
             if ($number >= $key) {

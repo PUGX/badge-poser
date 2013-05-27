@@ -35,6 +35,7 @@ Latest Version (to do)
 ```
 ## Why a composer badge?
 
+Not only because all the other languages already had it, but having the latest stable release in the readme could save developer time.
 
 
 ## Todo
