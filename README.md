@@ -4,7 +4,7 @@ Badge-Poser
 Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
 or its latest stable version.
 
-is still in ALPHA and if you use it the domain will probably change.
+is still in ALPHA and don't use it (the protocol and the domain will change).
 
 [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Version](version.png)](https://packagist.org/packages/pugx/badge-poser)
