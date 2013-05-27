@@ -38,7 +38,6 @@ class BadgerTest extends WebTestCase
             ->method('getDownloads')
             ->will($this->returnValue($downloads));
 
-
         $this->packagistClient->expects($this->once())
             ->method('get')
             ->with($this->equalTo($input))
@@ -46,11 +45,13 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals($badger->getPackageDownloads($input)->getTotal(), 90000);
+        $this->assertEquals($badger->getPackageDownloads($input, 'total'), 90000);
 
     }
 
-
+    /**
+     * @expectedException Exception
+     */
     public function testGetPackageDownloadsException()
     {
         $input = 'pugx/badge-poser';
@@ -65,7 +66,7 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals($badger->getPackageDownloads($input), null);
+        $this->assertEquals($badger->getPackageDownloads($input, 'total'), null);
 
     }
 

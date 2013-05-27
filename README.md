@@ -6,8 +6,6 @@ or it’s latest stable version.
 
 is still in ALPHA and if you use it the domain will probably change.
 
-
-
 [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Version](version.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
@@ -35,6 +33,9 @@ Latest Version (to do)
 ```md
 [![Latest Version](http://poser.pagodabox.com/symfony/symfony/version.png](https://packagist.org/packages/symfony/symfony)
 ```
+## Why a composer badge?
+
+
 
 ## Todo
 

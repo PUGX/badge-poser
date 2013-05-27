@@ -2,12 +2,17 @@
 
 namespace PUGX\BadgeBundle\Service;
 
+use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 use Symfony\Bridge\Monolog\Logger;
 use PUGX\BadgeBundle\Event\PackageEvent;
 
 
 class ImageCreator
 {
+    CONST ERROR_TEXT_GENERIC          = 'ERR 1 ';
+    CONST ERROR_TEXT_NOT_A_NUMBER     = 'ERR 2 ';
+    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
+
     private $logger;
     protected $dispatcher;
     protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'download.png');
@@ -15,11 +20,6 @@ class ImageCreator
     protected $fontPath;
     protected $defaultFont;
     protected $defaultImage;
-
-    //same lenght
-    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
-    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
-    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
 
     public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = null, $defaultImage = null)
     {
@@ -44,6 +44,7 @@ class ImageCreator
      * @param int $maxChar
      *
      * @return string
+     * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
      */
     public function transformNumberToReadableFormat($number, $maxChar = 6)
     {
@@ -58,8 +59,9 @@ class ImageCreator
 
         $number = floatval($number);
         if ($number < 1) {
-            return self::ERROR_TEXT_NOT_A_NUMBER;
+            throw new InvalidArgumentException('number should be greater than 0');
         }
+
         foreach ($dimensions as $key => $suffix) {
             if ($number >= $key) {
                 $number = $number / $key;
@@ -78,9 +80,7 @@ class ImageCreator
                 return $readable;
             }
         }
-
-        $this->logger->warning(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
-        return self::ERROR_TEXT_GENERIC;
+        throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
     /**
@@ -88,7 +88,7 @@ class ImageCreator
      *
      * @param resource $image
      *
-     * return Boolean
+     * @return Boolean
      */
     public function streamRawImageData($image)
     {
@@ -96,10 +96,11 @@ class ImageCreator
     }
 
     /**
+     * Destroy the resource.
+     *
      * @param $image
      *
      * @return Boolean
-     *
      */
     public function destroyImage($image)
     {
@@ -107,6 +108,7 @@ class ImageCreator
     }
 
     /**
+     * Create the image resource.
      *
      * @param $text
      * @param $value
@@ -141,7 +143,8 @@ class ImageCreator
     /**
      * Create the 'downloads' image with the standard Font and standard Image.
      *
-     * @param string $value text to add to the image
+     * @param string $value
+     * @param string $text
      *
      * @return resource
      */
@@ -152,6 +155,4 @@ class ImageCreator
 
         return $this->createImage($text, $value, $imagePath, $fontPath, true);
     }
-
-
 }

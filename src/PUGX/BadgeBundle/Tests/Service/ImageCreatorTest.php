@@ -24,26 +24,31 @@ class ImageCreatorTest extends WebTestCase
     {
         return array(
             //bad number return 1
-            array('A',             'ERR 2 '),
-            array(-1,              'ERR 2 '),
-            //
-            array(1,               '   1  '),
-            array('16',            '  16  '),
-            array(199,             ' 199  '),
-            array('1012',          '1.01 k'),
-            array('1999',          '2.00 k'),
-            array('1003000',       '1.00 m'),
-            array(9001003000,      '9.0 mm'),
-            array('9001003000000', '9.0 bb'),
+            array('A',             'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
+            array(-1,              'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
+            array(1,               '   1  ', null),
+            array('16',            '  16  ', null),
+            array(199,             ' 199  ', null),
+            array('1012',          '1.01 k', null),
+            array('1999',          '2.00 k', null),
+            array('1003000',       '1.00 m', null),
+            array(9001003000,      '9.0 mm', null),
+            array('9001003000000', '9.0 bb', null),
         );
     }
 
     /**
      * @dataProvider provider
      */
-    public function testNumberToTextConversion($input, $output)
+    public function testNumberToTextConversion($input, $output, $withException)
     {
+        if (null !== $withException) {
+            $this->setExpectedException($withException);
+        }
         $imageCreator = new ImageCreator($this->logger, 'font', 'image');
-        $this->assertEquals($imageCreator->transformNumberToReadableFormat($input), $output);
+        $res = $imageCreator->transformNumberToReadableFormat($input);
+        if (null === $withException) {
+            $this->assertEquals($imageCreator->transformNumberToReadableFormat($input), $res);
+        }
     }
 }

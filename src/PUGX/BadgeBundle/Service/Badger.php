@@ -6,7 +6,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Packagist\Api\Client;
 use PUGX\BadgeBundle\Event\PackageEvent;
-use PUGX\BadgeBundle\Exception;
+use PUGX\BadgeBundle\Exception\UnexpectedValueException;
 
 class Badger
 {
@@ -24,33 +24,32 @@ class Badger
     /**
      * Just get the download number for that repository.
      *
-     * @param string $repositoryName
+     * @param string $repositoryName  the 'vendor/reponame'
+     * @param string $type            the type of the stats total,monthly or daily
      *
-     * @return \Packagist\Api\Result\Package\Downloads The Download entity or null
+     * @return int
      */
-    public function getPackageDownloads($repositoryName)
+    public function getPackageDownloads($repositoryName, $type)
     {
+        $statsType = 'get' . ucfirst($type);
+
         $this->logger->info(sprintf('download - %s', $repositoryName));
         $this->dispatcher->dispatch('get.package', new PackageEvent($repositoryName, PackageEvent::ACTION_DOWNLOAD));
 
-        $download = null;
-        try {
-            $download = $this->doGetPackageDownloads($repositoryName);
-            $this->logger->info(sprintf('download - %s - %d', $repositoryName, $download->getTotal()));
-        } catch (\Exception $e) {
-            // do nothing we want to catch all the exception.
-            $this->logger->error(sprintf('error during download of %s', $repositoryName));
-        }
+        $download = $this->doGetPackageDownloads($repositoryName);
+        $downloadsTypeNumber = $download->{$statsType}();
+        $this->logger->info(sprintf('download - %s - %d', $repositoryName, $downloadsTypeNumber));
 
-        return $download;
+        return $downloadsTypeNumber;
     }
 
     /**
      * Do the get number for that repository.
      *
-     * @param string $repositoryName
+     * @param $repositoryName
      *
-     * @return \Packagist\Api\Result\Package\Downloads The Download entity
+     * @return \Packagist\Api\Result\Package\Downloads
+     * @throws \PUGX\BadgeBundle\Exception
      */
     private function doGetPackageDownloads($repositoryName)
     {
@@ -60,7 +59,7 @@ class Badger
             return $download;
         }
 
-        throw new Exception(sprintf('Impossibile to found repository "%s"', $repositoryName));
+        throw new UnexpectedValueException(sprintf('Impossible to found repository "%s"', $repositoryName));
 
     }
 

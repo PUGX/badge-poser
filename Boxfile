@@ -14,8 +14,6 @@ web1:
      - intl
      - mbstring
      - xsl
-     - mysql
-     - pdo_mysql
      - zip
      - gd
      - curl

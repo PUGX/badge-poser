@@ -14,20 +14,28 @@ class BadgeController extends Controller
 
     public function downloadsAction($vendor, $repository, $type = 'total')
     {
-        $repository = $vendor . '/' . $repository;
-        $filename = sprintf('%s.png', $type);
-        $statType = 'get' . ucfirst($type);
-        // get the download statistic from packagist and then make it readable
-        $downloads = $this->get('badger')->getPackageDownloads($repository);
-        $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
-        $httpCode = 500;
-
-        if ($downloads && $downloads->{$statType}() >= 0) {
-            $downloadsText = $this->get('image_creator')->transformNumberToReadableFormat($downloads->{$statType}());
-            $httpCode = 200;
-        }
-        // image creation
         $imageCreator = $this->get('image_creator');
+        $repository = $vendor . '/' . $repository;
+        $outputFilename = sprintf('%s.png', $type);
+        $httpCode = 200;
+
+        // get the statistic from packagist
+        try {
+            $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
+        } catch (\Exception $e){
+            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
+            $httpCode = 500;
+        }
+
+        // and then makes it readable
+        try {
+            $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
+        } catch (\Exception $e){
+            $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
+            $httpCode = 500;
+        }
+
+        // handles the image
         $image = $imageCreator->createDownloadsImage($downloadsText);
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
@@ -35,7 +43,7 @@ class BadgeController extends Controller
             $imageCreator->streamRawImageData($image);
         });
         $response->headers->set('Content-Type', 'image/png');
-        $response->headers->set('Content-Disposition', 'inline; filename="'.$filename.'"');
+        $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
         $response->send();
         $imageCreator->destroyImage($image);
 
