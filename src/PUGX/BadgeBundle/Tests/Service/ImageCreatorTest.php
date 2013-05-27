@@ -23,9 +23,10 @@ class ImageCreatorTest extends WebTestCase
     public static function provider()
     {
         return array(
-            //bad number return 1
+            //bad number return Exception
             array('A',             'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
             array(-1,              'ERR 2 ', 'PUGX\BadgeBundle\Exception\InvalidArgumentException'),
+
             array(1,               '   1  ', null),
             array('16',            '  16  ', null),
             array(199,             ' 199  ', null),

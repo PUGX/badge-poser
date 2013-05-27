@@ -58,8 +58,10 @@ class ImageCreator
         );
 
         $number = floatval($number);
-        if ($number < 1) {
+        if ($number < 0) {
             throw new InvalidArgumentException('number should be greater than 0');
+        } else if ($number == 0) {
+            $number++;
         }
 
         foreach ($dimensions as $key => $suffix) {

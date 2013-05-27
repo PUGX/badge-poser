@@ -1,8 +1,8 @@
 Badge-Poser
 ===========
 
-Use shields for you packagist.org repository, that shows many times your project has been downloaded from Packagist.org
-or it’s latest stable version.
+Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
+or its latest stable version.
 
 is still in ALPHA and if you use it the domain will probably change.
 
