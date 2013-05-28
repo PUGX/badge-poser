@@ -70,6 +70,7 @@ cd badge-poser
 - Install vendors:
 
 ``` bash
+php composer.phar self-update
 php composer.phar install
 ```
 
