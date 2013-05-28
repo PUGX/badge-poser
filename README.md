@@ -71,7 +71,7 @@ cd badge-poser
 - Install vendors:
 
 ``` bash
-php composer.phar install --dev
+php composer.phar install
 ```
 
 - This will give you proper results:
