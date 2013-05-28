@@ -11,8 +11,8 @@
 
 namespace PUGX\BadgeBundle\Service;
 
-use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 use Symfony\Bridge\Monolog\Logger;
+use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 use PUGX\BadgeBundle\Event\PackageEvent;
 
 
@@ -158,6 +158,9 @@ class ImageCreator
         $image = imagecreatefrompng($imagePath);
         $white = imagecolorallocate($image, 255, 255, 250);
         $black = imagecolorallocate($image, 0, 0, 0);
+        imageAlphaBlending($image, true);
+        imageSaveAlpha($image, true);
+
         $font_path = $fontPath;
 
         //text

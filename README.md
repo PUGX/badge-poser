@@ -40,19 +40,18 @@ Not only because all the other languages already had it, but having the latest s
 
 ## Todo
 
-0. Documentation
+0. Documentation and homepage.
 
-1. badge for download monthly and daily
+1. ~~badge for download monthly and daily~~
 
-2. badge for current last version
+2. badge for current stable version.
 
 3. gather feedback about destroy this project or find a domain
 
-4. some love to the image templates
+4. ~~some love to the image templates~~
 
 5. cache
 
-6. test-issue
 
 ## Contribution
 
