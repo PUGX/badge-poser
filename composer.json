@@ -1,8 +1,24 @@
 {
     "name": "pugx/badge-poser",
     "description": "add badges on your readme, such as downloads number or latest version.",
+    "keywords": ["composer", "packagist", "badge", "pin"],
+    "homepage": "https://github.com/PUGX",
+    "type": "symfony-project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Giulio De Donato",
+            "email": "liuggio@gmail.com"
+        },
+        {
+            "name": "PUGX Community",
+            "homepage": "https://github.com/PUGX/badge-poser/contributors"
+        }
+    ],
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": {
+            "": "src/"
+        }
     },
     "require": {
         "php": ">=5.3.3",
