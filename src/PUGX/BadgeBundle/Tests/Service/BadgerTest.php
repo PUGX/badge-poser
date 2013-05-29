@@ -93,7 +93,7 @@ class BadgerTest extends WebTestCase
         $this->assertTrue(($d > $c));
     }
 
-    public function testGetLastStableVersionReturnsLastVersion()
+    public function testGetLatestStableVersionReturnsLatestVersion()
     {
         $branches = array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1');
         foreach ($branches as $branch) {
@@ -115,10 +115,10 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals('2.0.0', $badger->getStableVersion($input));
+        $this->assertEquals('2.0.0', $badger->getLatestStableVersion($input));
     }
 
-    public function testGetLastStableVersionReturnsNull()
+    public function testGetLatestStableVersionReturnsNull()
     {
         $branches = array('dev-master', 'v3.0.0-RC1');
         foreach ($branches as $branch) {
@@ -140,6 +140,6 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals(null, $badger->getStableVersion($input));
+        $this->assertEquals(null, $badger->getLatestStableVersion($input));
     }
 }
