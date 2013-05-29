@@ -24,7 +24,6 @@ class BadgeController extends Controller
     public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->get('image_creator');
-        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', $type);
         $httpCode = 500;
 
@@ -57,14 +56,13 @@ class BadgeController extends Controller
     public function lastStableAction($repository)
     {
         $imageCreator = $this->get('image_creator');
-        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', 'last_stable');
         $httpCode = 200;
 
         $last = $this->get('badger')->getLastStableVersion($repository);
 
         // handles the image
-        $image = $imageCreator->createLastStableImage($last);
+        $image = $imageCreator->createStableImage($last);
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
         $response->setCallback(function () use ($imageCreator, $image) {
