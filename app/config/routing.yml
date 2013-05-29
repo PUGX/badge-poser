@@ -10,3 +10,8 @@ pugx_badge_stat:
     requirements:
       type: total|daily|monthly
 
+pugx_badge_last:
+    path:      /{vendor}/{repository}/last_stable.png
+    defaults:  { _controller: PUGXBadgeBundle:Badge:lastStable }
+    methods:  [GET]
+

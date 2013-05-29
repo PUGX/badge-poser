@@ -16,6 +16,7 @@ use Symfony\Bridge\Monolog\Logger;
 use Packagist\Api\Client;
 use PUGX\BadgeBundle\Event\PackageEvent;
 use PUGX\BadgeBundle\Exception\UnexpectedValueException;
+use Packagist\Api\Result\Package\Version;
 
 class Badger
 {
@@ -55,16 +56,15 @@ class Badger
     /**
      * Do the get number for that repository.
      *
-     * @param $repositoryName
+     * @param string $repositoryName
      *
      * @return \Packagist\Api\Result\Package\Downloads
      * @throws \PUGX\BadgeBundle\Exception
      */
     private function doGetPackageDownloads($repositoryName)
     {
-        $package = $this->client->get($repositoryName);
+        $package = $this->getPackage($repositoryName);
         if ($package && ($download = $package->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
-
             return $download;
         }
 
@@ -72,4 +72,48 @@ class Badger
 
     }
 
+    /**
+     * Returns package if found.
+     *
+     * @param string $repository
+     * @return \Packagist\Api\Result\Package|null
+     */
+    protected function getPackage($repository)
+    {
+        $package = $this->client->get($repository);
+        if ($package && $package instanceof \Packagist\Api\Result\Package) {
+            return $package;
+        }
+
+        return null;
+    }
+
+    protected function filterStableVersions(Version $version)
+    {
+        $notStableKeys = array('dev', 'RC', 'BETA', 'ALPHA');
+        foreach ($notStableKeys as $notStableKey) {
+            if (stripos($version->getVersion(), $notStableKey) != false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getLastStableVersion($repository)
+    {
+        $last = null;
+
+        $package = $this->getPackage($repository);
+        if ($package && $versions = $package->getVersions()) {
+            $stableVersions = array_filter($versions, array($this, 'filterStableVersions'));
+            array_walk($stableVersions, function($version) use(&$last){
+                if ($version->getVersion() > $last) {
+                    $last = $version->getVersion();
+                }
+            });
+        }
+
+        return $last;
+    }
 }

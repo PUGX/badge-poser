@@ -58,4 +58,28 @@ class BadgeController extends Controller
 
         return $response;
     }
+
+    public function lastStableAction($vendor, $repository)
+    {
+        $imageCreator = $this->get('image_creator');
+        $repository = $vendor . '/' . $repository;
+        $outputFilename = sprintf('%s.png', 'last_stable');
+        $httpCode = 200;
+
+        $last = $this->get('badger')->getLastStableVersion($repository);
+
+        // handles the image
+        $image = $imageCreator->createDownloadsImage($last);
+        //generating the streamed response
+        $response = new StreamedResponse(null, $httpCode);
+        $response->setCallback(function () use ($imageCreator, $image) {
+            $imageCreator->streamRawImageData($image);
+        });
+        $response->headers->set('Content-Type', 'image/png');
+        $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
+        $response->send();
+        $imageCreator->destroyImage($image);
+
+        return $response;
+    }
 }
