@@ -100,7 +100,7 @@ class Badger
         return true;
     }
 
-    public function getLastStableVersion($repository)
+    public function getStableVersion($repository)
     {
         $last = null;
 

@@ -115,7 +115,7 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals('2.0.0', $badger->getLastStableVersion($input));
+        $this->assertEquals('2.0.0', $badger->getStableVersion($input));
     }
 
     public function testGetLastStableVersionReturnsNull()
@@ -140,6 +140,6 @@ class BadgerTest extends WebTestCase
 
         $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
 
-        $this->assertEquals(null, $badger->getLastStableVersion($input));
+        $this->assertEquals(null, $badger->getStableVersion($input));
     }
 }

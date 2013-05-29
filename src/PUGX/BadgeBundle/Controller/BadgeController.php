@@ -11,12 +11,14 @@
 
 namespace PUGX\BadgeBundle\Controller;
 
-use PUGX\BadgeBundle\Service\ImageCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+use PUGX\BadgeBundle\Service\ImageCreator;
+use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 
 class BadgeController extends Controller
 {
@@ -32,7 +34,7 @@ class BadgeController extends Controller
             $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
             $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
             $httpCode = 200;
-        } catch (\PUGX\BadgeBundle\Exception\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
         } catch (\Exception $e){
             $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
@@ -57,10 +59,14 @@ class BadgeController extends Controller
     {
         $imageCreator = $this->get('image_creator');
         $outputFilename = sprintf('%s.png', 'last_stable');
-        $httpCode = 200;
+        $httpCode = 500;
 
-        $last = $this->get('badger')->getLastStableVersion($repository);
-
+        try {
+            $last = $this->get('badger')->getStableVersion($repository);
+            $httpCode = 200;
+        } catch (\Exception $e){
+            $last = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
+        }
         // handles the image
         $image = $imageCreator->createStableImage($last);
         //generating the streamed response
