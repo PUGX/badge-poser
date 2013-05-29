@@ -14,7 +14,7 @@ pugx_badge_stat:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_last:
-    path:      /{repository}/last_stable.png
+    path:      /{repository}/stable.png
     defaults:  { _controller: PUGXBadgeBundle:Badge:lastStable }
     methods:  [GET]
     requirements:

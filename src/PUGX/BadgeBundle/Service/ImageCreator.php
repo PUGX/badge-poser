@@ -24,7 +24,7 @@ class ImageCreator
 
     private $logger;
     protected $dispatcher;
-    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'download.png');
+    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png');
     protected $imagePath;
     protected $fontPath;
     protected $defaultFont;
@@ -76,6 +76,30 @@ class ImageCreator
 
 
     /**
+     * Stream the output.
+     *
+     * @param resource $image
+     *
+     * @return Boolean
+     */
+    public function streamRawImageData($image)
+    {
+        return imagepng($image);
+    }
+
+    /**
+     * Destroy the resource.
+     *
+     * @param $image
+     *
+     * @return Boolean
+     */
+    public function destroyImage($image)
+    {
+        return imagedestroy($image);
+    }
+
+    /**
      * Function that should return a human readable number in a maximum number of chars.
      *
      * @param int $number
@@ -118,62 +142,45 @@ class ImageCreator
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
+
     /**
-     * Stream the output.
+     * Add a shadowed text to an Image.
      *
      * @param resource $image
-     *
-     * @return Boolean
+     * @param string   $text
+     * @param int      $x
+     * @param int      $y
+     * @param float    $size
+     * @param string   $font
+     * @param bool     $withShadow
+     * @param int      $angle
      */
-    public function streamRawImageData($image)
+    private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
-        return imagepng($image);
+        if (null ===  $font) {
+            $font = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
+        }
+
+        $white = imagecolorallocate($image, 255, 255, 250);
+        $black = imagecolorallocate($image, 0, 0, 0);
+        if ($withShadow) {
+            $imageArray = imagettftext($image, $size, $angle, $x+1, $y+1, $black, $font, $text);
+        }
+        $imageArray = imagettftext($image, $size, $angle, $x, $y, $white, $font, $text);
     }
 
     /**
-     * Destroy the resource.
+     * Create the image resource, with Blending and Alpha.
      *
-     * @param $image
-     *
-     * @return Boolean
-     */
-    public function destroyImage($image)
-    {
-        return imagedestroy($image);
-    }
-
-    /**
-     * Create the image resource.
-     *
-     * @param $text
-     * @param $value
-     * @param $imagePath
-     * @param $fontPath
-     * @param $withShadow
+     * @param string $imagePath
      *
      * @return resource
      */
-    public function createImage($text, $value, $imagePath, $fontPath, $withShadow = true)
+    private function createImage($imagePath)
     {
         $image = imagecreatefrompng($imagePath);
-        $white = imagecolorallocate($image, 255, 255, 250);
-        $black = imagecolorallocate($image, 0, 0, 0);
         imageAlphaBlending($image, true);
         imageSaveAlpha($image, true);
-
-        $font_path = $fontPath;
-
-        //text
-        if ($withShadow) {
-            $imageArray = imagettftext($image, 8.5, 0, 4, 14, $black, $font_path, $text);
-        }
-        $imageArray = imagettftext($image, 8.5, 0, 3, 13, $white, $font_path, $text);
-
-        // value
-        if ($withShadow) {
-            $imageArray = imagettftext($image, 8, 0, 67, 14.5, $black, $font_path, $value);
-        }
-        $imageArray = imagettftext($image, 8, 0, 66, 13.5, $white, $font_path, $value);
 
         return $image;
     }
@@ -182,31 +189,33 @@ class ImageCreator
      * Create the 'downloads' image with the standard Font and standard Image.
      *
      * @param string $value
-     * @param string $text
      *
      * @return resource
      */
-    public function createDownloadsImage($value, $text = 'downloads')
+    public function createDownloadsImage($value)
     {
-        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['empty'];
-        $fontPath = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
+        $image =  $this->createImage($imagePath);
 
-        return $this->createImage($text, $value, $imagePath, $fontPath, true);
+        $this->addShadowedText($image, $value, 64, 13.5);
+
+        return $image;
     }
 
     /**
-     * Create the 'downloads' image with the standard Font and standard Image.
+     * Create the 'stable' image with the standard Font and standard Image.
      *
      * @param string $value
-     * @param string $text
      *
      * @return resource
      */
-    public function createLastStableImage($value, $text = 'version')
+    public function createStableImage($value)
     {
-        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['empty'];
-        $fontPath = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
+        $image =  $this->createImage($imagePath);
 
-        return $this->createImage($text, $value, $imagePath, $fontPath, true);
+        $this->addShadowedText($image, $value, 46, 13.5);
+
+        return $image;
     }
 }

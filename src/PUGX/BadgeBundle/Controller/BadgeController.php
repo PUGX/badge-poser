@@ -24,7 +24,6 @@ class BadgeController extends Controller
     public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->get('image_creator');
-        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', $type);
         $httpCode = 500;
 
@@ -33,10 +32,10 @@ class BadgeController extends Controller
             $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
             $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
             $httpCode = 200;
-        } catch (\Exception $e){
-            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\PUGX\BadgeBundle\Exception\InvalidArgumentException $e) {
             $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
+        } catch (\Exception $e){
+            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
         // handles the image
@@ -57,14 +56,13 @@ class BadgeController extends Controller
     public function lastStableAction($repository)
     {
         $imageCreator = $this->get('image_creator');
-        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', 'last_stable');
         $httpCode = 200;
 
         $last = $this->get('badger')->getLastStableVersion($repository);
 
         // handles the image
-        $image = $imageCreator->createLastStableImage($last);
+        $image = $imageCreator->createStableImage($last);
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
         $response->setCallback(function () use ($imageCreator, $image) {
