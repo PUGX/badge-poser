@@ -227,12 +227,12 @@ class ImageCreator
      *
      * @return resource
      */
-    public function createUnstableImage($value)
+    public function createUnstableImage($value = '@dev')
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image =  $this->createImage($imagePath);
 
-        $this->addShadowedText($image, '@dev', 46, 13.5);
+        $this->addShadowedText($image, $value, 46, 13.5);
 
         return $image;
     }

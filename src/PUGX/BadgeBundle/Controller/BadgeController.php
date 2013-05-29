@@ -53,7 +53,7 @@ class BadgeController extends Controller
         if ($version) {
             $image = $imageCreator->createStableImage($version);
         } else {
-            $image = $imageCreator->createUnstableImage($version);
+            $image = $imageCreator->createUnstableImage();
         }
 
         return $this->streamImage($image, $outputFilename);
