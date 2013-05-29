@@ -11,7 +11,7 @@
 
 namespace PUGX\BadgeBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -20,17 +20,17 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use PUGX\BadgeBundle\Service\ImageCreator;
 use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 
-class BadgeController extends Controller
+class BadgeController extends ContainerAware
 {
     public function downloadsAction($repository, $type = 'total')
     {
-        $imageCreator = $this->get('image_creator');
+        $imageCreator = $this->container->get('image_creator');
         $outputFilename = sprintf('%s.png', $type);
         $httpCode = 500;
 
         // get the statistic from packagist
         try {
-            $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
+            $downloads = $this->container->get('badger')->getPackageDownloads($repository, $type);
             $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
             $httpCode = 200;
         } catch (InvalidArgumentException $e) {
@@ -45,10 +45,10 @@ class BadgeController extends Controller
 
     public function versionAction($repository)
     {
-        $imageCreator = $this->get('image_creator');
+        $imageCreator = $this->container->get('image_creator');
         $outputFilename = sprintf('%s.png', 'version');
 
-        $version = $this->get('badger')->getLatestStableVersion($repository);
+        $version = $this->container->get('badger')->getLatestStableVersion($repository);
 
         if ($version) {
             $image = $imageCreator->createStableImage($version);
@@ -61,7 +61,7 @@ class BadgeController extends Controller
 
     protected function streamImage($image, $outputFilename)
     {
-        $imageCreator = $this->get('image_creator');
+        $imageCreator = $this->container->get('image_creator');
 
         //generating the streamed response
         $response = new StreamedResponse(null);
