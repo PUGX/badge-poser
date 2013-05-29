@@ -69,7 +69,7 @@ class BadgeController extends Controller
         $last = $this->get('badger')->getLastStableVersion($repository);
 
         // handles the image
-        $image = $imageCreator->createDownloadsImage($last);
+        $image = $imageCreator->createLastStableImage($last);
         //generating the streamed response
         $response = new StreamedResponse(null, $httpCode);
         $response->setCallback(function () use ($imageCreator, $image) {

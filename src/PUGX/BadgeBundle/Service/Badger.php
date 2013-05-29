@@ -90,7 +90,7 @@ class Badger
 
     protected function filterStableVersions(Version $version)
     {
-        $notStableKeys = array('dev', 'RC', 'BETA', 'ALPHA');
+        $notStableKeys = array('develop', 'master', 'dev', 'RC', 'BETA', 'ALPHA');
         foreach ($notStableKeys as $notStableKey) {
             if (stripos($version->getVersion(), $notStableKey) != false) {
                 return false;

@@ -120,7 +120,7 @@ class BadgerTest extends WebTestCase
 
     public function testGetLastStableVersionReturnsNull()
     {
-        $branches = array('3.0.x-dev', 'v3.0.0-RC1');
+        $branches = array('dev-master', 'v3.0.0-RC1');
         foreach ($branches as $branch) {
             $version = new Version();
             $version->fromArray(array('version' => $branch));

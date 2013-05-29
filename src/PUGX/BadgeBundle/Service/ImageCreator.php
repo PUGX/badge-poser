@@ -193,4 +193,20 @@ class ImageCreator
 
         return $this->createImage($text, $value, $imagePath, $fontPath, true);
     }
+
+    /**
+     * Create the 'downloads' image with the standard Font and standard Image.
+     *
+     * @param string $value
+     * @param string $text
+     *
+     * @return resource
+     */
+    public function createLastStableImage($value, $text = 'version')
+    {
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['empty'];
+        $fontPath = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
+
+        return $this->createImage($text, $value, $imagePath, $fontPath, true);
+    }
 }
