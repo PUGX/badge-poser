@@ -112,7 +112,7 @@ class ImageCreator
     {
         $defaultFormatter = '%.0f %s';
         $dimensions = array(
-            1000000000000 => 'bb',
+            //1000000000000 => 'bb',
             1000000000 => 'mm',
             1000000 => 'm',
             1000 => 'k',
@@ -139,6 +139,7 @@ class ImageCreator
                 return $readable;
             }
         }
+
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
@@ -215,6 +216,23 @@ class ImageCreator
         $image =  $this->createImage($imagePath);
 
         $this->addShadowedText($image, $value, 46, 13.5);
+
+        return $image;
+    }
+
+    /**
+     * Create the 'stable' image with the standard Font and standard Image.
+     *
+     * @param string $value
+     *
+     * @return resource
+     */
+    public function createUnstableImage($value)
+    {
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
+        $image =  $this->createImage($imagePath);
+
+        $this->addShadowedText($image, '@dev', 46, 13.5);
 
         return $image;
     }

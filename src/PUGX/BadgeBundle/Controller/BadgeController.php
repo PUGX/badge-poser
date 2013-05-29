@@ -22,7 +22,6 @@ use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 
 class BadgeController extends Controller
 {
-
     public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->get('image_creator');
@@ -40,43 +39,40 @@ class BadgeController extends Controller
             $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
-        // handles the image
         $image = $imageCreator->createDownloadsImage($downloadsText);
-        //generating the streamed response
-        $response = new StreamedResponse(null, $httpCode);
-        $response->setCallback(function () use ($imageCreator, $image) {
-            $imageCreator->streamRawImageData($image);
-        });
-        $response->headers->set('Content-Type', 'image/png');
-        $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
-        $response->send();
-        $imageCreator->destroyImage($image);
-
-        return $response;
+        return $this->streamImage($image, $outputFilename);
     }
 
-    public function lastStableAction($repository)
+    public function versionAction($repository)
     {
         $imageCreator = $this->get('image_creator');
-        $outputFilename = sprintf('%s.png', 'last_stable');
-        $httpCode = 500;
+        $outputFilename = sprintf('%s.png', 'version');
 
-        try {
-            $last = $this->get('badger')->getStableVersion($repository);
-            $httpCode = 200;
-        } catch (\Exception $e){
-            $last = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
+        $version = $this->get('badger')->getLatestStableVersion($repository);
+
+        if ($version) {
+            $image = $imageCreator->createStableImage($version);
+        } else {
+            $image = $imageCreator->createUnstableImage($version);
         }
-        // handles the image
-        $image = $imageCreator->createStableImage($last);
+
+        return $this->streamImage($image, $outputFilename);
+    }
+
+    protected function streamImage($image, $outputFilename)
+    {
+        $imageCreator = $this->get('image_creator');
+
         //generating the streamed response
-        $response = new StreamedResponse(null, $httpCode);
+        $response = new StreamedResponse(null);
         $response->setCallback(function () use ($imageCreator, $image) {
             $imageCreator->streamRawImageData($image);
         });
+
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
         $response->send();
+
         $imageCreator->destroyImage($image);
 
         return $response;
