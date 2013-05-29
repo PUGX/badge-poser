@@ -13,9 +13,9 @@ pugx_badge_stat:
       type: total|daily|monthly
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
-pugx_badge_last:
-    path:      /{repository}/stable.png
-    defaults:  { _controller: PUGXBadgeBundle:Badge:lastStable }
+pugx_badge_version:
+    path:      /{repository}/version.png
+    defaults:  { _controller: PUGXBadgeBundle:Badge:version }
     methods:  [GET]
     requirements:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"

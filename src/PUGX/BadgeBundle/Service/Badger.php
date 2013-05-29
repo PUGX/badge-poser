@@ -80,14 +80,22 @@ class Badger
      */
     protected function getPackage($repository)
     {
-        $package = $this->client->get($repository);
-        if ($package && $package instanceof \Packagist\Api\Result\Package) {
-            return $package;
+        try {
+            $package = $this->client->get($repository);
+            if ($package && $package instanceof \Packagist\Api\Result\Package) {
+                return $package;
+            }
+        } catch (\Exception $e){
+
         }
 
         return null;
     }
 
+    /**
+     * @param Version $version
+     * @return bool
+     */
     protected function filterStableVersions(Version $version)
     {
         $notStableKeys = array('develop', 'master', 'dev', 'RC', 'BETA', 'ALPHA');
@@ -100,7 +108,11 @@ class Badger
         return true;
     }
 
-    public function getStableVersion($repository)
+    /**
+     * @param string $repository
+     * @return string|null
+     */
+    public function getLatestStableVersion($repository)
     {
         $last = null;
 
