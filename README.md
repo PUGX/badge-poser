@@ -7,10 +7,10 @@ or its latest stable version.
 is still in ALPHA and don't use it (the protocol and the domain will change).
 
 [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Latest Version](version.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
-(Only the `version` badge is not real)
+~~(Only the `version` badge is not real)~~  <- now it works
 
 ## Usage
 
@@ -29,10 +29,11 @@ Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/dail
 [![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Latest Version (to do)
+Latest Version [![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Latest Version](http://poser.pagodabox.com/symfony/symfony/version.png](https://packagist.org/packages/symfony/symfony)
+[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
 ```
+
 ## Why a composer badge?
 
 Not only because all the other languages already had it, but having the latest stable release in the readme could save developer time.
@@ -44,7 +45,7 @@ Not only because all the other languages already had it, but having the latest s
 
 1. ~~badge for download monthly and daily~~
 
-2. badge for current stable version.
+2. ~~badge for current stable version.~~
 
 3. gather feedback about destroy this project or find a domain
 
