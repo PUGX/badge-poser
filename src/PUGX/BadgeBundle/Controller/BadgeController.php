@@ -21,10 +21,10 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class BadgeController extends Controller
 {
 
-    public function downloadsAction($vendor, $repository, $type = 'total')
+    public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->get('image_creator');
-        $repository = $vendor . '/' . $repository;
+        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', $type);
         $httpCode = 500;
 
@@ -54,10 +54,10 @@ class BadgeController extends Controller
         return $response;
     }
 
-    public function lastStableAction($vendor, $repository)
+    public function lastStableAction($repository)
     {
         $imageCreator = $this->get('image_creator');
-        $repository = $vendor . '/' . $repository;
+        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', 'last_stable');
         $httpCode = 200;
 

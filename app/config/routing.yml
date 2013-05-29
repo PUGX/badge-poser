@@ -1,17 +1,21 @@
 pugx_badge:
-    path:      /{vendor}/{repository}/downloads.png
-    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads, type: 'total' }
+    path:      /{repository}/downloads.png
+    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads}
     methods:  [GET]
+    requirements:
+       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_stat:
-    path:      /{vendor}/{repository}/d/{type}.png
+    path:      /{repository}/d/{type}.png
     defaults:  { _controller: PUGXBadgeBundle:Badge:downloads, type: 'total' }
     methods:  [GET]
     requirements:
       type: total|daily|monthly
+      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_last:
-    path:      /{vendor}/{repository}/last_stable.png
+    path:      /{repository}/last_stable.png
     defaults:  { _controller: PUGXBadgeBundle:Badge:lastStable }
     methods:  [GET]
-
+    requirements:
+      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
