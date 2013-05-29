@@ -32,10 +32,10 @@ class BadgeController extends Controller
             $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
             $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
             $httpCode = 200;
-        } catch (\Exception $e){
-            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\PUGX\BadgeBundle\Exception\InvalidArgumentException $e) {
             $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
+        } catch (\Exception $e){
+            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
         // handles the image
