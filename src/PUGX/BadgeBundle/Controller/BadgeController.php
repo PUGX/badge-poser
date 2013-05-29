@@ -21,27 +21,22 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class BadgeController extends Controller
 {
 
-    public function downloadsAction($vendor, $repository, $type = 'total')
+    public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->get('image_creator');
-        $repository = $vendor . '/' . $repository;
+        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', $type);
-        $httpCode = 200;
+        $httpCode = 500;
 
         // get the statistic from packagist
         try {
             $downloads = $this->get('badger')->getPackageDownloads($repository, $type);
+            $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
+            $httpCode = 200;
         } catch (\Exception $e){
             $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
-            $httpCode = 500;
-        }
-
-        // and then makes it readable
-        try {
-            $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
-        } catch (\Exception $e){
+        } catch (\PUGX\BadgeBundle\Exception\InvalidArgumentException $e) {
             $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
-            $httpCode = 500;
         }
 
         // handles the image
@@ -59,10 +54,10 @@ class BadgeController extends Controller
         return $response;
     }
 
-    public function lastStableAction($vendor, $repository)
+    public function lastStableAction($repository)
     {
         $imageCreator = $this->get('image_creator');
-        $repository = $vendor . '/' . $repository;
+        //$repository = $vendor . '/' . $repository;
         $outputFilename = sprintf('%s.png', 'last_stable');
         $httpCode = 200;
 
