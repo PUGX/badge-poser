@@ -61,6 +61,7 @@ class BadgeController extends ContainerAware
         }
 
         $image = $imageCreator->createDownloadsImage($downloadsText);
+
         return $this->streamImage($image, $outputFilename);
     }
 
