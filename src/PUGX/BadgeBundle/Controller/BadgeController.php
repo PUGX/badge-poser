@@ -15,12 +15,34 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use PUGX\BadgeBundle\Service\ImageCreator;
 use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 
 class BadgeController extends ContainerAware
 {
+    /**
+     * @Route("/{repository}/downloads.png",
+     *     name         = "pugx_badge",
+     *     requirements = {"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     *     )
+     * @Route("/{repository}/d/{type}.png",
+     *     name         = "pugx_badge_stat",
+     *     defaults     = {"type" = "total"},
+     *     requirements = {
+     *         "type"       = "total|daily|monthly",
+     *         "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+     *         }
+     *     )
+     * @Method({"GET"})
+     *
+     * @param string $repository
+     * @param string $type
+     *
+     * @return StreamedResponse
+     */
     public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->container->get('image_creator');
@@ -42,6 +64,17 @@ class BadgeController extends ContainerAware
         return $this->streamImage($image, $outputFilename);
     }
 
+    /**
+     * @Route("/{repository}/version.png",
+     *     name="pugx_badge_version",
+     *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     *     )
+     * @Method({"GET"})
+     *
+     * @param string $repository
+     *
+     * @return StreamedResponse
+     */
     public function versionAction($repository)
     {
         $imageCreator = $this->container->get('image_creator');
@@ -58,6 +91,12 @@ class BadgeController extends ContainerAware
         return $this->streamImage($image, $outputFilename);
     }
 
+    /**
+     * @param resource $image
+     * @param string $outputFilename
+     *
+     * @return StreamedResponse
+     */
     protected function streamImage($image, $outputFilename)
     {
         $imageCreator = $this->container->get('image_creator');
