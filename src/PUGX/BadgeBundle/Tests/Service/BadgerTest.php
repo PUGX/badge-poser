@@ -142,4 +142,29 @@ class BadgerTest extends WebTestCase
 
         $this->assertEquals(null, $badger->getLatestStableVersion($input));
     }
+
+    public function testGetLatestUnstableVersionReturnsLatestVersion()
+    {
+        $branches = array('1.0.0', '1.1.0', '2.0.0', 'v3.0.0-RC1', '3.0.0-dev');
+        foreach ($branches as $branch) {
+            $version = new Version();
+            $version->fromArray(array('version' => $branch));
+            $versions[] = $version;
+        }
+
+        $input = 'pugx/badge-poser';
+        $output = $this->getMock('Packagist\Api\Result\Package');
+        $output->expects($this->once())
+            ->method('getVersions')
+            ->will($this->returnValue($versions));
+
+        $this->packagistClient->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($input))
+            ->will($this->returnValue($output));
+
+        $badger = new Badger($this->packagistClient, $this->dispatcher, $this->logger);
+
+        $this->assertEquals('v3.0.0-RC1', $badger->getLatestUnstableVersion($input));
+    }
 }
