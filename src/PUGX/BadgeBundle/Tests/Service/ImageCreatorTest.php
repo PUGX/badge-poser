@@ -59,7 +59,7 @@ class ImageCreatorTest extends WebTestCase
         $imageCreator = new ImageCreator($this->logger, 'font', 'image');
         $res = $imageCreator->transformNumberToReadableFormat($input);
         if (null === $withException) {
-            $this->assertEquals($imageCreator->transformNumberToReadableFormat($input), $res);
+            $this->assertEquals($output, $res);
         }
     }
 }

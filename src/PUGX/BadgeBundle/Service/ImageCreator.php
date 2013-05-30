@@ -112,16 +112,16 @@ class ImageCreator
     {
         $defaultFormatter = '%.0f %s';
         $dimensions = array(
-            //1000000000000 => 'bb',
-            1000000000 => 'mm',
-            1000000 => 'm',
-            1000 => 'k',
-            1 => ' ',
+            'bb' => 1000000000000,
+            'mm' => 1000000000,
+            'm'  => 1000000,
+            'k'  => 1000,
+            ' '  => 1,
         );
 
         $number = $this->normalizeNumber($number);
 
-        foreach ($dimensions as $key => $suffix) {
+        foreach ($dimensions as $suffix => $key) {
             if ($number >= $key) {
                 $number = $number / $key;
                 // 2 is strlen(' ' . '.');  space and dot
