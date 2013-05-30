@@ -59,7 +59,7 @@ class Badger
      * @param string $repositoryName
      *
      * @return \Packagist\Api\Result\Package\Downloads
-     * @throws \PUGX\BadgeBundle\Exception
+     * @throws \PUGX\BadgeBundle\Exception\UnexpectedValueException
      */
     private function doGetPackageDownloads($repositoryName)
     {
@@ -76,6 +76,7 @@ class Badger
      * Returns package if found.
      *
      * @param string $repository
+     *
      * @return \Packagist\Api\Result\Package|null
      */
     protected function getPackage($repository)
@@ -93,8 +94,11 @@ class Badger
     }
 
     /**
+     * This function try to understand if the repository is stable or not.
+     *
      * @param Version $version
-     * @return bool
+     *
+     * @return Boolean
      */
     protected function filterStableVersions(Version $version)
     {
@@ -109,7 +113,10 @@ class Badger
     }
 
     /**
+     * Return the latest stable version.
+     *
      * @param string $repository
+     *
      * @return string|null
      */
     public function getLatestStableVersion($repository)
