@@ -24,7 +24,7 @@ class ImageCreator
 
     private $logger;
     protected $dispatcher;
-    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png');
+    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png');
     protected $imagePath;
     protected $fontPath;
     protected $defaultFont;
