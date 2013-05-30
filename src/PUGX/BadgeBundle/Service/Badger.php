@@ -69,7 +69,6 @@ class Badger
         }
 
         throw new UnexpectedValueException(sprintf('Impossible to found repository "%s"', $repositoryName));
-
     }
 
     /**
