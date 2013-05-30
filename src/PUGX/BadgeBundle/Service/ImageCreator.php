@@ -112,7 +112,7 @@ class ImageCreator
     {
         $defaultFormatter = '%.0f %s';
         $dimensions = array(
-            //1000000000000 => 'bb',
+            1000000000000 => 'bb',
             1000000000 => 'mm',
             1000000 => 'm',
             1000 => 'k',
