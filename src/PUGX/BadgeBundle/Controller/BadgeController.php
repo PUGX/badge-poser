@@ -47,21 +47,21 @@ class BadgeController extends ContainerAware
     {
         $imageCreator = $this->container->get('image_creator');
         $outputFilename = sprintf('%s.png', $type);
-        $httpCode = 500;
+        $status = 500;
 
-        // get the statistic from packagist
         try {
-            $downloads = $this->container->get('badger')->getPackageDownloads($repository, $type);
-            $downloadsText = $imageCreator->transformNumberToReadableFormat($downloads);
-            $httpCode = 200;
-        } catch (InvalidArgumentException $e) {
-            $downloadsText = ImageCreator::ERROR_TEXT_GENERIC;
+            $package = $this->container->get('package_manager')->fetchPackage($repository);
+            $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
+            $status = 200;
+        } catch (UnexpectedValueException $e) {
+            $text = ImageCreator::ERROR_TEXT_GENERIC;
         } catch (\Exception $e){
-            $downloadsText = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
+            $text = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
-        $image = $imageCreator->createDownloadsImage($downloadsText);
-        return $this->streamImage($image, $outputFilename);
+        $image = $imageCreator->createDownloadsImage($text);
+
+        return $this->streamImage($status, $image, $outputFilename);
     }
 
     /**
@@ -69,26 +69,48 @@ class BadgeController extends ContainerAware
      *     name="pugx_badge_version",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
+     * @Route("/{repository}/v/{latest}.png",
+     *     name         = "pugx_badge_version_latest",
+     *     defaults     = {"latest" = "stable"},
+     *     requirements = {
+     *         "type"       = "stable|unstable",
+     *         "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+     *         }
+     *     )
      * @Method({"GET"})
      *
      * @param string $repository
+     * @param string $latest
      *
      * @return StreamedResponse
      */
-    public function versionAction($repository)
+    public function versionAction($repository, $latest = 'stable')
     {
-        $imageCreator = $this->container->get('image_creator');
-        $outputFilename = sprintf('%s.png', 'version');
+        $image = null;
+        $outputFilename = sprintf('%s.png', $latest);
+        $error = 'Err';
+        $status = 500;
 
-        $version = $this->container->get('badger')->getLatestStableVersion($repository);
+        try {
+            $package = $this->container->get('package_manager')->fetchPackage($repository);
+            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
 
-        if ($version) {
-            $image = $imageCreator->createStableImage($version);
-        } else {
-            $image = $imageCreator->createUnstableImage();
+            if ('stable' == $latest && $package->hasStableVersion()) {
+                $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
+            } else if ($package->hasUnstableVersion()) {
+                $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
+            }
+
+            $status = 200;
+        } catch (\Exception $e) {
+            $error = 'Err 01';
         }
 
-        return $this->streamImage($image, $outputFilename);
+        if (null == $image) {
+            $image = $this->container->get('image_creator')->createStableImage($error);
+        }
+
+        return $this->streamImage($status, $image, $outputFilename);
     }
 
     /**
@@ -97,12 +119,12 @@ class BadgeController extends ContainerAware
      *
      * @return StreamedResponse
      */
-    protected function streamImage($image, $outputFilename)
+    protected function streamImage($status, $image, $outputFilename)
     {
         $imageCreator = $this->container->get('image_creator');
 
         //generating the streamed response
-        $response = new StreamedResponse(null);
+        $response = new StreamedResponse(null, $status);
         $response->setCallback(function () use ($imageCreator, $image) {
             $imageCreator->streamRawImageData($image);
         });

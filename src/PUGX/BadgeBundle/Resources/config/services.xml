@@ -5,19 +5,19 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="packagist.client.class">Packagist\Api\Client</parameter>
+        <parameter key="packagist_client.class">Packagist\Api\Client</parameter>
         <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
-        <parameter key="badger.class">PUGX\BadgeBundle\Service\Badger</parameter>
-    </parameters>
+        <parameter key="badge_package.class">PUGX\BadgeBundle\Package\Package</parameter>
+        <parameter key="package_manager.class">PUGX\BadgeBundle\Service\PackageManager</parameter>
+     </parameters>
 
     <services>
-        <service id="packagist.client" class="%packagist.client.class%">
+        <service id="packagist_client" class="%packagist_client.class%">
         </service>
 
-        <service id="badger" class="%badger.class%">
-            <argument type="service" id="packagist.client" />
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="logger" />
+        <service id="package_manager" class="%package_manager.class%">
+            <argument type="service" id="packagist_client" />
+            <argument>%badge_package.class%</argument>
         </service>
 
         <service id="image_creator" class="%image_creator.class%">
@@ -28,5 +28,6 @@
             <tag name="monolog.logger" channel="image_creator" />
         </service>
     </services>
+
 
 </container>
