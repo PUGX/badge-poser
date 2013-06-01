@@ -10,7 +10,6 @@
 
 namespace PUGX\BadgeBundle\Package;
 
-use PUGX\BadgeBundle\Exception\BadFunctionCallException;
 use Packagist\Api\Result\Package as ApiPackage;
 
 class Package implements PackageInterface, ApiPackageInterface
