@@ -154,7 +154,7 @@ class PackageManager
         $statsType = 'get' . ucfirst($type);
 
         if ($package && ($download = $package->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
-             return $download->{$statsType}();
+            return $download->{$statsType}();
         }
     }
 }

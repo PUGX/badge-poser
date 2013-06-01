@@ -138,7 +138,6 @@ class ImageCreator implements ImageCreatorInterface
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
-
     /**
      * Add a shadowed text to an Image.
      *
@@ -148,19 +147,19 @@ class ImageCreator implements ImageCreatorInterface
      * @param int      $y
      * @param float    $size
      * @param string   $font
-     * @param bool     $withShadow
+     * @param Boolean  $withShadow
      * @param int      $angle
      */
     private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
-        if (null ===  $font) {
+        if (null === $font) {
             $font = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
         }
 
         $white = imagecolorallocate($image, 255, 255, 250);
         $black = imagecolorallocate($image, 0, 0, 0);
         if ($withShadow) {
-            $imageArray = imagettftext($image, $size, $angle, $x+1, $y+1, $black, $font, $text);
+            $imageArray = imagettftext($image, $size, $angle, $x + 1, $y + 1, $black, $font, $text);
         }
         $imageArray = imagettftext($image, $size, $angle, $x, $y, $white, $font, $text);
     }
@@ -191,7 +190,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createDownloadsImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
-        $image =  $this->createImage($imagePath);
+        $image = $this->createImage($imagePath);
         $value = $this->transformNumberToReadableFormat($value);
         $this->addShadowedText($image, $value, 64, 13.5);
 
@@ -208,7 +207,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createStableImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
-        $image =  $this->createImage($imagePath);
+        $image = $this->createImage($imagePath);
 
         $this->addShadowedText($image, $value, 59, 13.5);
 
@@ -225,7 +224,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createUnstableImage($value = '@dev')
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
-        $image =  $this->createImage($imagePath);
+        $image = $this->createImage($imagePath);
 
         $this->addShadowedText($image, $value, 51, 12, 7);
 
