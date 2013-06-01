@@ -32,7 +32,6 @@ Interface ImageCreatorInterface
      */
     public function destroyImage($image);
 
-
     /**
      * Create the 'downloads' image with the standard Font and standard Image.
      *

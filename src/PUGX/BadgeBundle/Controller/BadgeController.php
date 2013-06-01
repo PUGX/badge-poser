@@ -16,12 +16,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-use PUGX\BadgeBundle\Service\ImageCreator;
-use PUGX\BadgeBundle\Exception\InvalidArgumentException;
+use PUGX\BadgeBundle\Exception\UnexpectedValueException;
 
 class BadgeController extends ContainerAware
 {
+    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
+    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
+    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
+
     /**
      * @Route("/{repository}/downloads.png",
      *     name         = "pugx_badge",
@@ -53,9 +55,9 @@ class BadgeController extends ContainerAware
             $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
             $status = 200;
         } catch (UnexpectedValueException $e) {
-            $text = ImageCreator::ERROR_TEXT_GENERIC;
+            $text = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e){
-            $text = ImageCreator::ERROR_TEXT_CLIENT_EXCEPTION;
+            $text = self::ERROR_TEXT_GENERIC;
         }
 
         $image = $imageCreator->createDownloadsImage($text);
@@ -87,7 +89,7 @@ class BadgeController extends ContainerAware
     {
         $image = null;
         $outputFilename = sprintf('%s.png', $latest);
-        $error = 'Err';
+        $error = self::ERROR_TEXT_GENERIC;
         $status = 500;
 
         try {
@@ -101,8 +103,10 @@ class BadgeController extends ContainerAware
             }
 
             $status = 200;
-        } catch (\Exception $e) {
-            $error = 'Err 01';
+        } catch (UnexpectedValueException $e) {
+            $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
+        } catch (\Exception $e){
+            $error = self::ERROR_TEXT_GENERIC;
         }
 
         if (null == $image) {
@@ -113,8 +117,9 @@ class BadgeController extends ContainerAware
     }
 
     /**
+     * @param int      $status
      * @param resource $image
-     * @param string $outputFilename
+     * @param string   $outputFilename
      *
      * @return StreamedResponse
      */
