@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the badge-poser package
  *
@@ -14,10 +13,8 @@ namespace PUGX\BadgeBundle\Tests\Service;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use PUGX\BadgeBundle\Service\ImageCreator;
 
-
 class ImageCreatorTest extends WebTestCase
 {
-
     private $logger;
     private $packagistClient;
     private $fontPath;

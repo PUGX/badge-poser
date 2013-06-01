@@ -6,32 +6,37 @@ or its latest stable version.
 
 is still in ALPHA and don't use it (the protocol and the domain will change).
 
-[![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
-~~(Only the `version` badge is not real)~~  <- now it works
 
 ## Usage
 
-Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
+Total downloads [![Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Total Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
+[![Total Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
+Monthly downloads [![Downloads](https://poser.pugx.org/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
+[![Monthly Downloads](https://poser.pugx.org/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
+Daily downloads  [![Downloads](https://poser.pugx.org/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
+[![Daily Downloads](https://poser.pugx.org/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
-Latest Version [![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
+Latest Stable Version [![Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/symfony/symfony)
 ```md
-[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
+[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/symfony/symfony)
+```
+
+Latest Unstable Version [![Stable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)
+```md
+[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)
 ```
 
 ## Why a composer badge?
@@ -67,6 +72,6 @@ php composer.phar install
 phpunit
 ```
 
-### This project was inspired by [pypy](https://pypip.in/) 
+#### This project was inspired by [pypy](https://pypip.in/)
 
 

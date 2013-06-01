@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the badge-poser package
  *
@@ -16,7 +15,7 @@ use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 use PUGX\BadgeBundle\Event\PackageEvent;
 
 
-class ImageCreator
+class ImageCreator implements ImageCreatorInterface
 {
     CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
     CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
@@ -193,7 +192,7 @@ class ImageCreator
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
         $image =  $this->createImage($imagePath);
-
+        $value = $this->transformNumberToReadableFormat($value);
         $this->addShadowedText($image, $value, 64, 13.5);
 
         return $image;
@@ -211,7 +210,7 @@ class ImageCreator
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image =  $this->createImage($imagePath);
 
-        $this->addShadowedText($image, $value, 46, 13.5);
+        $this->addShadowedText($image, $value, 59, 13.5);
 
         return $image;
     }
@@ -225,10 +224,10 @@ class ImageCreator
      */
     public function createUnstableImage($value = '@dev')
     {
-        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image =  $this->createImage($imagePath);
 
-        $this->addShadowedText($image, $value, 46, 13.5);
+        $this->addShadowedText($image, $value, 51, 12, 7);
 
         return $image;
     }
