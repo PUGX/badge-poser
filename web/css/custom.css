@@ -19,3 +19,8 @@ body {
     font-size: 64px;
     line-height: 1;
 }
+pre {
+    overflow: auto;
+    word-wrap: normal;
+    white-space: pre;
+}
