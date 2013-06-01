@@ -12,8 +12,6 @@ namespace PUGX\BadgeBundle\Service;
 
 use Symfony\Bridge\Monolog\Logger;
 use PUGX\BadgeBundle\Exception\InvalidArgumentException;
-use PUGX\BadgeBundle\Event\PackageEvent;
-
 
 class ImageCreator implements ImageCreatorInterface
 {
