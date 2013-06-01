@@ -29,20 +29,16 @@ class ImageCreator implements ImageCreatorInterface
     protected $defaultFont;
     protected $defaultImage;
 
-    public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = null, $defaultImage = null)
+    public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
     {
         $this->logger = $logger;
         $this->fontPath = $fontPath;
         $this->imagePath = $imagePath;
 
-        if (!$defaultFont) {
-            $defaultFont = 'DroidSans.ttf';
-        }
         if (!$defaultImage) {
-            $defaultImage = $this->imageNames['empty'];
+            $this->defaultImage = $this->imageNames['empty'];
         }
         $this->defaultFont = $defaultFont;
-        $this->defaultImage = $defaultImage;
     }
 
     /**

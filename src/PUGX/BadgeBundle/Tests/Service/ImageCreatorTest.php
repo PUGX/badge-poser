@@ -17,13 +17,24 @@ class ImageCreatorTest extends WebTestCase
 {
     private $logger;
     private $packagistClient;
+    private $fontPath;
+    private $imagesPath;
+    private $imageCreator;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->logger = $this->getMockBuilder('Symfony\Bridge\Monolog\Logger')
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->packagistClient = $this->getMock('Packagist\Api\Client');
+
+        $kernelDir = $_SERVER['KERNEL_DIR'];
+
+        $this->fontPath = $kernelDir . '/badge-assets/fonts';
+        $this->imagesPath = $kernelDir . '/badge-assets/images';
+
+        $this->imageCreator = new ImageCreator($this->logger, $this->fontPath, $this->imagesPath);
     }
 
     public static function provider()
@@ -53,10 +64,78 @@ class ImageCreatorTest extends WebTestCase
         if (null !== $withException) {
             $this->setExpectedException($withException);
         }
-        $imageCreator = new ImageCreator($this->logger, 'font', 'image');
-        $res = $imageCreator->transformNumberToReadableFormat($input);
+
+        $res = $this->imageCreator->transformNumberToReadableFormat($input);
         if (null === $withException) {
             $this->assertEquals($output, $res);
         }
+    }
+
+    /**
+     * @expectedException \ErrorException
+     */
+    public function testAddShadowedText_withBadImage()
+    {
+
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'addShadowedText');
+        $reflectionMethod->setAccessible(true);
+
+        $reflectionMethod->invokeArgs($this->imageCreator, array(false, 'test text'));
+    }
+
+
+    public function provideShadow()
+    {
+        return array(
+            array(false, 'downloads.png'),
+            array(true, 'downloads.png')
+        );
+    }
+
+    /**
+     *
+     * @dataProvider provideShadow
+     */
+    public function testAddShadowedText_maintainsOriginalDimension($withShadow, $imageFile)
+    {
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'addShadowedText');
+        $reflectionMethod->setAccessible(true);
+
+        $image = imagecreatefrompng($this->imagesPath . DIRECTORY_SEPARATOR . $imageFile);
+        $this->assertTrue(is_resource($image));
+        $expectedWidth = imagesx($image);
+        $expectedHeight = imagesy($image);
+
+        $reflectionMethod->invokeArgs($this->imageCreator, array($image, 'TEST_TEXT', 3, 13, 8.5, null, $withShadow));
+
+        $this->assertEquals($expectedWidth, imagesx($image), 'The method should not modify the image width');
+        $this->assertEquals($expectedHeight, imagesy($image), 'The method should not modify the image height');
+
+        imagedestroy($image);
+    }
+
+    public function testCreateImage()
+    {
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImage');
+        $reflectionMethod->setAccessible(true);
+        $image = $reflectionMethod->invokeArgs(
+            $this->imageCreator,
+            array($this->imagesPath . DIRECTORY_SEPARATOR . 'empty.png')
+        );
+
+        $this->assertTrue(is_resource($image));
+    }
+
+    /**
+     * @expectedException \ErrorException
+     */
+    public function testCreateImage_throwException()
+    {
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImage');
+        $reflectionMethod->setAccessible(true);
+        $image = $reflectionMethod->invokeArgs(
+            $this->imageCreator,
+            array($this->imagesPath . DIRECTORY_SEPARATOR . 'invalid_file.png')
+        );
     }
 }
