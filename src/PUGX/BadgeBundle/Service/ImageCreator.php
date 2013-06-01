@@ -17,10 +17,6 @@ use PUGX\BadgeBundle\Event\PackageEvent;
 
 class ImageCreator implements ImageCreatorInterface
 {
-    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
-    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
-    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
-
     private $logger;
     protected $dispatcher;
     protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png');
