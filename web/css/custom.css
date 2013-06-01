@@ -24,3 +24,6 @@ pre {
     word-wrap: normal;
     white-space: pre;
 }
+.footer {
+    text-align: center;
+}
