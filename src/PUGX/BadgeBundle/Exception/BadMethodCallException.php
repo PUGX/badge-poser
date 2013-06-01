@@ -9,8 +9,8 @@
  */
 namespace PUGX\BadgeBundle\Exception;
 
-class InvalidArgumentException
-    extends \InvalidArgumentException
+class BadMethodCallException
+    extends \BadFunctionCallException
     implements ExceptionInterface
 {
 
