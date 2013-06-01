@@ -41,7 +41,7 @@ class PackageManager
     }
 
     /**
-     * Create a new Package decorated from the Api Package.
+     * Create a new Package decorated with the Api Package.
      *
      * @param ApiPackage $apiPackage
      *
@@ -56,7 +56,7 @@ class PackageManager
     }
 
     /**
-     * Returns package if found.
+     * Returns package if founded.
      *
      * @param string $repository
      *
@@ -154,7 +154,7 @@ class PackageManager
         $statsType = 'get' . ucfirst($type);
 
         if ($package && ($download = $package->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
-             return $download->{$statsType}();
+            return $download->{$statsType}();
         }
     }
 }
