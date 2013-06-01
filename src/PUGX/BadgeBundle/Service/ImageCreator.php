@@ -196,7 +196,7 @@ class ImageCreator implements ImageCreatorInterface
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
         $image =  $this->createImage($imagePath);
-
+        $value = $this->transformNumberToReadableFormat($value);
         $this->addShadowedText($image, $value, 64, 13.5);
 
         return $image;
