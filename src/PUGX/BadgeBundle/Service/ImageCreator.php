@@ -210,7 +210,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image =  $this->createImage($imagePath);
 
-        $this->addShadowedText($image, $value, 52, 13.5);
+        $this->addShadowedText($image, $value, 59, 13.5);
 
         return $image;
     }
