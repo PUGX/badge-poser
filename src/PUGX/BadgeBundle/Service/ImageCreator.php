@@ -225,7 +225,7 @@ class ImageCreator
      */
     public function createUnstableImage($value = '@dev')
     {
-        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image =  $this->createImage($imagePath);
 
         $this->addShadowedText($image, $value, 46, 13.5);

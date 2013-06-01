@@ -86,7 +86,8 @@ class BadgeController extends ContainerAware
         if ($version) {
             $image = $imageCreator->createStableImage($version);
         } else {
-            $image = $imageCreator->createUnstableImage();
+            $version = $this->container->get('badger')->getLatestUnstableVersion($repository);
+            $image = $imageCreator->createUnstableImage($version);
         }
 
         return $this->streamImage($image, $outputFilename);

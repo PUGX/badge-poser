@@ -53,7 +53,6 @@ class BadgeControllerTest extends WebTestCase
         static::$kernel->getContainer()->set('packagist.client', $packagistClient);
 
         $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
-        //var_dump($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 }

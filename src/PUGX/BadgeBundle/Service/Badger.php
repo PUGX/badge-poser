@@ -92,6 +92,8 @@ class Badger
         return null;
     }
 
+    //to be refactored
+
     /**
      * This function try to understand if the repository is stable or not.
      *
@@ -134,4 +136,44 @@ class Badger
 
         return $last;
     }
+    /**
+     * @param Version $version
+     * @return bool
+     */
+    protected function filterUnstableVersions(Version $version)
+    {
+        $notStableKeys = array('develop', 'master', 'dev', 'RC', 'BETA', 'ALPHA');
+
+        foreach ($notStableKeys as $notStableKey) {
+            if (stripos($version->getVersion(), $notStableKey) == true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $repository
+     * @return null
+     */
+    public function getLatestUnstableVersion($repository)
+    {
+        $last = null;
+
+        $package = $this->getPackage($repository);
+        if ($package && $versions = $package->getVersions()) {
+            $unstableVersions = array_filter($versions, array($this, 'filterUnstableVersions'));
+
+            array_walk($unstableVersions, function($version) use(&$last){
+                if ($version->getVersion() > $last) {
+                    $last = $version->getVersion();
+                }
+            });
+        }
+
+        return $last;
+    }
+
+    //end to be refactored
 }
