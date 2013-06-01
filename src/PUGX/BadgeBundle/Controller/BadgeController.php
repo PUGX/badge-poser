@@ -16,9 +16,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
-use PUGX\BadgeBundle\Service\ImageCreator;
-use PUGX\BadgeBundle\Exception\InvalidArgumentException;
+use PUGX\BadgeBundle\Exception\UnexpectedValueException;
 
 class BadgeController extends ContainerAware
 {
@@ -119,8 +117,9 @@ class BadgeController extends ContainerAware
     }
 
     /**
+     * @param int      $status
      * @param resource $image
-     * @param string $outputFilename
+     * @param string   $outputFilename
      *
      * @return StreamedResponse
      */
