@@ -17,8 +17,6 @@ use PUGX\BadgeBundle\Service\PackageManager;
 
 class PackageManagerTest extends WebTestCase
 {
-
-
     private function instatiatePackageManager($versions = null)
     {
         $packagistClient = $this->getMock('Packagist\Api\Client');
