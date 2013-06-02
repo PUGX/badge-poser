@@ -13,7 +13,6 @@ namespace PUGX\BadgeBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use PUGX\BadgeBundle\Exception\UnexpectedValueException;
@@ -56,7 +55,7 @@ class BadgeController extends ContainerAware
             $status = 200;
         } catch (UnexpectedValueException $e) {
             $text = self::ERROR_TEXT_CLIENT_EXCEPTION;
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $text = self::ERROR_TEXT_GENERIC;
         }
 
@@ -98,14 +97,14 @@ class BadgeController extends ContainerAware
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
-            } else if ($package->hasUnstableVersion()) {
+            } elseif ($package->hasUnstableVersion()) {
                 $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
             }
 
             $status = 200;
         } catch (UnexpectedValueException $e) {
             $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $error = self::ERROR_TEXT_GENERIC;
         }
 

@@ -10,8 +10,6 @@
 
 namespace PUGX\BadgeBundle\Service;
 
-use Symfony\Bridge\Monolog\Logger;
-
 Interface ImageCreatorInterface
 {
     /**

@@ -30,7 +30,6 @@ class BadgeControllerTest extends WebTestCase
         $this->packagistClient = new Client($clientHttp);
     }
 
-
     public function testDownloadsAction()
     {
         $client = static::createClient();
@@ -47,7 +46,6 @@ class BadgeControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
-
 
     public function testLatestUnstableAction()
     {

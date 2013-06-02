@@ -28,7 +28,8 @@ class Package implements PackageInterface, ApiPackageInterface
         return $this->latestStableVersion;
     }
 
-    public function hasStableVersion() {
+    public function hasStableVersion()
+    {
         return isset($this->latestStableVersion);
     }
 
@@ -42,7 +43,8 @@ class Package implements PackageInterface, ApiPackageInterface
         return $this->latestUnstableVersion;
     }
 
-    public function hasUnstableVersion() {
+    public function hasUnstableVersion()
+    {
         return isset($this->latestUnstableVersion);
     }
 
