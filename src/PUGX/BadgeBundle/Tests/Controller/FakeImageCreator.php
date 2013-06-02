@@ -10,17 +10,17 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
-use PUGX\BadgeBundle\Event\PackageEvent;
 use PUGX\BadgeBundle\Service\ImageCreator;
-
 
 class FakeImageCreator extends ImageCreator
 {
-    public function streamRawImageData($image) {
+    public function streamRawImageData($image)
+    {
         // pass
        return true;
     }
-    public function destroyImage($image) {
+    public function destroyImage($image)
+    {
         // pass
         return true;
     }

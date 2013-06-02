@@ -10,7 +10,6 @@
 
 namespace PUGX\BadgeBundle\Exception;
 
-
-interface ExceptionInterface {
-
+interface ExceptionInterface
+{
 }

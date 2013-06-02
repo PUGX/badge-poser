@@ -63,7 +63,6 @@ class ImageCreator implements ImageCreatorInterface
         return $number;
     }
 
-
     /**
      * Stream the output.
      *
