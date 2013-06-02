@@ -83,7 +83,6 @@ class ImageCreatorTest extends WebTestCase
         $reflectionMethod->invokeArgs($this->imageCreator, array(false, 'test text'));
     }
 
-
     public function provideShadow()
     {
         return array(

@@ -10,8 +10,6 @@
 
 namespace PUGX\BadgeBundle\Package;
 
-use Packagist\Api\Result\Package as ApiPackage;
-
 interface PackageInterface
 {
     public function setLatestStableVersion($version);
