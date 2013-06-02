@@ -1,7 +1,12 @@
 body {
     padding-top: 20px;
     padding-bottom: 40px;
+    /*
+     * Background pattern provided by subtlepatterns.com 
+     */ 
+    background: url(../img/groovepaper.png) repeat;
 }
+
 /* Custom container */
 .container-narrow {
     margin: 0 auto;
@@ -32,6 +37,13 @@ pre {
 }
 strong {
     font-weight: 700;
+}
+
+/* Override the standard prettyprint style*/
+.prettyprint{
+    word-wrap: break-word !important;
+    line-height: 24px !important;
+    margin-bottom: 30px;
 }
 
 hr.styled {
