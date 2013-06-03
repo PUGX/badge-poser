@@ -2,5 +2,6 @@ composer.lock
 app/cache
 app/logs
 app/parameter.yml
+app/bootstrap.php.cache
 vendor
 .idea
