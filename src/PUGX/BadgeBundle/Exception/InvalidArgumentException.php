@@ -9,6 +9,11 @@
  */
 namespace PUGX\BadgeBundle\Exception;
 
+/**
+ * Class InvalidArgumentException
+ *
+ * @package PUGX\BadgeBundle\Exception
+ */
 class InvalidArgumentException
     extends \InvalidArgumentException
     implements ExceptionInterface

@@ -17,6 +17,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use PUGX\BadgeBundle\Exception\UnexpectedValueException;
 
+/**
+ * Class BadgeController.
+ * Main controller for badges.
+ *
+ * @package PUGX\BadgeBundle\Controller
+ */
 class BadgeController extends ContainerAware
 {
     CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
@@ -24,6 +30,11 @@ class BadgeController extends ContainerAware
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
 
     /**
+     * Downloads action.
+     *
+     * @param string $repository repository
+     * @param string $type       badge type
+     *
      * @Route("/{repository}/downloads.png",
      *     name         = "pugx_badge",
      *     requirements = {"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
@@ -37,9 +48,6 @@ class BadgeController extends ContainerAware
      *         }
      *     )
      * @Method({"GET"})
-     *
-     * @param string $repository
-     * @param string $type
      *
      * @return StreamedResponse
      */
@@ -65,6 +73,11 @@ class BadgeController extends ContainerAware
     }
 
     /**
+     * Version action.
+     *
+     * @param string $repository repository
+     * @param string $latest     latest
+     *
      * @Route("/{repository}/version.png",
      *     name="pugx_badge_version",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
@@ -78,9 +91,6 @@ class BadgeController extends ContainerAware
      *         }
      *     )
      * @Method({"GET"})
-     *
-     * @param string $repository
-     * @param string $latest
      *
      * @return StreamedResponse
      */

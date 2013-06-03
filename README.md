@@ -69,7 +69,7 @@ php composer.phar install
 - This will give you proper results:
 
 ``` bash
-phpunit
+./bin/phpunit -c app
 ```
 
 #### This project was inspired by [pypy](https://pypip.in/)
