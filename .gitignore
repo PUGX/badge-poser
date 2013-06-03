@@ -3,5 +3,6 @@ app/cache
 app/logs
 app/parameter.yml
 app/bootstrap.php.cache
+bin/phpunit
 vendor
 .idea

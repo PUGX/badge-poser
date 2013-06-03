@@ -37,7 +37,8 @@
         "knplabs/packagist-api": "dev-master"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "*"
+        "guzzle/plugin-mock": "*",
+        "phpunit/phpunit": "@stable"
     },
     "scripts": {
         "post-install-cmd": [
