@@ -12,6 +12,11 @@ namespace PUGX\BadgeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * Class PUGXBadgeBundle
+ *
+ * @package PUGX\BadgeBundle
+ */
 class PUGXBadgeBundle extends Bundle
 {
 }

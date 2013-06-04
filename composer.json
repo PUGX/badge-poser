@@ -39,7 +39,8 @@
         "snc/redis-bundle": "1.1.*"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "*"
+        "guzzle/plugin-mock": "*",
+        "phpunit/phpunit": "@stable"
     },
     "scripts": {
         "post-install-cmd": [

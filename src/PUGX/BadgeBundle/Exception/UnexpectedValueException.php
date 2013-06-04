@@ -9,6 +9,11 @@
  */
 namespace PUGX\BadgeBundle\Exception;
 
+/**
+ * Class UnexpectedValueException
+ *
+ * @package PUGX\BadgeBundle\Exception
+ */
 class UnexpectedValueException
     extends \UnexpectedValueException
     implements ExceptionInterface
