@@ -30,20 +30,10 @@ class SnippetController extends ContainerAware
      */
     public function allAction()
     {
-        $data = array();
-        $status = 500;
-        $name = $this->container->get('request')->get('username');
-        $repo = $this->container->get('request')->get('repository');
-        
-        if($name != null || $repo != null) {
-            $data = array(
-            'total' => array(
-                'markdown' => '[![Total Downloads](https://poser.pugx.org/'.$name.'/'.$repo.'/d/total.png)](https://packagist.org/packages/symfony/symfony)',
-                'img'      => 'https://poser.pugx.org/'.$name.'/'.$repo.'/d/total.png',
-            ));
-            $status = 200;
-        }
+        $username = $this->container->get('request')->get('username');
+        $repository = $this->container->get('request')->get('repository');
+        $repository = sprintf('%s/%s', $username, $repository);
 
-        return new JsonResponse($data, $status);
+        return new JsonResponse($this->container->get('snippet_generator')->generateAllSnippets($repository));
     }
 }

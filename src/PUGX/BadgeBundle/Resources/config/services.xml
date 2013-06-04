@@ -9,6 +9,7 @@
         <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
         <parameter key="badge_package.class">PUGX\BadgeBundle\Package\Package</parameter>
         <parameter key="package_manager.class">PUGX\BadgeBundle\Service\PackageManager</parameter>
+        <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
      </parameters>
 
     <services>
@@ -18,6 +19,11 @@
         <service id="package_manager" class="%package_manager.class%">
             <argument type="service" id="packagist_client" />
             <argument>%badge_package.class%</argument>
+        </service>
+
+        <service id="snippet_generator" class="%snippet_generator.class%">
+            <argument type="service" id="router" />
+            <argument>%pugx_badge.routes%</argument>
         </service>
 
         <service id="image_creator" class="%image_creator.class%">
