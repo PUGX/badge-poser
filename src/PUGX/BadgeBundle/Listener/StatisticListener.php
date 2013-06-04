@@ -17,13 +17,11 @@ use PUGX\BadgeBundle\Service\Statistic\PersisterInterface;
 /**
  * Class StatisticListener
  * This class is intended to collect and store usage statistic on Redis.
- * @todo decouple from redis
  *
  * @package PUGX\BadgeBundle\Listener
  */
 class StatisticListener
 {
-
     private $client;
 
     public function __construct(PersisterInterface $client)
