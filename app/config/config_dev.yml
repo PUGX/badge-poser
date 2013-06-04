@@ -1,6 +1,10 @@
 imports:
     - { resource: config.yml }
 
+services:
+    statistic_listener:
+        class: PUGX\BadgeBundle\Service\Statistic\NullPersister
+
 framework:
     router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
     profiler: { only_exceptions: false }
