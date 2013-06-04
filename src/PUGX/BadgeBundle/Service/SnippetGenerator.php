@@ -11,18 +11,42 @@
 namespace PUGX\BadgeBundle\Service;
 
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouteCollection;
 
 class SnippetGenerator
 {
 
+    /**
+     * @var Router $router
+     */
     private $router;
+
+    /**
+     * @var array $badges
+     */
+    private $badges;
+
+    /**
+     * @var null|RouteCollection
+     */
     private $routes;
 
-    public function __construct(Router $router, $routes)
+    /**
+     * @var string $packagistRoute
+     */
+    private $packagistRoute;
+
+    /**
+     * @param Router $router
+     * @param $badges
+     * @param string $packagist_route
+     */
+    public function __construct(Router $router, $badges, $packagist_route = 'pugx_badge_packagist')
     {
         $this->router = $router;
-        $this->routes = $routes;
-
+        $this->badges = $badges;
+        $this->packagistRoute = $packagist_route;
+        $this->routes = $this->router->getRouteCollection();
     }
 
     /**
@@ -32,41 +56,42 @@ class SnippetGenerator
     public function generateAllSnippets($repository)
     {
         $snippets = array();
-        foreach($this->routes as $route) {
+        foreach($this->badges as $badge) {
 
-            $routeName = $route['name'];
-            $snippets[$routeName] = array(
-                'markdown'  => $this->generateMarkdown($route, $repository),
-                'img'       => $this->generateImg($route, $repository)
+            $snippets[$badge['name']] = array(
+                'markdown'  => $this->generateMarkdown($badge, $repository),
+                'img'       => $this->generateImg($badge, $repository)
             );
         }
         return $snippets;
     }
 
     /**
-     * @param $route
+     * @param $badge
      * @param $repository
      * @return string
      */
-    public function generateMarkdown($route, $repository)
+    public function generateMarkdown($badge, $repository)
     {
         return sprintf(
             "[![%s](%s)](%s)",
-            $route['label'],
-            $this->generateImg($route, $repository),
+            $badge['label'],
+            $this->generateImg($badge, $repository),
             $this->generateRepositoryLink($repository)
         );
-
     }
 
     /**
-     * @param $route
+     * @param $badge
      * @param $repository
      * @return string
      */
-    public function generateImg($route, $repository)
+    public function generateImg($badge, $repository)
     {
-        return $this->router->generate($route['route'], array('repository' => $repository), true);
+        $badge['repository'] = $repository;
+        $parameters = $this->compileRouteParametersForBadge($badge);
+
+        return $this->router->generate($badge['route'], $parameters, true);
     }
 
     /**
@@ -75,6 +100,25 @@ class SnippetGenerator
      */
     public function generateRepositoryLink($repository)
     {
-        return sprintf('https://packagist.org/packages/%s', $repository);
+        return $this->router->generate($this->packagistRoute, array('repository' => $repository), true);
+    }
+
+    /**
+     * @param $badge
+     * @return array
+     */
+    private function compileRouteParametersForBadge($badge)
+    {
+        $parameters = array();
+        $route = $this->routes->get($badge['route']);
+        $routeParameters = array_keys(array_merge($route->getDefaults(), $route->getRequirements()));
+
+        foreach( $routeParameters as $routeParameter ){
+            if (array_key_exists($routeParameter, $badge)) {
+                $parameters[$routeParameter] = $badge[$routeParameter];
+            }
+        }
+
+        return $parameters;
     }
 }

@@ -45,7 +45,6 @@ strong {
     line-height: 24px !important;
     margin-bottom: 30px;
 }
-
 hr.styled {
     border: 0;
     height: 1px;
@@ -53,4 +52,190 @@ hr.styled {
     background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
+}
+#overlay {
+    background: rgba(0, 0, 0, 0.84);
+    width: 700px;
+    height: 100%;
+    z-index: 999;
+    position: absolute;
+    display: none;
+}
+
+/* Spinner */
+#spinningSquaresG{
+    float: right;
+    display: none;
+    position:relative;
+    width:183px;
+    height:22px}
+
+.spinningSquaresG{
+    position:absolute;
+    top:0;
+    background-color:#1E6DCC;
+    width:22px;
+    height:22px;
+    -moz-animation-name:bounce_spinningSquaresG;
+    -moz-animation-duration:0.9s;
+    -moz-animation-iteration-count:infinite;
+    -moz-animation-direction:linear;
+    -moz-transform:scale(.3);
+    -webkit-animation-name:bounce_spinningSquaresG;
+    -webkit-animation-duration:0.9s;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-direction:linear;
+    -webkit-transform:scale(.3);
+    -ms-animation-name:bounce_spinningSquaresG;
+    -ms-animation-duration:0.9s;
+    -ms-animation-iteration-count:infinite;
+    -ms-animation-direction:linear;
+    -ms-transform:scale(.3);
+    -o-animation-name:bounce_spinningSquaresG;
+    -o-animation-duration:0.9s;
+    -o-animation-iteration-count:infinite;
+    -o-animation-direction:linear;
+    -o-transform:scale(.3);
+    animation-name:bounce_spinningSquaresG;
+    animation-duration:0.9s;
+    animation-iteration-count:infinite;
+    animation-direction:linear;
+    transform:scale(.3);
+}
+
+#spinningSquaresG_1{
+    left:0;
+    -moz-animation-delay:0.36s;
+    -webkit-animation-delay:0.36s;
+    -ms-animation-delay:0.36s;
+    -o-animation-delay:0.36s;
+    animation-delay:0.36s;
+}
+
+#spinningSquaresG_2{
+    left:23px;
+    -moz-animation-delay:0.45s;
+    -webkit-animation-delay:0.45s;
+    -ms-animation-delay:0.45s;
+    -o-animation-delay:0.45s;
+    animation-delay:0.45s;
+}
+
+#spinningSquaresG_3{
+    left:46px;
+    -moz-animation-delay:0.54s;
+    -webkit-animation-delay:0.54s;
+    -ms-animation-delay:0.54s;
+    -o-animation-delay:0.54s;
+    animation-delay:0.54s;
+}
+
+#spinningSquaresG_4{
+    left:69px;
+    -moz-animation-delay:0.63s;
+    -webkit-animation-delay:0.63s;
+    -ms-animation-delay:0.63s;
+    -o-animation-delay:0.63s;
+    animation-delay:0.63s;
+}
+
+#spinningSquaresG_5{
+    left:92px;
+    -moz-animation-delay:0.72s;
+    -webkit-animation-delay:0.72s;
+    -ms-animation-delay:0.72s;
+    -o-animation-delay:0.72s;
+    animation-delay:0.72s;
+}
+
+#spinningSquaresG_6{
+    left:114px;
+    -moz-animation-delay:0.81s;
+    -webkit-animation-delay:0.81s;
+    -ms-animation-delay:0.81s;
+    -o-animation-delay:0.81s;
+    animation-delay:0.81s;
+}
+
+#spinningSquaresG_7{
+    left:137px;
+    -moz-animation-delay:0.9s;
+    -webkit-animation-delay:0.9s;
+    -ms-animation-delay:0.9s;
+    -o-animation-delay:0.9s;
+    animation-delay:0.9s;
+}
+
+#spinningSquaresG_8{
+    left:160px;
+    -moz-animation-delay:0.99s;
+    -webkit-animation-delay:0.99s;
+    -ms-animation-delay:0.99s;
+    -o-animation-delay:0.99s;
+    animation-delay:0.99s;
+}
+
+@-moz-keyframes bounce_spinningSquaresG{
+    0%{
+        -moz-transform:scale(1);
+        background-color:#1E6DCC;
+    }
+
+    100%{
+        -moz-transform:scale(.3) rotate(90deg);
+        background-color:#FFFFFF;
+    }
+
+}
+
+@-webkit-keyframes bounce_spinningSquaresG{
+    0%{
+        -webkit-transform:scale(1);
+        background-color:#1E6DCC;
+    }
+
+    100%{
+        -webkit-transform:scale(.3) rotate(90deg);
+        background-color:#FFFFFF;
+    }
+
+}
+
+@-ms-keyframes bounce_spinningSquaresG{
+    0%{
+        -ms-transform:scale(1);
+        background-color:#1E6DCC;
+    }
+
+    100%{
+        -ms-transform:scale(.3) rotate(90deg);
+        background-color:#FFFFFF;
+    }
+
+}
+
+@-o-keyframes bounce_spinningSquaresG{
+    0%{
+        -o-transform:scale(1);
+        background-color:#1E6DCC;
+    }
+
+    100%{
+        -o-transform:scale(.3) rotate(90deg);
+        background-color:#FFFFFF;
+    }
+
+}
+
+@keyframes bounce_spinningSquaresG{
+    0%{
+        transform:scale(1);
+        background-color:#1E6DCC;
+    }
+
+    100%{
+        transform:scale(.3) rotate(90deg);
+        background-color:#FFFFFF;
+    }
+
 }

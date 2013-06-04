@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pugx_badge');
         $rootNode
             ->children()
-            ->arrayNode('routes')
+            ->arrayNode('badges')
                 ->prototype('array')
                 ->children()
                     ->scalarNode('route')->isRequired()->end()
