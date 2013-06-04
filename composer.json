@@ -34,7 +34,9 @@
         "jms/security-extra-bundle": "1.4.*",
         "jms/di-extra-bundle": "1.3.*",
 
-        "knplabs/packagist-api": "dev-master"
+        "knplabs/packagist-api": "dev-master",
+        "predis/predis": "0.8.*",
+        "snc/redis-bundle": "1.1.*"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*"
