@@ -38,7 +38,7 @@ class BadgeController extends ContainerAware
      *         }
      *     )
      * @Method({"GET"})
-     * @Cache(smaxage="3600", public=true)
+     * @Cache(maxage="3600", smaxage="3600", public=true)
      *
      * @param string $repository
      * @param string $type
@@ -80,7 +80,7 @@ class BadgeController extends ContainerAware
      *         }
      *     )
      * @Method({"GET"})
-     * @Cache(smaxage="3600", public=true)
+     * @Cache(maxage="3600", smaxage="3600", public=true)
      *
      * @param string $repository
      * @param string $latest
