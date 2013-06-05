@@ -6,3 +6,4 @@ app/bootstrap.php.cache
 bin/phpunit
 vendor
 .idea
+web/bundles/*
