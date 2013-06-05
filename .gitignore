@@ -1,7 +1,7 @@
-app/cache
-app/logs
-app/parameters.yml
-app/bootstrap.php.cache
-bin/phpunit
-vendor
-web/bundles
+/app/cache/*
+/app/logs/*
+/app/config/parameters.yml
+/app/bootstrap*
+/bin/phpunit
+/vendor/
+/web/bundles/
