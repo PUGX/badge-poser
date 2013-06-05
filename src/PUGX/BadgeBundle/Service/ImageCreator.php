@@ -11,7 +11,7 @@
 namespace PUGX\BadgeBundle\Service;
 
 use Symfony\Bridge\Monolog\Logger;
-use PUGX\BadgeBundle\Exception\InvalidArgumentException;
+use \InvalidArgumentException;
 
 class ImageCreator implements ImageCreatorInterface
 {
@@ -41,7 +41,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param mixed $number
      *
      * @return int
-     * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     private function normalizeNumber($number)
     {
@@ -95,7 +95,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param int $maxChar
      *
      * @return string
-     * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function transformNumberToReadableFormat($number, $maxChar = 6)
     {

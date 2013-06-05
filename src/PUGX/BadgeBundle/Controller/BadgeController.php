@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use PUGX\BadgeBundle\Exception\UnexpectedValueException;
+use \UnexpectedValueException;
 
 class BadgeController extends ContainerAware
 {
