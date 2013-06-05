@@ -56,14 +56,6 @@ assetic:
 #        auto_generate_proxy_classes: %kernel.debug%
 #        auto_mapping: true
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    spool:     { type: memory }
-
 snc_redis:
     clients:
         default:
