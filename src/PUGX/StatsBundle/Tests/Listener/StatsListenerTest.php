@@ -1,16 +1,23 @@
 <?php
 
-namespace PUGX\BadgeBundle\Tests\Listener;
+namespace PUGX\StatsBundle\Tests\Listener;
 
-use PUGX\BadgeBundle\Listener\StatisticListener;
+use PUGX\StatsBundle\Listener\StatsListener;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class StatisticListenerTest extends WebTestCase
+class StatListenerTest extends WebTestCase
 {
+    protected $persister;
+
+    protected $controllerEvent;
+
+    protected $request;
+
+    protected $listener;
+
     public function setUp()
     {
-
-        $this->persister = $this->getMockBuilder('PUGX\BadgeBundle\Service\Statistic\PersisterInterface')
+        $this->persister = $this->getMockBuilder('PUGX\StatsBundle\Service\PersisterInterface')
             ->disableOriginalConstructor()->getMock();
 
         $this->controllerEvent = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterControllerEvent')
@@ -18,6 +25,8 @@ class StatisticListenerTest extends WebTestCase
 
         $this->request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
             ->disableOriginalConstructor()->getMock();
+
+        $this->listener = new StatsListener($this->persister);
     }
 
     public function testOnKernelController()
@@ -45,8 +54,6 @@ class StatisticListenerTest extends WebTestCase
             ->with($repository, $method)
             ->will($this->returnSelf());
 
-        $this->listener = new StatisticListener($this->persister);
         $this->listener->onKernelController($this->controllerEvent);
-
     }
 }
