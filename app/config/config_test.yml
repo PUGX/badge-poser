@@ -1,9 +1,13 @@
 imports:
     - { resource: config_dev.yml }
 
+
+# for functional test
 parameters:
-    # for functional test
     image_creator.class: PUGX\BadgeBundle\Tests\Controller\FakeImageCreator
+services:
+    statistic_listener:
+        class: PUGX\BadgeBundle\Service\Statistic\NullPersister
 
 framework:
     test: ~
