@@ -62,7 +62,7 @@ class BadgeControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testPackageDoesntExists()
+    public function testIfPackageDoesntExist()
     {
         $data = '{"status":"error","message":"Package not found"}';
 

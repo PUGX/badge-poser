@@ -28,7 +28,7 @@ use PUGX\BadgeBundle\Exception\UnexpectedValueException;
 class BadgeController extends ContainerAware
 {
     CONST ERROR_TEXT_GENERIC = 'repository';
-    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'packagist';
+    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
     /**
@@ -57,7 +57,6 @@ class BadgeController extends ContainerAware
     public function downloadsAction($repository, $type = 'total')
     {
         $imageCreator = $this->container->get('image_creator');
-        $outputFilename = sprintf('%s.png', $type);
         $status = 500;
         $image = null;
 
@@ -76,8 +75,10 @@ class BadgeController extends ContainerAware
 
         if (null == $image) {
             $image = $imageCreator->createErrorImage($text);
+            $type = 'error';
         }
 
+        $outputFilename = sprintf('%s.png', $type);
         return $this->streamImage($status, $image, $outputFilename);
     }
 
@@ -107,7 +108,6 @@ class BadgeController extends ContainerAware
     public function versionAction($repository, $latest = 'stable')
     {
         $image = null;
-        $outputFilename = sprintf('%s.png', $latest);
         $error = self::ERROR_TEXT_GENERIC;
         $status = 500;
 
@@ -132,8 +132,10 @@ class BadgeController extends ContainerAware
 
         if (null == $image) {
             $image = $this->container->get('image_creator')->createErrorImage($error);
+            $latest = 'error';
         }
 
+        $outputFilename = sprintf('%s.png', $latest);
         return $this->streamImage($status, $image, $outputFilename);
     }
 
