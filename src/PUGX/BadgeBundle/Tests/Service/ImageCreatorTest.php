@@ -72,7 +72,7 @@ class ImageCreatorTest extends WebTestCase
     }
 
     /**
-     * @expectedException \ErrorException
+     * @expectedException \PHPUnit_Framework_Error_Warning
      */
     public function testAddShadowedText_withBadImage()
     {
@@ -126,7 +126,7 @@ class ImageCreatorTest extends WebTestCase
     }
 
     /**
-     * @expectedException \ErrorException
+     * @expectedException \PHPUnit_Framework_Error_Warning
      */
     public function testCreateImage_throwException()
     {
