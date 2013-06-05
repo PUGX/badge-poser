@@ -1,3 +1,4 @@
+/composer.lock
 /app/cache/*
 /app/logs/*
 /app/config/parameters.yml
