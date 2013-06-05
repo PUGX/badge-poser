@@ -10,7 +10,7 @@ matrix:
     - php: 5.5
 
 before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
+    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
 
 script:
   - bin/phpunit

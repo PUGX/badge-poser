@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Service\Statistic;
+namespace PUGX\StatsBundle\Service;
 
 class RedisPersister implements PersisterInterface
 {

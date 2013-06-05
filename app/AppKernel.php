@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new PUGX\BadgeBundle\PUGXBadgeBundle(),
+            new PUGX\StatsBundle\PUGXStatsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

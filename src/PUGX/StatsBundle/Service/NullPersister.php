@@ -8,16 +8,19 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Service\Statistic;
+namespace PUGX\StatsBundle\Service;
 
-Interface PersisterInterface
+class NullPersister implements PersisterInterface
 {
     /**
      * Increment by one the total accesses.
      *
      * @return PersisterInterface
      */
-    public function incrementTotalAccess();
+    public function incrementTotalAccess()
+    {
+        return $this;
+    }
 
     /**
      * Increment by one the repository accesses.
@@ -26,17 +29,10 @@ Interface PersisterInterface
      *
      * @return PersisterInterface
      */
-    public function incrementRepositoryAccess($repository);
-
-    /**
-     * Add the repository to the list of the latest accessed.
-     *
-     * @param string $repository
-     * @param int $maxListLenght
-     *
-     * @return PersisterInterface
-     */
-    public function addRepositoryToLatestAccessed($repository, $maxListLenght = 10);
+    public function incrementRepositoryAccess($repository)
+    {
+      return $this;
+    }
 
     /**
      * Increment by one the repository accesses type.
@@ -46,5 +42,21 @@ Interface PersisterInterface
      *
      * @return PersisterInterface
      */
-    public function incrementRepositoryAccessType($repository, $type);
+    public function incrementRepositoryAccessType($repository, $type)
+    {
+        return $this;
+    }
+
+    /**
+     * Add the repository to the list of the latest accessed.
+     *
+     * @param string $repository
+     * @param int $maxListLength
+     *
+     * @return PersisterInterface
+     */
+    public function addRepositoryToLatestAccessed($repository, $maxListLength = 50)
+    {
+        return $this;
+    }
 }
