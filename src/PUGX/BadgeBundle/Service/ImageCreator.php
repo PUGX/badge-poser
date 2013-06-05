@@ -13,6 +13,11 @@ namespace PUGX\BadgeBundle\Service;
 use Symfony\Bridge\Monolog\Logger;
 use PUGX\BadgeBundle\Exception\InvalidArgumentException;
 
+/**
+ * Class ImageCreator
+ *
+ * @package PUGX\BadgeBundle\Service
+ */
 class ImageCreator implements ImageCreatorInterface
 {
     private $logger;
@@ -23,6 +28,15 @@ class ImageCreator implements ImageCreatorInterface
     protected $defaultFont;
     protected $defaultImage;
 
+    /**
+     * class constructor
+     *
+     * @param Logger $logger       logger
+     * @param string $fontPath     font path
+     * @param string $imagePath    image path
+     * @param null   $defaultFont  default font
+     * @param null   $defaultImage default image
+     */
     public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
     {
         $this->logger = $logger;
@@ -38,7 +52,7 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * This function transform a number to a float value or raise an Exception.
      *
-     * @param mixed $number
+     * @param mixed $number number to be normalized
      *
      * @return int
      * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
@@ -78,7 +92,7 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Destroy the resource.
      *
-     * @param $image
+     * @param resource $image
      *
      * @return Boolean
      */
@@ -90,8 +104,8 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Function that should return a human readable number in a maximum number of chars.
      *
-     * @param int $number
-     * @param int $maxChar
+     * @param int $number  number
+     * @param int $maxChar max characters
      *
      * @return string
      * @throws \PUGX\BadgeBundle\Exception\InvalidArgumentException
@@ -134,14 +148,14 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Add a shadowed text to an Image.
      *
-     * @param resource $image
-     * @param string   $text
-     * @param int      $x
-     * @param int      $y
-     * @param float    $size
-     * @param string   $font
-     * @param Boolean  $withShadow
-     * @param int      $angle
+     * @param resource $image      image
+     * @param string   $text       text
+     * @param int      $x          x
+     * @param int      $y          y
+     * @param float    $size       size
+     * @param string   $font       font
+     * @param bool     $withShadow cast shodow
+     * @param int      $angle      angle
      */
     private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
@@ -167,8 +181,8 @@ class ImageCreator implements ImageCreatorInterface
     private function createImage($imagePath)
     {
         $image = imagecreatefrompng($imagePath);
-        imageAlphaBlending($image, true);
-        imageSaveAlpha($image, true);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
 
         return $image;
     }
