@@ -62,7 +62,9 @@ hr.styled {
     display: none;
 }
 
-/* Spinner */
+/*
+ * Css Spinner provided by http://cssload.net
+ */
 #spinningSquaresG{
     float: right;
     display: none;
