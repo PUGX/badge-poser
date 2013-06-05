@@ -33,6 +33,7 @@ class PackageManagerTest extends WebTestCase
         }
 
         $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
+
         return $pm;
     }
 
@@ -65,7 +66,6 @@ class PackageManagerTest extends WebTestCase
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }
-
 
     public static function stabilityProvider()
     {
