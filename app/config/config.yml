@@ -64,14 +64,6 @@ pugx_badge:
         - { name: 'latest_stable_version', label: 'Latest Stable Version', route: "pugx_badge_version_latest", latest: 'stable'}
         - { name: 'latest_unstable_version', label: 'Latest Unstable Version', route: "pugx_badge_version_latest", latest: 'unstable'}
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    spool:     { type: memory }
-
 snc_redis:
     clients:
         default:

@@ -9,10 +9,8 @@
         <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
         <parameter key="badge_package.class">PUGX\BadgeBundle\Package\Package</parameter>
         <parameter key="package_manager.class">PUGX\BadgeBundle\Service\PackageManager</parameter>
-        <parameter key="statistic_listener.class">PUGX\BadgeBundle\Listener\StatisticListener</parameter>
-        <parameter key="statistic_persister.class">PUGX\BadgeBundle\Service\Statistic\RedisPersister</parameter>
-		<parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>    
-	</parameters>
+		<parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
+    </parameters>
 
     <services>
         <service id="packagist_client" class="%packagist_client.class%">
@@ -22,7 +20,7 @@
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
         </service>
-       
+		
 		<service id="snippet_generator" class="%snippet_generator.class%">
             <argument type="service" id="router" />
             <argument>%pugx_badge.badges%</argument>
@@ -34,16 +32,6 @@
             <argument>%kernel.root_dir%/badge-assets/images</argument>
             <argument>DroidSans.ttf</argument>
             <tag name="monolog.logger" channel="image_creator"/>
-        </service>
-
-        <!--listener and statistics-->
-        <service id="statistic_persister" class="%statistic_persister.class%">
-            <argument type="service" id="snc_redis.default"/>
-        </service>
-
-        <service id="statistic_listener" class="%statistic_listener.class%">
-            <argument type="service" id="statistic_persister"/>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>
     </services>
 

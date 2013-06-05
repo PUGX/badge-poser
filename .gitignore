@@ -1,8 +1,8 @@
-composer.lock
-app/cache
-app/logs
-app/parameter.yml
-app/bootstrap.php.cache
-bin/phpunit
-vendor
-.idea
+/composer.lock
+/app/cache/*
+/app/logs/*
+/app/config/parameters.yml
+/app/bootstrap*
+/bin/phpunit
+/vendor/
+/web/bundles/

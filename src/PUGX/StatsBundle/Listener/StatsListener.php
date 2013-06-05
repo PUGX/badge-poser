@@ -8,19 +8,19 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Listener;
+namespace PUGX\StatsBundle\Listener;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use PUGX\BadgeBundle\Service\Statistic\PersisterInterface;
+use PUGX\StatsBundle\Service\PersisterInterface;
 
 /**
- * Class StatisticListener
+ * Class StatsListener
  * This class is intended to collect and store usage statistic on Redis.
  *
  * @package PUGX\BadgeBundle\Listener
  */
-class StatisticListener
+class StatsListener
 {
     private $client;
 
