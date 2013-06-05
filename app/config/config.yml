@@ -52,4 +52,4 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: redis://localhost
+            dsn: redis://%redis_hostname%

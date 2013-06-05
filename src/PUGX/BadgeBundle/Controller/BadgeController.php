@@ -10,6 +10,7 @@
 
 namespace PUGX\BadgeBundle\Controller;
 
+use Guzzle\Http\Exception\BadResponseException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -26,9 +27,9 @@ use PUGX\BadgeBundle\Exception\UnexpectedValueException;
  */
 class BadgeController extends ContainerAware
 {
-    CONST ERROR_TEXT_GENERIC = 'ERR 1 ';
-    CONST ERROR_TEXT_NOT_A_NUMBER = 'ERR 2 ';
-    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'ERR 3 ';
+    CONST ERROR_TEXT_GENERIC = 'repository';
+    CONST ERROR_TEXT_CLIENT_EXCEPTION = 'packagist';
+    CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
     /**
      * Downloads action.
@@ -58,18 +59,24 @@ class BadgeController extends ContainerAware
         $imageCreator = $this->container->get('image_creator');
         $outputFilename = sprintf('%s.png', $type);
         $status = 500;
+        $image = null;
 
         try {
             $package = $this->container->get('package_manager')->fetchPackage($repository);
             $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
+            $image = $imageCreator->createDownloadsImage($text);
             $status = 200;
+        } catch (BadResponseException $e) {
+            $text = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
         } catch (UnexpectedValueException $e) {
             $text = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e) {
             $text = self::ERROR_TEXT_GENERIC;
         }
 
-        $image = $imageCreator->createDownloadsImage($text);
+        if (null == $image) {
+            $image = $imageCreator->createErrorImage($text);
+        }
 
         return $this->streamImage($status, $image, $outputFilename);
     }
@@ -115,6 +122,8 @@ class BadgeController extends ContainerAware
             }
 
             $status = 200;
+        } catch (BadResponseException $e) {
+            $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
         } catch (UnexpectedValueException $e) {
             $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e) {
@@ -122,7 +131,7 @@ class BadgeController extends ContainerAware
         }
 
         if (null == $image) {
-            $image = $this->container->get('image_creator')->createStableImage($error);
+            $image = $this->container->get('image_creator')->createErrorImage($error);
         }
 
         return $this->streamImage($status, $image, $outputFilename);

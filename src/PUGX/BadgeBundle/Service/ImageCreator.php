@@ -22,7 +22,7 @@ class ImageCreator implements ImageCreatorInterface
 {
     private $logger;
     protected $dispatcher;
-    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png');
+    protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png', 'error' => 'error.png');
     protected $imagePath;
     protected $fontPath;
     protected $defaultFont;
@@ -188,7 +188,7 @@ class ImageCreator implements ImageCreatorInterface
     }
 
     /**
-     * Create the 'downloads' image with the standard Font and standard Image.
+     * Create the 'downloads' image with the standard Font and download image template.
      *
      * @param string $value
      *
@@ -205,7 +205,7 @@ class ImageCreator implements ImageCreatorInterface
     }
 
     /**
-     * Create the 'stable' image with the standard Font and standard Image.
+     * Create the 'stable' image with the standard Font and stable image template.
      *
      * @param string $value
      *
@@ -222,7 +222,7 @@ class ImageCreator implements ImageCreatorInterface
     }
 
     /**
-     * Create the 'stable' image with the standard Font and standard Image.
+     * Create the 'stable' image with the standard Font and unstable image template.
      *
      * @param string $value
      *
@@ -234,6 +234,22 @@ class ImageCreator implements ImageCreatorInterface
         $image = $this->createImage($imagePath);
 
         $this->addShadowedText($image, $value, 51, 12, 7);
+
+        return $image;
+    }
+
+    /**
+     * Create the 'error' image
+     *
+     * @param string $value
+     *
+     * @return resource
+     */
+    public function createErrorImage($value)
+    {
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
+        $image = $this->createImage($imagePath);
+        $this->addShadowedText($image, $value, 50, 13.5, 7);
 
         return $image;
     }
