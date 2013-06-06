@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use PUGX\BadgeBundle\Exception\UnexpectedValueException;
+use \UnexpectedValueException;
 
 /**
  * Class BadgeController.

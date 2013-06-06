@@ -16,7 +16,7 @@ use Packagist\Api\Result\Package as ApiPackage;
 
 use PUGX\BadgeBundle\Package\Package;
 use PUGX\BadgeBundle\Package\PackageInterface;
-use PUGX\BadgeBundle\Exception\UnexpectedValueException;
+use \UnexpectedValueException;
 
 /**
  * This class is intended to load ApiPackage, create, and work with the Package object
