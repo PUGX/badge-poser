@@ -29,10 +29,12 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    bundles:        [ PUGXBadgeBundle ]
     java: /usr/bin/java
     filters:
         cssrewrite: ~
+        yui_js:
+            jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.6.jar
         yui_css:
             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.6.jar
 
