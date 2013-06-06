@@ -86,16 +86,16 @@ class RedisPersister implements PersisterInterface
     }
 
     /**
-     * Add the repository to the list of the latest accessed.
+     * Add the repository to an ordered set of the latest accessed, with unique key value.
      *
      * @param string $repository
-     * @param int $maxListLength
+     * @param int    $maxListLength
      *
      * @return PersisterInterface
      */
     public function addRepositoryToLatestAccessed($repository, $maxListLength = 50)
     {
-        $this->redis->lpush($this->keyList, $repository);
+        $this->redis->zadd($this->keyList, time() ,$repository);
 
         return $this;
     }
