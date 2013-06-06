@@ -60,6 +60,8 @@ class BadgeControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/pugx/badge-poser/v/unstable.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
+        $response = $client->getResponse();
+        $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
     }
 
     public function testIfPackageDoesntExist()
