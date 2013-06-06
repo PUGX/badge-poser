@@ -146,7 +146,7 @@ class BadgeController extends ContainerAware
      *
      * @return StreamedResponse
      */
-    protected function streamImage($status, $image, $outputFilename)
+    protected function streamImage($status, $image, $outputFilename, $maxage = 3600, $smaxage = 3600)
     {
         $imageCreator = $this->container->get('image_creator');
 
@@ -158,6 +158,11 @@ class BadgeController extends ContainerAware
 
         $response->headers->set('Content-Type', 'image/png');
         $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
+
+        //adding cache-control as standard annotation fails here
+        $cacheControl = sprintf('public, maxage=%s, s-maxage=%s', $maxage, $smaxage);
+        $response->headers->set('Cache-Control', $cacheControl);
+
         $response->send();
 
         $imageCreator->destroyImage($image);
