@@ -3,6 +3,8 @@
 /app/logs/*
 /app/config/parameters.yml
 /app/bootstrap*
-/bin/phpunit
+/bin/
 /vendor/
 /web/bundles/
+/web/css/
+/web/js/
