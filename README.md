@@ -4,7 +4,7 @@ Badge-Poser
 Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
 or its latest stable version.
 
-is still in ALPHA and don't use it (the protocol and the domain will change).
+This project is still in ALPHA and you shouldn't use it yet (protocol and domain will change).
 
 [![Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/pugx/badge-poser)
@@ -47,7 +47,7 @@ Not only because all the other languages already had it, but having the latest s
 ## Contribution
 
 Active contribution and patches are very welcome.
-See the github issues there are some tagged as easy-pick.
+See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open) there are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).
 To keep things in shape we have quite a bunch of unit tests. If you're submitting pull requests please
 make sure that they are still passing and if you add functionality please
 take a look at the coverage as well it should be pretty high :)
