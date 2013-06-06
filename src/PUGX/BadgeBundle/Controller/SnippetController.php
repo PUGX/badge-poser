@@ -26,7 +26,7 @@ class SnippetController extends ContainerAware
      *     )
      * @Method({"GET"})
      * @Cache(smaxage="3600", maxage="3600", public=true)
-     * 
+     *
      * @return JsonResponse
      */
     public function allAction()

@@ -26,7 +26,7 @@ class PageController extends ContainerAware
      * @Method({"GET"})
      * @Template
      * @Cache(maxage="3600", smaxage="3600", public=true)
-     * 
+     *
      * @return Response
      */
     public function homeAction()
