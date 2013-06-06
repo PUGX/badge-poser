@@ -31,8 +31,8 @@ class ImageCreatorTest extends WebTestCase
 
         $kernelDir = $_SERVER['KERNEL_DIR'];
 
-        $this->fontPath = $kernelDir . '/badge-assets/fonts';
-        $this->imagesPath = $kernelDir . '/badge-assets/images';
+        $this->fontPath = $kernelDir . '/Resources/badge-assets/fonts';
+        $this->imagesPath = $kernelDir . '/Resources/badge-assets/images';
 
         $this->imageCreator = new ImageCreator($this->logger, $this->fontPath, $this->imagesPath);
     }
