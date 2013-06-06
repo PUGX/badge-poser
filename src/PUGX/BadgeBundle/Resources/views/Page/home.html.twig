@@ -34,32 +34,59 @@
             <article>
                 <h3 class="centered-content"><strong>Be a poser!</strong></h3>
                 <p>
-                    Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org or its latest stable version.
+                    Use shields for you <a href="https://packagist.org">packagist.org</a> repository, that shows how many times your project has been downloaded from Packagist.org or its latest stable version.
                 </p>
                 <hr class="styled">
-                <h3 class="centered-content">How to use Badge Poser</h3>
+                <h3 class="centered-content">Create your own Badge</h3>
+                <form id="generate-form" action="{{ url('pugx_snippet_all') }}" class="form-inline">
+                  <input type="text" name="username" class="input-small" placeholder="Username">
+                  /
+                  <input type="text" name="repository" class="input" placeholder="Repository">
+                  <button id="generate" class="btn">Generate</button>
+                <div id="spinningSquaresG">
+                    <div id="spinningSquaresG_1" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_2" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_3" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_4" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_5" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_6" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_7" class="spinningSquaresG">
+                    </div>
+                    <div id="spinningSquaresG_8" class="spinningSquaresG">
+                    </div>
+                </div>
+                </form>
                 <small>put the following snippets in your README:</small>
-                <div>
-                    <h4>Total downloads <img class="pull-right" src="https://poser.pugx.org/symfony/symfony/d/total.png"></h4>
-                    <pre class="prettyprint">[![Total Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)</pre>
-                </div>
-                <div>
-                    <h4>Monthly downloads <img class="pull-right" src="https://poser.pugx.org/symfony/symfony/d/monthly.png"></h4>
-                    <pre class="prettyprint">[![Monthly Downloads](https://poser.pugx.org/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)</pre>
-                </div>
-                <div>
-                    <h4>Daily downloads <img class="pull-right" src="https://poser.pugx.org/symfony/symfony/d/daily.png"></h4>
-                    <pre class="prettyprint">[![Daily Downloads](https://poser.pugx.org/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)</pre>
-                </div>
-                <div>
-                    <h4>Latest Stable Version <img class="pull-right" src="https://poser.pugx.org/symfony/symfony/version.png"></h4>
-                    <pre class="prettyprint">[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/symfony/symfony)</pre>
-                </div>
-                <div>
-                    <h4>Latest Unstable Version <img class="pull-right" src="https://poser.pugx.org/symfony/symfony/v/unstable.png"></h4>
-                    <pre class="prettyprint">[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)</pre>
-                </div>
 
+                <div id="badges">
+                <div id="overlay"></div>
+                    <div>
+                        <h4>Total downloads <img class="pull-right spinned" id="total_img" src="https://poser.pugx.org/symfony/symfony/d/total.png"></h4>
+                        <pre id="total_markdown" class="prettyprint">[![Total Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                    </div>
+                    <div>
+                        <h4>Monthly downloads <img class="pull-right spinned" id="monthly_img" src="https://poser.pugx.org/symfony/symfony/d/monthly.png"></h4>
+                        <pre id="monthly_markdown" class="prettyprint">[![Monthly Downloads](https://poser.pugx.org/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                    </div>
+                    <div>
+                        <h4>Daily downloads <img class="pull-right spinned" id="daily_img" src="https://poser.pugx.org/symfony/symfony/d/daily.png"></h4>
+                        <pre id="daily_markdown" class="prettyprint">[![Daily Downloads](https://poser.pugx.org/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                    </div>
+                    <div>
+                        <h4>Latest Stable Version <img class="pull-right spinned" id="latest_stable_version_img" src="https://poser.pugx.org/symfony/symfony/version.png"></h4>
+                        <pre id="latest_stable_version_markdown" class="prettyprint">[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                    </div>
+                    <div>
+                        <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="https://poser.pugx.org/symfony/symfony/v/unstable.png"></h4>
+                        <pre id="latest_unstable_version_markdown" class="prettyprint">[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                    </div>
+                </div>
             </article>
         </div>
     </div>
@@ -83,6 +110,8 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/jquery-2.0.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/snippet.js') }}"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
