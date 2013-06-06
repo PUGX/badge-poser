@@ -25,7 +25,8 @@ class SnippetController extends ContainerAware
      *     name="pugx_snippet_all"
      *     )
      * @Method({"GET"})
-     * @Cache(smaxage="3600")
+     * @Cache(smaxage="3600", maxage="3600", public=true)
+     * 
      * @return JsonResponse
      */
     public function allAction()
