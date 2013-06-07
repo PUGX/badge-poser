@@ -11,10 +11,9 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use PUGX\StatsBundle\Service\NullPersister;
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
 
-class PageControllerTest extends WebTestCase
+class PageControllerTest extends StatsFunctionalTest
 {
     public function testHomeAction()
     {
@@ -31,21 +30,7 @@ class PageControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Stable Version")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Unstable Version")')->count());
 
-        $profile = $client->getProfile();
-        $eventCollector = $profile->getCollector('events');
-        $eventName = 'kernel.controller.PUGX\StatsBundle\Listener\StatsListener::onKernelController';
-        $this->assertArrayHasKey($eventName, $eventCollector->getCalledListeners(), "stats listener has been called") ;
-
-        $this->assertFalse(NullPersister::$incrementTotalAccessCalled, "stats increment method 'incrementTotalAccess' should not be called");
-        $this->assertFalse(NullPersister::$incrementRepositoryAccessCalled, "stats increment method 'incrementRepositoryAccess' should not be called");
-        $this->assertFalse(NullPersister::$addRepositoryToLatestAccessedCalled, "stats increment method 'addRepositoryToLatestAccessed' should not be called");
-        $this->assertFalse(NullPersister::$incrementRepositoryAccessTypeCalled, "stats increment method 'incrementRepositoryAccessType' should not be called");
+        $this->checkStatsAreNotIncremented($client);
     }
 
-    public function tearDown()
-    {
-        NullPersister::$incrementTotalAccessCalled = false;
-        NullPersister::$incrementRepositoryAccessCalled = false;
-        NullPersister::$incrementRepositoryAccessTypeCalled = false;
-    }
 }

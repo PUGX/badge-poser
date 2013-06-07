@@ -12,11 +12,13 @@
 namespace PUGX\BadgeBundle\Tests\Controller;
 
 use Packagist\Api\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
 use PUGX\StatsBundle\Service\NullPersister;
 
-class BadgeControllerTest extends WebTestCase
+class BadgeControllerTest extends StatsFunctionalTest
 {
+    protected $packagistClient;
+
     // this setUp fake the request/response, if you comment this function the test'd run only with internet connection
     public function setUp()
     {
@@ -27,7 +29,6 @@ class BadgeControllerTest extends WebTestCase
 
     private function createPackagistClient($data, $status = 200)
     {
-
         $packagistResponse = new \Guzzle\Http\Message\Response($status);
         $packagistResponse->setBody($data);
         $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
@@ -45,15 +46,7 @@ class BadgeControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $profile = $client->getProfile();
-        $eventCollector = $profile->getCollector('events');
-        $eventName = 'kernel.controller.PUGX\StatsBundle\Listener\StatsListener::onKernelController';
-        $this->assertArrayHasKey($eventName, $eventCollector->getCalledListeners(), "stats listener has been called") ;
-
-        $this->assertTrue(NullPersister::$incrementTotalAccessCalled, "stats total access increment not called");
-        $this->assertEquals('pugx/badge-poser', NullPersister::$incrementRepositoryAccessCalled, "stats repo access increment not called or called with wrong param");
-        $this->assertEquals('pugx/badge-poser', NullPersister::$addRepositoryToLatestAccessedCalled, "stats repo last access increment not called or called with wrong param");
-        $this->assertEquals(array('pugx/badge-poser', 'downloadsAction'), NullPersister::$incrementRepositoryAccessTypeCalled, "stats repo access type increment not called or called with wrong params");
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
     }
 
     public function testLatestStableAction()
@@ -63,6 +56,8 @@ class BadgeControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
     public function testLatestUnstableAction()
@@ -74,6 +69,8 @@ class BadgeControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
         $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
     public function testIfPackageDoesntExist()
@@ -88,13 +85,5 @@ class BadgeControllerTest extends WebTestCase
 
         $this->assertFalse($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isServerError());
-    }
-
-    public function tearDown()
-    {
-        NullPersister::$incrementTotalAccessCalled = false;
-        NullPersister::$incrementRepositoryAccessCalled = false;
-        NullPersister::$addRepositoryToLatestAccessedCalled = false;
-        NullPersister::$incrementRepositoryAccessTypeCalled = false;
     }
 }
