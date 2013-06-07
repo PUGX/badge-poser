@@ -13,6 +13,7 @@ namespace PUGX\BadgeBundle\Tests\Controller;
 
 use Packagist\Api\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PUGX\StatsBundle\Service\NullPersister;
 
 class BadgeControllerTest extends WebTestCase
 {
@@ -43,6 +44,16 @@ class BadgeControllerTest extends WebTestCase
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $profile = $client->getProfile();
+        $eventCollector = $profile->getCollector('events');
+        $eventName = 'kernel.controller.PUGX\StatsBundle\Listener\StatsListener::onKernelController';
+        $this->assertArrayHasKey($eventName, $eventCollector->getCalledListeners(), "stats listener has been called") ;
+
+        $this->assertTrue(NullPersister::$incrementTotalAccessCalled, "stats total access increment not called");
+        $this->assertEquals('pugx/badge-poser', NullPersister::$incrementRepositoryAccessCalled, "stats repo access increment not called or called with wrong param");
+        $this->assertEquals('pugx/badge-poser', NullPersister::$addRepositoryToLatestAccessedCalled, "stats repo last access increment not called or called with wrong param");
+        $this->assertEquals(array('pugx/badge-poser', 'downloadsAction'), NullPersister::$incrementRepositoryAccessTypeCalled, "stats repo access type increment not called or called with wrong params");
     }
 
     public function testLatestStableAction()
@@ -77,5 +88,13 @@ class BadgeControllerTest extends WebTestCase
 
         $this->assertFalse($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isServerError());
+    }
+
+    public function tearDown()
+    {
+        NullPersister::$incrementTotalAccessCalled = false;
+        NullPersister::$incrementRepositoryAccessCalled = false;
+        NullPersister::$addRepositoryToLatestAccessedCalled = false;
+        NullPersister::$incrementRepositoryAccessTypeCalled = false;
     }
 }
