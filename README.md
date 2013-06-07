@@ -11,8 +11,12 @@ This project is still in ALPHA and you shouldn't use it yet (protocol and domain
 [![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
+## How to create your own Badge
+-  Go to the [Badge Poser](https://poser.pugx.org) website
+-  Insert username/repository and click Generate
+-  That's it!  Copy the Markdown into the README.md
 
-## Usage
+## Examples
 
 Total downloads [![Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
 ```md

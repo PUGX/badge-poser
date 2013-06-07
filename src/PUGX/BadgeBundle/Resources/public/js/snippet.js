@@ -2,12 +2,25 @@ $(document).ready(function(){
 
     var lock = function(){
       $('#spinningSquaresG').show();
-      $('#overlay').fadeIn();
+        $('.prettyprint').each(function(idx, el){
+            $(el).addClass('grey-text');
+        });
+        $('.spinned').each(function(idx, el){
+            $(el).fadeOut();
+        });
     };
 
     var unlock = function(){
         $('#spinningSquaresG').hide();
-        $('#overlay').fadeOut(500);
+        setTimeout(function(){
+            $('.prettyprint').each(function(idx, el){
+                $(el).removeClass('grey-text');
+            });
+            $('.spinned').each(function(idx, el){
+                $(el).fadeIn(1500);
+            });
+        },200);
+
     };
 
 	var generateSnippets = function(snippets_raw_data){
