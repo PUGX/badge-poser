@@ -43,34 +43,15 @@
                 </p>
                 <hr class="styled">
                 <h3 class="centered-content">Create your own Badge</h3>
-                <form id="generate-form" action="{{ url('pugx_snippet_all') }}" class="form-inline">
+                <form id="generate-form" action="{{ url('pugx_snippet_all') }}" class="form-inline centered-content">
                   <input type="text" name="username" class="input-small" placeholder="Username">
                   /
                   <input type="text" name="repository" class="input" placeholder="Repository">
                   <button id="generate" class="btn">Generate</button>
-                <div id="spinningSquaresG">
-                    <div id="spinningSquaresG_1" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_2" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_3" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_4" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_5" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_6" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_7" class="spinningSquaresG">
-                    </div>
-                    <div id="spinningSquaresG_8" class="spinningSquaresG">
-                    </div>
-                </div>
                 </form>
-                <small>put the following snippets in your README:</small>
+                <p class="centered-content"><small >put the following snippets in your README:</small></p>
 
                 <div id="badges">
-                <div id="overlay"></div>
                     <div>
                         <h4>Total downloads <img class="pull-right spinned" id="total_img" src="https://poser.pugx.org/symfony/symfony/d/total.png"></h4>
                         <pre id="total_markdown" class="prettyprint">[![Total Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)</pre>
