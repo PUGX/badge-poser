@@ -2,7 +2,7 @@ imports:
     - { resource: config.yml }
 
 services:
-    stats_listener:
+    stats_persister:
         class: PUGX\StatsBundle\Service\NullPersister
 
 framework:

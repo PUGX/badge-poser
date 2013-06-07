@@ -1,21 +1,20 @@
 imports:
     - { resource: config_dev.yml }
 
-
-# for functional test
-parameters:
-    image_creator.class: PUGX\BadgeBundle\Tests\Controller\FakeImageCreator
-services:
-    statistic_listener:
-        class: PUGX\BadgeBundle\Service\Statistic\NullPersister
-
 framework:
     test: ~
     session:
         storage_id: session.storage.mock_file
     profiler:
-        enabled: false
+        enabled: true
 
 web_profiler:
     toolbar: false
     intercept_redirects: false
+
+# for functional test
+parameters:
+    image_creator.class: PUGX\BadgeBundle\Tests\Controller\FakeImageCreator
+services:
+    stats_persister:
+        class: PUGX\StatsBundle\Service\NullPersister
