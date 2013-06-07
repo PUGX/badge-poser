@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the badge-poser package
+ * This file is part of the badge-poser package.
  *
- * (c) Giulio De Donato <liuggio@gmail.com>
+ * (c) PUGX <http://pugx.github.io/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,13 +11,15 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
 
-class PageControllerTest extends WebTestCase
+class PageControllerTest extends StatsFunctionalTest
 {
     public function testHomeAction()
     {
         $client = static::createClient();
+        $client->enableProfiler();
+
         $crawler = $client->request('GET', '/');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('#container h1:contains("Badge Poser")')->count());
@@ -27,5 +29,8 @@ class PageControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Monthly downloads")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Stable Version")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Unstable Version")')->count());
+
+        $this->checkStatsAreNotIncremented($client);
     }
+
 }

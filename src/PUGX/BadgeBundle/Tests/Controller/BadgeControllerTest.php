@@ -1,8 +1,9 @@
 <?php
+
 /*
- * This file is part of the badge-poser package
+ * This file is part of the badge-poser package.
  *
- * (c) Giulio De Donato <liuggio@gmail.com>
+ * (c) PUGX <http://pugx.github.io/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,10 +12,13 @@
 namespace PUGX\BadgeBundle\Tests\Controller;
 
 use Packagist\Api\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
+use PUGX\StatsBundle\Service\NullPersister;
 
-class BadgeControllerTest extends WebTestCase
+class BadgeControllerTest extends StatsFunctionalTest
 {
+    protected $packagistClient;
+
     // this setUp fake the request/response, if you comment this function the test'd run only with internet connection
     public function setUp()
     {
@@ -25,7 +29,6 @@ class BadgeControllerTest extends WebTestCase
 
     private function createPackagistClient($data, $status = 200)
     {
-
         $packagistResponse = new \Guzzle\Http\Message\Response($status);
         $packagistResponse->setBody($data);
         $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
@@ -42,6 +45,8 @@ class BadgeControllerTest extends WebTestCase
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
     }
 
     public function testLatestStableAction()
@@ -51,6 +56,8 @@ class BadgeControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
     public function testLatestUnstableAction()
@@ -62,6 +69,8 @@ class BadgeControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
         $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
     public function testIfPackageDoesntExist()
