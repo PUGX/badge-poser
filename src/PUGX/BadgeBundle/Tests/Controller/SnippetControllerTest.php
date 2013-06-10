@@ -35,7 +35,7 @@ class SnippetControllerTest extends WebTestCase
 
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET','/snippet/all/?username=pugx&repository=badge-poser');
+        $crawler = $client->request('GET','/snippet/all/?repository=pugx/badge-poser');
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals($expectedData, $client->getResponse()->getContent());
     }
