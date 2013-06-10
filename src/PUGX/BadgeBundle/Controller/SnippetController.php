@@ -31,16 +31,16 @@ class SnippetController extends ContainerAware
      */
     public function allAction()
     {
-        $username = $this->container->get('request')->get('username');
         $repository = $this->container->get('request')->get('repository');
-        $repository = sprintf('%s/%s', $username, $repository);
         $response = new JsonResponse();
 
+        if (!$this->isValidRepositoryName($repository)) {
+            $response->setData(array('msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)'));
+            $response->setStatusCode(404);
+            return $response;
+        }
 
         try {
-            //Check if repository exists
-            $this->container->get('package_manager')->fetchPackage($repository);
-
             $badges = $this->container->get('snippet_generator')->generateAllSnippets($repository);
             $response->setData($badges);
         } catch(ClientErrorResponseException $e) {
@@ -52,5 +52,16 @@ class SnippetController extends ContainerAware
         }
 
         return $response;
+    }
+
+    /**
+     * Validates a repository name.
+     *
+     * @param  string   $repository
+     * @return Boolean
+     */
+    private function isValidRepositoryName($repository)
+    {
+        return (preg_match('/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?/', $repository) === 1);
     }
 }

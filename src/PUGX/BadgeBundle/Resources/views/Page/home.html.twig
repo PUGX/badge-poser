@@ -30,6 +30,7 @@
         <h1>Badge Poser</h1>
         <p class="lead">Pimp your README!</p>
         <p class="lead">
+            <a href="https://packagist.org/packages/pugx/badge-poser"><img style="max-width:100%;" alt="Latest Stable Version" src="https://poser.pugx.org/pugx/badge-poser/version.png"></a>
             <a target="_blank" href="http://travis-ci.org/PUGX/badge-poser"><img src="https://secure.travis-ci.org/PUGX/badge-poser.png" /></a>
         </p>
     </div>
@@ -42,14 +43,12 @@
                     Use shields for you <a href="https://packagist.org">packagist.org</a> repository, that shows how many times your project has been downloaded from Packagist.org or its latest stable version.
                 </p>
                 <hr class="styled">
-                <h3 class="centered-content">Create your own Badge</h3>
+                <h3 class="centered-content">Show the markdown for your Badges</h3>
                 <form id="generate-form" action="{{ url('pugx_snippet_all') }}" class="form-inline centered-content">
-                  <input type="text" name="username" class="input-small" placeholder="Username">
-                  /
-                  <input type="text" name="repository" class="input" placeholder="Repository">
-                  <button id="generate" class="btn">Generate</button>
+                  <input type="text" name="repository" class="input" placeholder="vendor/repository">
+                  <button id="generate" class="btn">Show</button>
                 </form>
-                <p class="centered-content"><small >put the following snippets in your README:</small></p>
+                <p class="centered-content"><small >put the following snippets in your README.markdown:</small></p>
 
                 <div id="badges">
                     <div>
@@ -70,7 +69,7 @@
                     </div>
                     <div>
                         <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="https://poser.pugx.org/symfony/symfony/v/unstable.png"></h4>
-                        <pre id="latest_unstablejs_version_markdown" class="prettyprint">[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)</pre>
+                        <pre id="latest_unstable_version_markdown" class="prettyprint">[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                 </div>
             </article>
