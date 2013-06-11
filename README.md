@@ -13,7 +13,7 @@ This project is still in ALPHA and you shouldn't use it yet (protocol and domain
 
 ## How to create your own Badge
 -  Go to the [Badge Poser](https://poser.pugx.org) website
--  Insert username/repository and click Generate
+-  Insert username/repository and click on `Show`
 -  That's it!  Copy the Markdown into the README.md
 
 ## Examples
