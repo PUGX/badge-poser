@@ -11,7 +11,7 @@ or its latest stable version.
 
 ## How to create your own Badge
 -  Go to the [Badge Poser](https://poser.pugx.org) website
--  Insert username/repository and click Generate
+-  Insert username/repository and click on `Show`
 -  That's it!  Copy the Markdown into the README.md
 
 ## Why a composer badge?

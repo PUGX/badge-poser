@@ -48,4 +48,13 @@ Interface PersisterInterface
      * @return PersisterInterface
      */
     public function incrementRepositoryAccessType($repository, $type);
+
+    /**
+     * Add the referrer to a subset.
+     *
+     * @param string $url
+     *
+     * @return PersisterInterface
+     */
+    public function addReferer($url);
 }

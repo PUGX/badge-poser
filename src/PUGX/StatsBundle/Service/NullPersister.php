@@ -17,6 +17,7 @@ class NullPersister implements PersisterInterface
     public static $incrementRepositoryAccessCalled = false;
     public static $addRepositoryToLatestAccessedCalled = false;
     public static $incrementRepositoryAccessTypeCalled = false;
+    public static $addReferrer = false;
 
     /**
      * Increment by one the total accesses.
@@ -73,4 +74,20 @@ class NullPersister implements PersisterInterface
 
         return $this;
     }
+
+    /**
+     * Add the referrer to a subset.
+     *
+     * @param string $url
+     *
+     * @return PersisterInterface
+     */
+    public function addReferer($url)
+    {
+        static::$addReferrer = $url;
+
+        return $this;
+    }
+
+
 }

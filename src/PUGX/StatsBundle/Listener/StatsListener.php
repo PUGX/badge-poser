@@ -58,11 +58,15 @@ class StatsListener
         if (null === ($repository = $request->get('repository', null))) {
             return;
         }
+        $referer = $request->headers->get('referer');
 
         $this->client->incrementTotalAccess();
         $this->client->incrementRepositoryAccess($repository);
         $this->client->addRepositoryToLatestAccessed($repository);
         $this->client->incrementRepositoryAccessType($repository, $controller);
+        if ($referer) {
+            $this->client->addReferer($referer);
+        }
 
         return true;
     }
