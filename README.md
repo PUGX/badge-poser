@@ -4,8 +4,6 @@ Badge-Poser
 Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
 or its latest stable version.
 
-This project is still in ALPHA and you shouldn't use it yet (protocol and domain will change).
-
 [![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
