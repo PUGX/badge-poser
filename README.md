@@ -6,9 +6,9 @@ or its latest stable version.
 
 This project is still in ALPHA and you shouldn't use it yet (protocol and domain will change).
 
-[![Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
 
 ## How to create your own Badge
