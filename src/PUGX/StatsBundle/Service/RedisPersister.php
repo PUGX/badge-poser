@@ -17,6 +17,7 @@ class RedisPersister implements PersisterInterface
     const KEY_TOTAL = 'TOTAL';
     const KEY_HASH_NAME = 'REPO';
     const KEY_LIST_NAME = 'LIST';
+    const KEY_REFERER_SUFFIX = 'REFE';
 
     private $redis;
     private $keyTotal;
@@ -97,6 +98,21 @@ class RedisPersister implements PersisterInterface
     public function addRepositoryToLatestAccessed($repository, $maxListLength = 50)
     {
         $this->redis->zadd($this->keyList, time() ,$repository);
+
+        return $this;
+    }
+
+
+    /**
+     * Add the referrer to a subset.
+     *
+     * @param string $url
+     *
+     * @return PersisterInterface
+     */
+    public function addReferer($url)
+    {
+        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time() ,$url);
 
         return $this;
     }

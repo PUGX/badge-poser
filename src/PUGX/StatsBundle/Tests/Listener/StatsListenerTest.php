@@ -43,9 +43,18 @@ class StatListenerTest extends WebTestCase
         $controller = new \StdClass();
         $method = 'boomAction';
         $repository = 'pugx/badge-poser';
-
+        $url = 'https://poser.pugx.org';
         $this->request->expects($this->once())->method('get')
             ->will($this->returnValue($repository));
+
+        // adding referer
+        $this->request->headers = $this->getMockBuilder('Symfony\Component\HttpFoundation\ParameterBag')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->request->headers->expects($this->once())
+            ->method('get')
+            ->with('referer')
+            ->will($this->returnValue($url));
 
         $this->controllerEvent->expects($this->once())->method('getRequest')
             ->will($this->returnValue($this->request));
@@ -62,7 +71,11 @@ class StatListenerTest extends WebTestCase
         $this->persister->expects($this->once())->method('incrementRepositoryAccessType')
             ->with($repository, $method)
             ->will($this->returnSelf());
+        $this->persister->expects($this->once())->method('addReferer')
+            ->with($url)
+            ->will($this->returnSelf());
 
         $this->listener->onKernelController($this->controllerEvent);
     }
+
 }
