@@ -1,6 +1,17 @@
 imports:
     - { resource: config.yml }
 
+services:
+    packagist_cache:
+        class: %snc_redis.doctrine_cache.class%
+        calls:
+          - [setRedis, ["@snc_redis.packagist_cache"]]
+          - [setNameSpace, ["cache"]]
+    packagist_client:
+        class: PUGX\BadgeBundle\Service\CachedClient
+        calls:
+          - [setCache, ["@packagist_cache"]]
+
 # In production environment you should know that the parameters for URL generation
 # always pass the requirements. Otherwise it would break your link (or even site with
 # strict_requirements = true). So we can disable the requirements check completely for
@@ -21,3 +32,11 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+
+
+snc_redis:
+    clients:
+        packagist_cache:
+            type: predis
+            alias: packagist_cache
+            dsn: redis://%redis_hostname%/%redis_database_cache%
