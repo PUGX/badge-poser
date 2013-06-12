@@ -18,6 +18,7 @@ use \InvalidArgumentException;
  * Class ImageCreator
  *
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Leonardo Proietti <leonardo.proietti@gmail.com>
  */
 class ImageCreator implements ImageCreatorInterface
 {
@@ -35,7 +36,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param Logger $logger       logger
      * @param string $fontPath     font path
      * @param string $imagePath    image path
-     * @param null   $defaultFont  default font
+     * @param string   $defaultFont  default font
      * @param null   $defaultImage default image
      */
     public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
@@ -146,6 +147,7 @@ class ImageCreator implements ImageCreatorInterface
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
+
     /**
      * Add a shadowed text to an Image.
      *
@@ -155,8 +157,11 @@ class ImageCreator implements ImageCreatorInterface
      * @param int      $y          y
      * @param float    $size       size
      * @param string   $font       font
-     * @param bool     $withShadow cast shadow
+     * @param Boolean  $withShadow cast shadow
      * @param int      $angle      angle
+     *
+     * @return resource
+     * @throws \UnexpectedValueException
      */
     private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
@@ -166,10 +171,22 @@ class ImageCreator implements ImageCreatorInterface
 
         $white = imagecolorallocate($image, 255, 255, 250);
         $black = imagecolorallocate($image, 0, 0, 0);
-        if ($withShadow) {
-            $imageArray = imagettftext($image, $size, $angle, $x + 1, $y + 1, $black, $font, $text);
+
+        if (false === $white ||  false === $black) {
+            throw new \UnexpectedValueException(sprintf('Impossible to allocate a color with imagecolorallocate.'));
         }
-        $imageArray = imagettftext($image, $size, $angle, $x, $y, $white, $font, $text);
+
+        if ($withShadow) {
+            if (!imagettftext($image, $size, $angle, $x + 1, $y + 1, $black, $font, $text)) {
+                throw new \UnexpectedValueException('Impossible to add shadow text to the image with imagettftext.');
+            }
+        }
+
+        if (!imagettftext($image, $size, $angle, $x, $y, $white, $font, $text)) {
+            throw new \UnexpectedValueException('Impossible to add text to the image with imagettftext.');
+        }
+
+        return $image;
     }
 
     /**
@@ -200,9 +217,8 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
         $image = $this->createImage($imagePath);
         $value = $this->transformNumberToReadableFormat($value);
-        $this->addShadowedText($image, $value, 64, 13.5);
 
-        return $image;
+        return $this->addShadowedText($image, $value, 64, 13.5);
     }
 
     /**
@@ -217,9 +233,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image = $this->createImage($imagePath);
 
-        $this->addShadowedText($image, $value, 59, 13.5);
-
-        return $image;
+        return $this->addShadowedText($image, $value, 59, 13.5);
     }
 
     /**
@@ -234,9 +248,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image = $this->createImage($imagePath);
 
-        $this->addShadowedText($image, $value, 51, 12, 7);
-
-        return $image;
+        return $this->addShadowedText($image, $value, 51, 12, 7);
     }
 
     /**
@@ -250,8 +262,7 @@ class ImageCreator implements ImageCreatorInterface
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
         $image = $this->createImage($imagePath);
-        $this->addShadowedText($image, $value, 50, 13.5, 7);
 
-        return $image;
+        return $this->addShadowedText($image, $value, 50, 13.5, 7);
     }
 }
