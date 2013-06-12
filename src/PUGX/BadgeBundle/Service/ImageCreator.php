@@ -155,7 +155,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param int      $y          y
      * @param float    $size       size
      * @param string   $font       font
-     * @param bool     $withShadow cast shodow
+     * @param bool     $withShadow cast shadow
      * @param int      $angle      angle
      */
     private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)

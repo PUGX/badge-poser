@@ -18,7 +18,7 @@ use PUGX\BadgeBundle\Service\PackageManager;
 
 class PackageManagerTest extends WebTestCase
 {
-    private function instatiatePackageManager($versions = null)
+    private function instantiatePackageManager($versions = null)
     {
         $packagistClient = $this->getMock('Packagist\Api\Client');
 
@@ -59,7 +59,7 @@ class PackageManagerTest extends WebTestCase
             $versions[] = $version;
         }
 
-        $pm = $this->instatiatePackageManager($versions);
+        $pm = $this->instantiatePackageManager($versions);
         $package = $pm->fetchPackage('puum');
         $pm->calculateLatestVersions($package);
 
@@ -94,7 +94,7 @@ class PackageManagerTest extends WebTestCase
      */
     public function testParseStability($version, $stable)
     {
-        $pm = $this->instatiatePackageManager();
+        $pm = $this->instantiatePackageManager();
 
         $this->assertEquals($pm->parseStability($version), $stable);
 
