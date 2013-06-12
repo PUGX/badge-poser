@@ -21,7 +21,7 @@ class StatsFunctionalTest extends WebTestCase
      */
     public function checkStatsAreNotIncremented($client)
     {
-        $this->checkEventIsCatched($client);
+        $this->checkEventIsCaught($client);
 
         $this->assertFalse(NullPersister::$incrementTotalAccessCalled, "stats increment method 'incrementTotalAccess' should not be called");
         $this->assertFalse(NullPersister::$incrementRepositoryAccessCalled, "stats increment method 'incrementRepositoryAccess' should not be called");
@@ -36,7 +36,7 @@ class StatsFunctionalTest extends WebTestCase
      */
     public function checkStatsCalls($client, $repo, $action)
     {
-        $this->checkEventIsCatched($client);
+        $this->checkEventIsCaught($client);
 
         $this->assertTrue(NullPersister::$incrementTotalAccessCalled, "stats total access increment not called");
         $this->assertEquals($repo, NullPersister::$incrementRepositoryAccessCalled, "stats repo access increment not called or called with wrong param (repo: " . $repo . ")");
@@ -48,7 +48,7 @@ class StatsFunctionalTest extends WebTestCase
      * @param $client
      * @throws \Exception
      */
-    public function checkEventIsCatched($client)
+    public function checkEventIsCaught($client)
     {
         $profile = $client->getProfile();
 
