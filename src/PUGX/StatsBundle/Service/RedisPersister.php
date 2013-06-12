@@ -11,6 +11,11 @@
 
 namespace PUGX\StatsBundle\Service;
 
+/**
+ * Class RedisPersister
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 class RedisPersister implements PersisterInterface
 {
     const KEY_PREFIX = 'STAT';

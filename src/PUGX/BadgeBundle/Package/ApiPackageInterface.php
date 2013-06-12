@@ -11,6 +11,11 @@
 
 namespace PUGX\BadgeBundle\Package;
 
+/**
+ * Class ApiPackageInterface
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 interface ApiPackageInterface
 {
     public function getName();

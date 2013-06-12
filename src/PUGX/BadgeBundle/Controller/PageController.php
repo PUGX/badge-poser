@@ -18,6 +18,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * Class PageController
+ *
+ * @author Giorgio Cefaro <giorgio.cefaro@gmail.com>
+ */
 class PageController extends ContainerAware
 {
     /**

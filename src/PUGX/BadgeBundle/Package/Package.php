@@ -13,6 +13,11 @@ namespace PUGX\BadgeBundle\Package;
 
 use Packagist\Api\Result\Package as ApiPackage;
 
+/**
+ * Class Package
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 class Package implements PackageInterface, ApiPackageInterface
 {
     private $originalObject;

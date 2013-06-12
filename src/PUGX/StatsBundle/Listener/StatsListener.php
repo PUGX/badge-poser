@@ -19,7 +19,7 @@ use PUGX\StatsBundle\Service\PersisterInterface;
  * Class StatsListener
  * This class is intended to collect and store usage statistic on Redis.
  *
- * @package PUGX\BadgeBundle\Listener
+ * @author Giulio De Donato <liuggio@gmail.com>
  */
 class StatsListener
 {

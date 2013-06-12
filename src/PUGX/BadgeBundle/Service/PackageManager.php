@@ -21,9 +21,7 @@ use \UnexpectedValueException;
 /**
  * This class is intended to load ApiPackage, create, and work with the Package object
  *
- * Class PackageHandler
- * @package PUGX\BadgeBundle\Service
- *
+ * @author Giulio De Donato <liuggio@gmail.com>
  */
 class PackageManager
 {

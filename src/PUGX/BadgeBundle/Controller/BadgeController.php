@@ -24,7 +24,8 @@ use \UnexpectedValueException;
  * Class BadgeController.
  * Main controller for badges.
  *
- * @package PUGX\BadgeBundle\Controller
+ * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Leonardo Proietti <leonardo.proietti@gmail.com>
  */
 class BadgeController extends ContainerAware
 {
