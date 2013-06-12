@@ -13,6 +13,11 @@ namespace PUGX\BadgeBundle\Service;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * Class SnippetGenerator
+ *
+ * @author Simone Di Maulo <toretto460@gmail.com>
+ */
 class SnippetGenerator
 {
 

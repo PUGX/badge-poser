@@ -11,6 +11,11 @@
 
 namespace PUGX\StatsBundle\Service;
 
+/**
+ * Class NullPersister
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 class NullPersister implements PersisterInterface
 {
     public static $incrementTotalAccessCalled = false;

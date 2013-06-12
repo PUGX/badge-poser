@@ -10,7 +10,11 @@
  */
 
 namespace PUGX\BadgeBundle\Service;
-
+/**
+ * Class ImageCreatorInterface
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 Interface ImageCreatorInterface
 {
     /**
