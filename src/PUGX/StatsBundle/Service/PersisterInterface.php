@@ -33,11 +33,11 @@ Interface PersisterInterface
      * Add the repository to the list of the latest accessed.
      *
      * @param string $repository
-     * @param int $maxListLenght
+     * @param int $maxListLength
      *
      * @return PersisterInterface
      */
-    public function addRepositoryToLatestAccessed($repository, $maxListLenght = 10);
+    public function addRepositoryToLatestAccessed($repository, $maxListLength = 10);
 
     /**
      * Increment by one the repository accesses type.
