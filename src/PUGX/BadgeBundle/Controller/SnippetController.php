@@ -18,6 +18,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * Class SnippetController
+ *
+ * @author Simone Di Maulo <toretto460@gmail.com>
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 class SnippetController extends ContainerAware
 {
     /**

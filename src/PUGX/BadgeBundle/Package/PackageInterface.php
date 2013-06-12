@@ -10,7 +10,11 @@
  */
 
 namespace PUGX\BadgeBundle\Package;
-
+/**
+ * Class PackageInterface
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 interface PackageInterface
 {
     public function setLatestStableVersion($version);

@@ -17,7 +17,7 @@ use \InvalidArgumentException;
 /**
  * Class ImageCreator
  *
- * @package PUGX\BadgeBundle\Service
+ * @author Giulio De Donato <liuggio@gmail.com>
  */
 class ImageCreator implements ImageCreatorInterface
 {

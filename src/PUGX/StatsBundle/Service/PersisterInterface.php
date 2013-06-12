@@ -11,6 +11,11 @@
 
 namespace PUGX\StatsBundle\Service;
 
+/**
+ * Class PersisterInterface
+ *
+ * @author Giulio De Donato <liuggio@gmail.com>
+ */
 Interface PersisterInterface
 {
     /**
