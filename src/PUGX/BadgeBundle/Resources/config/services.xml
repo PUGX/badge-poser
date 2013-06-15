@@ -31,6 +31,7 @@
 
         <service id="image_creator" class="%image_creator.class%">
             <argument type="service" id="logger"/>
+            <argument type="service" id="imagine"/>
             <argument>%kernel.root_dir%/Resources/badge-assets/fonts</argument>
             <argument>%kernel.root_dir%/Resources/badge-assets/images</argument>
             <argument>DroidSans.ttf</argument>

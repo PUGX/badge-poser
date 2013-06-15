@@ -167,8 +167,6 @@ class BadgeController extends ContainerAware
 
         $response->send();
 
-        $imageCreator->destroyImage($image);
-
         return $response;
     }
 }
