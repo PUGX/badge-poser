@@ -166,6 +166,9 @@ class ImageCreator implements ImageCreatorInterface
         $white = $this->imagine->font($font, $size, new Color('ffffff'));
         $black = $this->imagine->font($font, $size, new Color('000000'));
 
+        // trying to fix vertical text position across libraries
+        $y -= ($white->box('foo')->getHeight() - 8) / 2;
+
         try {
             if ($withShadow) {
                 $image
@@ -242,7 +245,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 51, 5, 7);
+        return $this->addShadowedText($image, $value, 51, 4.5, 7);
     }
 
     /**
