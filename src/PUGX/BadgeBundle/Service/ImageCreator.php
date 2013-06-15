@@ -157,7 +157,7 @@ class ImageCreator implements ImageCreatorInterface
      * @return Imagine\Image\ImageInterface
      * @throws \UnexpectedValueException
      */
-    private function addShadowedText(ImageInterface $image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
+    private function addShadowedText(ImageInterface $image, $text, $x = 3, $y = null, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
         if (null === $font) {
             $font = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
@@ -166,8 +166,10 @@ class ImageCreator implements ImageCreatorInterface
         $white = $this->imagine->font($font, $size, new Color('ffffff'));
         $black = $this->imagine->font($font, $size, new Color('000000'));
 
-        // trying to fix vertical text position across libraries
-        $y -= ($white->box('foo')->getHeight() - 8) / 2;
+        if (null === $y) {
+            // vertically centering textbox
+            $y = ($image->getSize()->getHeight() - $white->box($text)->getHeight()) / 2;
+        }
 
         try {
             if ($withShadow) {
@@ -215,7 +217,7 @@ class ImageCreator implements ImageCreatorInterface
         $image = $this->createImage($imagePath);
         $value = $this->transformNumberToReadableFormat($value);
 
-        return $this->addShadowedText($image, $value, 64, 4.5);
+        return $this->addShadowedText($image, $value, 64);
     }
 
     /**
@@ -230,7 +232,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 59, 4.5);
+        return $this->addShadowedText($image, $value, 59);
     }
 
     /**
@@ -245,7 +247,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 51, 4.5, 7);
+        return $this->addShadowedText($image, $value, 51, null, 7);
     }
 
     /**
@@ -260,6 +262,6 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 50, 4.5, 7);
+        return $this->addShadowedText($image, $value, 50, null, 7);
     }
 }
