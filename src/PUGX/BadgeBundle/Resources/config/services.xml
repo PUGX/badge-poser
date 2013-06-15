@@ -9,7 +9,10 @@
         <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
         <parameter key="badge_package.class">PUGX\BadgeBundle\Package\Package</parameter>
         <parameter key="package_manager.class">PUGX\BadgeBundle\Service\PackageManager</parameter>
-		<parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
+        <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
+        <parameter key="imagine.class.gd">Imagine\Gd\Imagine</parameter>
+        <parameter key="imagine.class.imagick">Imagine\Imagick\Imagine</parameter>
+        <parameter key="imagine.class.gmagick">Imagine\Gmagick\Imagine</parameter>
     </parameters>
 
     <services>
@@ -20,8 +23,8 @@
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
         </service>
-		
-		<service id="snippet_generator" class="%snippet_generator.class%">
+
+        <service id="snippet_generator" class="%snippet_generator.class%">
             <argument type="service" id="router" />
             <argument>%pugx_badge.badges%</argument>
         </service>
@@ -33,6 +36,8 @@
             <argument>DroidSans.ttf</argument>
             <tag name="monolog.logger" channel="image_creator"/>
         </service>
+
+        <service id="imagine" class="%imagine.class%" />
     </services>
 
 </container>
