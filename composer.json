@@ -34,7 +34,8 @@
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "@stable",
+        "phake/phake": "1.*"
     },
     "scripts": {
         "post-install-cmd": [
