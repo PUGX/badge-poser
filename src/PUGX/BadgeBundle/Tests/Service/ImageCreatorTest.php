@@ -24,11 +24,9 @@ class ImageCreatorTest extends WebTestCase
 
     public function setUp()
     {
-        $this->logger = $this->getMockBuilder('Symfony\Bridge\Monolog\Logger')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->logger = \Phake::mock('Symfony\Bridge\Monolog\Logger');
 
-        $this->packagistClient = $this->getMock('Packagist\Api\Client');
+        $this->packagistClient = \Phake::mock('Packagist\Api\Client');
 
         $kernelDir = $_SERVER['KERNEL_DIR'];
 
@@ -38,39 +36,51 @@ class ImageCreatorTest extends WebTestCase
         $this->imageCreator = new ImageCreator($this->logger, $this->fontPath, $this->imagesPath);
     }
 
-    public static function provider()
+
+
+    /**
+     * @dataProvider getBadNumberToConvert
+     * @expectedException InvalidArgumentException
+     */
+    public function testNumberToTextConversion($input, $output)
+    {
+        $res = $this->imageCreator->transformNumberToReadableFormat($input);
+        $this->assertEquals($output, $res);
+    }
+
+    public static function getBadNumberToConvert()
     {
         return array(
-            //bad number return Exception
-            array('A',             'ERR 2 ', 'InvalidArgumentException'),
-            array(-1,              'ERR 2 ', 'InvalidArgumentException'),
-
-            array(0,               '   1  ', null),
-            array(1,               '   1  ', null),
-            array('16',            '  16  ', null),
-            array(199,             ' 199  ', null),
-            array('1012',          '1.01 k', null),
-            array('1999',          '2.00 k', null),
-            array('1003000',       '1.00 m', null),
-            array(9001003000,      '9.0 mm', null),
-            array('9001003000000', '9.0 bb', null),
+            array('A', 'ERR 2 '),
+            array(-1, 'ERR 2 '),
         );
     }
 
     /**
-     * @dataProvider provider
+     * @dataProvider getGoodNumberToConvert
      */
-    public function testNumberToTextConversion($input, $output, $withException)
+    public function testGoodNumberToTextConversion($input, $output)
     {
-        if (null !== $withException) {
-            $this->setExpectedException($withException);
-        }
-
         $res = $this->imageCreator->transformNumberToReadableFormat($input);
-        if (null === $withException) {
-            $this->assertEquals($output, $res);
-        }
+        $this->assertEquals($output, $res);
     }
+
+    public static function getGoodNumberToConvert()
+    {
+        return array(
+            array(0,               '   1  '),
+            array(1,               '   1  '),
+            array('16',            '  16  '),
+            array(199,             ' 199  '),
+            array('1012',          '1.01 k'),
+            array('1999',          '2.00 k'),
+            array('1003000',       '1.00 m'),
+            array(9001003000,      '9.0 mm'),
+            array('9001003000000', '9.0 bb'),
+        );
+    }
+
+
 
     /**
      * @expectedException \PHPUnit_Framework_Error_Warning
@@ -137,5 +147,12 @@ class ImageCreatorTest extends WebTestCase
             $this->imageCreator,
             array($this->imagesPath . DIRECTORY_SEPARATOR . 'invalid_file.png')
         );
+    }
+
+    public function tearDown()
+    {
+        $this->logger = null;
+        $this->packagistClient = null;
+        $this->imageCreator = null;
     }
 }
