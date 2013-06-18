@@ -38,19 +38,18 @@ class PackageManagerTest extends WebTestCase
         return $pm;
     }
 
-
     /**
      * @dataProvider getStableAndUnstableVersion
      */
-    public function testPackageShouldContainStableAndUnstableVersion($stableAssertion, $unstableAssertion, $branches)
+    public function testPackageShouldContainStableAndUnstableVersion($stableAssertion, $unstableAssertion, array $versions)
     {
-        foreach ($branches as $branch) {
-            $version = new Version();
-            $version->fromArray(array('version' => $branch));
-            $versions[] = $version;
-        }
+        $packagistClient = \Phake::mock('Packagist\Api\Client');
+        $apiPackage = \Phake::mock('Packagist\Api\Result\Package');
+        \Phake::when($apiPackage)->getVersions()->thenReturn($versions);
+        \Phake::when($packagistClient)->get('puum')->thenReturn($apiPackage);
 
-        $pm = $this->instantiatePackageManager($versions);
+        $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
+
         $package = $pm->fetchPackage('puum');
         $pm->calculateLatestVersions($package);
 
@@ -59,13 +58,13 @@ class PackageManagerTest extends WebTestCase
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }
 
-    public static function getStableAndUnstableVersion()
+    public function getStableAndUnstableVersion()
     {
         return array(
-            //    stable    unstable     versions
-            array('2.0.0', 'v3.0.0-RC1', array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1')),
-            array('v2.2.1', 'v2.3.0-RC2', array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1')),
-            array(null, 'dev-master', array('dev-master')),
+            //    stable    unstable        versions
+            array('2.0.0',  'v3.0.0-RC1', $this->createVersion(array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1'))),
+            array('v2.2.1', 'v2.3.0-RC2', $this->createVersion(array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1'))),
+            array(null,     'dev-master', $this->createVersion(array('dev-master'))),
         );
     }
 
@@ -100,5 +99,16 @@ class PackageManagerTest extends WebTestCase
 
         $this->assertEquals($pm->parseStability($version), $stable);
 
+    }
+
+    protected function createVersion(array $branches)
+    {
+        $versions = array();
+        foreach ($branches as $branch) {
+            $version = new Version();
+            $version->fromArray(array('version' => $branch));
+            $versions[] = $version;
+        }
+        return $versions;
     }
 }
