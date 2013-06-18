@@ -18,25 +18,6 @@ use PUGX\BadgeBundle\Service\PackageManager;
 
 class PackageManagerTest extends WebTestCase
 {
-    private function instantiatePackageManager($versions = null)
-    {
-        $packagistClient = $this->getMock('Packagist\Api\Client');
-
-        if (null !== $versions) {
-            $apiPackage = $this->getMock('Packagist\Api\Result\Package');
-            $apiPackage->expects($this->once())
-                ->method('getVersions')
-                ->will($this->returnValue($versions));
-
-            $packagistClient->expects($this->once())
-                ->method('get')
-                ->will($this->returnValue($apiPackage));
-        }
-
-        $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
-
-        return $pm;
-    }
 
     /**
      * @dataProvider getStableAndUnstableVersion
@@ -68,8 +49,19 @@ class PackageManagerTest extends WebTestCase
         );
     }
 
+    /**
+     * @dataProvider getVersionAndStability
+     */
+    public function testParseStability($version, $stability)
+    {
+        $packagistClient = \Phake::mock('Packagist\Api\Client');
+        $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
 
-    public static function stabilityProvider()
+        $this->assertEquals($pm->parseStability($version), $stability);
+
+    }
+
+    public static function getVersionAndStability()
     {
         return array(
             array('1.0.0', 'stable'),
@@ -88,17 +80,6 @@ class PackageManagerTest extends WebTestCase
             array('v2.1.10', 'stable'),
             array('v2.2.1', 'stable'),
         );
-    }
-
-    /**
-     * @dataProvider stabilityProvider
-     */
-    public function testParseStability($version, $stable)
-    {
-        $pm = $this->instantiatePackageManager();
-
-        $this->assertEquals($pm->parseStability($version), $stable);
-
     }
 
     protected function createVersion(array $branches)
