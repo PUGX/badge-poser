@@ -38,18 +38,9 @@ class PackageManagerTest extends WebTestCase
         return $pm;
     }
 
-    public static function provider()
-    {
-        return array(
-            //    stable    unstable     versions
-            array('2.0.0', 'v3.0.0-RC1', array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1')),
-            array('v2.2.1', 'v2.3.0-RC2', array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1')),
-            array(null, 'dev-master', array('dev-master')),
-        );
-    }
 
     /**
-     * @dataProvider provider
+     * @dataProvider getStableAndUnstableVersion
      */
     public function testPackageShouldContainStableAndUnstableVersion($stableAssertion, $unstableAssertion, $branches)
     {
@@ -67,6 +58,17 @@ class PackageManagerTest extends WebTestCase
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }
+
+    public static function getStableAndUnstableVersion()
+    {
+        return array(
+            //    stable    unstable     versions
+            array('2.0.0', 'v3.0.0-RC1', array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1')),
+            array('v2.2.1', 'v2.3.0-RC2', array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1')),
+            array(null, 'dev-master', array('dev-master')),
+        );
+    }
+
 
     public static function stabilityProvider()
     {
