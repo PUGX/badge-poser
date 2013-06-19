@@ -12,6 +12,10 @@
 namespace PUGX\BadgeBundle\Service;
 
 use Symfony\Bridge\Monolog\Logger;
+use Imagine\Image\Color;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
 use \InvalidArgumentException;
 
 /**
@@ -23,6 +27,7 @@ use \InvalidArgumentException;
 class ImageCreator implements ImageCreatorInterface
 {
     private $logger;
+    private $imagine;
     protected $dispatcher;
     protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png', 'error' => 'error.png');
     protected $imagePath;
@@ -39,9 +44,10 @@ class ImageCreator implements ImageCreatorInterface
      * @param string   $defaultFont  default font
      * @param null   $defaultImage default image
      */
-    public function __construct(Logger $logger, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
+    public function __construct(Logger $logger, ImagineInterface $imagine, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
     {
         $this->logger = $logger;
+        $this->imagine = $imagine;
         $this->fontPath = $fontPath;
         $this->imagePath = $imagePath;
 
@@ -82,25 +88,13 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Stream the output.
      *
-     * @param resource $image
+     * @param Imagine\Image\ImageInterface $image
      *
      * @return Boolean
      */
-    public function streamRawImageData($image)
+    public function streamRawImageData(ImageInterface $image)
     {
-        return imagepng($image);
-    }
-
-    /**
-     * Destroy the resource.
-     *
-     * @param resource $image
-     *
-     * @return Boolean
-     */
-    public function destroyImage($image)
-    {
-        return imagedestroy($image);
+        return $image->show('png');
     }
 
     /**
@@ -151,39 +145,48 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Add a shadowed text to an Image.
      *
-     * @param resource $image      image
-     * @param string   $text       text
-     * @param int      $x          x
-     * @param int      $y          y
-     * @param float    $size       size
-     * @param string   $font       font
-     * @param Boolean  $withShadow cast shadow
-     * @param int      $angle      angle
+     * @param Imagine\Image\ImageInterface $image      image
+     * @param string                       $text       text
+     * @param int                          $x          x
+     * @param int                          $y          y
+     * @param float                        $size       size
+     * @param string                       $font       font
+     * @param Boolean                      $withShadow cast shadow
+     * @param int                          $angle      angle
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      * @throws \UnexpectedValueException
      */
-    private function addShadowedText($image, $text, $x = 3, $y = 13, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
+    private function addShadowedText(ImageInterface $image, $text, $x = 3, $y = null, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
     {
         if (null === $font) {
             $font = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
         }
 
-        $white = imagecolorallocate($image, 255, 255, 250);
-        $black = imagecolorallocate($image, 0, 0, 0);
+        $white = $this->imagine->font($font, $size, new Color('ffffff'));
+        $black = $this->imagine->font($font, $size, new Color('000000'));
 
-        if (false === $white ||  false === $black) {
-            throw new \UnexpectedValueException(sprintf('Impossible to allocate a color with imagecolorallocate.'));
+        if (null === $y) {
+            // vertically centering textbox
+            $y = ($image->getSize()->getHeight() - $white->box($text)->getHeight()) / 2;
         }
 
-        if ($withShadow) {
-            if (!imagettftext($image, $size, $angle, $x + 1, $y + 1, $black, $font, $text)) {
-                throw new \UnexpectedValueException('Impossible to add shadow text to the image with imagettftext.');
+        try {
+            if ($withShadow) {
+                $image
+                    ->draw()
+                    ->text($text, $black, new Point($x + 1, $y + 1));
             }
+        } catch (\Imagine\Exception\RuntimeException $e) {
+            throw new \UnexpectedValueException('Impossible to add shadow text to the image with imagettftext.', $e);
         }
 
-        if (!imagettftext($image, $size, $angle, $x, $y, $white, $font, $text)) {
-            throw new \UnexpectedValueException('Impossible to add text to the image with imagettftext.');
+        try {
+            $image
+                ->draw()
+                ->text($text, $white, new Point($x, $y));
+        } catch (\Imagine\Exception\RuntimeException $e) {
+            throw new \UnexpectedValueException('Impossible to add text to the image with imagettftext.', $e);
         }
 
         return $image;
@@ -194,15 +197,11 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $imagePath
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      */
     private function createImage($imagePath)
     {
-        $image = imagecreatefrompng($imagePath);
-        imagealphablending($image, true);
-        imagesavealpha($image, true);
-
-        return $image;
+        return $this->imagine->open($imagePath);
     }
 
     /**
@@ -210,7 +209,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      */
     public function createDownloadsImage($value)
     {
@@ -218,7 +217,7 @@ class ImageCreator implements ImageCreatorInterface
         $image = $this->createImage($imagePath);
         $value = $this->transformNumberToReadableFormat($value);
 
-        return $this->addShadowedText($image, $value, 64, 13.5);
+        return $this->addShadowedText($image, $value, 64);
     }
 
     /**
@@ -226,14 +225,14 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      */
     public function createStableImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 59, 13.5);
+        return $this->addShadowedText($image, $value, 59);
     }
 
     /**
@@ -241,14 +240,14 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      */
     public function createUnstableImage($value = '@dev')
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 51, 12, 7);
+        return $this->addShadowedText($image, $value, 51, null, 7);
     }
 
     /**
@@ -256,13 +255,13 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return resource
+     * @return Imagine\Image\ImageInterface
      */
     public function createErrorImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 50, 13.5, 7);
+        return $this->addShadowedText($image, $value, 50, null, 7);
     }
 }
