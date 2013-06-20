@@ -12,17 +12,13 @@
 namespace PUGX\BadgeBundle\Tests\Controller;
 
 use PUGX\BadgeBundle\Service\ImageCreator;
+use Imagine\Image\ImageInterface;
 
 class FakeImageCreator extends ImageCreator
 {
-    public function streamRawImageData($image)
+    public function streamRawImageData(ImageInterface $image)
     {
         // pass
        return true;
-    }
-    public function destroyImage($image)
-    {
-        // pass
-        return true;
     }
 }
