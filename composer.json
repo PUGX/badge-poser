@@ -30,7 +30,8 @@
         "ext-gd": "*",
         "knplabs/packagist-api": "dev-master",
         "predis/predis": "0.8.*",
-        "snc/redis-bundle": "1.1.*"
+        "snc/redis-bundle": "1.1.*",
+        "imagine/Imagine": "@stable"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",

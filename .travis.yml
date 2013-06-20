@@ -14,3 +14,7 @@ before_script:
 
 script:
   - bin/phpunit
+  
+notifications:
+  email:
+    - liuggio@gmail.com

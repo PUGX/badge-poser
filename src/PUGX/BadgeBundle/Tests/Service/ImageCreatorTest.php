@@ -13,6 +13,7 @@ namespace PUGX\BadgeBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use PUGX\BadgeBundle\Service\ImageCreator;
+use Imagine\Gd\Imagine;
 
 class ImageCreatorTest extends WebTestCase
 {
@@ -27,13 +28,14 @@ class ImageCreatorTest extends WebTestCase
         $this->logger = \Phake::mock('Symfony\Bridge\Monolog\Logger');
 
         $this->packagistClient = \Phake::mock('Packagist\Api\Client');
+        $this->imagine = new Imagine();
 
         $kernelDir = $_SERVER['KERNEL_DIR'];
 
         $this->fontPath = $kernelDir . '/Resources/badge-assets/fonts';
         $this->imagesPath = $kernelDir . '/Resources/badge-assets/images';
 
-        $this->imageCreator = new ImageCreator($this->logger, $this->fontPath, $this->imagesPath);
+        $this->imageCreator = new ImageCreator($this->logger, $this->imagine, $this->fontPath, $this->imagesPath);
     }
 
 
@@ -83,7 +85,7 @@ class ImageCreatorTest extends WebTestCase
 
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit_Framework_Error
      */
     public function testAddShadowedText_withBadImage()
     {
@@ -111,17 +113,15 @@ class ImageCreatorTest extends WebTestCase
         $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'addShadowedText');
         $reflectionMethod->setAccessible(true);
 
-        $image = imagecreatefrompng($this->imagesPath . DIRECTORY_SEPARATOR . $imageFile);
-        $this->assertTrue(is_resource($image));
-        $expectedWidth = imagesx($image);
-        $expectedHeight = imagesy($image);
+        $image = $this->imagine->open($this->imagesPath . DIRECTORY_SEPARATOR . $imageFile);
+
+        $expectedWidth = $image->getSize()->getWidth();
+        $expectedHeight = $image->getSize()->getHeight();
 
         $reflectionMethod->invokeArgs($this->imageCreator, array($image, 'TEST_TEXT', 3, 13, 8.5, null, $withShadow));
 
-        $this->assertEquals($expectedWidth, imagesx($image), 'The method should not modify the image width');
-        $this->assertEquals($expectedHeight, imagesy($image), 'The method should not modify the image height');
-
-        imagedestroy($image);
+        $this->assertEquals($expectedWidth, $image->getSize()->getWidth(), 'The method should not modify the image width');
+        $this->assertEquals($expectedHeight, $image->getSize()->getHeight(), 'The method should not modify the image height');
     }
 
     public function testCreateImage()
@@ -133,11 +133,11 @@ class ImageCreatorTest extends WebTestCase
             array($this->imagesPath . DIRECTORY_SEPARATOR . 'empty.png')
         );
 
-        $this->assertTrue(is_resource($image));
+        $this->assertInstanceOf('Imagine\Image\ImageInterface', $image);
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \Imagine\Exception\InvalidArgumentException
      */
     public function testCreateImage_throwException()
     {

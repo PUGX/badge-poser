@@ -10,6 +10,9 @@
  */
 
 namespace PUGX\BadgeBundle\Service;
+
+use Imagine\Image\ImageInterface;
+
 /**
  * Class ImageCreatorInterface
  *
@@ -24,16 +27,7 @@ Interface ImageCreatorInterface
      *
      * @return Boolean
      */
-    public function streamRawImageData($image);
-
-    /**
-     * Destroy the resource.
-     *
-     * @param $image
-     *
-     * @return Boolean
-     */
-    public function destroyImage($image);
+    public function streamRawImageData(ImageInterface $image);
 
     /**
      * Create the 'downloads' image with the standard Font and standard Image.

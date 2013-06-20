@@ -30,9 +30,11 @@ class PUGXBadgeExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter($this->getAlias().'.badges', $config['badges']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter($this->getAlias().'.badges', $config['badges']);
+        $container->setParameter('imagine.class', $container->getParameter(sprintf('imagine.class.%s', $config['imagine_driver'])));
     }
 }
