@@ -100,7 +100,7 @@ class PackageManager
                 $functionName = 'Stable';
             }
 
-            if ($version->getVersion() > $package->{'getLatest' . $functionName . 'Version'}()) {
+            if (version_compare($version->getVersion(), $package->{'getLatest' . $functionName . 'Version'}()) > 0) {
                 $package->{'setLatest' . $functionName . 'Version'}($version->getVersion());
             }
         }

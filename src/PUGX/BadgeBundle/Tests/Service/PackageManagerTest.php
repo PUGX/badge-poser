@@ -42,9 +42,12 @@ class PackageManagerTest extends WebTestCase
     {
         return array(
             //    stable    unstable     versions
-            array('2.0.0', 'v3.0.0-RC1', array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1')),
-            array('v2.2.1', 'v2.3.0-RC2', array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1')),
+            array('2.0.0', '3.0.x-dev', array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1')),
+            array('v2.2.1', '2.3.x-dev', array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1')),
             array(null, 'dev-master', array('dev-master')),
+            array('v0.11.0', 'dev-master', array('v0.11.0', 'v0.9.0', 'dev-master')),
+            array('1.10.0', 'dev-master', array('1.9.0', '1.10.0', 'dev-master')),
+            array('1.0.0', 'dev-master', array('0.9.0', '1.0.0', 'dev-master')),
         );
     }
 
