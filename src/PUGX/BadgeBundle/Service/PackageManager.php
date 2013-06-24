@@ -93,19 +93,50 @@ class PackageManager
     {
         $versions = $package->getVersions();
 
-        foreach ($versions as $version) {
+        foreach ($versions as $name => $version) {
+
+            $currentVersionName = $version->getVersion();
+            $versionNormalized = $version->getVersionNormalized();
+
+            $aliases = $this->getBranchAliases($version);
+            if (null !== $aliases && array_key_exists($currentVersionName, $aliases)) {
+                $currentVersionName = $aliases[$currentVersionName];
+            }
 
             $functionName = 'Unstable';
-            if ('stable' == $this->parseStability($version->getVersion())) {
+            if ('stable' == $this->parseStability($currentVersionName)) {
                 $functionName = 'Stable';
             }
 
-            if ($version->getVersion() > $package->{'getLatest' . $functionName . 'Version'}()) {
-                $package->{'setLatest' . $functionName . 'Version'}($version->getVersion());
+            if (version_compare($versionNormalized, $package->{'getLatest' . $functionName . 'VersionNormalized'}()) > 0) {
+                $package->{'setLatest' . $functionName . 'Version'}($currentVersionName);
+                $package->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
             }
+
+            $stable = $package;
         }
 
         return $package;
+    }
+
+    /**
+     * Get all the branch aliases.
+     *
+     * @param ApiPackage\Version $version
+     *
+     * @return null|array
+     */
+    public function getBranchAliases(ApiPackage\Version $version)
+    {
+        if (null !== $version->getExtra()
+            && null !== $version->getExtra()["branch-alias"]
+            && is_array($version->getExtra()["branch-alias"])
+        ) {
+
+            return $version->getExtra()["branch-alias"];
+        }
+
+        return null;
     }
 
     /**
@@ -152,7 +183,7 @@ class PackageManager
      * Take the Type of the Downloads (total, monthly or daily).
      *
      * @param Package $package
-     * @param string  $type
+     * @param string $type
      *
      * @return string
      */

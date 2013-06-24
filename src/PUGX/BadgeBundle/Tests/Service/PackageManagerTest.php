@@ -18,7 +18,6 @@ use PUGX\BadgeBundle\Service\PackageManager;
 
 class PackageManagerTest extends WebTestCase
 {
-
     /**
      * @dataProvider getStableAndUnstableVersion
      */
@@ -37,28 +36,68 @@ class PackageManagerTest extends WebTestCase
         $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
+
+
+//        foreach ($branches as $branch) {
+//            $version = new Version();
+//            $version->fromArray($branch);
+//            $versions[] = $version;
+//        }
+//
+//        $pm = $this->instantiatePackageManager($versions);
+//        $package = $pm->fetchPackage('puum');
+//        $pm->calculateLatestVersions($package);
+//
+//        $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
+//        $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
+//        $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
+
     }
 
     public function getStableAndUnstableVersion()
     {
         return array(
-            //    stable    unstable        versions
-            array('2.0.0',  'v3.0.0-RC1', $this->createVersion(array('1.0.0', '1.1.0', '2.0.0', '3.0.x-dev', 'v3.0.0-RC1'))),
-            array('v2.2.1', 'v2.3.0-RC2', $this->createVersion(array('2.3.x-dev', '2.2.x-dev', 'dev-master', '2.1.x-dev', '2.0.x-dev', 'v2.3.0-RC2', 'v2.3.0-RC1', 'v2.3.0-BETA2', 'v2.1.10', 'v2.2.1'))),
-            array(null,     'dev-master', $this->createVersion(array('dev-master'))),
+            //    stable    unstable     versions
+            array('v2.0.0', '3.1.0-dev', $this->createVersion(array(
+                array('version' => 'v0.0.1',      'versionNormalized' => '0.0.1.0'),
+                array('version' => 'v1.0.0',      'versionNormalized' => '1.0.0.0'),
+                array('version' => 'v2.0.0',      'versionNormalized' => '2.0.0.0'),
+                array('version' => '3.0.x-dev',   'versionNormalized' => '3.0.9999999.9999999-dev'),
+                array('version' => 'v3.0.0-BETA1',  'versionNormalized' => '3.0.0.0-beta1'),
+                array('version' => 'v3.0.0-RC1',  'versionNormalized' => '3.0.0.0-RC1'),
+                array('version' => 'dev-master', 'versionNormalized' => '9999999-dev', 'extra'=>array('branch-alias'=>array('dev-master'=>'3.1.0-dev')))
+            ))),
+
+            array('v2.2.1', '2.3.x-dev', $this->createVersion(array(
+                array('version' => '2.3.x-dev',     'versionNormalized' => '2.3.9999999.9999999-dev'),
+                array('version' => '2.2.x-dev',     'versionNormalized' => '2.2.9999999.9999999-dev'),
+                array('version' => '2.0.x-dev',     'versionNormalized' => '2.0.9999999.9999999-dev'),
+                array('version' => 'v2.3.0-RC2',    'versionNormalized' => '2.3.0.0-RC2'),
+                array('version' => 'v2.3.0-RC1',    'versionNormalized' => '2.3.0.0-RC1'),
+                array('version' => 'v2.3.0-BETA2',  'versionNormalized' => '2.3.0.0-beta2'),
+                array('version' => 'v2.1.10',       'versionNormalized' => '2.1.10.0'),
+                array('version' => 'v2.2.1',        'versionNormalized' => '2.2.1.0'),
+            ))),
+
+            array('v1.10.0', 'dev-master', $this->createVersion(array(
+                array('version' => 'v0.9.0',     'versionNormalized' => '0.9.0.0'),
+                array('version' => 'v1.0.0',     'versionNormalized' => '1.0.0.'),
+                array('version' => 'v1.9.0',     'versionNormalized' => '1.9.0.0'),
+                array('version' => 'v1.10.0',    'versionNormalized' => '1.10.0.0'),
+                array('version' => 'dev-master',    'versionNormalized' => '9999999-dev'),
+            ))),
         );
     }
 
     /**
      * @dataProvider getVersionAndStability
      */
-    public function testParseStability($version, $stability)
+    public function testParseStability($version, $stable)
     {
         $packagistClient = \Phake::mock('Packagist\Api\Client');
         $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
 
-        $this->assertEquals($pm->parseStability($version), $stability);
-
+        $this->assertEquals($pm->parseStability($version), $stable);
     }
 
     public static function getVersionAndStability()
@@ -87,7 +126,7 @@ class PackageManagerTest extends WebTestCase
         $versions = array();
         foreach ($branches as $branch) {
             $version = new Version();
-            $version->fromArray(array('version' => $branch));
+            $version->fromArray($branch);
             $versions[] = $version;
         }
         return $versions;

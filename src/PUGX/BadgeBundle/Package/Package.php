@@ -23,6 +23,8 @@ class Package implements PackageInterface, ApiPackageInterface
     private $originalObject;
     private $latestStableVersion = null;
     private $latestUnstableVersion = null;
+    private $latestStableVersionNormalized = null;
+    private $latestUnstableVersionNormalized = null;
 
     public function setLatestStableVersion($version)
     {
@@ -49,10 +51,44 @@ class Package implements PackageInterface, ApiPackageInterface
         return $this->latestUnstableVersion;
     }
 
+    /**
+     * @param null $latestStableVersionNormalized
+     */
+    public function setLatestStableVersionNormalized($latestStableVersionNormalized)
+    {
+        $this->latestStableVersionNormalized = $latestStableVersionNormalized;
+    }
+
+    /**
+     * @return null
+     */
+    public function getLatestStableVersionNormalized()
+    {
+        return $this->latestStableVersionNormalized;
+    }
+
+    /**
+     * @param null $latestUnstableVersionNormalized
+     */
+    public function setLatestUnstableVersionNormalized($latestUnstableVersionNormalized)
+    {
+        $this->latestUnstableVersionNormalized = $latestUnstableVersionNormalized;
+    }
+
+    /**
+     * @return null
+     */
+    public function getLatestUnstableVersionNormalized()
+    {
+        return $this->latestUnstableVersionNormalized;
+    }
+
+
     public function hasUnstableVersion()
     {
         return isset($this->latestUnstableVersion);
     }
+
 
     public function setOriginalObject(ApiPackage $originalObject)
     {
@@ -63,6 +99,7 @@ class Package implements PackageInterface, ApiPackageInterface
     {
         return $this->originalObject;
     }
+
 
     // original object's property
 
