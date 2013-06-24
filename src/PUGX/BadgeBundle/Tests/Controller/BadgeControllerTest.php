@@ -13,7 +13,6 @@ namespace PUGX\BadgeBundle\Tests\Controller;
 
 use Packagist\Api\Client;
 use PUGX\StatsBundle\Test\StatsFunctionalTest;
-use PUGX\StatsBundle\Service\NullPersister;
 
 class BadgeControllerTest extends StatsFunctionalTest
 {
