@@ -128,12 +128,13 @@ class PackageManager
      */
     public function getBranchAliases(ApiPackage\Version $version)
     {
-        if (null !== $version->getExtra()
-            && null !== $version->getExtra()["branch-alias"]
-            && is_array($version->getExtra()["branch-alias"])
+        $extra = $version->getExtra();
+        if (null !== $extra
+            && null !== $extra["branch-alias"]
+            && is_array($extra["branch-alias"])
         ) {
 
-            return $version->getExtra()["branch-alias"];
+            return $extra["branch-alias"];
         }
 
         return null;
