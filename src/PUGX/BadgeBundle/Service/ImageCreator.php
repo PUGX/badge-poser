@@ -16,7 +16,7 @@ use Imagine\Image\Color;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class ImageCreator
@@ -36,13 +36,14 @@ class ImageCreator implements ImageCreatorInterface
     protected $defaultImage;
 
     /**
-     * class constructor
+     * Class constructor.
      *
-     * @param Logger $logger       logger
-     * @param string $fontPath     font path
-     * @param string $imagePath    image path
-     * @param string   $defaultFont  default font
-     * @param null   $defaultImage default image
+     * @param Logger           $logger
+     * @param ImagineInterface $imagine
+     * @param string           $fontPath
+     * @param string           $imagePath
+     * @param string           $defaultFont
+     * @param null             $defaultImage
      */
     public function __construct(Logger $logger, ImagineInterface $imagine, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
     {
@@ -63,7 +64,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param mixed $number number to be normalized
      *
      * @return int
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function normalizeNumber($number)
     {
@@ -88,7 +89,7 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Stream the output.
      *
-     * @param Imagine\Image\ImageInterface $image
+     * @param ImageInterface $image
      *
      * @return Boolean
      */
@@ -145,14 +146,14 @@ class ImageCreator implements ImageCreatorInterface
     /**
      * Add a shadowed text to an Image.
      *
-     * @param Imagine\Image\ImageInterface $image      image
-     * @param string                       $text       text
-     * @param int                          $x          x
-     * @param int                          $y          y
-     * @param float                        $size       size
-     * @param string                       $font       font
-     * @param Boolean                      $withShadow cast shadow
-     * @param int                          $angle      angle
+     * @param ImageInterface $image      image
+     * @param string         $text       text
+     * @param int            $x          x
+     * @param int            $y          y
+     * @param float          $size       size
+     * @param string         $font       font
+     * @param Boolean        $withShadow cast shadow
+     * @param int            $angle      angle
      *
      * @return Imagine\Image\ImageInterface
      * @throws \UnexpectedValueException
@@ -197,7 +198,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $imagePath
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     private function createImage($imagePath)
     {
@@ -209,7 +210,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     public function createDownloadsImage($value)
     {
@@ -225,7 +226,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     public function createStableImage($value)
     {
@@ -240,7 +241,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     public function createUnstableImage($value = '@dev')
     {
@@ -255,7 +256,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      */
     public function createErrorImage($value)
     {
