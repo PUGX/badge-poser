@@ -23,7 +23,7 @@ Interface ImageCreatorInterface
     /**
      * Stream the output.
      *
-     * @param resource $image
+     * @param ImageInterface $image
      *
      * @return Boolean
      */

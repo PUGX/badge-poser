@@ -22,9 +22,89 @@ use Packagist\Api\Client;
 class CachedClient extends Client
 {
     protected $cache = null;
-    protected $ttl_search = 3600;
-    protected $ttl_get = 3600;
-    protected $ttl_all= 3600;
+    protected $TTLSearch = 1800;
+    protected $TTLGet = 1800;
+    protected $TTLAll= 1800;
+
+    /**
+     * @param int $TTLAll
+     */
+    public function setTTLAll($TTLAll)
+    {
+        $this->TTLAll = $TTLAll;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTTLAll()
+    {
+        return $this->TTLAll;
+    }
+
+    /**
+     * @param int $TTLGet
+     */
+    public function setTTLGet($TTLGet)
+    {
+        $this->TTLGet = $TTLGet;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTTLGet()
+    {
+        return $this->TTLGet;
+    }
+
+    /**
+     * @param int $TTLSearch
+     */
+    public function setTTLSearch($TTLSearch)
+    {
+        $this->TTLSearch = $TTLSearch;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTTLSearch()
+    {
+        return $this->TTLSearch;
+    }
+
+    /**
+     * @param \Guzzle\Http\ClientInterface $httpClient
+     */
+    public function setHttpClient($httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @return \Guzzle\Http\ClientInterface
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @param \Packagist\Api\Result\Factory $resultFactory
+     */
+    public function setResultFactory($resultFactory)
+    {
+        $this->resultFactory = $resultFactory;
+    }
+
+    /**
+     * @return \Packagist\Api\Result\Factory
+     */
+    public function getResultFactory()
+    {
+        return $this->resultFactory;
+    }
 
     public function setCache($cache)
     {
@@ -56,7 +136,7 @@ class CachedClient extends Client
             $results = $this->getCache()->fetch($key);
         } else {
             $results = parent::search($query);
-            $this->getCache()->save($key, $results, $this->ttl_search);
+            $this->getCache()->save($key, $results, $this->TTLSearch);
         }
         return $results;
     }
@@ -69,7 +149,7 @@ class CachedClient extends Client
             $result = $this->getCache()->fetch($key);
         } else {
             $result = parent::get($package);
-            $this->getCache()->save($key, $result, $this->ttl_get);
+            $this->getCache()->save($key, $result, $this->TTLGet);
         }
 
         return $result;
@@ -83,7 +163,7 @@ class CachedClient extends Client
             $results = $this->getCache()->fetch($key);
         } else {
             $results = parent::all($filters);
-            $this->getCache()->save($key, $results, $this->ttl_all);
+            $this->getCache()->save($key, $results, $this->TTLAll);
         }
 
         return $results;
