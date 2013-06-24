@@ -36,22 +36,6 @@ class PackageManagerTest extends WebTestCase
         $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
-
-
-//        foreach ($branches as $branch) {
-//            $version = new Version();
-//            $version->fromArray($branch);
-//            $versions[] = $version;
-//        }
-//
-//        $pm = $this->instantiatePackageManager($versions);
-//        $package = $pm->fetchPackage('puum');
-//        $pm->calculateLatestVersions($package);
-//
-//        $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
-//        $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
-//        $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
-
     }
 
     public function getStableAndUnstableVersion()
