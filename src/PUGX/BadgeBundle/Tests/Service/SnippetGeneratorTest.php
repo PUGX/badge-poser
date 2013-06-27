@@ -17,12 +17,24 @@ use Symfony\Component\Routing\RouteCollection;
 class SnippetGeneratorTest extends \PHPUnit_Framework_TestCase
 {
 
-
-    public function setUp()
+    /**
+     * @dataProvider badgesRoutesProvider
+     */
+    public function testCompileRouteParametersForBadge($badges, $routes, $expectedParams)
     {
-        $this->router = $this->getMockBuilder('Symfony\Component\Routing\Router')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $router = \Phake::mock('Symfony\Component\Routing\Router');
+        \Phake::when($router)->getRouteCollection()->thenReturn($routes);
+
+        $snippetGenerator = new SnippetGenerator($router, $badges);
+
+        $reflectionMethod = new \ReflectionMethod($snippetGenerator, 'compileRouteParametersForBadge');
+        $reflectionMethod->setAccessible(true);
+
+        foreach( $badges as $i => $badge ){
+            $parameters = $reflectionMethod->invokeArgs($snippetGenerator, array($badge));
+            $this->assertEquals($expectedParams[$i], $parameters);
+        }
+
     }
 
     public function badgesRoutesProvider()
@@ -67,26 +79,6 @@ class SnippetGeneratorTest extends \PHPUnit_Framework_TestCase
                 )
             )
         );
-    }
-
-    /**
-     * @dataProvider badgesRoutesProvider
-     */
-    public function testCompileRouteParametersForBadge($badges, $routes, $expectedParams)
-    {
-        $this->router->expects($this->once())
-            ->method('getRouteCollection')
-            ->will($this->returnValue($routes));
-
-        $snippetGenerator = new SnippetGenerator($this->router, $badges);
-
-        $reflectionMethod = new \ReflectionMethod($snippetGenerator, 'compileRouteParametersForBadge');
-        $reflectionMethod->setAccessible(true);
-
-        foreach( $badges as $i => $badge ){
-            $parameters = $reflectionMethod->invokeArgs($snippetGenerator, array($badge));
-            $this->assertEquals($expectedParams[$i], $parameters);
-        }
     }
 
 }
