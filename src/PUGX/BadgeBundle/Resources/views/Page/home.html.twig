@@ -30,7 +30,7 @@
         <h1>Badge Poser</h1>
         <p class="lead">Pimp your README!</p>
         <p class="lead">
-            <a href="https://packagist.org/packages/pugx/badge-poser"><img style="max-width:100%;" alt="Latest Stable Version" src="https://poser.pugx.org/pugx/badge-poser/version.png"></a>
+            <a href="https://packagist.org/packages/pugx/badge-poser"><img style="max-width:100%;" alt="Latest Stable Version" src="{{ url('pugx_badge_version',{'repository': 'pugx/badge-poser'}) }}"></a>
             <a target="_blank" href="http://travis-ci.org/PUGX/badge-poser"><img src="https://secure.travis-ci.org/PUGX/badge-poser.png" /></a>
         </p>
     </div>
@@ -52,23 +52,23 @@
 
                 <div id="badges">
                     <div>
-                        <h4>Latest Stable Version <img class="pull-right spinned" id="latest_stable_version_img" src="https://poser.pugx.org/symfony/symfony/version.png"></h4>
+                        <h4>Latest Stable Version <img class="pull-right spinned" id="latest_stable_version_img" src="{{ url('pugx_badge_version',{'repository': 'symfony/symfony'}) }}"></h4>
                         <pre id="latest_stable_version_markdown" class="prettyprint">[![Latest Stable Version](https://poser.pugx.org/symfony/symfony/version.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                     <div>
-                        <h4>Total downloads <img class="pull-right spinned" id="total_img" src="https://poser.pugx.org/symfony/symfony/d/total.png"></h4>
+                        <h4>Total downloads <img class="pull-right spinned" id="total_img" src="{{ url('pugx_badge',{'repository': 'symfony/symfony'}) }}"></h4>
                         <pre id="total_markdown" class="prettyprint">[![Total Downloads](https://poser.pugx.org/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                     <div>
-                        <h4>Monthly downloads <img class="pull-right spinned" id="monthly_img" src="https://poser.pugx.org/symfony/symfony/d/monthly.png"></h4>
+                        <h4>Monthly downloads <img class="pull-right spinned" id="monthly_img" src="{{ url('pugx_badge_stat',{'repository': 'symfony/symfony', 'type':'monthly'}) }}"></h4>
                         <pre id="monthly_markdown" class="prettyprint">[![Monthly Downloads](https://poser.pugx.org/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                     <div>
-                        <h4>Daily downloads <img class="pull-right spinned" id="daily_img" src="https://poser.pugx.org/symfony/symfony/d/daily.png"></h4>
+                        <h4>Daily downloads <img class="pull-right spinned" id="daily_img" src="{{ url('pugx_badge_stat',{'repository': 'symfony/symfony', 'type':'daily'}) }}"></h4>
                         <pre id="daily_markdown" class="prettyprint">[![Daily Downloads](https://poser.pugx.org/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                     <div>
-                        <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="https://poser.pugx.org/symfony/symfony/v/unstable.png"></h4>
+                        <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="{{ url('pugx_badge_version_latest',{'repository': 'symfony/symfony', 'latest':'unstable'}) }}"></h4>
                         <pre id="latest_unstable_version_markdown" class="prettyprint">[![Latest Unstable Version](https://poser.pugx.org/symfony/symfony/v/unstable.png)](https://packagist.org/packages/symfony/symfony)</pre>
                     </div>
                 </div>
@@ -76,16 +76,41 @@
         </div>
     </div>
 
+</div>
+
+<div class=" container-narrow">
+
     <hr>
 
-    <div class="footer">
-    </div>
+    <p class="footer">Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative.</p>
 
-</div>
-    <div class="footer">
-    Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative.
+    <hr>
+
+    <div class="row-fluid">
+        <h4>Sponsors</h4>
+        <ul class="thumbnails">
+            <li class="span4">
+                <div class="thumbnail">
+                    <span class="badge pull-right">Server</span>
+                    <a href="http://www.ideato.it"  title="Ideato | Web ideas for sale"><img src="{{ asset('bundles/pugxbadge/img/ideato-srl.png') }}" alt="Ideato SRL" style="width: 300px; height: 75px"></a>
+                </div>
+            </li>
+            <li class="span4">
+                <div class="thumbnail">
+                    <span class="badge pull-right">Monitoring and Statistics</span>
+                    <a href="http://tvision.github.io" title="Tvision software team"><img src="{{ asset('bundles/pugxbadge/img/tvision.jpg') }}" alt="Tvision-team" style="  height: 75px;"></a>
+                </div>
+            </li>
+            <li class="span4">
+                <div class="thumbnail">
+                    <span class="badge pull-right">SSL certificate</span>
+                    <a href="godaddy.com" title="Godaddy Free opensource SSL certificates"><img src="{{ asset('bundles/pugxbadge/img/godaddy-logo.png') }}" alt="Go-Daddy" style="  width: 200px; height: 75px"></a>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
+
 
 <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
