@@ -11,7 +11,6 @@
 
 namespace PUGX\BadgeBundle\Service;
 
-use Doctrine\Common\Cache;
 use Packagist\Api\Client;
 
 /**

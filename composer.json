@@ -31,7 +31,7 @@
         "knplabs/packagist-api": "dev-master",
         "predis/predis": "0.8.*",
         "snc/redis-bundle": "1.1.*",
-        "imagine/Imagine": "@stable"
+        "imagine/Imagine": "0.5.*"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",

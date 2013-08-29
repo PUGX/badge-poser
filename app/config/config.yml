@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
 
 framework:
     #esi:             ~
@@ -17,7 +16,8 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:         ~
+    session:
+        name: %session_name%
     fragments:       ~
 
 # Twig Configuration
