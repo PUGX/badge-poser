@@ -120,7 +120,7 @@ class BadgeController extends ContainerAware
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
             } else if ('stable' == $latest) {
-
+                $image = $this->container->get('image_creator')->createNoStableImage(self::TEXT_NO_STABLE_RELEASE);
             } else if ($package->hasUnstableVersion()) {
                 $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
             }
@@ -133,7 +133,7 @@ class BadgeController extends ContainerAware
             $error = self::ERROR_TEXT_GENERIC;
         }
 
-        if (null == $image) {
+        if (null === $image) {
             $image = $this->container->get('image_creator')->createErrorImage($error);
             $latest = 'error';
         }

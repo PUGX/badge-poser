@@ -249,6 +249,21 @@ class ImageCreator implements ImageCreatorInterface
     }
 
     /**
+     * Create the 'stable:no release' image with the standard Font and stable image template.
+     *
+     * @param string $value
+     *
+     * @return ImageInterface
+     */
+    public function createNoStableImage($value)
+    {
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
+        $image = $this->createImage($imagePath);
+
+        return $this->addShadowedText($image, $value, 51, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
+    }
+
+    /**
      * Create the 'stable' image with the standard Font and unstable image template.
      *
      * @param string $value
