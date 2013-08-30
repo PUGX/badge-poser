@@ -100,7 +100,6 @@ class Package implements PackageInterface, ApiPackageInterface
         return $this->originalObject;
     }
 
-
     // original object's property
 
     public function getName()

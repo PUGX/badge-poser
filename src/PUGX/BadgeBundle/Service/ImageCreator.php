@@ -45,7 +45,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param string           $defaultFont
      * @param null             $defaultImage
      */
-    public function __construct(Logger $logger, ImagineInterface $imagine, $fontPath, $imagePath, $defaultFont = 'DroidSans.ttf', $defaultImage = null)
+    public function __construct(Logger $logger, ImagineInterface $imagine, $fontPath, $imagePath, $defaultFont = 'Monaco.ttf', $defaultImage = null)
     {
         $this->logger = $logger;
         $this->imagine = $imagine;
@@ -154,11 +154,12 @@ class ImageCreator implements ImageCreatorInterface
      * @param string         $font       font
      * @param Boolean        $withShadow cast shadow
      * @param int            $angle      angle
+     * @param int            $padding      padding
      *
-     * @return Imagine\Image\ImageInterface
+     * @return ImageInterface
      * @throws \UnexpectedValueException
      */
-    private function addShadowedText(ImageInterface $image, $text, $x = 3, $y = null, $size = 8.5, $font = null, $withShadow = true, $angle = 0)
+    private function addShadowedText(ImageInterface $image, $text, $x = 3, $y = null, $size = 8.5, $font = null, $withShadow = true, $angle = 0, $padding = 2)
     {
         if (null === $font) {
             $font = $this->fontPath . DIRECTORY_SEPARATOR . $this->defaultFont;
@@ -169,14 +170,25 @@ class ImageCreator implements ImageCreatorInterface
 
         if (null === $y) {
             // vertically centering textbox
-            $y = ($image->getSize()->getHeight() - $white->box($text)->getHeight()) / 2;
+            $y = ($image->getSize()->getHeight()+$padding - $white->box($text)->getHeight()) / 2;
         }
+        $space = $image->getSize()->getWidth() - 1 - $x;
+        $newX = (($space - $white->box($text)->getWidth()) / 2);
+
+        // if it doesn't fit recall with lower font size
+        if ($newX < 1 && $size > 5) {
+            $size -= 0.5;
+
+            return $this->addShadowedText($image, $text, $x, $y, $size, $font, $withShadow, $angle);
+        }
+
+        $newX += $x;
 
         try {
             if ($withShadow) {
                 $image
                     ->draw()
-                    ->text($text, $black, new Point($x + 1, $y + 1));
+                    ->text($text, $black, new Point($newX, $y + 1));
             }
         } catch (\Imagine\Exception\RuntimeException $e) {
             throw new \UnexpectedValueException('Impossible to add shadow text to the image with imagettftext.', $e);
@@ -185,7 +197,7 @@ class ImageCreator implements ImageCreatorInterface
         try {
             $image
                 ->draw()
-                ->text($text, $white, new Point($x, $y));
+                ->text($text, $white, new Point($newX, $y));
         } catch (\Imagine\Exception\RuntimeException $e) {
             throw new \UnexpectedValueException('Impossible to add text to the image with imagettftext.', $e);
         }
@@ -218,7 +230,7 @@ class ImageCreator implements ImageCreatorInterface
         $image = $this->createImage($imagePath);
         $value = $this->transformNumberToReadableFormat($value);
 
-        return $this->addShadowedText($image, $value, 64);
+        return $this->addShadowedText($image, $value, 64, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
     }
 
     /**
@@ -233,7 +245,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 59);
+        return $this->addShadowedText($image, $value, 51);
     }
 
     /**
@@ -248,7 +260,7 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 51, null, 7);
+        return $this->addShadowedText($image, $value, 51, null, 8);
     }
 
     /**
@@ -263,6 +275,6 @@ class ImageCreator implements ImageCreatorInterface
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
         $image = $this->createImage($imagePath);
 
-        return $this->addShadowedText($image, $value, 50, null, 7);
+        return $this->addShadowedText($image, $value, 51, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
     }
 }

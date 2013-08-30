@@ -15,12 +15,15 @@ use PUGX\StatsBundle\Test\StatsFunctionalTest;
 
 class PageControllerTest extends StatsFunctionalTest
 {
-    public function testHomeAction()
+    /**
+     * @dataProvider provider
+     */
+    public function testHomeAction($path)
     {
         $client = static::createClient();
         $client->enableProfiler();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', $path);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('#container h1:contains("Badge Poser")')->count());
         $this->assertEquals(1, $crawler->filter('#container p:contains("Pimp your README!")')->count());
@@ -32,5 +35,14 @@ class PageControllerTest extends StatsFunctionalTest
 
         $this->checkStatsAreNotIncremented($client);
     }
+
+    public function provider()
+    {
+        return array(
+            array('/'),
+            array('/show/doctrine/orm')
+        );
+    }
+
 
 }

@@ -112,8 +112,6 @@ class PackageManager
                 $package->{'setLatest' . $functionName . 'Version'}($currentVersionName);
                 $package->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
             }
-
-            $stable = $package;
         }
 
         return $package;

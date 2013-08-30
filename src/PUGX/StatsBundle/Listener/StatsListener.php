@@ -46,6 +46,18 @@ class StatsListener
     }
 
     /**
+     * Return true if the the route of the Request is home.
+     *
+     * @param Request $request    The request
+     *
+     * @return Boolean
+     */
+    private function isRoutedFromHome(Request $request)
+    {
+        return (strpos($request->get('_route'), 'home') !== false);
+    }
+
+    /**
      * Persist data.
      *
      * @param Request $request    The request
@@ -55,7 +67,7 @@ class StatsListener
      */
     public function persistData(Request $request, $controller)
     {
-        if (null === ($repository = $request->get('repository', null))) {
+        if (null === ($repository = $request->get('repository', null)) || $this->isRoutedFromHome($request)) {
             return;
         }
         $referer = $request->headers->get('referer');

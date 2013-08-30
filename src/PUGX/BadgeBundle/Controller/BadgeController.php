@@ -13,7 +13,6 @@ namespace PUGX\BadgeBundle\Controller;
 
 use Guzzle\Http\Exception\BadResponseException;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,6 +28,7 @@ use \UnexpectedValueException;
  */
 class BadgeController extends ContainerAware
 {
+    CONST TEXT_NO_STABLE_RELEASE = 'No release';
     CONST ERROR_TEXT_GENERIC = 'repository';
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
@@ -119,10 +119,11 @@ class BadgeController extends ContainerAware
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
-            } elseif ($package->hasUnstableVersion()) {
+            } else if ('stable' == $latest) {
+
+            } else if ($package->hasUnstableVersion()) {
                 $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
             }
-
             $status = 200;
         } catch (BadResponseException $e) {
             $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
@@ -145,6 +146,8 @@ class BadgeController extends ContainerAware
      * @param int      $status
      * @param resource $image
      * @param string   $outputFilename
+     * @param int      $maxage
+     * @param int      $smaxage
      *
      * @return StreamedResponse
      */

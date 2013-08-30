@@ -13,13 +13,14 @@ namespace PUGX\StatsBundle\Test;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use PUGX\StatsBundle\Service\NullPersister;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class StatsFunctionalTest extends WebTestCase
 {
     /**
-     * @param $client
+     * @param Client $client
      */
-    public function checkStatsAreNotIncremented($client)
+    public function checkStatsAreNotIncremented(Client $client)
     {
         $this->checkEventIsCaught($client);
 
@@ -30,12 +31,13 @@ class StatsFunctionalTest extends WebTestCase
     }
 
     /**
-     * @param $client
+     * @param Client $client
      * @param string $repo
      * @param string $action
      */
-    public function checkStatsCalls($client, $repo, $action)
+    public function checkStatsCalls(Client $client, $repo, $action)
     {
+
         $this->checkEventIsCaught($client);
 
         $this->assertTrue(NullPersister::$incrementTotalAccessCalled, "stats total access increment not called");
@@ -45,10 +47,10 @@ class StatsFunctionalTest extends WebTestCase
     }
 
     /**
-     * @param $client
+     * @param Client $client
      * @throws \Exception
      */
-    public function checkEventIsCaught($client)
+    public function checkEventIsCaught(Client $client)
     {
         $profile = $client->getProfile();
 
