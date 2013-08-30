@@ -38,10 +38,7 @@ class StatListenerTest extends WebTestCase
         $this->listener = new StatsListener($this->persister);
     }
 
-    /**
-     * @dataProvider provider
-     */
-    public function testOnKernelController($route, $accessed)
+    public function testOnKernelController()
     {
         $controller = new \StdClass();
         $method = 'boomAction';
