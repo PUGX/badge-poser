@@ -34,7 +34,7 @@
             <argument type="service" id="imagine"/>
             <argument>%kernel.root_dir%/Resources/badge-assets/fonts</argument>
             <argument>%kernel.root_dir%/Resources/badge-assets/images</argument>
-            <argument>DroidSans.ttf</argument>
+            <argument>Monaco.ttf</argument>
             <tag name="monolog.logger" channel="image_creator"/>
         </service>
 

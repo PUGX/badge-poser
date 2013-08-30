@@ -11,7 +11,6 @@
 
 namespace PUGX\BadgeBundle\Service;
 
-use Doctrine\Common\Cache;
 use Packagist\Api\Client;
 
 /**
@@ -22,9 +21,9 @@ use Packagist\Api\Client;
 class CachedClient extends Client
 {
     protected $cache = null;
-    protected $TTLSearch = 1800;
-    protected $TTLGet = 1800;
-    protected $TTLAll= 1800;
+    protected $TTLSearch = 900;
+    protected $TTLGet = 900;
+    protected $TTLAll= 900;
 
     /**
      * @param int $TTLAll

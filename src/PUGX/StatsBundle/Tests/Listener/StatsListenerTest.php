@@ -38,14 +38,23 @@ class StatListenerTest extends WebTestCase
         $this->listener = new StatsListener($this->persister);
     }
 
-    public function testOnKernelController()
+    /**
+     * @dataProvider provider
+     */
+    public function testOnKernelController($route, $accessed)
     {
         $controller = new \StdClass();
         $method = 'boomAction';
         $repository = 'pugx/badge-poser';
         $url = 'https://poser.pugx.org';
-        $this->request->expects($this->once())->method('get')
+        $this->request->expects($this->at(0))
+            ->method('get')
+            ->with('repository')
             ->will($this->returnValue($repository));
+        $this->request->expects($this->at(1))
+            ->method('get')
+            ->with('_route')
+            ->will($this->returnValue('route_xyz'));
 
         // adding referer
         $this->request->headers = $this->getMockBuilder('Symfony\Component\HttpFoundation\ParameterBag')
@@ -61,17 +70,31 @@ class StatListenerTest extends WebTestCase
         $this->controllerEvent->expects($this->once())->method('getController')
             ->will($this->returnValue(array($controller, $method)));
 
-        $this->persister->expects($this->once())->method('incrementTotalAccess')
+        $this->persister
+            ->expects($this->once())
+            ->method('incrementTotalAccess')
             ->will($this->returnSelf());
-        $this->persister->expects($this->once())->method('incrementRepositoryAccess')
+
+        $this->persister
+            ->expects($this->once())
+            ->method('incrementRepositoryAccess')
             ->with($repository)
             ->will($this->returnSelf());
-        $this->persister->expects($this->once())->method('addRepositoryToLatestAccessed')
+
+        $this->persister
+            ->expects($this->once())
+            ->method('addRepositoryToLatestAccessed')
             ->will($this->returnSelf());
-        $this->persister->expects($this->once())->method('incrementRepositoryAccessType')
+
+        $this->persister
+            ->expects($this->once())
+            ->method('incrementRepositoryAccessType')
             ->with($repository, $method)
             ->will($this->returnSelf());
-        $this->persister->expects($this->once())->method('addReferer')
+
+        $this->persister
+            ->expects($this->once())
+            ->method('addReferer')
             ->with($url)
             ->will($this->returnSelf());
 
