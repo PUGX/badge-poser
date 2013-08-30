@@ -27,16 +27,23 @@ class PageController extends ContainerAware
 {
     /**
      * @Route("/",
-     *     name="pugx_page_home"
+     *     name  = "pugx_page_home"
      *     )
+     *
+     * @Route("/show/{repository}",
+     *     name         = "pugx_page_home-show",
+     *     defaults     = {"repository" = "doctrine/orm"},
+     *     requirements = {"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     *     )
+     *
      * @Method({"GET"})
      * @Template
      * @Cache(maxage="3600", smaxage="3600", public=true)
      *
      * @return Response
      */
-    public function homeAction()
+    public function homeAction($repository = 'doctrine/orm')
     {
-        return array();
+        return array('repository' => $repository);
     }
 }

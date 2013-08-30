@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fdaf036c8bd1b24bda0e55f6268e7a85",
+    "hash": "e96c9eea41aa380a79acde0950862c4d",
     "packages": [
         {
             "name": "doctrine/common",
@@ -439,16 +439,16 @@
         },
         {
             "name": "knplabs/packagist-api",
-            "version": "dev-master",
+            "version": "v1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "f8edf32d836d0398a6e38d4a59f1a65601fe7991"
+                "reference": "06322002c94d75b810bb4e30c2f3310e895c796c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/f8edf32d836d0398a6e38d4a59f1a65601fe7991",
-                "reference": "f8edf32d836d0398a6e38d4a59f1a65601fe7991",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/06322002c94d75b810bb4e30c2f3310e895c796c",
+                "reference": "06322002c94d75b810bb4e30c2f3310e895c796c",
                 "shasum": ""
             },
             "require": {
@@ -488,7 +488,7 @@
                 "composer",
                 "packagist"
             ],
-            "time": "2013-08-08 13:48:57"
+            "time": "2013-08-30 07:11:24"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1707,8 +1707,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "knplabs/packagist-api": 20,
-        "imagine/imagine": 0,
         "phpunit/phpunit": 0
     },
     "platform": {
