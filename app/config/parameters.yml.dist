@@ -6,7 +6,7 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            aeeffc9503a4a90db11ef58059d592dc
     redis_hostname:    localhost
     redis_database_default: 0
     redis_database_cache: 1
