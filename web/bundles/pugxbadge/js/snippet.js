@@ -22,4 +22,14 @@ $(document).ready(function(){
         },200);
 
     };
+
+	var generateSnippets = function(snippets_raw_data){
+		$.each(snippets_raw_data, function(idx, snippet){
+                $('.' + idx + '_markdown').html(snippet.markdown);
+                $('.' + idx + '_img').attr('src', snippet.img);
+                $('.' + idx + '_clip').attr('data-clipboard-text', snippet.markdown);
+		});
+	};
+
+
 });
