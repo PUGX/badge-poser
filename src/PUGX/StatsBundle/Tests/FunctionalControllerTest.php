@@ -11,10 +11,10 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
 use Packagist\Api\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BadgeControllerTest extends WebTestCase
+class FunctionalControllerTest extends StatsFunctionalTest
 {
     protected $packagistClient;
 
@@ -38,45 +38,53 @@ class BadgeControllerTest extends WebTestCase
         return new Client($clientHttp);
     }
 
-    public function testDownloadsAction()
+    public function testOnDownloadsActionStatisticShouldBeCreated()
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $client->request('GET', '/pugx/badge-poser/d/total.png');
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
     }
 
-    public function testLatestStableAction()
+    public function testOnLatestStableActionStatisticShouldBeCreated()
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $client->request('GET', '/pugx/badge-poser/version.png');
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
-    public function testLatestUnstableAction()
+    public function testOnLatestUnstableActionStatisticShouldBeCreated()
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/v/unstable.png');
+        $client->request('GET', '/pugx/badge-poser/v/unstable.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $response = $client->getResponse();
-        $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
+
+        $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
-    public function testIfPackageDoesntExist()
+    /**
+     * @dataProvider provider
+     */
+    public function testOnHomeActionStatisticShouldNotBeCreated($path)
     {
-        $data = '{"status":"error","message":"Package not found"}';
-
-        $packagistClient = $this->createPackagistClient($data, 500);
-
         $client = static::createClient();
-        static::$kernel->getContainer()->set('packagist_client', $packagistClient);
-        $crawler = $client->request('GET', '/pugx/microsoft-lover/d/total.png');
+        $client->enableProfiler();
 
-        $this->assertFalse($client->getResponse()->getContent());
-        $this->assertTrue($client->getResponse()->isServerError());
+        $client->request('GET', $path);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->checkStatsAreNotIncremented($client);
+    }
+
+    public function provider()
+    {
+        return array(
+            array('/'),
+            array('/show/pugx/badge-poser')
+        );
     }
 }
