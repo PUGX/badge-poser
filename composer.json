@@ -1,6 +1,6 @@
 {
     "name": "pugx/badge-poser",
-    "description": "add badges on your readme, such as downloads number or latest version.",
+    "description": "Poser, add badges on your readme, such as downloads number or latest version.",
     "keywords": ["composer", "packagist", "badge", "pin"],
     "homepage": "https://github.com/PUGX",
     "type": "symfony-project",

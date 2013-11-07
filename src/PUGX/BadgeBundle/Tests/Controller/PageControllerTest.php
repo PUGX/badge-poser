@@ -11,9 +11,9 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
-use PUGX\StatsBundle\Test\StatsFunctionalTest;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PageControllerTest extends StatsFunctionalTest
+class PageControllerTest extends WebTestCase
 {
     /**
      * @dataProvider provider
@@ -32,8 +32,6 @@ class PageControllerTest extends StatsFunctionalTest
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Monthly downloads")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Stable Version")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Unstable Version")')->count());
-
-        $this->checkStatsAreNotIncremented($client);
     }
 
     public function provider()
