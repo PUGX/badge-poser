@@ -44,11 +44,11 @@
                 <hr class="styled">
                 <h3 class="centered-content">Show the markdown for your Badges</h3>
                 <form id="generate-form" action="{{ path('pugx_snippet_all') }}" class="form-inline centered-content">
-                  <input type="text" name="repository" class="input" placeholder="vendor/repository">
+                  <input type="text" name="repository" class="input" placeholder="vendor/repository" value="{{ repository }}">
                   <button id="generate" class="btn">Show</button>
                 </form>
-                <p class="centered-content"><small >Put the following snippets in your README.markdown:</small></p>
-
+                <p class="centered-content"><small>Put the following snippets in your README.markdown:</small></p>
+                <p class="centered-content"><small><a href="{{ url('pugx_page_home_show',{'repository': repository}) }}" title="Permalink to {{ repository }} page"><img width="15" src="{{ asset('bundles/pugxbadge/img/permalink.png') }}" alt="Permalink to {{ repository }} page"> Permalink to this page</a></small></p>
                 <div id="badges">
                     <div>
                         <h4>Latest Stable Version <img class="pull-right spinned" id="latest_stable_version_img" src="{{ path('pugx_badge_version',{'repository': repository}) }}"></h4>
@@ -81,7 +81,11 @@
 
     <hr>
 
-    <p class="footer">Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative.</p>
+    <div>
+        <p class="footer">Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative.</p>
+
+    </div>
+
 
     <hr>
 

@@ -42,7 +42,8 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
+        $client->request('GET', '/pugx/badge-poser/d/total.png');
+
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -50,7 +51,7 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
+        $client->request('GET', '/pugx/badge-poser/version.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
@@ -59,7 +60,7 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/v/unstable.png');
+        $client->request('GET', '/pugx/badge-poser/v/unstable.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
@@ -74,7 +75,7 @@ class BadgeControllerTest extends WebTestCase
 
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $packagistClient);
-        $crawler = $client->request('GET', '/pugx/microsoft-lover/d/total.png');
+        $client->request('GET', '/pugx/microsoft-lover/d/total.png');
 
         $this->assertFalse($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isServerError());
