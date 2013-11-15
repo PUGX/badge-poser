@@ -44,6 +44,12 @@ class PageController extends ContainerAware
      */
     public function homeAction($repository = 'doctrine/orm')
     {
-        return array('repository' => $repository);
+        
+        $redis_reader = $this->container->get('stats_reader');
+        
+        return array(
+            'repository' => $repository,
+            'total_access' => $redis_reader->totalAccess()
+            );
     }
 }
