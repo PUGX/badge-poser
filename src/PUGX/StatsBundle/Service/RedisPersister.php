@@ -60,6 +60,16 @@ class RedisPersister implements PersisterInterface
     public function incrementTotalAccess()
     {
         $this->redis->incr($this->keyTotal);
+
+        $key = $this->createDailyKey($this->keyTotal);
+        $this->redis->incr($key);
+
+        $key = $this->createMonthlyKey($this->keyTotal);
+        $this->redis->incr($key);
+
+        $key = $this->createYearlyKey($this->keyTotal);
+        $this->redis->incr($key);
+
         return $this;
     }
 
@@ -73,6 +83,15 @@ class RedisPersister implements PersisterInterface
     public function incrementRepositoryAccess($repository)
     {
         $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), self::KEY_TOTAL, 1);
+
+        $key = $this->createDailyKey(self::KEY_TOTAL);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
+
+        $key = $this->createMonthlyKey(self::KEY_TOTAL);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
+
+        $key = $this->createYearlyKey(self::KEY_TOTAL);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
 
         return $this;
     }
@@ -120,5 +139,63 @@ class RedisPersister implements PersisterInterface
         $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time() ,$url);
 
         return $this;
+    }
+
+
+
+    /**
+     * Create the yearly key with prefix eg. 'total_2003'
+     *
+     * @param string    $prefix
+     * @param \DateTime $datetime
+     *
+     * @return string
+     */
+    private function createYearlyKey($prefix, \DateTime $datetime = null)
+    {
+        return sprintf("%s_%s", $prefix, $this->formatDate($datetime, 'Y'));
+    }
+
+    /**
+     * Create the monthly key with prefix eg. 'total_2003_11'
+     *
+     * @param string    $prefix
+     * @param \DateTime $datetime
+     *
+     * @return string
+     */
+    private function createMonthlyKey($prefix, \DateTime $datetime = null)
+    {
+        return sprintf("%s_%s", $prefix, $this->formatDate($datetime, 'Y_m'));
+    }
+
+    /**
+     * Create the daily key with prefix eg. 'total_2003_11_29'
+     *
+     * @param string    $prefix
+     * @param \DateTime $datetime
+     *
+     * @return string
+     */
+    private function createDailyKey($prefix, \DateTime $datetime = null)
+    {
+        return sprintf("%s_%s", $prefix, $this->formatDate($datetime, 'Y_m_d'));
+    }
+
+    /**
+     * format a date.
+     *
+     * @param \DateTime $datetime
+     * @param string    $format
+     *
+     * @return string
+     */
+    private function formatDate(\DateTime $datetime = null, $format = 'Y_m_d')
+    {
+        if (null == $datetime) {
+            $datetime = new \DateTime('now');
+        }
+
+        return $datetime->format($format);
     }
 }
