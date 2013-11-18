@@ -18,7 +18,7 @@ namespace PUGX\StatsBundle\Service;
  */
 class NullReader implements ReaderInterface
 {
-    public static $incrementTotalAccessCalled = false;
+    public static $totalAccess = false;
 
     /**
      * Return the total accesses.
@@ -27,7 +27,7 @@ class NullReader implements ReaderInterface
      */
     public function totalAccess()
     {
-        return static::$incrementTotalAccessCalled;
+        return static::$totalAccess;
     }
 
 }
