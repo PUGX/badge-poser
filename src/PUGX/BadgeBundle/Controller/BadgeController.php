@@ -18,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use \UnexpectedValueException;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,35 +42,18 @@ class BadgeController extends ContainerAware
      */
     public function searchPackagistAction(Request $request)
     {
-
         $responseContent = array();
         $packageName = $request->query->get('name');
 
-        try {
+        $packagistResponse = $this->container->get('packagist_client')->search($packageName);
 
-            $packagistResponse = $this->container->get('packagist_client')->search($packageName);
-
-            foreach ($packagistResponse as $package) {
-                $responseContent[] = array("id" => $package->getName(), "description" => $package->getDescription());
-            }
-
-            $httpStatus = 200;
-
-        } catch (\Exception $e) {
-
-            $logger = $this->container->get('logger');
-            $logger->error('Error connecting to Packagist API | '. $e->getMessage());
-
-            $responseContent = array("ERRORa" => $e->getCode(), "MESSAGEa" => $e->getMessage() );
-            $httpStatus = 501;
-
+        foreach ($packagistResponse as $package) {
+            $responseContent[] = array("id" => $package->getName(), "description" => $package->getDescription());
         }
 
-        $response = new Response(json_encode($responseContent), $httpStatus);
-        $response->headers->set('Content-Type', 'application/json');
+        $response = new JsonResponse($responseContent);
 
         return $response;
-
     }
 
     /**
