@@ -62,12 +62,12 @@ class SnippetGenerator
     {
         $snippets = array();
         foreach($this->badges as $badge) {
-
             $snippets[$badge['name']] = array(
                 'markdown'  => $this->generateMarkdown($badge, $repository),
                 'img'       => $this->generateImg($badge, $repository)
             );
         }
+
         return $snippets;
     }
 

@@ -13,6 +13,7 @@ namespace PUGX\BadgeBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,12 +28,12 @@ class PageController extends ContainerAware
 {
     /**
      * @Route("/",
-     *     name  = "pugx_page_home"
+     *     name  = "pugx_page_home",
+     *     defaults     = {"repository" = "leaphly/cart-bundle"}
      *     )
      *
      * @Route("/show/{repository}",
-     *     name         = "pugx_page_home-show",
-     *     defaults     = {"repository" = "doctrine/orm"},
+     *     name         = "pugx_page_home_show",
      *     requirements = {"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
      *
@@ -42,7 +43,7 @@ class PageController extends ContainerAware
      *
      * @return Response
      */
-    public function homeAction($repository = 'doctrine/orm')
+    public function homeAction($repository)
     {
 
         $redisReader = $this->container->get('stats_reader');
@@ -52,4 +53,21 @@ class PageController extends ContainerAware
             'total_access' => $redisReader->totalAccess()
             );
     }
+
+    /**
+     * @Route("/show/",
+     *     name  = "pugx_page_show_qs"
+     *     )
+     * @Method({"GET"})
+     * @Template("PUGXBadgeBundle:Page:home.html.twig")
+     * @Cache(maxage="3600", smaxage="3600", public=true)
+     *
+     * @return Response
+     */
+    public function showAction(Request $request)
+    {
+        $repository = $request->get('repository');
+        return array('repository' => $repository);
+    }
+
 }

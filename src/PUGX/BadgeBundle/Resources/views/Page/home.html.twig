@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Badge Poser</title>
+    <title>Badge Poser - packagist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Flat and Clean.">
-    <meta name="author" content="Jenil Gogari">
-
+    <meta name="description" content="Badges for packagist and composer.">
+    <meta name="author" content="Giulio De Donato">
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -17,7 +16,7 @@
         '@PUGXBadgeBundle/Resources/public/css/custom.css'
 
         filter='?yui_css' %}
-<link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 </head>
 
@@ -40,39 +39,100 @@
     <div class="row-fluid bundles">
         <div class="span12">
             <article>
-                <h3 class="centered-content"><strong>Be a poser!</strong></h3>
+                <h2 class="centered-content"><strong>Be a poser!</strong></h2>
                 <p>
                     Use shields for your <a href="https://packagist.org">packagist.org</a> repository, showing how many times your project has been downloaded from Packagist.org or its latest stable version.
                 </p>
                 <hr class="styled">
-                <h3 class="centered-content">Show the markdown for your Badges</h3>
-                <form id="generate-form" action="{{ path('pugx_snippet_all') }}" class="form-inline centered-content">
-                  <input type="text" name="repository" class="input" placeholder="vendor/repository">
+                <h3 class="centered-content">Markdown for your Badges</h3>
+                <form id="go" action="{{ path('pugx_page_show_qs') }}#badges" class="form-inline centered-content" method="get">
+                  <input type="text" name="repository" class="input" placeholder="vendor/repository" value="{{ repository }}">
                   <button id="generate" class="btn">Show</button>
                 </form>
-                <p class="centered-content"><small >Put the following snippets in your README.markdown:</small></p>
+                <p class="centered-content"><small>Put the following snippets in your README.markdown:</small></p>
 
                 <div id="badges">
                     <div>
-                        <h4>Latest Stable Version <img class="pull-right spinned" id="latest_stable_version_img" src="{{ path('pugx_badge_version',{'repository': repository}) }}"></h4>
-                        <pre id="latest_stable_version_markdown" class="prettyprint">[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                        <h2>{{ repository }}
+                                <a title="Permalink for {{ repository }} repository" href="{{ url('pugx_page_home_show',{'repository': repository}) }}#badges" class="headerlink">¶</a>
+                            </a></h2>
+                        <a title="copy to clipboard"  class="copy_on_clip " data-clipboard-text="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }}) [![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }}) [![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                            <img class="latest_stable_version_img" src="{{ path('pugx_badge_version',{'repository': repository}) }}"> <img class="total_img" src="{{ path('pugx_badge',{'repository': repository}) }}"> <img class="latest_unstable_version_img" src="{{ path('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }}">
+                        </a>
+                        <a title="copy to clipboard"  class="copy_on_clip btn btn-mini pull-right" data-clipboard-text="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }}) [![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }}) [![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                            <i class="icon-share"></i> Copy to clipboard</a>
+                    </div>
+
+                    <hr>
+
+                    <div>
+                        <h4>Latest Stable Version
+                            <span class="pull-right">
+                                <a title="copy to clipboard"  class="copy_on_clip" data-clipboard-text="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <img class="spinned latest_stable_version_img" src="{{ path('pugx_badge_version',{'repository': repository}) }}">
+                                </a>
+                                <a title="copy to clipboard"  class="copy_on_clip btn btn-mini latest_stable_version_clip" data-clipboard-text="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <i class="icon-share"></i>
+                                </a>
+                            </span>
+                        </h4>
+                        <pre class="prettyprint latest_stable_version_markdown">[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
                     </div>
                     <div>
-                        <h4>Total downloads <img class="pull-right spinned" id="total_img" src="{{ path('pugx_badge',{'repository': repository}) }}"></h4>
-                        <pre id="total_markdown" class="prettyprint">[![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                        <h4>Total downloads
+                            <span class="pull-right">
+                                <a title="copy to clipboard" class="copy_on_clip total_clip" data-clipboard-text="[![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <img class="spinned total_img" src="{{ path('pugx_badge',{'repository': repository}) }}">
+                                </a>
+                                <a title="copy to clipboard" class="copy_on_clip btn btn-mini total_clip" data-clipboard-text="[![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <i class="icon-share"></i>
+                                </a>
+                            </span>
+                            </h4>
+                        <pre class="prettyprint total_markdown">[![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                    </div>
+
+                    <div>
+                        <h4>Latest Unstable Version
+                            <span class="pull-right">
+                                 <a title="copy to clipboard"  class="copy_on_clip latest_unstable_version_clip" data-clipboard-text="[![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }})">
+                                     <img class="spinned latest_unstable_version_img" src="{{ path('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }}">
+                                 </a>
+                                 <a title="copy to clipboard"  class="copy_on_clip btn btn-mini  latest_unstable_version_clip" data-clipboard-text="[![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <i class="icon-share"></i>
+                                 </a>
+                            </span>
+                        </h4>
+                        <pre class="prettyprint latest_unstable_version_markdown">[![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                    </div>
+
+                    <div>
+                        <h4>Monthly downloads
+                            <span class="pull-right">
+                                <a title="copy to clipboard"  class="copy_on_clip monthly_clip" data-clipboard-text="[![Monthly Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <img class="spinned monthly_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }}">
+                                </a>
+                                <a title="copy to clipboard"  class="copy_on_clip btn btn-mini monthly_clip" data-clipboard-text="[![Monthly Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                    <i class="icon-share"></i>
+                                </a>
+                            </span>
+                        </h4>
+                        <pre class="prettyprint monthly_markdown">[![Monthly Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
                     </div>
                     <div>
-                        <h4>Monthly downloads <img class="pull-right spinned" id="monthly_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }}"></h4>
-                        <pre id="monthly_markdown" class="prettyprint">[![Monthly Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                        <h4>Daily downloads
+                            <span class="pull-right">
+                             <a title="copy to clipboard"  class="copy_on_clip daily_clip" data-clipboard-text="[![Daily Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                <img class="spinned daily_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }}">
+                             </a>
+                             <a title="copy to clipboard"  class="copy_on_clip btn btn-mini daily_clip" data-clipboard-text="[![Daily Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})">
+                                <i class="icon-share"></i>
+                             </a>
+                            </span>
+                        </h4>
+                        <pre class="prettyprint daily_markdown">[![Daily Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
                     </div>
-                    <div>
-                        <h4>Daily downloads <img class="pull-right spinned" id="daily_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }}"></h4>
-                        <pre id="daily_markdown" class="prettyprint">[![Daily Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
-                    </div>
-                    <div>
-                        <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="{{ path('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }}"></h4>
-                        <pre id="latest_unstable_version_markdown" class="prettyprint">[![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }})</pre>
-                    </div>
+
                 </div>
             </article>
         </div>
@@ -84,10 +144,11 @@
 
     <hr>
 
-    <p class="footer">Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative.</p>
-
+    <div class="footer">
+        <p>Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative,
+         see the full list of <a href="https://github.com/PUGX/badge-poser/graphs/contributors" target="_blank">contributors</a>.</p>
+    </div>
     <hr>
-
     <div class="row-fluid">
         <h4>Sponsors</h4>
         <ul class="thumbnails">
@@ -113,7 +174,6 @@
     </div>
 </div>
 
-
 <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
 <!-- Placed at the end of the document so the pages load faster -->
@@ -125,6 +185,12 @@ filter='?yui_js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
+{% javascripts
+    '@PUGXBadgeBundle/Resources/public/js/zeroclipboard/ZeroClipboard.min.js'
+    filter='?yui_js'
+%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -135,5 +201,26 @@ filter='?yui_js' %}
   ga('send', 'pageview');
 
 </script>
+
+
+
+<script type="text/javascript">
+    {% image
+    '@PUGXBadgeBundle/Resources/public/js/zeroclipboard/ZeroClipboard.swf'
+    %}
+    var clip = new ZeroClipboard($('.copy_on_clip'), {moviePath: "{{ asset_url }}" });
+    {% endimage %}
+
+    clip.on( 'complete', function ( client, args ) {
+        alert("Badges copied to the clipboard.");
+    } );
+    clip.on( 'noflash', function ( client, args ) {
+        alert("Flash support not found.\n please copy:" + args.text );
+    } );
+    clip.on( 'wrongflash', function ( client, args ) {
+        alert("Flash version is too old\n please copy:" + args.text );
+    } );
+</script>
+
 </body>
 </html>
