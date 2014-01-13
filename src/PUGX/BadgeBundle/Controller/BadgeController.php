@@ -18,6 +18,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use \UnexpectedValueException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BadgeController.
@@ -25,6 +27,7 @@ use \UnexpectedValueException;
  *
  * @author Giulio De Donato <liuggio@gmail.com>
  * @author Leonardo Proietti <leonardo.proietti@gmail.com>
+ * @author Simone Fumagalli <simone@iliveinperego.com>
  */
 class BadgeController extends ContainerAware
 {
@@ -32,6 +35,26 @@ class BadgeController extends ContainerAware
     CONST ERROR_TEXT_GENERIC = 'repository';
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
+
+    /**
+     * @Route("/search_packagist", name="search_packagist")
+     * @Method("GET")
+     */
+    public function searchPackagistAction(Request $request)
+    {
+        $responseContent = array();
+        $packageName = $request->query->get('name');
+
+        $packagistResponse = $this->container->get('packagist_client')->search($packageName);
+
+        foreach ($packagistResponse as $package) {
+            $responseContent[] = array("id" => $package->getName(), "description" => $package->getDescription());
+        }
+
+        $response = new JsonResponse($responseContent);
+
+        return $response;
+    }
 
     /**
      * Downloads action.
@@ -81,6 +104,7 @@ class BadgeController extends ContainerAware
         }
 
         $outputFilename = sprintf('%s.png', $type);
+
         return $this->streamImage($status, $image, $outputFilename);
     }
 
@@ -119,9 +143,9 @@ class BadgeController extends ContainerAware
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
-            } else if ('stable' == $latest) {
+            } elseif ('stable' == $latest) {
                 $image = $this->container->get('image_creator')->createNoStableImage(self::TEXT_NO_STABLE_RELEASE);
-            } else if ($package->hasUnstableVersion()) {
+            } elseif ($package->hasUnstableVersion()) {
                 $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
             }
             $status = 200;
@@ -139,6 +163,7 @@ class BadgeController extends ContainerAware
         }
 
         $outputFilename = sprintf('%s.png', $latest);
+
         return $this->streamImage($status, $image, $outputFilename);
     }
 

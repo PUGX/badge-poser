@@ -14,8 +14,8 @@
     {% stylesheets
         '@PUGXBadgeBundle/Resources/public/css/bootstrap.css'
         '@PUGXBadgeBundle/Resources/public/css/bootstrap-responsive.css'
+        '@PUGXBadgeBundle/Resources/public/css/select2.css'
         '@PUGXBadgeBundle/Resources/public/css/custom.css'
-
         filter='?yui_css' %}
 <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
@@ -46,10 +46,13 @@
                 </p>
                 <hr class="styled">
                 <h3 class="centered-content">Show the markdown for your Badges</h3>
-                <form id="generate-form" action="{{ path('pugx_snippet_all') }}" class="form-inline centered-content">
-                  <input type="text" name="repository" class="input" placeholder="vendor/repository">
-                  <button id="generate" class="btn">Show</button>
-                </form>
+                
+                <form id="generate-form" action="{{ path('pugx_snippet_all') }}" class="form-inline clearfix">
+                  <input type="hidden" class="bigdrop span9 offset1" id="repository" placeholder="vendor/repository" name="repository" />
+                  <button id="generate" class="btn" style="height :28px; margin-left: 10px" >Show</button>
+                  <hr class="styled clearfix">
+                </form> 
+                
                 <p class="centered-content"><small >Put the following snippets in your README.markdown:</small></p>
 
                 <div id="badges">
@@ -113,12 +116,12 @@
     </div>
 </div>
 
-
 <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
 <!-- Placed at the end of the document so the pages load faster -->
 {% javascripts
     '@PUGXBadgeBundle/Resources/public/js/jquery-2.0.2.min.js'
+    '@PUGXBadgeBundle/Resources/public/js/select2.min.js'
     '@PUGXBadgeBundle/Resources/public/js/bootstrap.js'
     '@PUGXBadgeBundle/Resources/public/js/snippet.js'
 filter='?yui_js' %}
