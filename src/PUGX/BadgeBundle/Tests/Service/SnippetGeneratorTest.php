@@ -30,7 +30,7 @@ class SnippetGeneratorTest extends \PHPUnit_Framework_TestCase
         $reflectionMethod = new \ReflectionMethod($snippetGenerator, 'compileRouteParametersForBadge');
         $reflectionMethod->setAccessible(true);
 
-        foreach( $badges as $i => $badge ){
+        foreach ($badges as $i => $badge) {
             $parameters = $reflectionMethod->invokeArgs($snippetGenerator, array($badge));
             $this->assertEquals($expectedParams[$i], $parameters);
         }

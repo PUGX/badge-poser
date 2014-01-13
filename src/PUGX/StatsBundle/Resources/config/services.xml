@@ -14,7 +14,7 @@
         <service id="stats_persister" class="%stats_persister.class%">
             <argument type="service" id="snc_redis.default"/>
         </service>
-        
+
         <service id="stats_reader" class="%stats_reader.class%">
             <argument type="service" id="snc_redis.default"/>
         </service>

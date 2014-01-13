@@ -31,7 +31,7 @@ class RedisReader implements ReaderInterface
         $this->keyPrefix = $keyPrefix;
         $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
     }
-    
+
     /**
      * Generate the Key with the default prefix.
      *

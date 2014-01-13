@@ -29,7 +29,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $treeBuilder->root('pugx_stats');
 
-
         return $treeBuilder;
     }
 }
