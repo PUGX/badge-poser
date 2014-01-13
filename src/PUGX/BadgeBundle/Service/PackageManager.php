@@ -131,7 +131,6 @@ class PackageManager
             && null !== $extra["branch-alias"]
             && is_array($extra["branch-alias"])
         ) {
-
             return $extra["branch-alias"];
         }
 
@@ -182,7 +181,7 @@ class PackageManager
      * Take the Type of the Downloads (total, monthly or daily).
      *
      * @param Package $package
-     * @param string $type
+     * @param string  $type
      *
      * @return string
      */

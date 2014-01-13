@@ -42,5 +42,4 @@ class PageControllerTest extends WebTestCase
         );
     }
 
-
 }

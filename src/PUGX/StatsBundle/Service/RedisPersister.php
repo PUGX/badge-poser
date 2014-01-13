@@ -126,7 +126,6 @@ class RedisPersister implements PersisterInterface
         return $this;
     }
 
-
     /**
      * Add the referrer to a subset.
      *
@@ -140,8 +139,6 @@ class RedisPersister implements PersisterInterface
 
         return $this;
     }
-
-
 
     /**
      * Create the yearly key with prefix eg. 'total_2003'

@@ -123,7 +123,8 @@ class CachedClient extends Client
      *
      * @return string
      */
-    private function getPrefixKey($method, $argument) {
+    private function getPrefixKey($method, $argument)
+    {
         return sprintf("%s.%s", $method, json_encode($argument));
     }
 
@@ -137,6 +138,7 @@ class CachedClient extends Client
             $results = parent::search($query);
             $this->getCache()->save($key, $results, $this->TTLSearch);
         }
+
         return $results;
     }
 
@@ -167,4 +169,4 @@ class CachedClient extends Client
 
         return $results;
     }
-}	
+}

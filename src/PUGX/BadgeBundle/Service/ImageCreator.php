@@ -142,7 +142,6 @@ class ImageCreator implements ImageCreatorInterface
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
-
     /**
      * Add a shadowed text to an Image.
      *
@@ -154,7 +153,7 @@ class ImageCreator implements ImageCreatorInterface
      * @param string         $font       font
      * @param Boolean        $withShadow cast shadow
      * @param int            $angle      angle
-     * @param int            $padding      padding
+     * @param int            $padding    padding
      *
      * @return ImageInterface
      * @throws \UnexpectedValueException

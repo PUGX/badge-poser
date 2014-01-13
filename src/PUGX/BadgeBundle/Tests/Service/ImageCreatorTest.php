@@ -38,8 +38,6 @@ class ImageCreatorTest extends WebTestCase
         $this->imageCreator = new ImageCreator($this->logger, $this->imagine, $this->fontPath, $this->imagesPath);
     }
 
-
-
     /**
      * @dataProvider getBadNumberToConvert
      * @expectedException InvalidArgumentException
@@ -81,8 +79,6 @@ class ImageCreatorTest extends WebTestCase
             array('9001003000000', '9.0 bb'),
         );
     }
-
-
 
     /**
      * @expectedException \PHPUnit_Framework_Error

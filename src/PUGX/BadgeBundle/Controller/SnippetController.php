@@ -43,13 +43,14 @@ class SnippetController extends ContainerAware
         if (!$this->isValidRepositoryName($repository)) {
             $response->setData(array('msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)'));
             $response->setStatusCode(404);
+
             return $response;
         }
 
         try {
             $badges = $this->container->get('snippet_generator')->generateAllSnippets($repository);
             $response->setData($badges);
-        } catch(ClientErrorResponseException $e) {
+        } catch (ClientErrorResponseException $e) {
             $response->setData(array('msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)'));
             $response->setStatusCode(404);
         } catch (\Exception $e) {
@@ -63,7 +64,7 @@ class SnippetController extends ContainerAware
     /**
      * Validates a repository name.
      *
-     * @param  string   $repository
+     * @param  string  $repository
      * @return Boolean
      */
     private function isValidRepositoryName($repository)

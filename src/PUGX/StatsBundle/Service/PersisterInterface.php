@@ -38,7 +38,7 @@ Interface PersisterInterface
      * Add the repository to the list of the latest accessed.
      *
      * @param string $repository
-     * @param int $maxListLength
+     * @param int    $maxListLength
      *
      * @return PersisterInterface
      */

@@ -48,7 +48,7 @@ class StatsListener
     /**
      * Return true if the the route of the Request is home.
      *
-     * @param Request $request    The request
+     * @param Request $request The request
      *
      * @return Boolean
      */
@@ -61,7 +61,7 @@ class StatsListener
      * Persist data.
      *
      * @param Request $request    The request
-     * @param string $controller The controller Name
+     * @param string  $controller The controller Name
      *
      * @return Boolean
      */

@@ -47,7 +47,7 @@ class StatsFunctionalTest extends WebTestCase
     }
 
     /**
-     * @param Client $client
+     * @param  Client     $client
      * @throws \Exception
      */
     public function checkEventIsCaught(Client $client)

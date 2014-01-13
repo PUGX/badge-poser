@@ -113,6 +113,7 @@ class PackageManagerTest extends WebTestCase
             $version->fromArray($branch);
             $versions[] = $version;
         }
+
         return $versions;
     }
 }

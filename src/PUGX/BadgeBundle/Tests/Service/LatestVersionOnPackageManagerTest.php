@@ -28,6 +28,7 @@ class LatestVersionOnPackageManagerTest extends WebTestCase
         $clientHttp->addSubscriber($plugin);
 
         $c = new Client($clientHttp);
+
         return new PackageManager($c, '\PUGX\BadgeBundle\Package\Package');
     }
 

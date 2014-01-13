@@ -83,12 +83,10 @@ class Package implements PackageInterface, ApiPackageInterface
         return $this->latestUnstableVersionNormalized;
     }
 
-
     public function hasUnstableVersion()
     {
         return isset($this->latestUnstableVersion);
     }
-
 
     public function setOriginalObject(ApiPackage $originalObject)
     {
