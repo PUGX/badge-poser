@@ -22,13 +22,13 @@ $(document).ready(function(){
         escapeMarkup: function (m) { return m; }
     });
 
-    function packageFormatResult(package) {
-        var markup = "<dt>" + package.id + "</dt><dd>" + package.description + "</dd>";
+    function packageFormatResult(packageInfo) {
+        var markup = "<dt>" + packageInfo.id + "</dt><dd>" + packageInfo.description + "</dd>";
         return markup;
     }
 
-    function packageFormatSelection(package) {
-        return package.id;
+    function packageFormatSelection(packageInfo) {
+        return packageInfo.id;
     }
 
     var lock = function(){
