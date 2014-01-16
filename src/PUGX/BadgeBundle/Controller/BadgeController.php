@@ -177,6 +177,7 @@ class BadgeController extends ContainerAware
         return $this->streamImage($status, $image, $outputFilename);
     }
 
+
     /**
      * License action.
      *
@@ -222,10 +223,13 @@ class BadgeController extends ContainerAware
         if (null === $image) {
             $image = $this->container->get('image_creator')->createErrorImage($error);
         }
+
         $outputFilename = sprintf('%s.png', 'version');
 
         return $this->streamImage($status, $image, $outputFilename);
     }
+
+
 
     /**
      * @param int      $status

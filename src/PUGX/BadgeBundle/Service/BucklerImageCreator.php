@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: liuggio
- * Date: 1/15/14
- * Time: 2:23 PM
- */
-
 namespace PUGX\BadgeBundle\Service;
 
 use Symfony\Bridge\Monolog\Logger;
