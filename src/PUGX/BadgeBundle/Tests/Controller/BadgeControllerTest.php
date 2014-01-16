@@ -40,41 +40,48 @@ class BadgeControllerTest extends WebTestCase
 
     public function testDownloadsAction()
     {
+        ob_start();
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/d/total.png');
+        $client->request('GET', '/pugx/badge-poser/d/total.png');
+        ob_clean();
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testLatestStableAction()
     {
+        ob_start();
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/version.png');
+        $client->request('GET', '/pugx/badge-poser/version.png');
+        ob_clean();
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testLatestUnstableAction()
     {
+        ob_start();
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $crawler = $client->request('GET', '/pugx/badge-poser/v/unstable.png');
+        $client->request('GET', '/pugx/badge-poser/v/unstable.png');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
+        ob_clean();
         $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
     }
 
     public function testIfPackageDoesntExist()
     {
+        ob_start();
         $data = '{"status":"error","message":"Package not found"}';
 
         $packagistClient = $this->createPackagistClient($data, 500);
 
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $packagistClient);
-        $crawler = $client->request('GET', '/pugx/microsoft-lover/d/total.png');
-
+        $client->request('GET', '/pugx/microsoft-lover/d/total.png');
+        ob_clean();
         $this->assertFalse($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isServerError());
     }
@@ -86,7 +93,7 @@ class BadgeControllerTest extends WebTestCase
 
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $packagistClient);
-        $crawler = $client->request('GET', '/search_packagist?name=hpatoio');
+        $client->request('GET', '/search_packagist?name=hpatoio');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }

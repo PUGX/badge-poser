@@ -20,6 +20,11 @@ use Imagine\Image\ImageInterface;
  */
 Interface ImageCreatorInterface
 {
+    CONST DOWNLOADS = 'downloads';
+    CONST STABLE = 'stable';
+    CONST UNSTABLE = 'unstable';
+    CONST ERROR = 'error';
+
     /**
      * Stream the output.
      *
@@ -34,9 +39,18 @@ Interface ImageCreatorInterface
      *
      * @param string $value
      *
-     * @return resource
+     * @return mixed
      */
     public function createDownloadsImage($value);
+
+    /**
+     * Create the 'stable:no release' image with the standard Font and stable image template.
+     *
+     * @param string $value
+     *
+     * @return ImageInterface
+     */
+    public function createStableNoImage($value);
 
     /**
      * Create the 'stable' image with the standard Font and standard Image.
@@ -55,4 +69,13 @@ Interface ImageCreatorInterface
      * @return resource
      */
     public function createUnstableImage($value = '@dev');
+
+    /**
+     * Create the 'error' image
+     *
+     * @param string $value
+     *
+     * @return ImageInterface
+     */
+    public function createErrorImage($value);
 }

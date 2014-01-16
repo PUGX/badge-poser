@@ -42,8 +42,9 @@ class FunctionalControllerTest extends StatsFunctionalTest
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
+        ob_start();
         $client->request('GET', '/pugx/badge-poser/d/total.png');
-
+        ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
     }
 
@@ -51,7 +52,9 @@ class FunctionalControllerTest extends StatsFunctionalTest
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
+        ob_start();
         $client->request('GET', '/pugx/badge-poser/version.png');
+        ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
 
@@ -59,8 +62,9 @@ class FunctionalControllerTest extends StatsFunctionalTest
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
+        ob_start();
         $client->request('GET', '/pugx/badge-poser/v/unstable.png');
-
+        ob_clean();
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');

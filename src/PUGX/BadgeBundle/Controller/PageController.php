@@ -44,7 +44,6 @@ class PageController extends ContainerAware
      */
     public function homeAction($repository = 'doctrine/orm')
     {
-
         $redisReader = $this->container->get('stats_reader');
 
         return array(

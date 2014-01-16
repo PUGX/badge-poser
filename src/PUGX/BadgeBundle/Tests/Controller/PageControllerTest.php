@@ -26,7 +26,7 @@ class PageControllerTest extends WebTestCase
         $crawler = $client->request('GET', $path);
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('#container h1:contains("Badge Poser")')->count());
-        $this->assertEquals(1, $crawler->filter('#container p:contains("Pimp your README!")')->count());
+        $this->assertEquals(1, $crawler->filter('#container p:contains("Pimp your README")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Total downloads")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Daily downloads")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Monthly downloads")')->count());
