@@ -202,12 +202,14 @@ class BadgeController extends ContainerAware
 
         try {
             $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $license = $this->container->get('package_manager')
+                ->calculateLatestVersions($package)
+                ->getLicense();
 
             if (empty($license)) {
-                $image = $this->container->get('image_creator')->createImage('license', self::TEXT_NO_LICENSE, 'blue');
+                $image = $this->container->get('image_creator')->createImage('license', self::TEXT_NO_LICENSE, 'green');
             } else {
-                $image = $this->container->get('image_creator')->createImage('license',  $package->getLicense(), 'blue');
+                $image = $this->container->get('image_creator')->createImage('license',  $license, '428F7E');
             }
             $status = 200;
         } catch (BadResponseException $e) {
@@ -221,7 +223,6 @@ class BadgeController extends ContainerAware
         if (null === $image) {
             $image = $this->container->get('image_creator')->createErrorImage($error);
         }
-
         $outputFilename = sprintf('%s.png', 'version');
 
         return $this->streamImage($status, $image, $outputFilename);
