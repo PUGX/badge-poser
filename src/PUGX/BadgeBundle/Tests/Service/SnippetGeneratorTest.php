@@ -25,7 +25,8 @@ class SnippetGeneratorTest extends \PHPUnit_Framework_TestCase
         $router = \Phake::mock('Symfony\Component\Routing\Router');
         \Phake::when($router)->getRouteCollection()->thenReturn($routes);
 
-        $snippetGenerator = new SnippetGenerator($router, $badges);
+        $allInBadges = array_values($badges);
+        $snippetGenerator = new SnippetGenerator($router, $badges, $allInBadges);
 
         $reflectionMethod = new \ReflectionMethod($snippetGenerator, 'compileRouteParametersForBadge');
         $reflectionMethod->setAccessible(true);

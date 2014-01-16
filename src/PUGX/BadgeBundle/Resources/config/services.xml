@@ -30,6 +30,7 @@
         <service id="snippet_generator" class="%snippet_generator.class%">
             <argument type="service" id="router" />
             <argument>%pugx_badge.badges%</argument>
+            <argument>%pugx_badge.on_allin_badges%</argument>
         </service>
 
         <service id="image_creator2" class="%image_creator.class%">

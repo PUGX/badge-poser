@@ -32,6 +32,7 @@ class PageControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Monthly downloads")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Stable Version")')->count());
         $this->assertEquals(1, $crawler->filter('#container h4:contains("Latest Unstable Version")')->count());
+        $this->assertEquals(1, $crawler->filter('#container h4:contains("License")')->count());
     }
 
     public function provider()

@@ -177,7 +177,6 @@ class BadgeController extends ContainerAware
         return $this->streamImage($status, $image, $outputFilename);
     }
 
-
     /**
      * License action.
      *

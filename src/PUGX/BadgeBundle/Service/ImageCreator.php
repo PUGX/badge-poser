@@ -16,7 +16,6 @@ use Imagine\Image\Color;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
-use InvalidArgumentException;
 
 /**
  * Class ImageCreator

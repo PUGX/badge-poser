@@ -28,7 +28,7 @@ class BucklerImage implements ImageInterface
      * Returns the image content as a binary string
      *
      * @param string $format
-     * @param array $options
+     * @param array  $options
      *
      * @throws RuntimeException
      *
@@ -158,7 +158,7 @@ class BucklerImage implements ImageInterface
      * Returns cropped self
      *
      * @param PointInterface $start
-     * @param BoxInterface $size
+     * @param BoxInterface   $size
      *
      * @throws OutOfBoundsException
      * @throws RuntimeException
@@ -174,7 +174,7 @@ class BucklerImage implements ImageInterface
      * Resizes current image and returns self
      *
      * @param BoxInterface $size
-     * @param string $filter
+     * @param string       $filter
      *
      * @throws RuntimeException
      *
@@ -191,7 +191,7 @@ class BucklerImage implements ImageInterface
      * area of rotated image.
      *
      * @param integer $angle
-     * @param Color $background
+     * @param Color   $background
      *
      * @throws RuntimeException
      *
@@ -229,7 +229,7 @@ class BucklerImage implements ImageInterface
      * supported
      *
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws RuntimeException
      *
@@ -244,7 +244,7 @@ class BucklerImage implements ImageInterface
      * Outputs the image content
      *
      * @param string $format
-     * @param array $options
+     * @param array  $options
      *
      * @throws RuntimeException
      *
@@ -296,7 +296,7 @@ class BucklerImage implements ImageInterface
      * Returns it as a new image, doesn't modify the current image
      *
      * @param BoxInterface $size
-     * @param string $mode
+     * @param string       $mode
      *
      * @throws RuntimeException
      *
@@ -333,4 +333,4 @@ class BucklerImage implements ImageInterface
         throw new \Exception('Not implementedImplement fill');
     }
 
-} 
+}

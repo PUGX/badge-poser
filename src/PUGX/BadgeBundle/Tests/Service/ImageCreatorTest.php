@@ -36,7 +36,6 @@ class ImageCreatorTest extends WebTestCase
         $this->imageCreator = new ImageCreator($this->logger, $this->imagine, $this->fontPath, $this->imagesPath);
     }
 
-
     /**
      * @expectedException \PHPUnit_Framework_Error
      */

@@ -27,7 +27,6 @@ class Package implements PackageInterface, ApiPackageInterface
     private $latestStableVersionNormalized = null;
     private $latestUnstableVersionNormalized = null;
 
-
     public function setLicense($license)
     {
         $this->license = $license;

@@ -18,7 +18,6 @@ class BucklerImageCreatorTest extends WebTestCase
 {
     private $buckler;
     private $logger;
-    private $normalizer;
 
     public function setUp()
     {

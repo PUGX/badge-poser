@@ -53,7 +53,6 @@ class TextNormalizer
         throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
-
     /**
      * This function transform a number to a float value or raise an Exception.
      *
@@ -81,4 +80,4 @@ class TextNormalizer
 
         return $number;
     }
-} 
+}

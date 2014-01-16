@@ -58,3 +58,23 @@ hr.styled {
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
 }
+
+.combined-box input {
+    background-color: #ffffff;
+    cursor: hand
+}
+
+.together {
+    height: 20px;
+    width:100px;
+}
+
+.copy_on_clip { cursor: hand}
+
+img {margin-top: 2px;}
+
+img.permalink {height: 12px; width: 15px;}
+
+.pull-right {
+    padding-left: 5px;
+}

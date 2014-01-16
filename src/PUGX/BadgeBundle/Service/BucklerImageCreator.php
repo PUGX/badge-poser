@@ -44,7 +44,7 @@ class BucklerImageCreator implements ImageCreatorInterface
     /**
      * Stream the output.
      *
-     * @param ImageInterface $image
+     * @param  ImageInterface $image
      * @return bool|string
      *
      * @throws \RuntimeException
@@ -135,4 +135,4 @@ class BucklerImageCreator implements ImageCreatorInterface
         return new BucklerImage($vendor, $value, $color);
     }
 
-} 
+}
