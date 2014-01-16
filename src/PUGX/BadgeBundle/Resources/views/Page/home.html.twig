@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Badge Poser</title>
+    <title>Badge Poser, badges for PHP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Flat and Clean.">
-    <meta name="author" content="Jenil Gogari">
+    <meta name="author" content="liuggio">
 
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,11 +25,12 @@
 <div id="container" class="container-narrow">
 
     <div class="row-fluid bundles">
-        <div class="span12"><p>{{ total_access }} badges served so far.</p><hr class="styled"></div>
+        <div class="span12"><p class="text-center">
+                <img src="{{ url('buckler_image',{'vendor': 'badges served so far', 'status': total_access, 'color': 'ff00cc'}) }}" alt="{{ total_access }} badges served so far"></p><hr class="styled"></div>
     </div>
     <div class="jumbotron">
         <h1>Badge Poser</h1>
-        <p class="lead">Pimp your README!</p>
+        <p class="lead">Pimp your README for PHP packages.</p>
         <p class="lead">
             <a href="https://packagist.org/packages/pugx/badge-poser"><img style="max-width:100%;" alt="Latest Stable Version" src="{{ path('pugx_badge_version',{'repository': 'pugx/badge-poser'}) }}"></a>
             <a target="_blank" href="http://travis-ci.org/PUGX/badge-poser"><img src="https://secure.travis-ci.org/PUGX/badge-poser.png" /></a>
@@ -75,6 +75,10 @@
                     <div>
                         <h4>Latest Unstable Version <img class="pull-right spinned" id="latest_unstable_version_img" src="{{ path('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }}"></h4>
                         <pre id="latest_unstable_version_markdown" class="prettyprint">[![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }})</pre>
+                    </div>
+                    <div>
+                        <h4>License <img class="pull-right spinned" id="license_img" src="{{ path('pugx_badge_license',{'repository': repository}) }}"></h4>
+                        <pre id="license_markdown" class="prettyprint">[![License]({{ url('pugx_badge_license',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})</pre>
                     </div>
                 </div>
             </article>

@@ -28,6 +28,7 @@ class ImageCreator implements ImageCreatorInterface
 {
     private $logger;
     private $imagine;
+    private $normalizer;
     protected $dispatcher;
     protected $imageNames = array('empty' => 'empty.png', 'downloads' => 'downloads.png', 'stable' => 'stable.png', 'unstable' => 'unstable.png', 'error' => 'error.png');
     protected $imagePath;
@@ -59,34 +60,6 @@ class ImageCreator implements ImageCreatorInterface
     }
 
     /**
-     * This function transform a number to a float value or raise an Exception.
-     *
-     * @param mixed $number number to be normalized
-     *
-     * @return int
-     * @throws InvalidArgumentException
-     */
-    private function normalizeNumber($number)
-    {
-        if (!is_numeric($number)) {
-            throw new InvalidArgumentException('Number expected');
-        }
-
-        $number = floatval($number);
-
-        if ($number < 0) {
-            throw new InvalidArgumentException('The number expected was >= 0');
-        }
-
-        // avoid division by 0
-        if ($number == 0) {
-            $number = 1;
-        }
-
-        return $number;
-    }
-
-    /**
      * Stream the output.
      *
      * @param ImageInterface $image
@@ -96,50 +69,6 @@ class ImageCreator implements ImageCreatorInterface
     public function streamRawImageData(ImageInterface $image)
     {
         return $image->show('png');
-    }
-
-    /**
-     * Function that should return a human readable number in a maximum number of chars.
-     *
-     * @param int $number  number
-     * @param int $maxChar max characters
-     *
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    public function transformNumberToReadableFormat($number, $maxChar = 6)
-    {
-        $defaultFormatter = '%.0f %s';
-        $dimensions = array(
-            'bb' => 1000000000000,
-            'mm' => 1000000000,
-            'm'  => 1000000,
-            'k'  => 1000,
-            ' '  => 1,
-        );
-
-        $number = $this->normalizeNumber($number);
-
-        foreach ($dimensions as $suffix => $key) {
-            if ($number >= $key) {
-                $number = $number / $key;
-                // 2 is strlen(' ' . '.');  space and dot
-                $floatPointNumber = $maxChar - strlen($suffix) - 2 - strlen(intval($number));
-                $formatter = $defaultFormatter;
-                $decimal_part = $number - floor($number);
-
-                if ($decimal_part > 0 && $floatPointNumber > 0) {
-                    $formatter = '%.' . $floatPointNumber . 'f %s';
-                }
-
-                $readable = sprintf($formatter, $number, $suffix);
-                $readable = str_pad($readable, $maxChar, ' ', STR_PAD_LEFT);
-
-                return $readable;
-            }
-        }
-
-        throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
     }
 
     /**
@@ -227,7 +156,7 @@ class ImageCreator implements ImageCreatorInterface
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
         $image = $this->createImage($imagePath);
-        $value = $this->transformNumberToReadableFormat($value);
+        $value = $this->normalizer->normalize($value);
 
         return $this->addShadowedText($image, $value, 64, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
     }
@@ -254,7 +183,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @return ImageInterface
      */
-    public function createNoStableImage($value)
+    public function createStableNoImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
         $image = $this->createImage($imagePath);

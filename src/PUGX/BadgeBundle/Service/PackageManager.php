@@ -111,6 +111,12 @@ class PackageManager
             if (version_compare($versionNormalized, $package->{'getLatest' . $functionName . 'VersionNormalized'}()) > 0) {
                 $package->{'setLatest' . $functionName . 'Version'}($currentVersionName);
                 $package->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
+
+                $license = $version->getLicense();
+                if (is_array($license) && count($license)>0) {
+                    $license = implode(',',$license);
+                }
+                $package->setLicense($license);
             }
         }
 
