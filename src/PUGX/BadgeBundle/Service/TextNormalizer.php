@@ -9,48 +9,18 @@ use InvalidArgumentException;
  */
 class TextNormalizer
 {
-    /**
-     * Function that should return a human readable number in a maximum number of chars.
-     *
-     * @param int $number  number
-     * @param int $maxChar max characters
-     *
-     * @return string
-     * @throws \InvalidArgumentException
-     */
-    public function normalize($number, $maxChar = 6)
+
+    public function normalize($number, $precision = 2)
     {
-        $defaultFormatter = '%.0f %s';
-        $dimensions = array(
-            'T' => 1000000000000,
-            'G'  => 1000000000,
-            'M'  => 1000000,
-            'k'  => 1000,
-            ' '  => 1,
-        );
+            $number = $this->normalizeNumber($number);
+            $units = array('', ' k', ' M', ' G', ' T');
 
-        $number = $this->normalizeNumber($number);
+            $pow = floor(($number ? log($number) : 0) / log(1000));
+            $pow = min($pow, count($units) - 1);
 
-        foreach ($dimensions as $suffix => $key) {
-            if ($number >= $key) {
-                $number = $number / $key;
-                // 2 is strlen(' ' . '.');  space and dot
-                $floatPointNumber = $maxChar - strlen($suffix) - 2 - strlen(intval($number));
-                $formatter = $defaultFormatter;
-                $decimal_part = $number - floor($number);
+            $number /= pow(1000, $pow);
 
-                if ($decimal_part > 0 && $floatPointNumber > 0) {
-                    $formatter = '%.' . $floatPointNumber . 'f %s';
-                }
-
-                $readable = sprintf($formatter, $number, $suffix);
-                $readable = str_pad($readable, $maxChar, ' ', STR_PAD_LEFT);
-
-                return $readable;
-            }
-        }
-
-        throw new InvalidArgumentException(sprintf('impossible to transform to readable number[%s] with [%d] chars', $number, $maxChar));
+             return round($number, 2) . $units[$pow];
     }
 
     /**
@@ -73,11 +43,6 @@ class TextNormalizer
             throw new InvalidArgumentException('The number expected was >= 0');
         }
 
-        // avoid division by 0
-        if ($number == 0) {
-            $number = 1;
-        }
-
-        return $number;
+        return max($number, 1);
     }
 }

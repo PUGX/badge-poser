@@ -139,7 +139,7 @@ class ImageCreator implements ImageCreatorInterface
      *
      * @return ImageInterface
      */
-    private function createImage($imagePath)
+    private function createImageByPath($imagePath)
     {
         return $this->imagine->open($imagePath);
     }
@@ -154,7 +154,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createDownloadsImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['downloads'];
-        $image = $this->createImage($imagePath);
+        $image = $this->createImageByPath($imagePath);
         $value = $this->normalizer->normalize($value);
 
         return $this->addShadowedText($image, $value, 64, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
@@ -170,7 +170,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createStableImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
-        $image = $this->createImage($imagePath);
+        $image = $this->createImageByPath($imagePath);
 
         return $this->addShadowedText($image, $value, 51);
     }
@@ -185,7 +185,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createStableNoImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['stable'];
-        $image = $this->createImage($imagePath);
+        $image = $this->createImageByPath($imagePath);
 
         return $this->addShadowedText($image, $value, 51, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
     }
@@ -200,7 +200,7 @@ class ImageCreator implements ImageCreatorInterface
     public function createUnstableImage($value = '@dev')
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['unstable'];
-        $image = $this->createImage($imagePath);
+        $image = $this->createImageByPath($imagePath);
 
         return $this->addShadowedText($image, $value, 51, null, 8);
     }
@@ -215,8 +215,25 @@ class ImageCreator implements ImageCreatorInterface
     public function createErrorImage($value)
     {
         $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
-        $image = $this->createImage($imagePath);
+        $image = $this->createImageByPath($imagePath);
 
         return $this->addShadowedText($image, $value, 51, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
     }
+
+    /**
+     * Create a license Image
+     *
+     * @param $value
+     *
+     * @return ImageInterface
+     */
+    public function createLicenseImage($value)
+    {
+        $imagePath = $this->imagePath . DIRECTORY_SEPARATOR . $this->imageNames['error'];
+
+        $image = $this->createImageByPath($imagePath);
+
+        return $this->addShadowedText($image, $value, 51, null, 8, $this->fontPath . DIRECTORY_SEPARATOR . 'DroidSans.ttf');
+    }
+
 }

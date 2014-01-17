@@ -15,7 +15,6 @@
         <parameter key="imagine.class.imagick">Imagine\Imagick\Imagine</parameter>
         <parameter key="imagine.class.gmagick">Imagine\Gmagick\Imagine</parameter>
         <parameter key="normalizer.class">PUGX\BadgeBundle\Service\TextNormalizer</parameter>
-        <parameter key="buckler_bin_path">/usr/local/bin/buckler</parameter>
     </parameters>
 
     <services>
@@ -30,7 +29,7 @@
         <service id="snippet_generator" class="%snippet_generator.class%">
             <argument type="service" id="router" />
             <argument>%pugx_badge.badges%</argument>
-            <argument>%pugx_badge.on_allin_badges%</argument>
+            <argument>%pugx_badge.allin_badges%</argument>
         </service>
 
         <service id="image_creator2" class="%image_creator.class%">

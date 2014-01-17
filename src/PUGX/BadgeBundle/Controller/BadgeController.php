@@ -97,7 +97,6 @@ class BadgeController extends ContainerAware
             $package = $this->container->get('package_manager')->fetchPackage($repository);
             $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
             $text = $this->container->get('normalizer')->normalize($text);
-
             $image = $imageCreator->createDownloadsImage(sprintf("%s %s", $text, $when));
             $status = 200;
         } catch (BadResponseException $e) {
@@ -177,7 +176,6 @@ class BadgeController extends ContainerAware
         return $this->streamImage($status, $image, $outputFilename);
     }
 
-
     /**
      * License action.
      *
@@ -202,14 +200,13 @@ class BadgeController extends ContainerAware
 
         try {
             $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $license = $this->container->get('package_manager')
-                ->calculateLatestVersions($package)
-                ->getLicense();
+            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $license = $package->getLicense();
 
             if (empty($license)) {
-                $image = $this->container->get('image_creator')->createImage('license', self::TEXT_NO_LICENSE, 'green');
+                $image = $this->container->get('image_creator')->createLicenseImage(self::TEXT_NO_LICENSE);
             } else {
-                $image = $this->container->get('image_creator')->createImage('license',  $license, '428F7E');
+                $image = $this->container->get('image_creator')->createLicenseImage($license);
             }
             $status = 200;
         } catch (BadResponseException $e) {
@@ -228,8 +225,6 @@ class BadgeController extends ContainerAware
 
         return $this->streamImage($status, $image, $outputFilename);
     }
-
-
 
     /**
      * @param int      $status

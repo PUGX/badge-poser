@@ -23,12 +23,67 @@ class BucklerImageCreatorTest extends WebTestCase
     {
         $this->logger = \Phake::mock('Symfony\Bridge\Monolog\Logger');
 
-        $this->buckler = new BucklerImageCreator($this->logger, 'buckler');
+        $this->buckler = new BucklerImageCreator($this->logger, 'ls');
     }
 
     public function testCreateDownloadsImage()
     {
         $image = $this->buckler->createDownloadsImage('a');
+
+        $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
+
+        $this->assertArrayHasKey('vendor', $image->get('array'));
+        $this->assertArrayHasKey('status', $image->get('array'));
+        $this->assertArrayHasKey('color', $image->get('array'));
+    }
+
+    public function testCreateStableNoImage()
+    {
+        $image = $this->buckler->createStableNoImage('a');
+
+        $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
+
+        $this->assertArrayHasKey('vendor', $image->get('array'));
+        $this->assertArrayHasKey('status', $image->get('array'));
+        $this->assertArrayHasKey('color', $image->get('array'));
+    }
+
+    public function testCreateStableImage()
+    {
+        $image = $this->buckler->createStableImage('a');
+
+        $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
+
+        $this->assertArrayHasKey('vendor', $image->get('array'));
+        $this->assertArrayHasKey('status', $image->get('array'));
+        $this->assertArrayHasKey('color', $image->get('array'));
+    }
+
+    public function testCreateUnstableImage()
+    {
+        $image = $this->buckler->createStableImage('a');
+
+        $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
+
+        $this->assertArrayHasKey('vendor', $image->get('array'));
+        $this->assertArrayHasKey('status', $image->get('array'));
+        $this->assertArrayHasKey('color', $image->get('array'));
+    }
+
+    public function testCreateErrorImage()
+    {
+        $image = $this->buckler->createErrorImage('a');
+
+        $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
+
+        $this->assertArrayHasKey('vendor', $image->get('array'));
+        $this->assertArrayHasKey('status', $image->get('array'));
+        $this->assertArrayHasKey('color', $image->get('array'));
+    }
+
+    public function testCreateLicenseImage()
+    {
+        $image = $this->buckler->createLicenseImage('a');
 
         $this->assertInstanceOf('PUGX\BadgeBundle\BucklerImage', $image);
 

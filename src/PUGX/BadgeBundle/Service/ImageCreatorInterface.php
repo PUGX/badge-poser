@@ -23,6 +23,7 @@ Interface ImageCreatorInterface
     CONST DOWNLOADS = 'downloads';
     CONST STABLE = 'stable';
     CONST UNSTABLE = 'unstable';
+    CONST LICENSE = 'license';
     CONST ERROR = 'error';
 
     /**
@@ -78,4 +79,13 @@ Interface ImageCreatorInterface
      * @return ImageInterface
      */
     public function createErrorImage($value);
+
+    /**
+     * Create a 'license' Image
+     *
+     * @param string $value
+     *
+     * @return ImageInterface
+     */
+    public function createLicenseImage($value);
 }

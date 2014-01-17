@@ -53,15 +53,16 @@ class TextNormalizerTest extends WebTestCase
     public static function getGoodNumberToConvert()
     {
         return array(
-            array(0,               '   1  '),
-            array(1,               '   1  '),
-            array('16',            '  16  '),
-            array(199,             ' 199  '),
+            array(0,               '1'),
+            array(1,               '1'),
+            array('16',            '16'),
+            array(199,             '199'),
             array('1012',          '1.01 k'),
-            array('1999',          '2.00 k'),
-            array('1003000',       '1.00 M'),
-            array(9001003000,      '9.00 G'),
-            array('9001003000000', '9.00 T'),
+            array('1212',          '1.21 k'),
+            array('1999',          '2 k'),
+            array('1003000',       '1 M'),
+            array(9001003000,      '9 G'),
+            array('9001003000000', '9 T'),
         );
     }
 }

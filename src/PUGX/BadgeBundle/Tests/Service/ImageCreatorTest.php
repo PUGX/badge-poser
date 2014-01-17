@@ -77,7 +77,7 @@ class ImageCreatorTest extends WebTestCase
 
     public function testCreateImage()
     {
-        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImage');
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImageByPath');
         $reflectionMethod->setAccessible(true);
         $image = $reflectionMethod->invokeArgs(
             $this->imageCreator,
@@ -92,7 +92,7 @@ class ImageCreatorTest extends WebTestCase
      */
     public function testCreateImage_throwException()
     {
-        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImage');
+        $reflectionMethod = new \ReflectionMethod($this->imageCreator, 'createImageByPath');
         $reflectionMethod->setAccessible(true);
         $image = $reflectionMethod->invokeArgs(
             $this->imageCreator,

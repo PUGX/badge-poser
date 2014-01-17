@@ -30,7 +30,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pugx_badge');
         $rootNode
             ->children()
-            ->arrayNode('on_allin_badges')
+            ->arrayNode('allin_badges')
                     ->prototype('scalar')
                     ->end()
                 ->end()
@@ -47,9 +47,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('type')->end()
                     ->scalarNode('latest')->end()
             ->end()
-        ->end()
-
-        ;
+        ->end();
 
         return $treeBuilder;
     }

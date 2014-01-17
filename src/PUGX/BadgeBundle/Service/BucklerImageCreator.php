@@ -12,7 +12,8 @@ class BucklerImageCreator implements ImageCreatorInterface
         self::DOWNLOADS => 'blue',
         self::STABLE => '28a3df',
         self::UNSTABLE => 'e68718',
-        self::ERROR => 'red'
+        self::ERROR => 'red',
+        self::LICENSE => '428F7E'
     );
     private $logger;
     private $bucklerBinary;
@@ -48,6 +49,7 @@ class BucklerImageCreator implements ImageCreatorInterface
         $process->run();
 
         if (!$process->isSuccessful()) {
+            $this->logger->critical('streamRawImageData:'  . $process->getErrorOutput());
             throw new \RuntimeException($process->getErrorOutput());
         }
 
@@ -87,7 +89,7 @@ class BucklerImageCreator implements ImageCreatorInterface
      */
     public function createStableNoImage($value)
     {
-        return new BucklerImage(self::STABLE, $value, $this->colors[self::STABLE]);
+        return $this->createImage(self::STABLE, $value, $this->colors[self::STABLE]);
     }
 
     /**
@@ -99,7 +101,7 @@ class BucklerImageCreator implements ImageCreatorInterface
      */
     public function createUnstableImage($value = '@dev')
     {
-        return new BucklerImage(self::UNSTABLE, $value, $this->colors[self::UNSTABLE]);
+        return $this->createImage(self::UNSTABLE, $value, $this->colors[self::UNSTABLE]);
     }
 
     /**
@@ -111,7 +113,19 @@ class BucklerImageCreator implements ImageCreatorInterface
      */
     public function createErrorImage($value)
     {
-        return new BucklerImage(self::ERROR, $value, $this->colors[self::ERROR]);
+        return $this->createImage(self::ERROR, $value, $this->colors[self::ERROR]);
+    }
+
+    /**
+     * Create a License Image
+     *
+     * @param $value
+     *
+     * @return ImageInterface
+     */
+    public function createLicenseImage($value)
+    {
+        return new BucklerImage(self::LICENSE, $value, $this->colors[self::LICENSE]);
     }
 
     /**
@@ -123,9 +137,8 @@ class BucklerImageCreator implements ImageCreatorInterface
      *
      * @return ImageInterface
      */
-    public function createImage($vendor, $value, $color)
+    private function createImage($vendor, $value, $color)
     {
         return new BucklerImage($vendor, $value, $color);
     }
-
 }

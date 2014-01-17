@@ -79,6 +79,7 @@ class SnippetGenerator
             }
         }
         $snippets['clip_all']['markdown'] = trim($snippets['clip_all']['markdown']);
+        $snippets['repository']['html'] = $repository;
 
         return $snippets;
     }

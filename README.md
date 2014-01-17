@@ -18,7 +18,6 @@ or its latest stable version.
 
 Not only because all the other languages already had it, but having the latest stable release in the readme could save developer time.
 
-
 ## Contribution
 
 Active contribution and patches are very welcome.
@@ -34,6 +33,20 @@ git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
 ```
 
+- Install dependencies:
+
+  * Install `go-lang`
+```
+sudo apt-get update -qq
+sudo apt-get install -qq golang git libgtk-3-dev libgtkspell-3-dev libtspi-dev trousers tor mercurial pkg-config libgtkspell-3-0 libgtkspell0
+```
+   * Install go-buckler
+
+```
+go get github.com/badges/buckler
+export SYMFONY__buckler_bin_path=$GOPATH/bin/buckler
+```
+
 - Install vendors:
 
 ``` bash
@@ -44,9 +57,7 @@ php composer.phar install
 - This will give you proper results:
 
 ``` bash
-./bin/phpunit -c app
+./bin/phpunit
 ```
 
 #### This project was inspired by [pypy](https://pypip.in/)
-
-

@@ -44,7 +44,7 @@ class BadgeControllerTest extends WebTestCase
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         $client->request('GET', '/pugx/badge-poser/d/total.png');
-        ob_clean();
+        $this->assertNotEmpty(ob_get_clean());
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -54,7 +54,7 @@ class BadgeControllerTest extends WebTestCase
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         $client->request('GET', '/pugx/badge-poser/version.png');
-        ob_clean();
+        $this->assertNotEmpty(ob_get_clean());
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -67,8 +67,18 @@ class BadgeControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
-        ob_clean();
+        $this->assertNotEmpty(ob_get_clean());
         $this->assertRegExp('/s-maxage=3600/', $response->headers->get('Cache-Control'));
+    }
+
+    public function testLicenseAction()
+    {
+        ob_start();
+        $client = static::createClient();
+        static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
+        $client->request('GET', '/pugx/badge-poser/license.png');
+        $this->assertNotEmpty(ob_get_clean());
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testIfPackageDoesntExist()
@@ -81,7 +91,7 @@ class BadgeControllerTest extends WebTestCase
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $packagistClient);
         $client->request('GET', '/pugx/microsoft-lover/d/total.png');
-        ob_clean();
+        $this->assertNotEmpty(ob_get_clean());
         $this->assertFalse($client->getResponse()->getContent());
         $this->assertTrue($client->getResponse()->isServerError());
     }
@@ -97,5 +107,7 @@ class BadgeControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+
+
 
 }
