@@ -8,6 +8,7 @@ or its latest stable version.
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
+[![License](https://poser.pugx.org/pugx/badge-poser/license.png)](https://packagist.org/packages/pugx/badge-poser)
 
 ## How to create your own Badge
 -  Go to the [Badge Poser](https://poser.pugx.org) website
@@ -16,7 +17,7 @@ or its latest stable version.
 
 ## Why a composer badge?
 
-Not only because all the other languages already had it, but having the latest stable release in the readme could save developer time.
+Not only because all the other languages already had it, but having the latest stable release in the readme could save time.
 
 ## Contribution
 
@@ -33,14 +34,13 @@ git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
 ```
 
-- Install dependencies:
+- Install `go-lang`:
 
-  * Install `go-lang`
 ```
 sudo apt-get update -qq
 sudo apt-get install -qq golang git libgtk-3-dev libgtkspell-3-dev libtspi-dev trousers tor mercurial pkg-config libgtkspell-3-0 libgtkspell0
 ```
-   * Install go-buckler
+- Install `go-buckler`
 
 ```
 go get github.com/badges/buckler
@@ -54,10 +54,8 @@ php composer.phar self-update
 php composer.phar install
 ```
 
-- This will give you proper results:
+- run phpunit:
 
 ``` bash
 ./bin/phpunit
 ```
-
-#### This project was inspired by [pypy](https://pypip.in/)

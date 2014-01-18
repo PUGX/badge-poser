@@ -76,7 +76,6 @@ $(document).ready(function(){
                 $('#' + idx + '_html').html(snippet.html);
                 $('#' + idx + '_markdown').attr('value', snippet.markdown);
                 $('.' + idx + '_img').attr('src', snippet.img);
-             alert(snippet.markdown + '\n' +  '#' + idx + '_markdown');
         });
     };
 
