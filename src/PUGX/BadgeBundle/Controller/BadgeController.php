@@ -32,6 +32,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BadgeController extends ContainerAware
 {
     CONST TEXT_NO_STABLE_RELEASE = 'No release';
+    CONST TEXT_NO_LICENSE = 'No';
     CONST ERROR_TEXT_GENERIC = 'repository';
     CONST ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
@@ -85,10 +86,18 @@ class BadgeController extends ContainerAware
         $status = 500;
         $image = null;
 
+        $when = '';
+        if ('daily' === $type) {
+            $when = 'today';
+        } elseif ('monthly' === $type) {
+            $when = 'this month';
+        }
+
         try {
             $package = $this->container->get('package_manager')->fetchPackage($repository);
             $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
-            $image = $imageCreator->createDownloadsImage($text);
+            $text = $this->container->get('normalizer')->normalize($text);
+            $image = $imageCreator->createDownloadsImage(sprintf("%s %s", $text, $when));
             $status = 200;
         } catch (BadResponseException $e) {
             $text = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
@@ -144,7 +153,7 @@ class BadgeController extends ContainerAware
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
             } elseif ('stable' == $latest) {
-                $image = $this->container->get('image_creator')->createNoStableImage(self::TEXT_NO_STABLE_RELEASE);
+                $image = $this->container->get('image_creator')->createStableNoImage(self::TEXT_NO_STABLE_RELEASE);
             } elseif ($package->hasUnstableVersion()) {
                 $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
             }
@@ -163,6 +172,56 @@ class BadgeController extends ContainerAware
         }
 
         $outputFilename = sprintf('%s.png', $latest);
+
+        return $this->streamImage($status, $image, $outputFilename);
+    }
+
+    /**
+     * License action.
+     *
+     * @param string $repository repository
+     * @param string $latest     latest
+     *
+     * @Route("/{repository}/license.png",
+     *     name="pugx_badge_license",
+     *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     *     )
+     *
+     * @Method({"GET"})
+     * @Cache(maxage="3600", smaxage="3600", public=true)
+     *
+     * @return StreamedResponse
+     */
+    public function licenseAction($repository)
+    {
+        $image = null;
+        $error = self::ERROR_TEXT_GENERIC;
+        $status = 500;
+
+        try {
+            $package = $this->container->get('package_manager')->fetchPackage($repository);
+            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $license = $package->getLicense();
+
+            if (empty($license)) {
+                $image = $this->container->get('image_creator')->createLicenseImage(self::TEXT_NO_LICENSE);
+            } else {
+                $image = $this->container->get('image_creator')->createLicenseImage($license);
+            }
+            $status = 200;
+        } catch (BadResponseException $e) {
+            $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
+        } catch (UnexpectedValueException $e) {
+            $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
+        } catch (\Exception $e) {
+            $error = self::ERROR_TEXT_GENERIC;
+        }
+
+        if (null === $image) {
+            $image = $this->container->get('image_creator')->createErrorImage($error);
+        }
+
+        $outputFilename = sprintf('%s.png', 'version');
 
         return $this->streamImage($status, $image, $outputFilename);
     }

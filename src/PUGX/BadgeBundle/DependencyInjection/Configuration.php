@@ -30,6 +30,10 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pugx_badge');
         $rootNode
             ->children()
+            ->arrayNode('allin_badges')
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
             ->enumNode('imagine_driver')
                 ->values(array('gd', 'imagick', 'gmagick'))
                 ->defaultValue('gd')

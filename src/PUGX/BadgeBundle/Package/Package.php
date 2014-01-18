@@ -20,11 +20,22 @@ use Packagist\Api\Result\Package as ApiPackage;
  */
 class Package implements PackageInterface, ApiPackageInterface
 {
+    private $license;
     private $originalObject;
     private $latestStableVersion = null;
     private $latestUnstableVersion = null;
     private $latestStableVersionNormalized = null;
     private $latestUnstableVersionNormalized = null;
+
+    public function setLicense($license)
+    {
+        $this->license = $license;
+    }
+
+    public function getLicense()
+    {
+        return $this->license;
+    }
 
     public function setLatestStableVersion($version)
     {

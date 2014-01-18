@@ -33,7 +33,6 @@ monolog:
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
 
-
 snc_redis:
     clients:
         packagist_cache:

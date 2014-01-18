@@ -1,3 +1,20 @@
+function _Redirect (url) {
+    var ua        = navigator.userAgent.toLowerCase(),
+        verOffset = ua.indexOf('msie') !== -1,
+        version   = parseInt(ua.substr(4, 2), 10);
+
+    // IE8 and lower
+    if (verOffset && version < 9) {
+        var link = document.createElement('a');
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+    }
+
+    // All other browsers
+    else { window.location.href = url; }
+}
+
 
 $(document).ready(function(){
 
@@ -55,16 +72,18 @@ $(document).ready(function(){
     };
 
     var generateSnippets = function(snippets_raw_data){
-            $.each(snippets_raw_data, function(idx, snippet){
-                    $('#' + idx + '_markdown').html(snippet.markdown);
-                    $('#' + idx + '_img').attr('src', snippet.img);
-            });
+        $.each(snippets_raw_data, function(idx, snippet){
+                $('#' + idx + '_html').html(snippet.html);
+                $('#' + idx + '_markdown').attr('value', snippet.markdown);
+                $('.' + idx + '_img').attr('src', snippet.img);
+             alert(snippet.markdown + '\n' +  '#' + idx + '_markdown');
+        });
     };
 
     $('#generate').click(function(){
 
         lock();
-        
+
         $.ajax({
                 url: $('#generate-form').attr('action'),
                 data: $('#generate-form').serialize(),

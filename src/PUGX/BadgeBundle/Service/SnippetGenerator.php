@@ -20,7 +20,6 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class SnippetGenerator
 {
-
     /**
      * @var Router $router
      */
@@ -30,6 +29,11 @@ class SnippetGenerator
      * @var array $badges
      */
     private $badges;
+
+    /**
+     * @var array $allInBadges
+     */
+    private $allInBadges;
 
     /**
      * @var null|RouteCollection
@@ -46,10 +50,11 @@ class SnippetGenerator
      *                                @param $badges
      * @param string $packagist_route
      */
-    public function __construct(Router $router, $badges, $packagist_route = 'pugx_badge_packagist')
+    public function __construct(Router $router, array $badges, array $allInBadges, $packagist_route = 'pugx_badge_packagist')
     {
         $this->router = $router;
         $this->badges = $badges;
+        $this->allInBadges = $allInBadges;
         $this->packagistRoute = $packagist_route;
         $this->routes = $this->router->getRouteCollection();
     }
@@ -61,13 +66,20 @@ class SnippetGenerator
     public function generateAllSnippets($repository)
     {
         $snippets = array();
+        $snippets['clip_all']['markdown'] = '';
         foreach ($this->badges as $badge) {
-
+            $markdown = $this->generateMarkdown($badge, $repository);
             $snippets[$badge['name']] = array(
-                'markdown'  => $this->generateMarkdown($badge, $repository),
+                'markdown'  => $markdown,
                 'img'       => $this->generateImg($badge, $repository)
             );
+
+            if (in_array($badge['name'], $this->allInBadges)) {
+                $snippets['clip_all']['markdown'] .= ' '.$markdown;
+            }
         }
+        $snippets['clip_all']['markdown'] = trim($snippets['clip_all']['markdown']);
+        $snippets['repository']['html'] = $repository;
 
         return $snippets;
     }

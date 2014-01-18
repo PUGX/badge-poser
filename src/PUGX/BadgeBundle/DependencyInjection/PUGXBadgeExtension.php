@@ -35,6 +35,7 @@ class PUGXBadgeExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter($this->getAlias().'.badges', $config['badges']);
+        $container->setParameter($this->getAlias().'.allin_badges', $config['allin_badges']);
         $container->setParameter('imagine.class', $container->getParameter(sprintf('imagine.class.%s', $config['imagine_driver'])));
     }
 }
