@@ -256,6 +256,22 @@
 
 <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
+<div id="alertModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- dialog body -->
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-contents"></div>
+            </div>
+            <!-- dialog buttons -->
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Placed at the end of the document so the pages load faster -->
 {% javascripts
     '@PUGXBadgeBundle/Resources/public/js/jquery-2.0.2.min.js'
@@ -282,15 +298,15 @@ filter='?yui_js' %}
     {% endimage %}
 
     clip.on( 'complete', function ( client, args ) {
-        alert("Badges copied to the clipboard.");
+        bsalert("Badges copied to the clipboard.");
     });
 
     clip.on( 'noflash', function ( client, args ) {
-        alert("Flash support not found.\n please copy:" + args.text );
+        bsalert("Flash support not found.\n please copy:" + args.text );
     });
 
     clip.on( 'wrongflash', function ( client, args ) {
-        alert("Flash version is too old\n please copy:" + args.text );
+        bsalert("Flash version is too old\n please copy:" + args.text );
     } );
 </script>
 

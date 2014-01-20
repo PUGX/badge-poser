@@ -15,6 +15,10 @@ function _Redirect (url) {
     else { window.location.href = url; }
 }
 
+function bsalert (text) {
+    $('#alertModal .modal-contents').html(text);
+    $('#alertModal').modal('show');
+}
 
 $(document).ready(function(){
 
@@ -92,11 +96,11 @@ $(document).ready(function(){
                 },
                 statusCode: {
                     404: function() {
-                        alert("Repository not found!");
+                        bsalert("Repository not found!");
                         unlock();
                     },
                     500: function() {
-                        alert("Repository not found!");
+                        bsalert("Repository not found!");
                         unlock();
                     }
                 }
