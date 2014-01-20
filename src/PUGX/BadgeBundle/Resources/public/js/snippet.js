@@ -83,7 +83,7 @@ $(document).ready(function(){
         });
     };
 
-    $('#generate').click(function(){
+    $("#repository").on('change', function(){
 
         lock();
 
