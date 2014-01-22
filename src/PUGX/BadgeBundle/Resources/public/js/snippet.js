@@ -76,10 +76,19 @@ $(document).ready(function(){
     };
 
     var generateSnippets = function(snippets_raw_data){
-        $.each(snippets_raw_data, function(idx, snippet){
-                $('#' + idx + '_html').html(snippet.html);
+        $.each(snippets_raw_data, function(idx, snippet) {
+
+		if (idx == 'repository') {
+			$('#' + idx + '_html').html(snippet.html).append('<a class="headerlink" href="show/'+snippet.html+'#badges" title="Permalink for '+snippet.html+' repository">¶</a>')
+			return true;
+		}
+
+		if (idx != 'clip_all') {
+			$('.' + idx + '_img').attr('src', snippet.img);
+		}
+
                 $('#' + idx + '_markdown').attr('value', snippet.markdown);
-                $('.' + idx + '_img').attr('src', snippet.img);
+                
         });
     };
 
