@@ -45,7 +45,7 @@ pugx_badge:
         - { name: 'total', label: 'Total Downloads', route: "pugx_badge" }
         - { name: 'latest_unstable_version', label: 'Latest Unstable Version', route: "pugx_badge_version_latest", latest: 'unstable'}
         - { name: 'license', label: 'License', route: "pugx_badge_license"}
-        - { name: 'monthly', label: 'Montly Downloads', route: "pugx_badge_stat", type: 'monthly'}
+        - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_stat", type: 'monthly'}
         - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_stat", type: 'daily'}
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
 
