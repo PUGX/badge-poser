@@ -38,6 +38,8 @@ class BadgeController extends ContainerAware
     CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
     /**
+     * Workaround for CORS, is Proxy for packagist.
+     *
      * @Route("/search_packagist", name="search_packagist")
      * @Method("GET")
      */

@@ -20,13 +20,11 @@ class RedisPersister implements PersisterInterface
 {
     private $redis;
 
-
     public function __construct($redis, KeysCreator $keysCreator)
     {
         $this->redis = $redis;
         $this->keysCreator = $keysCreator;
     }
-
 
     /**
      * Increment by one the total accesses.
@@ -35,7 +33,6 @@ class RedisPersister implements PersisterInterface
      */
     public function incrementTotalAccess()
     {
-
         $this->redis->incr($this->keysCreator->getKeyTotal());
 
         $key = $this->keysCreator->createDailyKey();

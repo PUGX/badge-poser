@@ -85,8 +85,6 @@ class RedisReader implements ReaderInterface
      */
     public function getRandomRepository()
     {
-       return $this->redis->zrevrangebyscore($this->keysCreator->getKeyList(), time(), 1, "LIMIT", 0, 1)[0];
+       return array_pop($this->redis->zrevrangebyscore($this->keysCreator->getKeyList(), time(), 1, "LIMIT", 0, 1));
     }
-
-
 }

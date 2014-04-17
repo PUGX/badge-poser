@@ -44,13 +44,14 @@ class PageController extends ContainerAware
      */
     public function homeAction($repository='')
     {
-
         $reader = $this->container->get('stats_reader');
-        $repository = $reader->getRandomRepository();
+        if (empty($repository)) {
+            $repository = $reader->getRandomRepository();
+        }
 
         return array(
             'repository' => $repository,
-            'total_access' => $reader->totalAccess()*900000000000
+            'total_access' => $reader->totalAccess()
             );
     }
 

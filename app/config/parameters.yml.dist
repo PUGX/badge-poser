@@ -10,4 +10,5 @@ parameters:
     redis_hostname:    localhost
     redis_database_default: 0
     redis_database_cache: 1
-    buckler_bin_path: '/usr/local/bin/buckler'
+# disabled for travis export variable
+#    buckler_bin_path: '/usr/local/bin/buckler'

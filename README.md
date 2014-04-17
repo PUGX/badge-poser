@@ -67,7 +67,3 @@ php composer.phar install
 - Chart
 - Homepage showing the latest used Repository
 - Minor fixes
-
-
-
-

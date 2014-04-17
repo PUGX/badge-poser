@@ -12,6 +12,7 @@
 namespace PUGX\BadgeBundle\Controller;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
+use PUGX\Repository\Repository;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -37,10 +38,11 @@ class SnippetController extends ContainerAware
      */
     public function allAction()
     {
-        $repository = $this->container->get('request')->get('repository');
         $response = new JsonResponse();
 
-        if (!$this->isValidRepositoryName($repository)) {
+        try {
+            $repository = $this->createRepositoryFromRequest();
+        } catch (\Exception $e) {
             $response->setData(array('msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)'));
             $response->setStatusCode(404);
 
@@ -62,13 +64,12 @@ class SnippetController extends ContainerAware
     }
 
     /**
-     * Validates a repository name.
-     *
-     * @param  string  $repository
-     * @return Boolean
+     * @return Repository
+     * @throws \Exception
      */
-    private function isValidRepositoryName($repository)
+    private function createRepositoryFromRequest()
     {
-        return (preg_match('/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?/', $repository) === 1);
+        return new Repository($this->container->get('request')->get('repository'));
     }
+
 }
