@@ -15,8 +15,7 @@
 <div id="container" class="container-narrow">
 
     <div class="row-fluid bundles">
-        <div class="span12"><p class="text-center">
-                <img src="{{ url('buckler_image',{'vendor': 'badges served so far', 'status': total_access, 'color': 'ff00cc'}) }}" alt="{{ total_access }} badges served so far"></p><hr class="styled"></div>
+        <div class="span12 badges-rendered"><p class="text-center">(more then <b>{{ total_access }}</b> badges served so far)</p><hr class="styled"></div>
     </div>
     <div class="jumbotron">
         <h1>Badge Poser</h1>
@@ -217,11 +216,16 @@
             see the full list of <a href="https://github.com/PUGX/badge-poser/graphs/contributors" target="_blank">contributors</a>.
         </p>
     </div>
+
+    {% block stats %}
     <hr>
     <div class="row-fluid">
-        <h4>Stats</h4>
+        <h4>Stats on badges rendered</h4>
         {% render(controller('PUGXStatsBundle:Show:monthlyRender'))  %}
     </div>
+    {% endblock %}
+
+    {% block sposors %}
     <hr>
     <div class="row-fluid">
         <h4>Sponsors</h4>
@@ -246,6 +250,7 @@
             </li>
         </ul>
     </div>
+    {% endblock %}
 </div>
 
 <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>

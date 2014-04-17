@@ -30,11 +30,6 @@ class ShowController extends ContainerAware
     const GITHUB_PROXY_STARTED = '2014-01-00 00:00:00';
 
     /**
-     * @Route("/stats/monthly",
-     * name = "pugx_stat_monthly"
-     * )
-     *
-     * @Method({"GET"})
      * @Template
      * @Cache(maxage="3600", smaxage="3600", public=true)
      *
@@ -44,29 +39,43 @@ class ShowController extends ContainerAware
     {
         $from = new \Datetime(self::STATS_STARTED);
         $to = new \Datetime("now");
-        $githubSSLProxyDate = new \Datetime(self::GITHUB_PROXY_STARTED);
 
-        $arrayOfData = $this->container->get('stats_reader')->totalDataOfAccessesByInterval($from, $to, ReaderInterface::MONTH);
+        $redisReader = $this->container->get('stats_reader');
 
-        $data = '0, ';
-        $labels = '"October `13", ';
+        $arrayOfData = $redisReader->totalDataOfAccessesByInterval($from, $to, ReaderInterface::MONTH);
 
-        foreach ($arrayOfData as $element) {
-            $data .=  $element->getValue().', '; ;
-
-            if ($element->getDatetime() >= $githubSSLProxyDate) {
-                $labels .=  '"'.$element->getDatetime()->format("F `y").' *",';
-            } else {
-                $labels .=  '"'.$element->getDatetime()->format("F `y").'",';
-            }
-        }
-        $data = rtrim($data, ',');
-        $labels = rtrim($labels, ',');
-
+        list($labels, $data) = $this->createLabelsAndDataForCanvas($arrayOfData);
 
         return array(
             'labels' => $labels,
             'data' => $data
         );
+    }
+
+    /**
+     * @param $arrayOfData
+     * @param $githubSSLProxyDate
+     * @param $data
+     * @param $labels
+     */
+    private function createLabelsAndDataForCanvas($arrayOfData)
+    {
+        $githubSSLProxyDate = new \Datetime(self::GITHUB_PROXY_STARTED);
+
+        $data = '0, ';
+        $labels = '"October `13", ';
+        foreach ($arrayOfData as $element) {
+            $data .= $element->getValue() . ', ';;
+
+            if ($element->getDatetime() >= $githubSSLProxyDate) {
+                $labels .= '"' . $element->getDatetime()->format("F `y") . ' *",';
+            } else {
+                $labels .= '"' . $element->getDatetime()->format("F `y") . '",';
+            }
+        }
+        $data = rtrim($data, ',');
+        $labels = rtrim($labels, ',');
+
+        return array($labels, $data);
     }
 }

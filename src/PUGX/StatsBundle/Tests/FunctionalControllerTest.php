@@ -11,10 +11,10 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
-use PUGX\StatsBundle\Test\StatsFunctionalTest;
+use PUGX\StatsBundle\Test\StatsFunctionalTestCase;
 use Packagist\Api\Client;
 
-class FunctionalControllerTest extends StatsFunctionalTest
+class FunctionalControllerTest extends StatsFunctionalTestCase
 {
     protected $packagistClient;
 

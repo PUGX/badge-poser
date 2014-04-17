@@ -41,7 +41,7 @@ class RedisReaderTest extends WebTestCase
         $reader = new RedisReader($redis, $keysCreator);
 
         $from = new \DateTime('2000-01-01');
-        $to = new \DateTime('2000-02-01');
+        $to = new \DateTime('2000-03-01');
 
         $element = array();
         $element[] = new ChartElement(new \DateTime('2000-01-01 00:00:00'), null);

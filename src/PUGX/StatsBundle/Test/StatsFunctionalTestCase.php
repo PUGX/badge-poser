@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use PUGX\StatsBundle\Service\NullPersister;
 use Symfony\Bundle\FrameworkBundle\Client;
 
-class StatsFunctionalTest extends WebTestCase
+class StatsFunctionalTestCase extends WebTestCase
 {
     /**
      * @param Client $client

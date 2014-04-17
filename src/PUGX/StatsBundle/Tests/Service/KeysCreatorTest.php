@@ -20,21 +20,21 @@ class KeysCreatorTest extends WebTestCase
     {
         $key = new KeysCreator();
 
-        $this->assertEquals('STAT_2000', $key->createYearlyKey(new \DateTime('2000-01-01')));
+        $this->assertEquals('STAT.TOTAL_2000', $key->createYearlyKey(new \DateTime('2000-01-01')));
     }
 
     public function testCreateMonthlyKey()
     {
         $key = new KeysCreator();
 
-        $this->assertEquals('STAT_2000_01', $key->createMonthlyKey(new \DateTime('2000-01-01')));
+        $this->assertEquals('STAT.TOTAL_2000_01', $key->createMonthlyKey(new \DateTime('2000-01-01')));
     }
 
     public function testCreateDailyKey()
     {
         $key = new KeysCreator();
 
-        $this->assertEquals('STAT_2000_01_01', $key->createDailyKey(new \DateTime('2000-01-01')));
+        $this->assertEquals('STAT.TOTAL_2000_01_01', $key->createDailyKey(new \DateTime('2000-01-01')));
     }
 
     public function testGetKeyHashWithNoRepository()

@@ -40,4 +40,14 @@ class NullReader implements ReaderInterface
     {
        return array();
     }
+
+    /**
+     * @return string
+     */
+    public function getRandomRepository()
+    {
+        return "monolog/monolog";
+    }
+
+
 }

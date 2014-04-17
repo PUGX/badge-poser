@@ -53,7 +53,6 @@ class RedisReader implements ReaderInterface
         $data = array();
         foreach($period as $interval){
             $value = $this->redis->get($this->getKeyString($interval, $dimension));
-
             $data[] = new ChartElement($interval, $value);
         }
 
@@ -75,7 +74,19 @@ class RedisReader implements ReaderInterface
 
     private function createPeriod(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH)
     {
-        $periodInt = new \DateInterval("P1".$dimension);
+        $periodInt = new \DateInterval("P1".$dimension."");
         return new \DatePeriod( $startDate, $periodInt, $endDate );
     }
+
+    /**
+     * Not so easy to get random repository with redis getting the last used
+     *
+     * @return string
+     */
+    public function getRandomRepository()
+    {
+       return $this->redis->zrevrangebyscore($this->keysCreator->getKeyList(), time(), 1, "LIMIT", 0, 1)[0];
+    }
+
+
 }

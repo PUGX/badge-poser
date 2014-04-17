@@ -59,3 +59,15 @@ php composer.phar install
 ``` bash
 ./bin/phpunit
 ```
+
+### Changelog
+
+#### *2014-04-17* 1 Year of badge-poser
+
+- Chart
+- Homepage showing the latest used Repository
+- Minor fixes
+
+
+
+

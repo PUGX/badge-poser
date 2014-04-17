@@ -44,4 +44,8 @@ Interface ReaderInterface
      */
     public function totalDataOfAccessesByInterval(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH);
 
+    /**
+     * @return string
+     */
+    public function getRandomRepository();
 }
