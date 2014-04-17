@@ -38,7 +38,7 @@ cd badge-poser
 
 ```
 sudo apt-get update -qq
-sudo apt-get install -qq golang git libgtk-3-dev libgtkspell-3-dev libtspi-dev trousers tor mercurial pkg-config libgtkspell-3-0 libgtkspell0
+sudo apt-get install -qq golang git mercurial
 ```
 - Install `go-buckler`
 

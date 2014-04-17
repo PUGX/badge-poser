@@ -18,7 +18,7 @@ namespace PUGX\StatsBundle\Service;
  */
 class NullReader implements ReaderInterface
 {
-    public static $totalAccess = 11111;
+    public static $totalAccess = 0;
 
     /**
      * Return the total accesses.
@@ -30,4 +30,14 @@ class NullReader implements ReaderInterface
         return static::$totalAccess;
     }
 
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param string $dimension
+     * @return array|mixed
+     */
+    public function totalDataOfAccessesByInterval(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH)
+    {
+       return array();
+    }
 }

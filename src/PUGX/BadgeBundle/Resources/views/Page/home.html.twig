@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Badge Poser, badges for PHP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="liuggio">
+{% extends "::base.html.twig" %}
 
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+{% block stylesheets %}
+       {{ parent() }}
 
-    {% stylesheets
-        '@PUGXBadgeBundle/Resources/public/css/bootstrap.css'
-        '@PUGXBadgeBundle/Resources/public/css/bootstrap-responsive.css'
+        {% stylesheets
         '@PUGXBadgeBundle/Resources/public/css/select2.css'
         '@PUGXBadgeBundle/Resources/public/css/custom.css'
         filter='?yui_css' %}
-<link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-</head>
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+{% endblock %}
 
-<body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
-
+{% block body %}
 <div id="container" class="container-narrow">
 
     <div class="row-fluid bundles">
@@ -228,7 +218,11 @@
         </p>
     </div>
     <hr>
-
+    <div class="row-fluid">
+        <h4>Stats</h4>
+        {% render(controller('PUGXStatsBundle:Show:monthlyRender'))  %}
+    </div>
+    <hr>
     <div class="row-fluid">
         <h4>Sponsors</h4>
         <ul class="thumbnails">
@@ -271,54 +265,53 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
-<!-- Placed at the end of the document so the pages load faster -->
-{% javascripts
-    '@PUGXBadgeBundle/Resources/public/js/jquery-2.0.2.min.js'
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
     '@PUGXBadgeBundle/Resources/public/js/select2.min.js'
-    '@PUGXBadgeBundle/Resources/public/js/bootstrap.js'
     '@PUGXBadgeBundle/Resources/public/js/snippet.js'
-filter='?yui_js' %}
+    filter='?yui_js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+    {% endjavascripts %}
 
-{% javascripts
+    {% javascripts
     '@PUGXBadgeBundle/Resources/public/js/zeroclipboard/ZeroClipboard.min.js'
     filter='?yui_js'
-%}
+    %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
+    {% endjavascripts %}
 
 <script type="text/javascript">
-    {% image
-        '@PUGXBadgeBundle/Resources/public/js/zeroclipboard/ZeroClipboard.swf'
-    %}
-    var clip = new ZeroClipboard($('.copy_on_clip'), {moviePath: "{{ asset_url }}" });
-    {% endimage %}
+        {% image
+            '@PUGXBadgeBundle/Resources/public/js/zeroclipboard/ZeroClipboard.swf'
+        %}
+        var clip = new ZeroClipboard($('.copy_on_clip'), {moviePath: "{{ asset_url }}" });
+        {% endimage %}
 
-    clip.on( 'complete', function ( client, args ) {
-        bsalert("Badges copied to the clipboard.");
-    });
+        clip.on( 'complete', function ( client, args ) {
+            bsalert("Badges copied to the clipboard.");
+        });
 
-    clip.on( 'noflash', function ( client, args ) {
-        bsalert("Flash support not found.\n please copy:" + args.text );
-    });
+        clip.on( 'noflash', function ( client, args ) {
+            bsalert("Flash support not found.\n please copy:" + args.text );
+        });
 
-    clip.on( 'wrongflash', function ( client, args ) {
-        bsalert("Flash version is too old\n please copy:" + args.text );
-    } );
+        clip.on( 'wrongflash', function ( client, args ) {
+            bsalert("Flash version is too old\n please copy:" + args.text );
+        } );
 </script>
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-37195869-2', 'pugx.org');
-  ga('send', 'pageview');
+        ga('create', 'UA-37195869-2', 'pugx.org');
+        ga('send', 'pageview');
 
 </script>
-</body>
-</html>
+{% endblock %}

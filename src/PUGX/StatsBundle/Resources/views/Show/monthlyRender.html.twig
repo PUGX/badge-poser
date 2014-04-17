@@ -1,0 +1,35 @@
+{% block head %}
+    {% stylesheets
+    '@PUGXStatsBundle/Resources/public/css/canvas.css'
+    filter='?yui_css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% javascripts
+    '@PUGXStatsBundle/Resources/public/Chart.js/Chart.js'
+    filter='?yui_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block body %}
+    <canvas id="canvas" height="250" width="660"></canvas>
+    <p class="canvas-caption"><b>*</b> on January 28, 2014 <a href="https://github.com/blog/1766-proxying-user-images" target="_blank">Github started proxying images</a></p>
+    <script>
+        var data = {
+            labels : [{{ labels|raw }}],
+            datasets : [
+                {
+                    fillColor : "rgba(0, 104, 168, 0.5)",
+                    strokeColor : "rgba(220,220,220,1)",
+                    pointColor : "rgba(220,220,220,1)",
+                    pointStrokeColor : "#fff",
+                    data : [{{ data }}]
+                }
+            ]
+        }
+        var myLine = new Chart(document.getElementById("canvas").getContext("2d")).Line(data, {scaleStepWidth: 1000, scaleSteps: 1000});
+    </script>
+
+{% endblock %}
+
+

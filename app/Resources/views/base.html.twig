@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <title>{% block title %}Badge Poser, badges for PHP{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="liuggio">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% block stylesheets %}
+        {% stylesheets
+            '@PUGXBadgeBundle/Resources/public/css/bootstrap.css'
+            '@PUGXBadgeBundle/Resources/public/css/bootstrap-responsive.css'
+            filter='?yui_css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+{% endblock %}
+</head>
+
+<body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {% javascripts
+        '@PUGXBadgeBundle/Resources/public/js/jquery-2.0.2.min.js'
+        '@PUGXBadgeBundle/Resources/public/js/bootstrap.js'
+    filter='?yui_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
+</html>

@@ -29,7 +29,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ PUGXBadgeBundle ]
+    bundles:        [ PUGXBadgeBundle, PUGXStatsBundle ]
     java: /usr/bin/java
     filters:
         cssrewrite: ~
