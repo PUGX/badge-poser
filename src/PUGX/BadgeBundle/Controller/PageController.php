@@ -28,7 +28,7 @@ class PageController extends ContainerAware
     /**
      * @Route("/",
      * name = "pugx_page_home",
-     * defaults = {"repository" = "leaphly/cart-bundle"}
+     * defaults = {"repository" = ""}
      * )
      *
      * @Route("/show/{repository}",
@@ -42,13 +42,16 @@ class PageController extends ContainerAware
      *
      * @return Response
      */
-    public function homeAction($repository)
+    public function homeAction($repository='')
     {
-        $redisReader = $this->container->get('stats_reader');
+        $reader = $this->container->get('stats_reader');
+        if (empty($repository)) {
+            $repository = $reader->getRandomRepository();
+        }
 
         return array(
             'repository' => $repository,
-            'total_access' => $redisReader->totalAccess()
+            'total_access' => $reader->totalAccess()
             );
     }
 

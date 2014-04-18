@@ -18,3 +18,5 @@ parameters:
 services:
     stats_persister:
         class: PUGX\StatsBundle\Service\NullPersister
+    stats_reader:
+        class: PUGX\StatsBundle\Service\NullReader

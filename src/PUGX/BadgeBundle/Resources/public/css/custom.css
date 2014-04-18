@@ -78,3 +78,7 @@ img.permalink {height: 12px; width: 15px;}
 .pull-right {
     padding-left: 5px;
 }
+
+.badges-rendered b {
+    color: #ff00cc;
+}

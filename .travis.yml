@@ -11,8 +11,8 @@ matrix:
     - php: hhvm
 
 before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
-    - sudo apt-get install
+    - composer self-update
+    - composer install --dev --prefer-dist
 
 before_install:
   - sudo apt-get update -qq

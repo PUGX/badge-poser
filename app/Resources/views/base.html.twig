@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <title>{% block title %}Badge Poser, badges for PHP{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="liuggio">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% block stylesheets %}
+        {% stylesheets
+            '../app/Resources/public/css/bootstrap.css'
+            '../app/Resources/public/css/bootstrap-responsive.css'
+            filter='?yui_css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+{% endblock %}
+</head>
+
+<body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {% javascripts
+        '../app/Resources/public/js/jquery-2.0.2.min.js'
+        '../app/Resources/public/js/bootstrap.js'
+    filter='?yui_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+{% block footer %}
+    <div class=" container-narrow">
+
+        <hr>
+        <div class="footer">
+            <p>
+                Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative,
+                see the full list of <a href="https://github.com/PUGX/badge-poser/graphs/contributors" target="_blank">contributors</a>.
+            </p>
+        </div>
+        {% block stats %}
+            <hr>
+            <div class="row-fluid">
+                <h4>Stats</h4>
+                {% render(controller('PUGXStatsBundle:Show:monthlyRender'))  %}
+            </div>
+        {% endblock %}
+
+        {% block sposors %}
+            <hr>
+            <div class="row-fluid">
+                <h4>Sponsors</h4>
+                <ul class="thumbnails">
+                    <li class="span4">
+                        <div class="thumbnail">
+                            <span class="badge pull-right">Server</span>
+                            <a href="http://www.ideato.it"  title="Ideato | Web ideas for sale">
+                                {% image '../app/Resources/public/img/ideato-srl.png' %}
+                                <img src="{{ asset_url }}" alt="Ideato SRL" style="width: 300px; height: 75px"/>
+                                {% endimage %}
+                                </a>
+                        </div>
+                    </li>
+                    <li class="span4">
+                        <div class="thumbnail">
+                            <span class="badge pull-right">Monitoring and Statistics</span>
+                            <a href="http://tvision.github.io" title="Tvision software team">
+                                {% image '../app/Resources/public/img/tvision.jpg' %}
+                                <img src="{{ asset_url }}"  alt="Tvision-team" style="height: 75px;"/>
+                                {% endimage %}
+                            </a>
+                        </div>
+                    </li>
+                    <li class="span4">
+                        <div class="thumbnail">
+                            <span class="badge pull-right">SSL certificate</span>
+                            <a href="https://www.godaddy.com/ssl/ssl-open-source.aspx" title="Godaddy Free opensource SSL certificates">
+                                {% image '../app/Resources/public/img/godaddy-logo.png' %}
+                                <img src="{{ asset_url }}" alt="Go-Daddy" style="width: 200px; height: 75px"/>
+                                {% endimage %}
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endblock %}
+    </div>
+
+    <a target="_blank" href="https://github.com/PUGX/badge-poser"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <div id="alertModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- dialog body -->
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-contents"></div>
+                </div>
+                <!-- dialog buttons -->
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

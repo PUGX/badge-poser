@@ -18,6 +18,9 @@ namespace PUGX\StatsBundle\Service;
  */
 Interface ReaderInterface
 {
+    const DAY = 'D';
+    const MONTH = 'M';
+    const YEAR = 'Y';
     /**
      * Read total accesses.
      *
@@ -25,4 +28,24 @@ Interface ReaderInterface
      */
     public function totalAccess();
 
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     *
+     * @return mixed
+     */
+
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param string $dimension
+     *
+     * @return mixed
+     */
+    public function totalDataOfAccessesByInterval(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH);
+
+    /**
+     * @return string
+     */
+    public function getRandomRepository();
 }

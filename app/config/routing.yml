@@ -3,6 +3,12 @@ pugx_badge:
     type:     annotation
     prefix:   /
 
+pugx_stats:
+    resource: "@PUGXStatsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
 pugx_badge_packagist:
     path: /packages/{repository}
     host: "packagist.org"

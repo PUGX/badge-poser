@@ -11,6 +11,8 @@
 
 namespace PUGX\StatsBundle\Service;
 
+use PUGX\StatsBundle\ChartElement;
+
 /**
  * Class RedisStats
  *
@@ -18,31 +20,14 @@ namespace PUGX\StatsBundle\Service;
  */
 class RedisReader implements ReaderInterface
 {
-    const KEY_PREFIX = 'STAT';
-    const KEY_TOTAL = 'TOTAL';
-
     private $redis;
-    private $keyTotal;
-    private $keyPrefix;
+    /** @var KeysCreator  */
+    private $keysCreator;
 
-    public function __construct($redis, $keyTotal = self::KEY_TOTAL, $keyPrefix = self::KEY_PREFIX)
+    public function __construct($redis, $keysCreator)
     {
         $this->redis = $redis;
-        $this->keyPrefix = $keyPrefix;
-        $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
-    }
-
-    /**
-     * Generate the Key with the default prefix.
-     *
-     * @param string $prefix
-     * @param string $keyName
-     *
-     * @return string
-     */
-    private function concatenateKeys($prefix, $keyName)
-    {
-        return sprintf("%s.%s", $prefix, $keyName);
+        $this->keysCreator = $keysCreator;
     }
 
     /**
@@ -52,7 +37,54 @@ class RedisReader implements ReaderInterface
      */
     public function totalAccess()
     {
-        return $this->redis->get($this->keyTotal);
+        return $this->redis->get($this->keysCreator->getKeyTotal());
     }
 
+    /**
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param string    $dimension
+     *
+     * @return ChartElement[]
+     */
+    public function totalDataOfAccessesByInterval(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH)
+    {
+        $period = $this->createPeriod($startDate, $endDate, $dimension);
+        $data = array();
+        foreach($period as $interval){
+            $value = $this->redis->get($this->getKeyString($interval, $dimension));
+            $data[] = new ChartElement($interval, $value);
+        }
+
+        return $data;
+    }
+
+    private function getKeyString(\Datetime $date, $dimension)
+    {
+        if (ReaderInterface::DAY == $dimension) {
+            return $this->keysCreator->createDailyKey($date);
+        }
+
+        if (ReaderInterface::MONTH == $dimension) {
+            return $this->keysCreator->createMonthlyKey($date);
+        }
+
+        return $this->keysCreator->createYearlyKey($date);
+    }
+
+    private function createPeriod(\DateTime $startDate, \DateTime $endDate, $dimension = ReaderInterface::MONTH)
+    {
+        $periodInt = new \DateInterval("P1".$dimension."");
+        return new \DatePeriod( $startDate, $periodInt, $endDate );
+    }
+
+    /**
+     * Not so easy to get random repository with redis getting the last used
+     *
+     * @return string
+     */
+    public function getRandomRepository()
+    {
+       return array_pop($this->redis->zrevrangebyscore($this->keysCreator->getKeyList(), time(), 1, "LIMIT", 0, 1));
+    }
 }
