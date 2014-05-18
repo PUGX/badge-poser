@@ -26,7 +26,7 @@
 
     <div class="row-fluid bundles">
         <div class="span12"><p class="text-center">
-                <img src="{{ url('buckler_image',{'vendor': 'badges served so far', 'status': total_access, 'color': 'ff00cc'}) }}" alt="{{ total_access }} badges served so far"></p><hr class="styled"></div>
+                More than {{ total_access }} badges served<hr class="styled"></div>
     </div>
     <div class="jumbotron">
         <h1>Badge Poser</h1>
@@ -61,7 +61,7 @@
 
                         <a title="copy to clipboard"  class="copy_on_clip " data-clipboard-text="default" data-clipboard-target="clip_all_markdown">
                             <img class="latest_stable_version_img" src="{{ path('pugx_badge_version',{'repository': repository}) }}">
-                            <img class="total_img" src="{{ path('pugx_badge',{'repository': repository}) }}">
+                            <img class="total_img" src="{{ path('pugx_badge_download',{'repository': repository}) }}">
                             <img class="latest_unstable_version_img" src="{{ path('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }}">
                             <img class="license_img" src="{{ path('pugx_badge_license',{'repository': repository}) }}">
                         </a>
@@ -71,7 +71,7 @@
                             Copy to clipboard
                         </a>
                         <input id="clip_all_markdown" readonly="readonly" class="input-large hidden" type="text"
-                               value="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }}) [![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }}) [![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
+                               value="[![Latest Stable Version]({{ url('pugx_badge_version',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }}) [![Latest Unstable Version]({{ url('pugx_badge_version_latest',{'repository': repository, 'latest':'unstable'}) }})]({{ path('pugx_badge_packagist',{'repository': repository}) }}) [![Total Downloads]({{ url('pugx_badge_download',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
                         >
                     </div>
 
@@ -105,13 +105,13 @@
                         <a title="copy to clipboard" class="copy_on_clip"
                            data-clipboard-target="total_markdown"
                            data-clipboard-text="-">
-                            <img class="spinned total_img" src="{{ url('pugx_badge',{'repository': repository}) }}">
+                            <img class="spinned total_img" src="{{ url('pugx_badge_download',{'repository': repository}) }}">
                         </a>
 
                         <div class="input-prepend input-append pull-right combined-box">
                             <span class="add-on">markdown</span>
                             <input id="total_markdown" readonly="readonly" class="input-large -input" type="text"
-                                   value="[![Total Downloads]({{ url('pugx_badge',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
+                                   value="[![Total Downloads]({{ url('pugx_badge_download',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
                                     >
                             <a title="copy to clipboard" class="add-on copy_on_clip btn total_clip"
                                data-clipboard-target="total_markdown"
@@ -173,13 +173,13 @@
                         <a title="copy to clipboard" class="copy_on_clip"
                            data-clipboard-target="monthly_markdown"
                            data-clipboard-text="-">
-                            <img class="spinned monthly_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }}">
+                            <img class="spinned monthly_img" src="{{ path('pugx_badge_download_type',{'repository': repository, 'type':'monthly'}) }}">
                         </a>
 
                         <div class="input-prepend input-append pull-right combined-box">
                             <span class="add-on">markdown</span>
                             <input id="monthly_markdown" readonly="readonly" class="input-large -input" type="text"
-                                   value="[![Monthly Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
+                                   value="[![Monthly Downloads]({{ url('pugx_badge_download_type',{'repository': repository, 'type':'monthly'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
                                     >
                             <a title="copy to clipboard" class="add-on copy_on_clip btn monthly_clip"
                                data-clipboard-target="monthly_markdown"
@@ -195,13 +195,13 @@
                         <a title="copy to clipboard" class="copy_on_clip"
                            data-clipboard-target="daily_markdown"
                            data-clipboard-text="-">
-                            <img class="spinned daily_img" src="{{ path('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }}">
+                            <img class="spinned daily_img" src="{{ path('pugx_badge_download_type',{'repository': repository, 'type':'daily'}) }}">
                         </a>
 
                         <div class="input-prepend input-append pull-right combined-box">
                             <span class="add-on">markdown</span>
                             <input id="daily_markdown" readonly="readonly" class="input-large -input" type="text"
-                                   value="[![Daily Downloads]({{ url('pugx_badge_stat',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
+                                   value="[![Daily Downloads]({{ url('pugx_badge_download_type',{'repository': repository, 'type':'daily'}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
                                     >
                             <a title="copy to clipboard" class="add-on copy_on_clip btn daily_clip"
                                data-clipboard-target="daily_markdown"

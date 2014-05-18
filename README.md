@@ -4,11 +4,11 @@ Badge-Poser
 Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
 or its latest stable version.
 
-[![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
-[![License](https://poser.pugx.org/pugx/badge-poser/license.png)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.svg)](http://travis-ci.org/PUGX/badge-poser)
+[![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.svg)](https://packagist.org/packages/pugx/badge-poser)
 
 ## How to create your own Badge
 -  Go to the [Badge Poser](https://poser.pugx.org) website
@@ -32,19 +32,6 @@ take a look at the coverage as well it should be pretty high :)
 ```
 git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
-```
-
-- Install `go-lang`:
-
-```
-sudo apt-get update -qq
-sudo apt-get install -qq golang git libgtk-3-dev libgtkspell-3-dev libtspi-dev trousers tor mercurial pkg-config libgtkspell-3-0 libgtkspell0
-```
-- Install `go-buckler`
-
-```
-go get github.com/badges/buckler
-export SYMFONY__buckler_bin_path=$GOPATH/bin/buckler
 ```
 
 - Install vendors:

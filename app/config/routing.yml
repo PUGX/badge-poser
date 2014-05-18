@@ -9,8 +9,3 @@ pugx_badge_packagist:
     schemes:  [https]
     requirements:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
-
-buckler_image:
-    path: /v1/{vendor}-{status}-{color}.png
-    host: "b.repl.ca"
-    schemes:  [http]

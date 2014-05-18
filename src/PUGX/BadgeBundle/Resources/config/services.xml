@@ -6,15 +6,11 @@
 
     <parameters>
         <parameter key="packagist_client.class">Packagist\Api\Client</parameter>
-        <parameter key="image_creator.class">PUGX\BadgeBundle\Service\ImageCreator</parameter>
-        <parameter key="image_creator.buckler.class">PUGX\BadgeBundle\Service\BucklerImageCreator</parameter>
         <parameter key="badge_package.class">PUGX\BadgeBundle\Package\Package</parameter>
         <parameter key="package_manager.class">PUGX\BadgeBundle\Service\PackageManager</parameter>
         <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
-        <parameter key="imagine.class.gd">Imagine\Gd\Imagine</parameter>
-        <parameter key="imagine.class.imagick">Imagine\Imagick\Imagine</parameter>
-        <parameter key="imagine.class.gmagick">Imagine\Gmagick\Imagine</parameter>
         <parameter key="normalizer.class">PUGX\BadgeBundle\Service\TextNormalizer</parameter>
+        <parameter key="image_creator.shieldio.class">PUGX\BadgeBundle\Service\ShieldIOImageCreator</parameter>
     </parameters>
 
     <services>
@@ -32,25 +28,15 @@
             <argument>%pugx_badge.allin_badges%</argument>
         </service>
 
-        <service id="image_creator2" class="%image_creator.class%">
-            <argument type="service" id="logger"/>
-            <argument type="service" id="imagine"/>
-            <argument>%kernel.root_dir%/Resources/badge-assets/fonts</argument>
-            <argument>%kernel.root_dir%/Resources/badge-assets/images</argument>
-            <argument>Monaco.ttf</argument>
-            <tag name="monolog.logger" channel="image_creator"/>
+        <service id="image_http_client" class="Guzzle\Http\Client">
         </service>
 
-        <service id="image_creator" class="%image_creator.buckler.class%">
-            <argument type="service" id="logger"/>
-            <argument>%buckler_bin_path%</argument>
-            <tag name="monolog.logger" channel="image_creator"/>
+        <service id="image_creator" class="%image_creator.shieldio.class%">
+            <argument type="service" id="image_http_client"/>
         </service>
 
         <service id="normalizer" class="%normalizer.class%">
         </service>
 
-        <service id="imagine" class="%imagine.class%" />
     </services>
-
 </container>

@@ -27,15 +27,6 @@ Interface ImageCreatorInterface
     CONST ERROR = 'error';
 
     /**
-     * Stream the output.
-     *
-     * @param ImageInterface $image
-     *
-     * @return Boolean
-     */
-    public function streamRawImageData(ImageInterface $image);
-
-    /**
      * Create the 'downloads' image with the standard Font and standard Image.
      *
      * @param string $value
