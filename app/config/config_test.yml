@@ -13,8 +13,6 @@ web_profiler:
     intercept_redirects: false
 
 # for functional test
-parameters:
-    image_creator.class: PUGX\BadgeBundle\Tests\Controller\FakeImageCreator
 services:
     stats_persister:
         class: PUGX\StatsBundle\Service\NullPersister

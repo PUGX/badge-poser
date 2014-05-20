@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="image_creator.shieldio.class">PUGX\Badge\Image\Factory\ShieldIOFactory</parameter>
+    </parameters>
+
+    <services>
+        <service id="image_http_client" class="Guzzle\Http\Client">
+        </service>
+
+        <service id="image_creator" class="%image_creator.shieldio.class%">
+            <argument type="service" id="image_http_client"/>
+            <argument type="expression">service('router').getGenerator()</argument>
+        </service>
+    </services>
+</container>

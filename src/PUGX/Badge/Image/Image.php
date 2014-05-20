@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle;
+namespace PUGX\Badge\Image;
 
 use Guzzle\Http\Message\Response;
 

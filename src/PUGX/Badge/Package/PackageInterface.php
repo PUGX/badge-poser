@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Package;
+namespace PUGX\Badge\Package;
 /**
  * Class PackageInterface
  *

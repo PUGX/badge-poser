@@ -1,6 +1,6 @@
 <?php
 
-namespace PUGX\BadgeBundle\Service;
+namespace PUGX\Badge\Package;
 
 use InvalidArgumentException;
 
@@ -9,7 +9,6 @@ use InvalidArgumentException;
  */
 class TextNormalizer
 {
-
     public function normalize($number, $precision = 2)
     {
             $number = $this->normalizeNumber($number);

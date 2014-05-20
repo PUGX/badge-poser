@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Tests\Controller;
+namespace PUGX\StatsBundle\Tests;
 
 use PUGX\StatsBundle\Test\StatsFunctionalTest;
 use Packagist\Api\Client;

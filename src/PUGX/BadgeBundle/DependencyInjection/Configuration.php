@@ -30,6 +30,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pugx_badge');
         $rootNode
             ->children()
+            ->booleanNode('disable_cache')->defaultValue('%kernel.debug%')->end()
             ->arrayNode('allin_badges')
                     ->prototype('scalar')
                     ->end()

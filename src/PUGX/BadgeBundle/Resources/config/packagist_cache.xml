@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="packagist_cache" class="%snc_redis.doctrine_cache.class%">
+            <call method="setRedis">
+                <argument type="service" id="snc_redis.packagist_cache"/>
+            </call>
+            <call method="setNamespace">
+                <argument>cache</argument>
+            </call>
+        </service>
+
+        <service id="packagist_client" class="PUGX\BadgeBundle\Service\CachedClient">
+            <call method="setCache">
+                <argument type="service" id="packagist_cache"/>
+            </call>
+        </service>
+    </services>
+</container>

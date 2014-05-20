@@ -6,6 +6,9 @@ php:
   - 5.5
   - hhvm
 
+services:
+  - redis-server
+
 matrix:
   allow_failures:
     - php: hhvm

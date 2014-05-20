@@ -9,13 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Service;
+namespace PUGX\Badge\Package;
 
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package as ApiPackage;
 
-use PUGX\BadgeBundle\Package\Package;
-use PUGX\BadgeBundle\Package\PackageInterface;
 use \UnexpectedValueException;
 
 /**
@@ -23,16 +21,18 @@ use \UnexpectedValueException;
  *
  * @author Giulio De Donato <liuggio@gmail.com>
  */
-class PackageManager
+class PackageService
 {
     private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
     private static $packageClass;
     private $client;
+    private $normalizer;
 
-    public function __construct(Client $packagistClient, $packageClass = '\PUGX\BadgeBundle\Package\Package')
+    public function __construct(Client $packagistClient, $packageClass = '\PUGX\Badge\Package\Package', $textNormalizer)
     {
         self::$packageClass = $packageClass;
         $this->client = $packagistClient;
+        $this->normalizer = $textNormalizer;
     }
 
     /**
@@ -196,7 +196,7 @@ class PackageManager
         $statsType = 'get' . ucfirst($type);
 
         if ($package && ($download = $package->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
-            return $download->{$statsType}();
+            return $this->normalizer->normalize($download->{$statsType}());
         }
     }
 }

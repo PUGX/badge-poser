@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Package;
+namespace PUGX\Badge\Package;
 
 use Packagist\Api\Result\Package as ApiPackage;
 

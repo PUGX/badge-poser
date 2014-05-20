@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
+    </parameters>
+
+    <services>
+        <service id="snippet_generator" class="%snippet_generator.class%">
+            <argument type="service" id="router" />
+            <argument>%pugx_badge.badges%</argument>
+            <argument>%pugx_badge.allin_badges%</argument>
+        </service>
+    </services>
+</container>

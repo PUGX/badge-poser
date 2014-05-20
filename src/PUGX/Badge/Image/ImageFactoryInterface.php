@@ -9,16 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Service;
-
-use Imagine\Image\ImageInterface;
+namespace PUGX\Badge\Image;
 
 /**
  * Class ImageCreatorInterface
  *
  * @author Giulio De Donato <liuggio@gmail.com>
  */
-Interface ImageCreatorInterface
+Interface ImageFactoryInterface
 {
     CONST DOWNLOADS = 'downloads';
     CONST STABLE = 'stable';

@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Service;
+namespace  PUGX\Badge\Image\Factory;
 
 use Guzzle\Http\ClientInterface;
-use PUGX\BadgeBundle\Image;
+use PUGX\Badge\Image\Image;
+use PUGX\Badge\Image\ImageFactoryInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class ShieldIOImageCreator, responsible to create an Image Object
@@ -20,7 +22,7 @@ use PUGX\BadgeBundle\Image;
  * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
  * @author Giulio De Donato <liuggio@gmail.com>
  */
-class ShieldIOImageCreator implements ImageCreatorInterface
+class ShieldIOFactory implements ImageFactoryInterface
 {
     private static $definedColors = array(
         self::DOWNLOADS => 'blue',
@@ -36,9 +38,11 @@ class ShieldIOImageCreator implements ImageCreatorInterface
     /**
      * @param ClientInterface $httpClient
      */
-    public function __construct(ClientInterface $httpClient)
+    public function __construct(ClientInterface $httpClient, UrlGeneratorInterface $routeGenerator, $route_name = 'pugx_badge_shieldio')
     {
         $this->httpClient = $httpClient;
+        $this->routeGenerator = $routeGenerator;
+        $this->route_name = $route_name;
     }
 
     /**
@@ -138,10 +142,9 @@ class ShieldIOImageCreator implements ImageCreatorInterface
         $value = str_replace(' ', '_', $value);
         $value  = urlencode($value);
 
-        return sprintf(
-            'http://img.shields.io/badge/%s-%s-%s.svg',
-            $vendor, $value, $color
-        );
+        $parameters = array('vendor'=> $vendor, 'color'=> $color, 'value' => $value, 'extension' => 'svg');
+
+        return $this->routeGenerator->generate($this->route_name, $parameters, true);
     }
 
     /**

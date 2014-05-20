@@ -97,9 +97,8 @@ class BadgeController extends Controller
         }
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
-            $text = $this->container->get('normalizer')->normalize($text);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $text = $this->container->get('package_service')->getPackageDownloads($package, $type);
             $image = $imageCreator->createDownloadsImage(sprintf("%s %s", $text, $when));
             $status = 200;
         } catch (BadResponseException $e) {
@@ -150,8 +149,8 @@ class BadgeController extends Controller
         $status = 500;
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $package = $this->container->get('package_service')->calculateLatestVersions($package);
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
@@ -162,10 +161,14 @@ class BadgeController extends Controller
             }
             $status = 200;
         } catch (BadResponseException $e) {
+            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
         } catch (UnexpectedValueException $e) {
+            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e) {
+
+            var_dump($e);die();
             $error = self::ERROR_TEXT_GENERIC;
         }
 
@@ -201,8 +204,8 @@ class BadgeController extends Controller
         $status = 500;
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $package = $this->container->get('package_service')->calculateLatestVersions($package);
             $license = $package->getLicense();
 
             if (empty($license)) {

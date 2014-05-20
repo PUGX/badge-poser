@@ -41,8 +41,21 @@ php composer.phar self-update
 php composer.phar install
 ```
 
-- run phpunit:
+- Run phpunit:
 
 ``` bash
 ./bin/phpunit
 ```
+
+- Production
+
+For Production purpose you need Redis.
+
+## This project is HHVM approved :)
+
+Try:
+
+``` bash
+hhvm ./bin/phpunit
+```
+

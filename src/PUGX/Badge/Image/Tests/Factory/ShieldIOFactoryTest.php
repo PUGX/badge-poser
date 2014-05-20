@@ -1,18 +1,20 @@
 <?php
 
-namespace PUGX\BadgeBundle\Tests\Service;
+namespace PUGX\Badge\Image\Tests\Factory;
 
-use PUGX\BadgeBundle\Service\ShieldIOImageCreator;
+use PUGX\Badge\Image\Factory\ShieldIOFactory;
 
-class ShieldIOImageCreatorTest extends \PHPUnit_Framework_TestCase
+class ShieldIOFactoryTest extends \PHPUnit_Framework_TestCase
 {
     private $httpClient;
     private $imageCreator;
+    private $urlGenerator;
 
     public function setUp()
     {
         $this->httpClient = $this->getMock('\Guzzle\Http\ClientInterface');
-        $this->imageCreator = new ShieldIOImageCreator($this->httpClient);
+        $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $this->imageCreator = new ShieldIOFactory($this->httpClient, $this->urlGenerator);
     }
 
     public function testShouldCreateDownloadsImage()
@@ -29,8 +31,12 @@ class ShieldIOImageCreatorTest extends \PHPUnit_Framework_TestCase
             ->method('send')
             ->will($this->returnValue($response));
 
-        $image = $this->imageCreator->createDownloadsImage('test');
-        $this->assertInstanceOf('\PUGX\BadgeBundle\ImageInterface', $image);
-    }
+        $this->urlGenerator->expects($this->once())
+            ->method('generate')
+            ->with('pugx_badge_shieldio', $this->equalTo(array('vendor'=>'downloads', 'value'=>'test', 'color'=>'blue', 'extension'=>'svg')), true)
+            ->will($this->returnValue('http://img.shields.io/badge/downloads-test-blue.svg'));
 
+        $image = $this->imageCreator->createDownloadsImage('test');
+        $this->assertInstanceOf('PUGX\Badge\Image\ImageInterface', $image);
+    }
 }
