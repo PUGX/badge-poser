@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Tests\Service;
+namespace PUGX\Badge\Package\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use PUGX\BadgeBundle\Service\TextNormalizer;
+use PUGX\Badge\Package\TextNormalizer;
 
 class TextNormalizerTest extends WebTestCase
 {

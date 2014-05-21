@@ -14,7 +14,7 @@ namespace PUGX\StatsBundle\Tests\Listener;
 use PUGX\StatsBundle\Listener\StatsListener;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class StatListenerTest extends WebTestCase
+class StatsListenerTest extends WebTestCase
 {
     protected $persister;
 

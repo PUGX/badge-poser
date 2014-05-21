@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Tests\Service;
+namespace PUGX\Badge\Package\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Packagist\Api\Result\Package;
 use Packagist\Api\Client;
-use PUGX\BadgeBundle\Service\PackageManager;
+use PUGX\Badge\Package\PackageService;
 
 class LatestVersionOnPackageManagerTest extends WebTestCase
 {
@@ -28,17 +28,21 @@ class LatestVersionOnPackageManagerTest extends WebTestCase
         $clientHttp->addSubscriber($plugin);
 
         $c = new Client($clientHttp);
+        $normalizer = $this->getMock('\PUGX\Badge\Package\TextNormalizer');
+        $normalizer->expects($this->any())
+            ->method('normalize')
+            ->willReturnCallback(function ($in) {return $in;});
 
-        return new PackageManager($c, '\PUGX\BadgeBundle\Package\Package');
+        return new PackageService($c, '\PUGX\Badge\Package\Package', $normalizer);
     }
 
     public static function provider()
     {
         return array(
             //    stable    unstable     json
-            array('v2.3.1', '2.4-dev', __DIR__ . '/../fixtures/packages/symfony.json'),
+            array('v2.3.1', '2.4-dev', __DIR__ . '/fixtures/packages/symfony.json'),
             // @todo mmm shouldn't be dev-master but dev-develop!
-            array('v0.11.0', 'dev-master', __DIR__ . '/../fixtures/packages/imagine-bundle.json'),
+            array('v0.11.0', 'dev-master', __DIR__ . '/fixtures/packages/imagine-bundle.json'),
         );
     }
 
@@ -54,7 +58,7 @@ class LatestVersionOnPackageManagerTest extends WebTestCase
 
         $package = $pm->calculateLatestVersions($package);
 
-        $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
+        $this->assertInstanceOf('PUGX\Badge\Package\PackageInterface', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }

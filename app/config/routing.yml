@@ -10,7 +10,9 @@ pugx_badge_packagist:
     requirements:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
 
-buckler_image:
-    path: /v1/{vendor}-{status}-{color}.png
-    host: "b.repl.ca"
-    schemes:  [http]
+pugx_badge_shieldio:
+    path: /badge/{vendor}-{value}-{color}.{extension}
+    host: "img.shields.io"
+    requirements:
+      vendor: "[A-Za-z0-9_.-]+"
+      value:  "[A-Za-z0-9_.-]+"

@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Tests\Service;
+namespace PUGX\Badge\Package\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use Packagist\Api\Result\Package\Version;
-use PUGX\BadgeBundle\Service\PackageManager;
+use PUGX\Badge\Package\PackageService;
 
 class PackageManagerTest extends WebTestCase
 {
@@ -28,12 +28,17 @@ class PackageManagerTest extends WebTestCase
         \Phake::when($apiPackage)->getVersions()->thenReturn($versions);
         \Phake::when($packagistClient)->get('puum')->thenReturn($apiPackage);
 
-        $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
+        $normalizer = $this->getMock('\PUGX\Badge\Package\TextNormalizer');
+        $normalizer->expects($this->any())
+            ->method('normalize')
+            ->willReturnCallback(function ($in) {return $in;});
+
+        $pm = new PackageService($packagistClient, '\PUGX\Badge\Package\Package', $normalizer);
 
         $package = $pm->fetchPackage('puum');
         $pm->calculateLatestVersions($package);
 
-        $this->assertInstanceOf('PUGX\BadgeBundle\Package\PackageInterface', $package);
+        $this->assertInstanceOf('PUGX\Badge\Package\PackageInterface', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }
@@ -79,7 +84,13 @@ class PackageManagerTest extends WebTestCase
     public function testParseStability($version, $stable)
     {
         $packagistClient = \Phake::mock('Packagist\Api\Client');
-        $pm = new PackageManager($packagistClient, '\PUGX\BadgeBundle\Package\Package');
+
+        $normalizer = $this->getMock('\PUGX\Badge\Package\TextNormalizer');
+        $normalizer->expects($this->any())
+            ->method('normalize')
+            ->willReturnCallback(function ($in) {return $in;});
+
+        $pm = new PackageService($packagistClient, '\PUGX\BadgeBundle\Package\Package', $normalizer);
 
         $this->assertEquals($pm->parseStability($version), $stable);
     }

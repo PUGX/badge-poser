@@ -12,7 +12,8 @@
 namespace PUGX\BadgeBundle\Controller;
 
 use Guzzle\Http\Exception\BadResponseException;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Leonardo Proietti <leonardo.proietti@gmail.com>
  * @author Simone Fumagalli <simone@iliveinperego.com>
  */
-class BadgeController extends ContainerAware
+class BadgeController extends Controller
 {
     CONST TEXT_NO_STABLE_RELEASE = 'No release';
     CONST TEXT_NO_LICENSE = 'No';
@@ -63,12 +64,14 @@ class BadgeController extends ContainerAware
      * @param string $repository repository
      * @param string $type       badge type
      *
-     * @Route("/{repository}/downloads.png",
-     *     name         = "pugx_badge",
-     *     requirements = {"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
+     * @Route("/{repository}/downloads.svg",
+     *     name         = "pugx_badge_download",
+     *     requirements = {
+     *          "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+     *       }
      *     )
-     * @Route("/{repository}/d/{type}.png",
-     *     name         = "pugx_badge_stat",
+     * @Route("/{repository}/d/{type}.svg",
+     *     name         = "pugx_badge_download_type",
      *     defaults     = {"type" = "total"},
      *     requirements = {
      *         "type"       = "total|daily|monthly",
@@ -94,9 +97,8 @@ class BadgeController extends ContainerAware
         }
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $text = $this->container->get('package_manager')->getPackageDownloads($package, $type);
-            $text = $this->container->get('normalizer')->normalize($text);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $text = $this->container->get('package_service')->getPackageDownloads($package, $type);
             $image = $imageCreator->createDownloadsImage(sprintf("%s %s", $text, $when));
             $status = 200;
         } catch (BadResponseException $e) {
@@ -112,9 +114,9 @@ class BadgeController extends ContainerAware
             $type = 'error';
         }
 
-        $outputFilename = sprintf('%s.png', $type);
+        $outputFilename = sprintf('%s.svg', $type);
 
-        return $this->streamImage($status, $image, $outputFilename);
+        return $this->createSVGResponse($status, (string) $image, $outputFilename);
     }
 
     /**
@@ -123,11 +125,11 @@ class BadgeController extends ContainerAware
      * @param string $repository repository
      * @param string $latest     latest
      *
-     * @Route("/{repository}/version.png",
+     * @Route("/{repository}/version.svg",
      *     name="pugx_badge_version",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
-     * @Route("/{repository}/v/{latest}.png",
+     * @Route("/{repository}/v/{latest}.svg",
      *     name         = "pugx_badge_version_latest",
      *     defaults     = {"latest" = "stable"},
      *     requirements = {
@@ -147,8 +149,8 @@ class BadgeController extends ContainerAware
         $status = 500;
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $package = $this->container->get('package_service')->calculateLatestVersions($package);
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
@@ -159,10 +161,14 @@ class BadgeController extends ContainerAware
             }
             $status = 200;
         } catch (BadResponseException $e) {
+            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
         } catch (UnexpectedValueException $e) {
+            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e) {
+
+            var_dump($e);die();
             $error = self::ERROR_TEXT_GENERIC;
         }
 
@@ -171,18 +177,17 @@ class BadgeController extends ContainerAware
             $latest = 'error';
         }
 
-        $outputFilename = sprintf('%s.png', $latest);
+        $outputFilename = sprintf('%s.svg', $latest);
 
-        return $this->streamImage($status, $image, $outputFilename);
+        return $this->createSVGResponse($status, (string) $image, $outputFilename);
     }
 
     /**
      * License action.
      *
      * @param string $repository repository
-     * @param string $latest     latest
      *
-     * @Route("/{repository}/license.png",
+     * @Route("/{repository}/license.svg",
      *     name="pugx_badge_license",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
@@ -199,8 +204,8 @@ class BadgeController extends ContainerAware
         $status = 500;
 
         try {
-            $package = $this->container->get('package_manager')->fetchPackage($repository);
-            $package = $this->container->get('package_manager')->calculateLatestVersions($package);
+            $package = $this->container->get('package_service')->fetchPackage($repository);
+            $package = $this->container->get('package_service')->calculateLatestVersions($package);
             $license = $package->getLicense();
 
             if (empty($license)) {
@@ -221,38 +226,30 @@ class BadgeController extends ContainerAware
             $image = $this->container->get('image_creator')->createErrorImage($error);
         }
 
-        $outputFilename = sprintf('%s.png', 'version');
+        $outputFilename = sprintf('%s.svg', 'version');
 
-        return $this->streamImage($status, $image, $outputFilename);
+        return $this->createSVGResponse($status, (string) $image, $outputFilename);
     }
 
     /**
-     * @param int      $status
-     * @param resource $image
-     * @param string   $outputFilename
-     * @param int      $maxage
-     * @param int      $smaxage
+     * @param int    $status
+     * @param string $image
+     * @param string $outputFilename
+     * @param int    $maxage
+     * @param int    $smaxage
      *
-     * @return StreamedResponse
+     * @return Response
      */
-    protected function streamImage($status, $image, $outputFilename, $maxage = 3600, $smaxage = 3600)
+    private function createSVGResponse($status, $image, $outputFilename, $maxage = 3600, $smaxage = 3600)
     {
-        $imageCreator = $this->container->get('image_creator');
+        $response = new Response($image, $status);
 
-        //generating the streamed response
-        $response = new StreamedResponse(null, $status);
-        $response->setCallback(function () use ($imageCreator, $image) {
-            $imageCreator->streamRawImageData($image);
-        });
-
-        $response->headers->set('Content-Type', 'image/png');
+        $response->headers->set('Content-Type', 'image/svg+xml;charset=utf-8');
         $response->headers->set('Content-Disposition', 'inline; filename="'.$outputFilename.'"');
 
         //adding cache-control as standard annotation fails here
         $cacheControl = sprintf('public, maxage=%s, s-maxage=%s', $maxage, $smaxage);
         $response->headers->set('Cache-Control', $cacheControl);
-
-        $response->send();
 
         return $response;
     }

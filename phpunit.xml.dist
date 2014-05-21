@@ -16,6 +16,8 @@
     <testsuites>
         <testsuite name="Packagist Test Suite">
             <directory>src/*/*Bundle/Tests</directory>
+            <directory>src/*/*/Tests</directory>
+            <directory>src/PUGX/Badge/*/Tests</directory>
             <directory>src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>

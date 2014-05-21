@@ -30,14 +30,11 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('pugx_badge');
         $rootNode
             ->children()
+            ->booleanNode('disable_cache')->defaultValue('%kernel.debug%')->end()
             ->arrayNode('allin_badges')
                     ->prototype('scalar')
                     ->end()
                 ->end()
-            ->enumNode('imagine_driver')
-                ->values(array('gd', 'imagick', 'gmagick'))
-                ->defaultValue('gd')
-            ->end()
             ->arrayNode('badges')
                 ->prototype('array')
                 ->children()

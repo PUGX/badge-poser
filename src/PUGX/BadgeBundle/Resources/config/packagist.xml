@@ -8,9 +8,7 @@
         <parameter key="packagist_client.class">Packagist\Api\Client</parameter>
         <parameter key="badge_package.class">PUGX\Badge\Package\Package</parameter>
         <parameter key="package_service.class">PUGX\Badge\Package\PackageService</parameter>
-        <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
         <parameter key="normalizer.class">PUGX\Badge\Package\TextNormalizer</parameter>
-        <parameter key="image_creator.shieldio.class">PUGX\Badge\Image\Factory\ShieldIOFactory</parameter>
     </parameters>
 
     <services>
@@ -21,19 +19,6 @@
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
             <argument type="service" id="normalizer"/>
-        </service>
-
-        <service id="snippet_generator" class="%snippet_generator.class%">
-            <argument type="service" id="router" />
-            <argument>%pugx_badge.badges%</argument>
-            <argument>%pugx_badge.allin_badges%</argument>
-        </service>
-
-        <service id="image_http_client" class="Guzzle\Http\Client">
-        </service>
-
-        <service id="image_creator" class="%image_creator.shieldio.class%">
-            <argument type="service" id="image_http_client"/>
         </service>
 
         <service id="normalizer" class="%normalizer.class%" public="false">

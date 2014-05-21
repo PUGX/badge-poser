@@ -47,7 +47,7 @@ class SnippetGenerator
 
     /**
      * @param Router $router
-     *                                @param $badges
+     * @param $badges
      * @param string $packagist_route
      */
     public function __construct(Router $router, array $badges, array $allInBadges, $packagist_route = 'pugx_badge_packagist')
@@ -129,6 +129,7 @@ class SnippetGenerator
     {
         $parameters = array();
         $route = $this->routes->get($badge['route']);
+
         $routeParameters = array_keys(array_merge($route->getDefaults(), $route->getRequirements()));
 
         foreach ($routeParameters as $routeParameter) {

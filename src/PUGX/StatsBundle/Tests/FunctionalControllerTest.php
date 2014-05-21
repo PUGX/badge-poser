@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\BadgeBundle\Tests\Controller;
+namespace PUGX\StatsBundle\Tests;
 
 use PUGX\StatsBundle\Test\StatsFunctionalTest;
 use Packagist\Api\Client;
@@ -43,7 +43,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         ob_start();
-        $client->request('GET', '/pugx/badge-poser/d/total.png');
+        $client->request('GET', '/pugx/badge-poser/d/total.svg');
         ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
     }
@@ -53,7 +53,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         ob_start();
-        $client->request('GET', '/pugx/badge-poser/version.png');
+        $client->request('GET', '/pugx/badge-poser/version.svg');
         ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
     }
@@ -63,7 +63,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         ob_start();
-        $client->request('GET', '/pugx/badge-poser/v/unstable.png');
+        $client->request('GET', '/pugx/badge-poser/v/unstable.svg');
         ob_clean();
         $this->assertTrue($client->getResponse()->isSuccessful());
 

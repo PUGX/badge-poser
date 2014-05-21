@@ -2,22 +2,17 @@ imports:
     - { resource: parameters.yml }
 
 framework:
-    #esi:             ~
-    #translator:      { fallback: %locale% }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
     form:            ~
-    csrf_protection: ~
+    csrf_protection: false
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
-        #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_proxies: ~
-    session:
-        name: %session_name%
     fragments:       ~
 
 # Twig Configuration
@@ -42,11 +37,11 @@ pugx_badge:
     allin_badges: ['latest_stable_version', 'total', 'latest_unstable_version', 'license']
     badges:
         - { name: 'latest_stable_version', label: 'Latest Stable Version', route: "pugx_badge_version_latest", latest: 'stable'}
-        - { name: 'total', label: 'Total Downloads', route: "pugx_badge" }
+        - { name: 'total', label: 'Total Downloads', route: "pugx_badge_download" }
         - { name: 'latest_unstable_version', label: 'Latest Unstable Version', route: "pugx_badge_version_latest", latest: 'unstable'}
         - { name: 'license', label: 'License', route: "pugx_badge_license"}
-        - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_stat", type: 'monthly'}
-        - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_stat", type: 'daily'}
+        - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_download_type_png", type: 'monthly'}
+        - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_download_type_png", type: 'daily'}
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
 
 

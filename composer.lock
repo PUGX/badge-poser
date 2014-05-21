@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a49e3002d4eb114ccb7641deb0814627",
+    "hash": "dff4dba6f8f3e1dfde45ffc7a177923e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -411,6 +411,58 @@
             "time": "2013-01-12 18:59:04"
         },
         {
+            "name": "guzzle/cache",
+            "version": "v3.9.1",
+            "target-dir": "Guzzle/Cache",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/cache.git",
+                "reference": "9d20d5afd4203f84893e809777ffa01e47bd4ea7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/cache/zipball/9d20d5afd4203f84893e809777ffa01e47bd4ea7",
+                "reference": "9d20d5afd4203f84893e809777ffa01e47bd4ea7",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Cache": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle cache adapter component",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "adapter",
+                "cache",
+                "doctrine",
+                "zf"
+            ],
+            "time": "2014-01-08 21:24:51"
+        },
+        {
             "name": "guzzle/common",
             "version": "v3.9.1",
             "target-dir": "Guzzle/Common",
@@ -556,6 +608,56 @@
             "time": "2014-02-05 18:29:46"
         },
         {
+            "name": "guzzle/plugin-cache",
+            "version": "v3.9.1",
+            "target-dir": "Guzzle/Plugin/Cache",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/plugin-cache.git",
+                "reference": "152bc4fa58e1578d01d501a97cbeee1c34edecb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/plugin-cache/zipball/152bc4fa58e1578d01d501a97cbeee1c34edecb6",
+                "reference": "152bc4fa58e1578d01d501a97cbeee1c34edecb6",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/cache": "self.version",
+                "guzzle/http": "self.version",
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Plugin\\Cache": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle HTTP cache plugin",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "plugin"
+            ],
+            "time": "2014-02-05 10:00:42"
+        },
+        {
             "name": "guzzle/stream",
             "version": "v3.9.1",
             "target-dir": "Guzzle/Stream",
@@ -607,58 +709,6 @@
                 "stream"
             ],
             "time": "2014-05-01 21:36:02"
-        },
-        {
-            "name": "imagine/imagine",
-            "version": "v0.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "f64ec666baaa800edcbf237db41121a569230709"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/f64ec666baaa800edcbf237db41121a569230709",
-                "reference": "f64ec666baaa800edcbf237db41121a569230709",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "sami/sami": "dev-master"
-            },
-            "suggest": {
-                "ext-gd": "to use the GD implementation",
-                "ext-gmagick": "to use the Gmagick implementation",
-                "ext-imagick": "to use the Imagick implementation"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Imagine": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bulat Shakirzyanov",
-                    "email": "mallluhuct@gmail.com",
-                    "homepage": "http://avalanche123.com"
-                }
-            ],
-            "description": "Image processing for PHP 5.3",
-            "homepage": "http://imagine.readthedocs.org/",
-            "keywords": [
-                "drawing",
-                "graphics",
-                "image manipulation",
-                "image processing"
-            ],
-            "time": "2013-07-10 17:25:36"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -714,16 +764,16 @@
         },
         {
             "name": "knplabs/packagist-api",
-            "version": "v1.0",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "06322002c94d75b810bb4e30c2f3310e895c796c"
+                "reference": "5d46003cfb1aca37efc84e8a0f1e8ba276a8245e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/06322002c94d75b810bb4e30c2f3310e895c796c",
-                "reference": "06322002c94d75b810bb4e30c2f3310e895c796c",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/5d46003cfb1aca37efc84e8a0f1e8ba276a8245e",
+                "reference": "5d46003cfb1aca37efc84e8a0f1e8ba276a8245e",
                 "shasum": ""
             },
             "require": {
@@ -738,7 +788,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -763,7 +813,7 @@
                 "composer",
                 "packagist"
             ],
-            "time": "2013-08-30 07:11:24"
+            "time": "2013-11-22 09:55:31"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1263,33 +1313,35 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v2.3.0",
+            "version": "v2.5.1",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a"
+                "reference": "71ad844ac29401f86619f9d643393265451e858b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
-                "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/71ad844ac29401f86619f9d643393265451e858b",
+                "reference": "71ad844ac29401f86619f9d643393265451e858b",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.3",
+                "monolog/monolog": "~1.6",
                 "php": ">=5.3.2",
-                "symfony/config": "~2.2-beta2",
-                "symfony/dependency-injection": "~2.2-beta2",
-                "symfony/monolog-bridge": "~2.2-beta2"
+                "symfony/config": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/http-kernel": "~2.3",
+                "symfony/monolog-bridge": "~2.3"
             },
             "require-dev": {
-                "symfony/yaml": "~2.2-beta2"
+                "symfony/console": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -1319,20 +1371,20 @@
                 "log",
                 "logging"
             ],
-            "time": "2013-05-27 18:06:55"
+            "time": "2014-02-19 14:49:26"
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.13",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "9c4b11915d7409a9cecd155d954f2ade273f3359"
+                "reference": "4697c33cdfb520dcf83fd6e4f7864fa26ddaebea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/9c4b11915d7409a9cecd155d954f2ade273f3359",
-                "reference": "9c4b11915d7409a9cecd155d954f2ade273f3359",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/4697c33cdfb520dcf83fd6e4f7864fa26ddaebea",
+                "reference": "4697c33cdfb520dcf83fd6e4f7864fa26ddaebea",
                 "shasum": ""
             },
             "require": {
@@ -1353,6 +1405,7 @@
                 "symfony/doctrine-bridge": "self.version",
                 "symfony/dom-crawler": "self.version",
                 "symfony/event-dispatcher": "self.version",
+                "symfony/expression-language": "self.version",
                 "symfony/filesystem": "self.version",
                 "symfony/finder": "self.version",
                 "symfony/form": "self.version",
@@ -1369,7 +1422,11 @@
                 "symfony/proxy-manager-bridge": "self.version",
                 "symfony/routing": "self.version",
                 "symfony/security": "self.version",
+                "symfony/security-acl": "self.version",
                 "symfony/security-bundle": "self.version",
+                "symfony/security-core": "self.version",
+                "symfony/security-csrf": "self.version",
+                "symfony/security-http": "self.version",
                 "symfony/serializer": "self.version",
                 "symfony/stopwatch": "self.version",
                 "symfony/swiftmailer-bridge": "self.version",
@@ -1387,13 +1444,13 @@
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "ircmaxell/password-compat": "1.0.*",
                 "monolog/monolog": "~1.3",
-                "ocramius/proxy-manager": ">=0.3.1,<0.4-dev",
+                "ocramius/proxy-manager": ">=0.3.1,<0.6-dev",
                 "propel/propel1": "1.6.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.4-dev"
                 }
             },
             "autoload": {
@@ -1429,7 +1486,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-27 08:34:33"
+            "time": "2014-04-27 13:39:18"
         },
         {
             "name": "twig/extensions",
@@ -2294,8 +2351,7 @@
         "phpunit/phpunit": 0
     },
     "platform": {
-        "php": ">=5.3.3",
-        "ext-gd": "*"
+        "php": ">=5.3.3"
     },
     "platform-dev": [
 
