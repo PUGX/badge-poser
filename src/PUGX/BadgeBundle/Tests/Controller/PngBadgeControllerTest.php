@@ -19,34 +19,34 @@ class PngBadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/total.png');
-        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/d/total.svg'));
+        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/d/total'));
     }
 
     public function testLatestStableAction()
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version.png');
-        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/version.svg'));
+        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/version'));
     }
 
     public function testLatestUnstableAction()
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/unstable.png');
-        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/v/unstable.svg'));
+        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/v/unstable'));
     }
 
     public function testLicenseAction()
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/license.png');
-        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/license.svg'));
+        $this->assertTrue($client->getResponse()->isRedirect('/pugx/badge-poser/license'));
     }
 
     public function testIfPackageDoesntExist()
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/microsoft-lover/d/total.png');
-        $this->assertTrue($client->getResponse()->isRedirect('/pugx/microsoft-lover/d/total.svg'));
+        $this->assertTrue($client->getResponse()->isRedirect('/pugx/microsoft-lover/d/total'));
     }
 }

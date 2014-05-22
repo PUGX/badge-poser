@@ -64,15 +64,15 @@ class BadgeController extends Controller
      * @param string $repository repository
      * @param string $type       badge type
      *
-     * @Route("/{repository}/downloads.svg",
+     * @Route("/{repository}/downloads",
      *     name         = "pugx_badge_download",
+     *     defaults     = {"type" = "total"},
      *     requirements = {
      *          "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
      *       }
      *     )
-     * @Route("/{repository}/d/{type}.svg",
+     * @Route("/{repository}/d/{type}",
      *     name         = "pugx_badge_download_type",
-     *     defaults     = {"type" = "total"},
      *     requirements = {
      *         "type"       = "total|daily|monthly",
      *         "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
@@ -83,7 +83,7 @@ class BadgeController extends Controller
      *
      * @return StreamedResponse
      */
-    public function downloadsAction($repository, $type = 'total')
+    public function downloadsAction($repository, $type)
     {
         $imageCreator = $this->getImageCreator();
         $status = 500;
@@ -125,15 +125,15 @@ class BadgeController extends Controller
      * @param string $repository repository
      * @param string $latest     latest
      *
-     * @Route("/{repository}/version.svg",
+     * @Route("/{repository}/version",
      *     name="pugx_badge_version",
+     *     defaults     = {"latest" = "stable"},
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
-     * @Route("/{repository}/v/{latest}.svg",
+     * @Route("/{repository}/v/{latest}",
      *     name         = "pugx_badge_version_latest",
-     *     defaults     = {"latest" = "stable"},
      *     requirements = {
-     *         "type"       = "stable|unstable",
+     *         "latest"     = "stable|unstable",
      *         "repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
      *         }
      *     )
@@ -142,7 +142,7 @@ class BadgeController extends Controller
      *
      * @return StreamedResponse
      */
-    public function versionAction($repository, $latest = 'stable')
+    public function versionAction($repository, $latest)
     {
         $image = null;
         $error = self::ERROR_TEXT_GENERIC;
@@ -182,7 +182,7 @@ class BadgeController extends Controller
      *
      * @param string $repository repository
      *
-     * @Route("/{repository}/license.svg",
+     * @Route("/{repository}/license",
      *     name="pugx_badge_license",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
