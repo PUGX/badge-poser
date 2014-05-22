@@ -16,3 +16,9 @@ pugx_badge_shieldio:
     requirements:
       vendor: "[A-Za-z0-9_.-]+"
       value:  "[A-Za-z0-9_.-]+"
+
+redirects:
+    resource: "@PUGXBadgeBundle/Resources/config/routing/routing_redirects.yml"
+
+aliases:
+    resource: "@PUGXBadgeBundle/Resources/config/routing/routing_aliases.yml"

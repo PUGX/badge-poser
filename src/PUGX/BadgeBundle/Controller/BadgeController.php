@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Giulio De Donato <liuggio@gmail.com>
  * @author Leonardo Proietti <leonardo.proietti@gmail.com>
  * @author Simone Fumagalli <simone@iliveinperego.com>
+ * @author Andrea Giuliano <giulianoand@gmail.com>
  */
 class BadgeController extends Controller
 {
