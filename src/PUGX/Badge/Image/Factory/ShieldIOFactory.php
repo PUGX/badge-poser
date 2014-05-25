@@ -140,7 +140,7 @@ class ShieldIOFactory implements ImageFactoryInterface
     {
         $value = str_replace('-', '--', $value);
         $value = str_replace(' ', '_', $value);
-        $value  = urlencode($value);
+        $value = str_replace(' ', '_', $value);
 
         $parameters = array('vendor'=> $vendor, 'color'=> $color, 'value' => $value, 'extension' => 'svg');
 
