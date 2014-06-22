@@ -22,16 +22,16 @@ use Guzzle\Http\Message\Response;
 class Image implements ImageInterface
 {
     /**
-     * @var \Guzzle\Http\Message\Response
+     * @var string $content
      */
-    private $response;
+    private $content;
 
     /**
-     * @param Response $response
+     * @param string $content
      */
-    private function __construct(Response $response)
+    private function __construct($content)
     {
-        $this->response = $response;
+        $this->content = $content;
     }
 
     /**
@@ -39,7 +39,7 @@ class Image implements ImageInterface
      */
     public function __toString()
     {
-        return $this->response->getBody(true);
+        return $this->content;
     }
 
     /**
@@ -51,6 +51,20 @@ class Image implements ImageInterface
      */
     public static function createFromResponse(Response $response)
     {
-        return new self($response);
+        $content = $response->getBody(true);
+
+        return self::createFromString($content);
+    }
+
+    /**
+     * Factory method
+     *
+     * @param string $content
+     *
+     * @return Image
+     */
+    public static function createFromString($content)
+    {
+        return new self($content);
     }
 }

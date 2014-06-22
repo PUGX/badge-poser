@@ -85,7 +85,7 @@ class BadgeController extends Controller
      */
     public function downloadsAction($repository, $type = 'total')
     {
-        $imageCreator = $this->container->get('image_creator');
+        $imageCreator = $this->getImageCreator();
         $status = 500;
         $image = null;
 
@@ -153,11 +153,11 @@ class BadgeController extends Controller
             $package = $this->container->get('package_service')->calculateLatestVersions($package);
 
             if ('stable' == $latest && $package->hasStableVersion()) {
-                $image = $this->container->get('image_creator')->createStableImage($package->getLatestStableVersion());
+                $image = $this->getImageCreator()->createStableImage($package->getLatestStableVersion());
             } elseif ('stable' == $latest) {
-                $image = $this->container->get('image_creator')->createStableNoImage(self::TEXT_NO_STABLE_RELEASE);
+                $image = $this->getImageCreator()->createStableNoImage(self::TEXT_NO_STABLE_RELEASE);
             } elseif ($package->hasUnstableVersion()) {
-                $image = $this->container->get('image_creator')->createUnstableImage($package->getLatestUnstableVersion());
+                $image = $this->getImageCreator()->createUnstableImage($package->getLatestUnstableVersion());
             }
             $status = 200;
         } catch (BadResponseException $e) {
@@ -173,7 +173,7 @@ class BadgeController extends Controller
         }
 
         if (null === $image) {
-            $image = $this->container->get('image_creator')->createErrorImage($error);
+            $image = $this->getImageCreator()->createErrorImage($error);
             $latest = 'error';
         }
 
@@ -209,9 +209,9 @@ class BadgeController extends Controller
             $license = $package->getLicense();
 
             if (empty($license)) {
-                $image = $this->container->get('image_creator')->createLicenseImage(self::TEXT_NO_LICENSE);
+                $image = $this->getImageCreator()->createLicenseImage(self::TEXT_NO_LICENSE);
             } else {
-                $image = $this->container->get('image_creator')->createLicenseImage($license);
+                $image = $this->getImageCreator()->createLicenseImage($license);
             }
             $status = 200;
         } catch (BadResponseException $e) {
@@ -223,7 +223,7 @@ class BadgeController extends Controller
         }
 
         if (null === $image) {
-            $image = $this->container->get('image_creator')->createErrorImage($error);
+            $image = $this->getImageCreator()->createErrorImage($error);
         }
 
         $outputFilename = sprintf('%s.svg', 'version');
@@ -252,5 +252,13 @@ class BadgeController extends Controller
         $response->headers->set('Cache-Control', $cacheControl);
 
         return $response;
+    }
+
+    /**
+     * @return \PUGX\Badge\Image\Factory\ShieldIOFactory
+     */
+    private function getImageCreator()
+    {
+        return $this->container->get('image_creator_local');
     }
 }

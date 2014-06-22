@@ -19,10 +19,10 @@ namespace PUGX\Badge\Image;
 Interface ImageFactoryInterface
 {
     CONST DOWNLOADS = 'downloads';
-    CONST STABLE = 'stable';
-    CONST UNSTABLE = 'unstable';
-    CONST LICENSE = 'license';
-    CONST ERROR = 'error';
+    CONST STABLE    = 'stable';
+    CONST UNSTABLE  = 'unstable';
+    CONST LICENSE   = 'license';
+    CONST ERROR     = 'error';
 
     /**
      * Create the 'downloads' image with the standard Font and standard Image.

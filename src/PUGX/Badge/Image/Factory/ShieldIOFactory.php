@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace  PUGX\Badge\Image\Factory;
+namespace PUGX\Badge\Image\Factory;
 
 use Guzzle\Http\ClientInterface;
 use PUGX\Badge\Image\Image;
@@ -24,25 +24,44 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class ShieldIOFactory implements ImageFactoryInterface
 {
+    /**
+     * @var array $definedColors
+     */
     private static $definedColors = array(
         self::DOWNLOADS => 'blue',
-        self::STABLE => '28a3df',
-        self::UNSTABLE => 'e68718',
-        self::ERROR => 'red',
-        self::LICENSE => '428F7E'
+        self::STABLE    => '28a3df',
+        self::UNSTABLE  => 'e68718',
+        self::ERROR     => 'red',
+        self::LICENSE   => '428F7E'
     );
 
-    /** @var ClientInterface $httpClient */
+    /**
+     * @var ClientInterface $httpClient
+     */
     private $httpClient;
 
     /**
-     * @param ClientInterface $httpClient
+     * @var UrlGeneratorInterface $routeGenerator
      */
-    public function __construct(ClientInterface $httpClient, UrlGeneratorInterface $routeGenerator, $route_name = 'pugx_badge_shieldio')
+    private $routeGenerator;
+
+    /**
+     * @var string $routeName
+     */
+    private $routeName;
+
+    /**
+     * @param ClientInterface       $httpClient
+     * @param UrlGeneratorInterface $routeGenerator
+     * @param string                $routeName
+     */
+    public function __construct(ClientInterface       $httpClient,
+                                UrlGeneratorInterface $routeGenerator,
+                                                      $routeName      = 'pugx_badge_shieldio')
     {
-        $this->httpClient = $httpClient;
+        $this->httpClient     = $httpClient;
         $this->routeGenerator = $routeGenerator;
-        $this->route_name = $route_name;
+        $this->routeName      = $routeName;
     }
 
     /**
@@ -50,7 +69,7 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return mixed
+     * @return \PUGX\Badge\Image\ImageInterface
      */
     public function createDownloadsImage($value)
     {
@@ -64,7 +83,7 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\BadgeBundle\ImageInterface
+     * @return \PUGX\Badge\Image\ImageInterface
      */
     public function createStableNoImage($value)
     {
@@ -106,7 +125,7 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\BadgeBundle\ImageInterface
+     * @return \PUGX\Badge\Image\ImageInterface
      */
     public function createErrorImage($value)
     {
@@ -120,7 +139,7 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\BadgeBundle\ImageInterface
+     * @return \PUGX\Badge\Image\ImageInterface
      */
     public function createLicenseImage($value)
     {
@@ -142,21 +161,21 @@ class ShieldIOFactory implements ImageFactoryInterface
         $value = str_replace(' ', '_', $value);
         $value = str_replace(' ', '_', $value);
 
-        $parameters = array('vendor'=> $vendor, 'color'=> $color, 'value' => $value, 'extension' => 'svg');
+        $parameters = array('vendor' => $vendor, 'color' => $color, 'value' => $value, 'extension' => 'svg');
 
-        return $this->routeGenerator->generate($this->route_name, $parameters, true);
+        return $this->routeGenerator->generate($this->routeName, $parameters, true);
     }
 
     /**
      * @param $vendor
      * @param $value
      * @param $color
+     *
      * @return array|\Guzzle\Http\Message\Response
      */
     private function fetchResponse($vendor, $value, $color)
     {
-        $request = $this->httpClient->get($this->generateURI($vendor, $value, $color));
-
+        $request  = $this->httpClient->get($this->generateURI($vendor, $value, $color));
         $response = $this->httpClient->send($request);
 
         return $response;
