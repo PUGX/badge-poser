@@ -39,6 +39,7 @@ class PUGXBadgeExtension extends Extension
         }
 
         $loader->load('shieldio.xml');
+        $loader->load('image_creator.xml');
         if (!$config['disable_cache']) {
             $loader->load('shieldio_cache.xml');
         }
