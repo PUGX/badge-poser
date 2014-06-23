@@ -94,9 +94,9 @@ class SvgShieldGenerator implements SvgShieldGeneratorInterface
     private function stringWidth($text, $font = self::STRING_FONT, $size = self::STRING_SIZE)
     {
         $size = $this->convertToPt($size);
-        $box  = imageftbbox($size, 0, __DIR__ . $font, $text);
+        $box  = imagettfbbox($size, 0, __DIR__ . $font, $text);
 
-        return round($box[2] - $box[0] + self::SHIELD_PADDING_EXTERNAL + self::SHIELD_PADDING_INTERNAL,  1);
+        return round(abs($box[2] - $box[0]) + self::SHIELD_PADDING_EXTERNAL + self::SHIELD_PADDING_INTERNAL,  1);
     }
 
     /**
