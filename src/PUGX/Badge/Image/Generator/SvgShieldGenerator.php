@@ -95,7 +95,6 @@ class SvgShieldGenerator implements SvgShieldGeneratorInterface
     {
         $size = $this->convertToPt($size);
         $box  = imagettfbbox($size, 0, __DIR__ . $font, $text);
-
         return round(abs($box[2] - $box[0]) + self::SHIELD_PADDING_EXTERNAL + self::SHIELD_PADDING_INTERNAL,  1);
     }
 

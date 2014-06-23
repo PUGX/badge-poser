@@ -9,10 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\Badge\Image\Tests\Generator;
+namespace PUGX\Badge\Image\Generator {
+    // travis fails the calculation of the box size... faked!
+    function imagettfbbox($size, $angle, $fontfile, $text) {
+        global $mockImagettfbbox;
+
+        if (isset($mockImagettfbbox) && $mockImagettfbbox != false) {
+            return $mockImagettfbbox[$text];
+        } else {
+            return call_user_func_array('\imagettfbbox', func_get_args());
+        }
+    }
+
+}
+
+
+namespace PUGX\Badge\Image\Tests\Generator {
 
 use PUGX\Badge\Image\Generator\SvgShieldGenerator;
 use PUGX\Badge\Image\Generator\SvgShieldGeneratorInterface;
+
 
 /**
  * Class SvgShieldGeneratorTest
@@ -29,6 +45,11 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        global $mockImagettfbbox;
+        $mockImagettfbbox = array(
+            'testVendor' => array(-2, 0, 61, 0, 61, -11, -2, -11),
+            'testValue'  => array(-2, 0, 52, 0, 52, -11, -2, -11)
+        );
         $this->templateEngine  = $this->getMock('\PUGX\Badge\Image\Template\TemplateEngineInterface');
         $this->shieldGenerator = new SvgShieldGenerator($this->templateEngine, 'test');
     }
@@ -38,10 +59,6 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testItGenerateAShieldFromVendorValueAndColor($vendor, $value, $color, $expectedParameters)
     {
-        if (!$this->hasGDTheVersion2()) {
-            $this->markTestSkipped('Need version 2 of GD image functions, found:'.$this->hasGDTheVersion2());
-        }
-
         $this->templateEngine->expects($this->once())
                              ->method('render')
                              ->with($this->identicalTo('test'), $this->equalTo($expectedParameters));
@@ -67,16 +84,5 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
         )
         );
     }
-
-    /**
-     * @return string|bool
-     */
-    private function hasGDTheVersion2()
-    {
-        $gdInfo = gd_info();   // array of GD
-        $version = $gdInfo['GD Version'];
-        $gdInfo = $version[0]; // first char
-
-        return ($gdInfo != '2')?$version:true;
-    }
+}
 }
