@@ -23,7 +23,7 @@ class SvgShieldGenerator implements SvgShieldGeneratorInterface
     const STRING_SIZE    = 11;
     const STRING_FONT    = '/../Font/DejaVuSans.ttf';
     const VENDOR_COLOR   = '#555';
-    const SHIELD_PADDING = 17;
+    const SHIELD_PADDING = 9.29;
 
     private static $colorScheme = array(
         "brightgreen" => "#4c1",
