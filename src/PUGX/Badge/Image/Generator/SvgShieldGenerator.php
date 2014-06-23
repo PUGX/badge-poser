@@ -20,10 +20,11 @@ use PUGX\Badge\Image\Template\TemplateEngineInterface;
  */
 class SvgShieldGenerator implements SvgShieldGeneratorInterface
 {
-    const STRING_SIZE    = 11;
-    const STRING_FONT    = '/../Font/DejaVuSans.ttf';
-    const VENDOR_COLOR   = '#555';
-    const SHIELD_PADDING = 17;
+    const STRING_SIZE             = 11;
+    const STRING_FONT             = '/../Font/DejaVuSans.ttf';
+    const VENDOR_COLOR            = '#555';
+    const SHIELD_PADDING_EXTERNAL = 6;
+    const SHIELD_PADDING_INTERNAL = 4;
 
     private static $colorScheme = array(
         "brightgreen" => "#4c1",
@@ -95,7 +96,7 @@ class SvgShieldGenerator implements SvgShieldGeneratorInterface
         $size = $this->convertToPt($size);
         $box  = imageftbbox($size, 0, __DIR__ . $font, $text);
 
-        return round($box[2] - $box[0] + self::SHIELD_PADDING,  1);
+        return round($box[2] - $box[0] + self::SHIELD_PADDING_EXTERNAL + self::SHIELD_PADDING_INTERNAL,  1);
     }
 
     /**

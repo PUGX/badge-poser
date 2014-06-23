@@ -38,6 +38,10 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testItGenerateAShieldFromVendorValueAndColor($vendor, $value, $color, $expectedParameters)
     {
+        if ($this->hasGDTheVersion2()) {
+            $this->markTestSkipped('Need version 2 of GD image functions');
+        }
+
         $this->templateEngine->expects($this->once())
                              ->method('render')
                              ->with($this->identicalTo('test'), $this->equalTo($expectedParameters));
@@ -50,17 +54,28 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'testVendor', 'testValue', 'red', array(
-                'vendorWidth'         => 80.0,
-                'valueWidth'          => 71.0,
-                'totalWidth'          => 151.0,
+                'vendorWidth'         => 73.0,
+                'valueWidth'          => 64.0,
+                'totalWidth'          => 137.0,
                 'vendorColor'         => '#555',
                 'valueColor'          => '#e05d44',
                 'vendor'              => 'testVendor',
                 'value'               => 'testValue',
-                'vendorStartPosition' => 41.0,
-                'valueStartPosition'  => 114.5
+                'vendorStartPosition' => 37.5,
+                'valueStartPosition'  => 104.0
             )
         )
         );
+    }
+
+    /**
+     * @return bool
+     */
+    private function hasGDTheVersion2()
+    {
+        $gdInfo = gd_info(); // array of GD version
+        $gdInfo = $gdInfo['GD Version'][0]; // first char
+
+        return $gdInfo != '2';
     }
 }
