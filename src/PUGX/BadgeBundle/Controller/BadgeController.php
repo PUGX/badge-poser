@@ -161,14 +161,10 @@ class BadgeController extends Controller
             }
             $status = 200;
         } catch (BadResponseException $e) {
-            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
         } catch (UnexpectedValueException $e) {
-            var_dump($e);die();
             $error = self::ERROR_TEXT_CLIENT_EXCEPTION;
         } catch (\Exception $e) {
-
-            var_dump($e);die();
             $error = self::ERROR_TEXT_GENERIC;
         }
 
