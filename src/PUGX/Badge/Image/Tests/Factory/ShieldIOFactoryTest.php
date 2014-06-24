@@ -2,6 +2,7 @@
 
 namespace PUGX\Badge\Image\Tests\Factory;
 
+use Guzzle\Http\Message\Response;
 use PUGX\Badge\Image\Factory\ShieldIOFactory;
 
 class ShieldIOFactoryTest extends \PHPUnit_Framework_TestCase
@@ -19,9 +20,7 @@ class ShieldIOFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldCreateDownloadsImage()
     {
-        $response = $this->getMockBuilder('\Guzzle\Http\Message\Response')
-                        ->disableOriginalConstructor()
-                        ->getMock();
+        $response = Response::fromMessage("HTTP/1.1 Hello.\r\n\r\n");
 
         $this->httpClient->expects($this->once())
             ->method('get')

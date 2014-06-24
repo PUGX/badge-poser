@@ -9,10 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace PUGX\Badge\Image\Tests\Generator;
+namespace PUGX\Badge\Image\Generator {
+    // travis fails the calculation of the box size... faked!
+    function imagettfbbox($size, $angle, $fontfile, $text) {
+        global $mockImagettfbbox;
+
+        if (isset($mockImagettfbbox) && $mockImagettfbbox != false) {
+            return $mockImagettfbbox[$text];
+        } else {
+            return call_user_func_array('\imagettfbbox', func_get_args());
+        }
+    }
+
+}
+
+
+namespace PUGX\Badge\Image\Tests\Generator {
 
 use PUGX\Badge\Image\Generator\SvgShieldGenerator;
 use PUGX\Badge\Image\Generator\SvgShieldGeneratorInterface;
+
 
 /**
  * Class SvgShieldGeneratorTest
@@ -29,6 +45,11 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        global $mockImagettfbbox;
+        $mockImagettfbbox = array(
+            'testVendor' => array(-2, 0, 61, 0, 61, -11, -2, -11),
+            'testValue'  => array(-2, 0, 52, 0, 52, -11, -2, -11)
+        );
         $this->templateEngine  = $this->getMock('\PUGX\Badge\Image\Template\TemplateEngineInterface');
         $this->shieldGenerator = new SvgShieldGenerator($this->templateEngine, 'test');
     }
@@ -50,17 +71,18 @@ class SvgShieldGeneratorTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'testVendor', 'testValue', 'red', array(
-                'vendorWidth'         => 80.0,
-                'valueWidth'          => 71.0,
-                'totalWidth'          => 151.0,
+                'vendorWidth'         => 73.0,
+                'valueWidth'          => 64.0,
+                'totalWidth'          => 137.0,
                 'vendorColor'         => '#555',
                 'valueColor'          => '#e05d44',
                 'vendor'              => 'testVendor',
                 'value'               => 'testValue',
-                'vendorStartPosition' => 41.0,
-                'valueStartPosition'  => 114.5
+                'vendorStartPosition' => 37.5,
+                'valueStartPosition'  => 104.0
             )
         )
         );
     }
+}
 }
