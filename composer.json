@@ -30,7 +30,8 @@
         "knplabs/packagist-api": "~1.0",
         "predis/predis": "0.8.*",
         "snc/redis-bundle": "~1.1",
-        "guzzle/plugin-cache": "*"
+        "guzzle/plugin-cache": "*",
+        "badges/poser": "dev-master"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",
@@ -56,7 +57,7 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

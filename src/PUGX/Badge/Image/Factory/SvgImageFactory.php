@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 namespace PUGX\Badge\Image\Factory;
 
-use PUGX\Badge\Image\Generator\SvgShieldGeneratorInterface;
 use PUGX\Badge\Image\Image;
 use PUGX\Badge\Image\ImageFactoryInterface;
+use PUGX\Poser\Poser;
 
 /**
  * Class SvgImageFactory
@@ -27,10 +27,10 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     private static $definedColors = array(
         self::DOWNLOADS => 'blue',
-        self::STABLE    => '#28a3df',
-        self::UNSTABLE  => '#e68718',
+        self::STABLE    => '28a3df',
+        self::UNSTABLE  => 'e68718',
         self::ERROR     => 'red',
-        self::LICENSE   => '#428F7E'
+        self::LICENSE   => '428F7E'
     );
 
     /**
@@ -38,9 +38,9 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     private $shieldGenerator;
 
-    public function __construct(SvgShieldGeneratorInterface $svgStringGenerator)
+    public function __construct(Poser $poser)
     {
-        $this->shieldGenerator = $svgStringGenerator;
+        $this->shieldGenerator = $poser;
     }
 
     /**
@@ -52,7 +52,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createDownloadsImage($value)
     {
-        $shield = $this->generateShield(self::DOWNLOADS, $value, self::$definedColors[self::DOWNLOADS]);
+        $shield = $this->generate(self::DOWNLOADS, $value, self::$definedColors[self::DOWNLOADS]);
 
         return Image::createFromString($shield);
     }
@@ -66,7 +66,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createStableNoImage($value)
     {
-        $shield = $this->generateShield(self::STABLE, $value, self::$definedColors[self::STABLE]);
+        $shield = $this->generate(self::STABLE, $value, self::$definedColors[self::STABLE]);
 
         return Image::createFromString($shield);
     }
@@ -80,7 +80,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createStableImage($value)
     {
-        $shield = $this->generateShield(self::STABLE, $value, self::$definedColors[self::STABLE]);
+        $shield = $this->generate(self::STABLE, $value, self::$definedColors[self::STABLE]);
 
         return Image::createFromString($shield);
     }
@@ -94,7 +94,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createUnstableImage($value = '@dev')
     {
-        $shield = $this->generateShield(self::UNSTABLE, $value, self::$definedColors[self::UNSTABLE]);
+        $shield = $this->generate(self::UNSTABLE, $value, self::$definedColors[self::UNSTABLE]);
 
         return Image::createFromString($shield);
     }
@@ -108,7 +108,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createErrorImage($value)
     {
-        $shield = $this->generateShield(self::ERROR, $value, self::$definedColors[self::ERROR]);
+        $shield = $this->generate(self::ERROR, $value, self::$definedColors[self::ERROR]);
 
         return Image::createFromString($shield);
     }
@@ -122,7 +122,7 @@ class SvgImageFactory implements ImageFactoryInterface
      */
     public function createLicenseImage($value)
     {
-        $shield = $this->generateShield(self::LICENSE, $value, self::$definedColors[self::LICENSE]);
+        $shield = $this->generate(self::LICENSE, $value, self::$definedColors[self::LICENSE]);
 
         return Image::createFromString($shield);
     }
@@ -134,8 +134,8 @@ class SvgImageFactory implements ImageFactoryInterface
      *
      * @return string
      */
-    private function generateShield($vendor, $value, $color)
+    private function generate($vendor, $value, $color)
     {
-        return $this->shieldGenerator->generateShield($vendor, $value, $color);
+        return $this->shieldGenerator->generate($vendor, $value, $color, 'svg');
     }
 }

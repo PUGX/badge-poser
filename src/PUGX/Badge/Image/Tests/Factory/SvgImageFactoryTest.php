@@ -25,9 +25,11 @@ class SvgImageFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $shieldGenerator = $this->getMock('\PUGX\Badge\Image\Generator\SvgShieldGeneratorInterface');
+        $shieldGenerator = $this->getMockBuilder('\PUGX\Poser\Poser')
+            ->disableOriginalConstructor()
+            ->getMock();
         $shieldGenerator->expects($this->once())
-            ->method('generateShield')
+            ->method('generate')
             ->will($this->returnValue('<svg \>'));
 
         $this->imageFactory = new SvgImageFactory($shieldGenerator);

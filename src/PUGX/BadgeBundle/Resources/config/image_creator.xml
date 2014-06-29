@@ -7,22 +7,20 @@
     <parameters>
         <parameter key="image_creator_local.class">PUGX\Badge\Image\Factory\SvgImageFactory</parameter>
         <parameter key="image_creator_local.template">PUGXBadgeBundle:Svg:defaultShield.svg.twig</parameter>
-        <parameter key="shield_generator.svg.class">PUGX\Badge\Image\Generator\SvgShieldGenerator</parameter>
-        <parameter key="shield_generator.template_engine.class">PUGX\BadgeBundle\Service\TwigAdapter</parameter>
+        <parameter key="poser.svg_render.class">PUGX\Poser\Render\SvgRender</parameter>
+        <parameter key="poser.class">PUGX\Poser\Poser</parameter>
     </parameters>
 
     <services>
-        <service id="shield_generator.template_engine" class="%shield_generator.template_engine.class%">
-            <argument type="service" id="twig"/>
+        <service id="poser.svg_render" class="%poser.svg_render.class%"  public="false">
         </service>
 
-        <service id="shield_generator" class="%shield_generator.svg.class%">
-            <argument type="service" id="shield_generator.template_engine" />
-            <argument type="string">%image_creator_local.template%</argument>
+        <service id="poser" class="%poser.class%" public="false">
+            <argument type="service" id="poser.svg_render" />
         </service>
 
         <service id="image_creator_local" class="%image_creator_local.class%">
-            <argument type="service" id="shield_generator"/>
+            <argument type="service" id="poser"/>
         </service>
 
         <service id="normalizer" class="%normalizer.class%" public="false">
