@@ -11,16 +11,17 @@
 
 namespace PUGX\Badge\Image\Factory;
 
-use PUGX\Badge\Image\Image;
+
 use PUGX\Badge\Image\ImageFactoryInterface;
+use PUGX\Badge\Image\Image;
 use PUGX\Poser\Poser;
 
 /**
- * Class SvgImageFactory
+ * Class PoserImageFactory
  *
  * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
  */
-class SvgImageFactory implements ImageFactoryInterface
+class PoserImageFactory implements ImageFactoryInterface
 {
     /**
      * @var array $definedColors
@@ -34,7 +35,7 @@ class SvgImageFactory implements ImageFactoryInterface
     );
 
     /**
-     * @var SvgShieldGeneratorInterface $shieldGenerator
+     * @var Poser $shieldGenerator
      */
     private $shieldGenerator;
 
@@ -48,7 +49,7 @@ class SvgImageFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createDownloadsImage($value)
     {
@@ -62,7 +63,7 @@ class SvgImageFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createStableNoImage($value)
     {
@@ -104,7 +105,7 @@ class SvgImageFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createErrorImage($value)
     {
@@ -118,7 +119,7 @@ class SvgImageFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createLicenseImage($value)
     {

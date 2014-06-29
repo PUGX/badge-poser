@@ -5,7 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="image_creator_local.class">PUGX\Badge\Image\Factory\SvgImageFactory</parameter>
+        <parameter key="image_creator_local.class">PUGX\Badge\Image\Factory\PoserImageFactory</parameter>
         <parameter key="image_creator_local.template">PUGXBadgeBundle:Svg:defaultShield.svg.twig</parameter>
         <parameter key="poser.svg_render.class">PUGX\Poser\Render\SvgRender</parameter>
         <parameter key="poser.class">PUGX\Poser\Poser</parameter>
@@ -15,16 +15,12 @@
         <service id="poser.svg_render" class="%poser.svg_render.class%"  public="false">
         </service>
 
-        <service id="poser" class="%poser.class%" public="false">
+        <service id="poser" class="%poser.class%">
             <argument type="service" id="poser.svg_render" />
         </service>
 
         <service id="image_creator_local" class="%image_creator_local.class%">
             <argument type="service" id="poser"/>
         </service>
-
-        <service id="normalizer" class="%normalizer.class%" public="false">
-        </service>
-
     </services>
 </container>

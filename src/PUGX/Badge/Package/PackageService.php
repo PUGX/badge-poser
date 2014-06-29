@@ -23,7 +23,6 @@ use \UnexpectedValueException;
  */
 class PackageService
 {
-    private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
     private static $packageClass;
     private $client;
     private $normalizer;
@@ -33,33 +32,6 @@ class PackageService
         self::$packageClass = $packageClass;
         $this->client = $packagistClient;
         $this->normalizer = $textNormalizer;
-    }
-
-    /**
-     * Factory of Packages.
-     *
-     * @return PackageInterface
-     */
-    public static function instantiatePackage()
-    {
-        $package = self::$packageClass;
-
-        return new $package();
-    }
-
-    /**
-     * Create a new Package decorated with the Api Package.
-     *
-     * @param ApiPackage $apiPackage
-     *
-     * @return PackageInterface
-     */
-    public function instantiateAndDecoratePackage(ApiPackage $apiPackage)
-    {
-        $package = self::instantiatePackage();
-        $package->setOriginalObject($apiPackage);
-
-        return $package;
     }
 
     /**
@@ -73,114 +45,13 @@ class PackageService
      */
     public function fetchPackage($repository)
     {
-        $package = $this->client->get($repository);
-        if ($package && $package instanceof ApiPackage) {
+        $apiPackage = $this->client->get($repository);
+        if ($apiPackage && $apiPackage instanceof ApiPackage) {
             // create a new Package from the ApiPackage
-            return $this->instantiateAndDecoratePackage($package);
+            return Package::createFromApi($apiPackage);
         }
 
         throw new UnexpectedValueException(sprintf('Impossible to found repository "%s"', $repository));
-    }
-
-    /**
-     * Set the latest Stable and the latest Unstable version from a Package.
-     *
-     * @param Package $package
-     *
-     * @return Package
-     */
-    public function calculateLatestVersions(Package &$package)
-    {
-        $versions = $package->getVersions();
-
-        foreach ($versions as $name => $version) {
-
-            $currentVersionName = $version->getVersion();
-            $versionNormalized = $version->getVersionNormalized();
-
-            $aliases = $this->getBranchAliases($version);
-            if (null !== $aliases && array_key_exists($currentVersionName, $aliases)) {
-                $currentVersionName = $aliases[$currentVersionName];
-            }
-
-            $functionName = 'Unstable';
-            if ('stable' == $this->parseStability($currentVersionName)) {
-                $functionName = 'Stable';
-            }
-
-            if (version_compare($versionNormalized, $package->{'getLatest' . $functionName . 'VersionNormalized'}()) > 0) {
-                $package->{'setLatest' . $functionName . 'Version'}($currentVersionName);
-                $package->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
-
-                $license = $version->getLicense();
-                if (is_array($license) && count($license)>0) {
-                    $license = implode(',',$license);
-                }
-                $package->setLicense($license);
-            }
-        }
-
-        return $package;
-    }
-
-    /**
-     * Get all the branch aliases.
-     *
-     * @param ApiPackage\Version $version
-     *
-     * @return null|array
-     */
-    public function getBranchAliases(ApiPackage\Version $version)
-    {
-        $extra = $version->getExtra();
-        if (null !== $extra
-            && null !== $extra["branch-alias"]
-            && is_array($extra["branch-alias"])
-        ) {
-            return $extra["branch-alias"];
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the stability of a version.
-     *
-     * This function is part of Composer.
-     *
-     * (c) Nils Adermann <naderman@naderman.de>
-     * Jordi Boggiano <j.boggiano@seld.be>
-     *
-     * @param string $version
-     *
-     * @return string
-     */
-    public function parseStability($version)
-    {
-        $version = preg_replace('{#.+$}i', '', $version);
-
-        if ('dev-' === substr($version, 0, 4) || '-dev' === substr($version, -4)) {
-            return 'dev';
-        }
-
-        preg_match('{' . self::$modifierRegex . '$}i', strtolower($version), $match);
-        if (!empty($match[3])) {
-            return 'dev';
-        }
-
-        if (!empty($match[1])) {
-            if ('beta' === $match[1] || 'b' === $match[1]) {
-                return 'beta';
-            }
-            if ('alpha' === $match[1] || 'a' === $match[1]) {
-                return 'alpha';
-            }
-            if ('rc' === $match[1]) {
-                return 'RC';
-            }
-        }
-
-        return 'stable';
     }
 
     /**
