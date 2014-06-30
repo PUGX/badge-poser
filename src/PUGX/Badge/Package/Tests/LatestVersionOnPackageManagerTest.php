@@ -19,7 +19,7 @@ use PUGX\Badge\Package\PackageService;
 class LatestVersionOnPackageManagerTest extends WebTestCase
 {
      private function createPM($data, $status = 200)
-    {
+     {
         $packagistResponse = new \Guzzle\Http\Message\Response($status);
         $packagistResponse->setBody($data);
         $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
@@ -56,9 +56,7 @@ class LatestVersionOnPackageManagerTest extends WebTestCase
         $pm = $this->createPM($data, 200);
         $package = $pm->fetchPackage('a/a');
 
-        $package = $pm->calculateLatestVersions($package);
-
-        $this->assertInstanceOf('PUGX\Badge\Package\PackageInterface', $package);
+        $this->assertInstanceOf('PUGX\Badge\Package\Package', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }

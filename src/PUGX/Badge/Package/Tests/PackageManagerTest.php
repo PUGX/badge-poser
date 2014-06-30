@@ -36,9 +36,8 @@ class PackageManagerTest extends WebTestCase
         $pm = new PackageService($packagistClient, '\PUGX\Badge\Package\Package', $normalizer);
 
         $package = $pm->fetchPackage('puum');
-        $pm->calculateLatestVersions($package);
 
-        $this->assertInstanceOf('PUGX\Badge\Package\PackageInterface', $package);
+        $this->assertInstanceOf('PUGX\Badge\Package\Package', $package);
         $this->assertEquals($package->getLatestStableVersion(), $stableAssertion);
         $this->assertEquals($package->getLatestUnstableVersion(), $unstableAssertion);
     }
@@ -75,44 +74,6 @@ class PackageManagerTest extends WebTestCase
                 array('version' => 'v1.10.0',    'versionNormalized' => '1.10.0.0'),
                 array('version' => 'dev-master',    'versionNormalized' => '9999999-dev'),
             ))),
-        );
-    }
-
-    /**
-     * @dataProvider getVersionAndStability
-     */
-    public function testParseStability($version, $stable)
-    {
-        $packagistClient = \Phake::mock('Packagist\Api\Client');
-
-        $normalizer = $this->getMock('\PUGX\Badge\Package\TextNormalizer');
-        $normalizer->expects($this->any())
-            ->method('normalize')
-            ->willReturnCallback(function ($in) {return $in;});
-
-        $pm = new PackageService($packagistClient, '\PUGX\BadgeBundle\Package\Package', $normalizer);
-
-        $this->assertEquals($pm->parseStability($version), $stable);
-    }
-
-    public static function getVersionAndStability()
-    {
-        return array(
-            array('1.0.0', 'stable'),
-            array('1.1.0', 'stable'),
-            array('2.0.0', 'stable'),
-            array('3.0.x-dev', 'dev'),
-            array('v3.0.0-RC1', 'RC'),
-            array('2.3.x-dev', 'dev'),
-            array('2.2.x-dev', 'dev'),
-            array('dev-master', 'dev'),
-            array('2.1.x-dev', 'dev'),
-            array('2.0.x-dev', 'dev'),
-            array('v2.3.0-rc2', 'RC'),
-            array('v2.3.0-RC1', 'RC'),
-            array('v2.3.0-BETA2', 'beta'),
-            array('v2.1.10', 'stable'),
-            array('v2.2.1', 'stable'),
         );
     }
 

@@ -45,10 +45,13 @@ class PageController extends ContainerAware
     public function homeAction($repository)
     {
         $redisReader = $this->container->get('stats_reader');
+        $poser = $this->container->get('poser');
+        $prefix = sprintf('More than %s', $redisReader->totalAccess());
+        $text = 'badges served !!';
 
         return array(
             'repository' => $repository,
-            'total_access' => $redisReader->totalAccess()
+            'badges_served_svg' => $poser->generate($prefix, $text, 'CC0066', 'svg')
             );
     }
 

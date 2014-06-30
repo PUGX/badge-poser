@@ -38,6 +38,5 @@
 
         <service id="normalizer" class="%normalizer.class%" public="false">
         </service>
-
     </services>
 </container>

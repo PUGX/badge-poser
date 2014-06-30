@@ -11,32 +11,34 @@
 
 namespace PUGX\Badge\Image\Tests\Factory;
 
-use PUGX\Badge\Image\Factory\SvgImageFactory;
+use PUGX\Badge\Image\Factory\PoserImageFactory;
 
 /**
- * Class SvgImageFactoryTest
+ * Class PoserImageFactoryTest
  *
  * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
  */
-class SvgImageFactoryTest extends \PHPUnit_Framework_TestCase
+class PoserImageFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var SvgImageFactory $imageFactory */
+    /** @var PoserImageFactory $imageFactory */
     private $imageFactory;
 
     public function setUp()
     {
-        $shieldGenerator = $this->getMock('\PUGX\Badge\Image\Generator\SvgShieldGeneratorInterface');
+        $shieldGenerator = $this->getMockBuilder('\PUGX\Poser\Poser')
+            ->disableOriginalConstructor()
+            ->getMock();
         $shieldGenerator->expects($this->once())
-            ->method('generateShield')
+            ->method('generate')
             ->will($this->returnValue('<svg \>'));
 
-        $this->imageFactory = new SvgImageFactory($shieldGenerator);
+        $this->imageFactory = new PoserImageFactory($shieldGenerator);
     }
 
     public function testShouldCreateDownloadsImage()
     {
         $image = $this->imageFactory->createDownloadsImage('test', 'test', 'red');
 
-        $this->assertInstanceOf('PUGX\Badge\Image\ImageInterface', $image);
+        $this->assertInstanceOf('PUGX\Badge\Image\Image', $image);
     }
 }

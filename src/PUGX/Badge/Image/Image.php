@@ -11,7 +11,6 @@
 
 namespace PUGX\Badge\Image;
 
-use Guzzle\Http\Message\Response;
 
 /**
  * Class Image, an Image value Object
@@ -19,7 +18,7 @@ use Guzzle\Http\Message\Response;
  * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
  * @author Giulio De Donato <liuggio@gmail.com>
  */
-class Image implements ImageInterface
+class Image
 {
     /**
      * @var string $content
@@ -45,26 +44,13 @@ class Image implements ImageInterface
     /**
      * Factory method
      *
-     * @param Response $response
-     *
-     * @return Image
-     */
-    public static function createFromResponse(Response $response)
-    {
-        $content = $response->getBody(true);
-
-        return self::createFromString($content);
-    }
-
-    /**
-     * Factory method
-     *
      * @param string $content
      *
      * @return Image
      */
     public static function createFromString($content)
     {
+        $content = (string) $content;
         return new self($content);
     }
 }

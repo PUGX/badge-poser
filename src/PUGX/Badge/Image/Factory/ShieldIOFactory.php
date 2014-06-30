@@ -69,13 +69,13 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createDownloadsImage($value)
     {
         $response = $this->fetchResponse(self::DOWNLOADS, $value, self::$definedColors[self::DOWNLOADS]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**
@@ -83,13 +83,13 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createStableNoImage($value)
     {
         $response = $this->fetchResponse(self::STABLE, $value, self::$definedColors[self::STABLE]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**
@@ -103,7 +103,7 @@ class ShieldIOFactory implements ImageFactoryInterface
     {
         $response = $this->fetchResponse(self::STABLE, $value, self::$definedColors[self::STABLE]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**
@@ -117,7 +117,7 @@ class ShieldIOFactory implements ImageFactoryInterface
     {
         $response = $this->fetchResponse(self::UNSTABLE, $value, self::$definedColors[self::UNSTABLE]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**
@@ -125,13 +125,13 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createErrorImage($value)
     {
         $response = $this->fetchResponse(self::ERROR, $value, self::$definedColors[self::ERROR]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**
@@ -139,13 +139,13 @@ class ShieldIOFactory implements ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return \PUGX\Badge\Image\ImageInterface
+     * @return \PUGX\Badge\Image\Image
      */
     public function createLicenseImage($value)
     {
         $response = $this->fetchResponse(self::LICENSE, $value, self::$definedColors[self::LICENSE]);
 
-        return Image::createFromResponse($response);
+        return Image::createFromString($response->getBody(true));
     }
 
     /**

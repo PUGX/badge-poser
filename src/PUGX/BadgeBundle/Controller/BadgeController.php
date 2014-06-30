@@ -150,7 +150,6 @@ class BadgeController extends Controller
 
         try {
             $package = $this->container->get('package_service')->fetchPackage($repository);
-            $package = $this->container->get('package_service')->calculateLatestVersions($package);
 
             if ('stable' == $latest && $package->hasStableVersion()) {
                 $image = $this->getImageCreator()->createStableImage($package->getLatestStableVersion());
@@ -201,7 +200,6 @@ class BadgeController extends Controller
 
         try {
             $package = $this->container->get('package_service')->fetchPackage($repository);
-            $package = $this->container->get('package_service')->calculateLatestVersions($package);
             $license = $package->getLicense();
 
             if (empty($license)) {

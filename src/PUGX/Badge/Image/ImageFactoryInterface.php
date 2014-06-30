@@ -38,7 +38,7 @@ Interface ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return ImageInterface
+     * @return Image
      */
     public function createStableNoImage($value);
 
@@ -65,7 +65,7 @@ Interface ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return ImageInterface
+     * @return Image
      */
     public function createErrorImage($value);
 
@@ -74,7 +74,7 @@ Interface ImageFactoryInterface
      *
      * @param string $value
      *
-     * @return ImageInterface
+     * @return Image
      */
     public function createLicenseImage($value);
 }

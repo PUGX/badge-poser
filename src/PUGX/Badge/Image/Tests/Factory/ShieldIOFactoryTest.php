@@ -36,6 +36,6 @@ class ShieldIOFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('http://img.shields.io/badge/downloads-test-blue.svg'));
 
         $image = $this->imageCreator->createDownloadsImage('test');
-        $this->assertInstanceOf('PUGX\Badge\Image\ImageInterface', $image);
+        $this->assertInstanceOf('PUGX\Badge\Image\Image', $image);
     }
 }
