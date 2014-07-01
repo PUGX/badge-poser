@@ -34,7 +34,7 @@ class BadgeControllerTest extends WebTestCase
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
         static::$kernel->getContainer()->set('image_http_client', $this->imageHttpClient);
-        $client->request('GET', '/pugx/badge-poser/d/total.svg');
+        $client->request('GET', '/pugx/badge-poser/d/total');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -42,7 +42,7 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $client->request('GET', '/pugx/badge-poser/version.svg');
+        $client->request('GET', '/pugx/badge-poser/version');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -50,7 +50,7 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $client->request('GET', '/pugx/badge-poser/v/unstable.svg');
+        $client->request('GET', '/pugx/badge-poser/v/unstable');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $response = $client->getResponse();
@@ -61,7 +61,7 @@ class BadgeControllerTest extends WebTestCase
     {
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $this->packagistClient);
-        $client->request('GET', '/pugx/badge-poser/license.svg');
+        $client->request('GET', '/pugx/badge-poser/license');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
@@ -74,7 +74,7 @@ class BadgeControllerTest extends WebTestCase
         $client = static::createClient();
         static::$kernel->getContainer()->set('packagist_client', $packagistClient);
         static::$kernel->getContainer()->set('image_http_client', $this->imageHttpClient);
-        $client->request('GET', '/pugx/microsoft-lover/d/total.svg');
+        $client->request('GET', '/pugx/microsoft-lover/d/total');
         $this->assertTrue($client->getResponse()->isServerError());
     }
 

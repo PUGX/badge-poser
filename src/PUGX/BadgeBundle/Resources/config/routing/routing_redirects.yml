@@ -1,0 +1,53 @@
+download_png_redirect:
+    path: /{repository}/downloads.png
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: pugx_badge_download
+        permanent: true
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]
+
+download_type_png_redirect:
+    path: /{repository}/d/{type}.png
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: pugx_badge_download_type
+        permanent: true
+        type: "total"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        type: "total|daily|monthly"
+    methods:  [GET]
+
+badge_version_png_redirect:
+    path: /{repository}/version.png
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: pugx_badge_version
+        permanent: true
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]
+
+version_latest_png_redirect:
+    path: /{repository}/v/{latest}.png
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: pugx_badge_version_latest
+        permanent: true
+        latest: "stable"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        type: "stable|unstable"
+    methods:  [GET]
+
+badge_license_png_redirect:
+    path: /{repository}/license.png
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: pugx_badge_license
+        permanent: true
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]
