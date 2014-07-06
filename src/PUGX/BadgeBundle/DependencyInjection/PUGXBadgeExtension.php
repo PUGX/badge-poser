@@ -38,14 +38,10 @@ class PUGXBadgeExtension extends Extension
             $loader->load('packagist_cache.xml');
         }
 
-        $loader->load('shieldio.xml');
-        $loader->load('image_creator.xml');
-        if (!$config['disable_cache']) {
-            $loader->load('shieldio_cache.xml');
-        }
+        $loader->load('image_factory.xml');
+        $loader->load('controllers.xml');
 
         $loader->load('snippet.xml');
-
         $container->setParameter($this->getAlias().'.badges', $config['badges']);
         $container->setParameter($this->getAlias().'.allin_badges', $config['allin_badges']);
     }

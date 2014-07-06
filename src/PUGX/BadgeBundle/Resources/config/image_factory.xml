@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="image_factory.class">PUGX\Badge\Service\ImageFactory</parameter>
+        <parameter key="poser.svg_render.class">PUGX\Poser\Render\SvgRender</parameter>
+        <parameter key="poser.class">PUGX\Poser\Poser</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="poser.svg_render" class="%poser.svg_render.class%"  public="false">
+        </service>
+
+        <service id="poser" class="%poser.class%">
+            <argument type="service" id="poser.svg_render" />
+        </service>
+
+        <service id="image_factory" class="%image_factory.class%">
+            <argument type="service" id="poser"/>
+        </service>
+    </services>
+</container>
