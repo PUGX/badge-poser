@@ -46,7 +46,7 @@ class PageController extends ContainerAware
     {
         $redisReader = $this->container->get('stats_reader');
         $poser = $this->container->get('poser');
-        $prefix = sprintf('More than %s', $redisReader->totalAccess());
+        $prefix = sprintf('More than %s', number_format($redisReader->totalAccess()));
         $text = 'badges served !!';
 
         return array(
