@@ -9,7 +9,7 @@
         <parameter key="badge_package.class">PUGX\Badge\Package\Package</parameter>
         <parameter key="package_service.class">PUGX\Badge\Package\PackageService</parameter>
         <parameter key="snippet_generator.class">PUGX\BadgeBundle\Service\SnippetGenerator</parameter>
-        <parameter key="normalizer.class">PUGX\Badge\Package\TextNormalizer</parameter>
+        <parameter key="text_normalizer.class">PUGX\Badge\Service\TextNormalizer</parameter>
         <parameter key="image_creator.shieldio.class">PUGX\Badge\Image\Factory\ShieldIOFactory</parameter>
     </parameters>
 
@@ -20,7 +20,7 @@
         <service id="package_service" class="%package_service.class%">
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
-            <argument type="service" id="normalizer"/>
+            <argument type="service" id="text_normalizer"/>
         </service>
 
         <service id="snippet_generator" class="%snippet_generator.class%">
@@ -36,7 +36,7 @@
             <argument type="service" id="image_http_client"/>
         </service>
 
-        <service id="normalizer" class="%normalizer.class%" public="false">
+        <service id="text_normalizer" class="%text_normalizer.class%">
         </service>
     </services>
 </container>

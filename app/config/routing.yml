@@ -1,5 +1,10 @@
-pugx_badge:
+pugx_controller:
     resource: "@PUGXBadgeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pugx_badge:
+    resource: "@PUGXBadgeBundle/Controller/Badge"
     type:     annotation
     prefix:   /
 
@@ -9,13 +14,6 @@ pugx_badge_packagist:
     schemes:  [https]
     requirements:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
-
-pugx_badge_shieldio:
-    path: /badge/{vendor}-{value}-{color}.{extension}
-    host: "img.shields.io"
-    requirements:
-      vendor: "[A-Za-z0-9_.-]+"
-      value:  "[A-Za-z0-9_.-]+"
 
 redirects:
     resource: "@PUGXBadgeBundle/Resources/config/routing/routing_redirects.yml"

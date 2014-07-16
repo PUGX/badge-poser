@@ -1,7 +1,7 @@
 download_svg_alias:
     path: /{repository}/downloads.svg
     defaults:
-        _controller: PUGXBadgeBundle:Badge:downloads
+        _controller: PUGXBadgeBundle:Downloads:downloads
         type: "total"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
@@ -10,7 +10,7 @@ download_svg_alias:
 download_type_svg_alias:
     path: /{repository}/d/{type}.svg
     defaults:
-        _controller: PUGXBadgeBundle:Badge:downloads
+        _controller: PUGXBadgeBundle:Badge/Downloads:downloads
         type: "total"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
@@ -20,7 +20,7 @@ download_type_svg_alias:
 badge_version_svg_alias:
     path: /{repository}/version.svg
     defaults:
-        _controller: PUGXBadgeBundle:Badge:version
+        _controller: PUGXBadgeBundle:Badge/Version:version
         latest: "stable"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
@@ -29,7 +29,7 @@ badge_version_svg_alias:
 version_latest_svg_alias:
     path: /{repository}/v/{latest}.svg
     defaults:
-        _controller: PUGXBadgeBundle:Badge:version
+        _controller: PUGXBadgeBundle:Badge/Version:version
         latest: "stable"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
@@ -39,7 +39,7 @@ version_latest_svg_alias:
 badge_license_svg_alias:
     path: /{repository}/license.svg
     defaults:
-        _controller: PUGXBadgeBundle:Badge:license
+        _controller: PUGXBadgeBundle:Badge/License:license
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
     methods:  [GET]

@@ -8,21 +8,16 @@
         <parameter key="packagist_client.class">Packagist\Api\Client</parameter>
         <parameter key="badge_package.class">PUGX\Badge\Package\Package</parameter>
         <parameter key="package_service.class">PUGX\Badge\Package\PackageService</parameter>
-        <parameter key="normalizer.class">PUGX\Badge\Package\TextNormalizer</parameter>
+        <parameter key="normalizer.class">PUGX\Badge\Service\TextNormalizer</parameter>
     </parameters>
 
     <services>
         <service id="packagist_client" class="%packagist_client.class%">
         </service>
 
-        <service id="package_service" class="%package_service.class%">
+        <service id="package_repository" class="%package_service.class%">
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
-            <argument type="service" id="normalizer"/>
         </service>
-
-        <service id="normalizer" class="%normalizer.class%" public="false">
-        </service>
-
     </services>
 </container>
