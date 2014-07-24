@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the badge-poser package
+ * This file is part of the badge-poser package.
  *
- * (c) Giulio De Donato <liuggio@gmail.com>
+ * (c) PUGX <http://pugx.github.io/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,6 +28,23 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pugx_badge');
+        $rootNode
+            ->children()
+            ->booleanNode('disable_cache')->defaultValue('%kernel.debug%')->end()
+            ->arrayNode('allin_badges')
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+            ->arrayNode('badges')
+                ->prototype('array')
+                ->children()
+                    ->scalarNode('route')->isRequired()->end()
+                    ->scalarNode('name')->isRequired()->end()
+                    ->scalarNode('label')->isRequired()->end()
+                    ->scalarNode('type')->end()
+                    ->scalarNode('latest')->end()
+            ->end()
+        ->end();
 
         return $treeBuilder;
     }

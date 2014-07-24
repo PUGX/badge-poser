@@ -1,6 +1,6 @@
 {
     "name": "pugx/badge-poser",
-    "description": "add badges on your readme, such as downloads number or latest version.",
+    "description": "Poser, add badges on your readme, such as downloads number or latest version.",
     "keywords": ["composer", "packagist", "badge", "pin"],
     "homepage": "https://github.com/PUGX",
     "type": "symfony-project",
@@ -16,37 +16,46 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "": "src/"
-        }
+        "psr-4": {
+            "PUGX\\Badge\\": "src/Badge/src/",
+            "PUGX\\BadgeBundle\\": "src/PUGX/BadgeBundle/",
+            "PUGX\\StatsBundle\\": "src/PUGX/StatsBundle/"
+        },
+        "psr-0": { "PUGX": "src/PUGX/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "PUGX\\Badge\\": "src/Badge/tests/" }
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.2.*",
-        "twig/extensions": "1.0.*",
-        "symfony/assetic-bundle": "2.1.*",
-        "symfony/swiftmailer-bundle": "2.2.*",
-        "symfony/monolog-bundle": "2.2.*",
-        "sensio/distribution-bundle": "2.2.*",
-        "sensio/framework-extra-bundle": "2.2.*",
-        "sensio/generator-bundle": "2.2.*",
-        "jms/security-extra-bundle": "1.4.*",
-        "jms/di-extra-bundle": "1.3.*",
-
-        "knplabs/packagist-api": "dev-master"
+        "symfony/symfony": "~2.3",
+        "twig/extensions": "~1.0",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.3",
+        "sensio/distribution-bundle": "~2.3",
+        "sensio/framework-extra-bundle": "~2.3",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "knplabs/packagist-api": "~1.0",
+        "predis/predis": "0.8.*",
+        "snc/redis-bundle": "~1.1",
+        "guzzle/plugin-cache": "*",
+        "badges/poser": "dev-master"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",
-        "phpunit/phpunit": "3.7.* "
+        "phpunit/phpunit": "@stable",
+        "phake/phake": "~1"
     },
     "scripts": {
         "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -56,12 +65,15 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "alpha",
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "2.4.x-dev"
         }
     }
 }

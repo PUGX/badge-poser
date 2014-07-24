@@ -4,59 +4,25 @@ Badge-Poser
 Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
 or its latest stable version.
 
-is still in ALPHA and don't use it (the protocol and the domain will change).
+[![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.svg)](http://travis-ci.org/PUGX/badge-poser)
+[![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.svg)](https://packagist.org/packages/pugx/badge-poser)
 
-[![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/pugx/badge-poser)
-[![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.png)](http://travis-ci.org/PUGX/badge-poser)
-
-~~(Only the `version` badge is not real)~~  <- now it works
-
-## Usage
-
-Total downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
-```md
-[![Total Downloads](http://poser.pagodabox.com/symfony/symfony/d/total.png)](https://packagist.org/packages/symfony/symfony)
-```
-
-Monthly downloads [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
-```md
-[![Monthly Downloads](http://poser.pagodabox.com/symfony/symfony/d/monthly.png)](https://packagist.org/packages/symfony/symfony)
-```
-
-Daily downloads  [![Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
-```md
-[![Daily Downloads](http://poser.pagodabox.com/symfony/symfony/d/daily.png)](https://packagist.org/packages/symfony/symfony)
-```
-
-Latest Version [![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
-```md
-[![Stable Version](http://poser.pagodabox.com/symfony/symfony/stable.png)](https://packagist.org/packages/symfony/symfony)
-```
+## How to create your own Badge
+-  Go to the [Badge Poser](https://poser.pugx.org) website
+-  Insert username/repository and click on `Show`
+-  That's it!  Copy the Markdown into the README.md
 
 ## Why a composer badge?
 
-Not only because all the other languages already had it, but having the latest stable release in the readme could save developer time.
-
-
-## Todo
-
-0. Documentation and homepage.
-
-1. ~~badge for download monthly and daily~~
-
-2. ~~badge for current stable version.~~
-
-3. gather feedback about destroy this project or find a domain
-
-4. ~~some love to the image templates~~
-
-5. cache
-
+Not only because all the other languages already had it, but having the latest stable release in the readme could save time.
 
 ## Contribution
 
 Active contribution and patches are very welcome.
+See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open) there are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).
 To keep things in shape we have quite a bunch of unit tests. If you're submitting pull requests please
 make sure that they are still passing and if you add functionality please
 take a look at the coverage as well it should be pretty high :)
@@ -75,9 +41,21 @@ php composer.phar self-update
 php composer.phar install
 ```
 
-- This will give you proper results:
+- Run phpunit:
 
 ``` bash
-phpunit
+./bin/phpunit
+```
+
+- Production
+
+For Production purpose you need Redis.
+
+## This project is HHVM approved :)
+
+Try:
+
+``` bash
+hhvm ./bin/phpunit
 ```
 

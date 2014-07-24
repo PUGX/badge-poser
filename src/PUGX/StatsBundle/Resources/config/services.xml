@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="stats_listener.class">PUGX\StatsBundle\Listener\StatsListener</parameter>
+        <parameter key="stats_persister.class">PUGX\StatsBundle\Service\RedisPersister</parameter>
+        <parameter key="stats_reader.class">PUGX\StatsBundle\Service\RedisReader</parameter>
+    </parameters>
+
+    <services>
+        <service id="stats_persister" class="%stats_persister.class%">
+            <argument type="service" id="snc_redis.default"/>
+        </service>
+
+        <service id="stats_reader" class="%stats_reader.class%">
+            <argument type="service" id="snc_redis.default"/>
+        </service>
+
+        <service id="stats_listener" class="%stats_listener.class%">
+            <argument type="service" id="stats_persister"/>
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
+        </service>
+    </services>
+</container>

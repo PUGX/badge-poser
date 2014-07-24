@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the badge-poser package
+ * This file is part of the badge-poser package.
  *
- * (c) Giulio De Donato <liuggio@gmail.com>
+ * (c) PUGX <http://pugx.github.io/>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -32,6 +32,17 @@ class PUGXBadgeExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+
+        $loader->load('packagist.xml');
+        if (!$config['disable_cache']) {
+            $loader->load('packagist_cache.xml');
+        }
+
+        $loader->load('image_factory.xml');
+        $loader->load('controllers.xml');
+
+        $loader->load('snippet.xml');
+        $container->setParameter($this->getAlias().'.badges', $config['badges']);
+        $container->setParameter($this->getAlias().'.allin_badges', $config['allin_badges']);
     }
 }

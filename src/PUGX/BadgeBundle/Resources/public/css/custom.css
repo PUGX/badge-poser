@@ -1,0 +1,80 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    /*
+     * Background pattern provided by subtlepatterns.com 
+     */ 
+    background: url(../img/groovepaper.png) repeat;
+}
+/* Custom container */
+.container-narrow {
+    margin: 0 auto;
+    max-width: 700px;
+}
+.container-narrow > hr {
+    margin: 30px 0;
+}
+/* Main marketing message and sign up button */
+.jumbotron {
+    margin: 30px 0;
+    text-align: center;
+}
+.jumbotron h1 {
+    font-size: 64px;
+    line-height: 1;
+}
+pre {
+    overflow: auto;
+    word-wrap: normal;
+    white-space: pre;
+}
+.footer {
+    text-align: center;
+}
+.centered-content {
+    text-align: center;
+}
+strong {
+    font-weight: 700;
+}
+.grey-text{
+    color: #F5F5F5;
+}
+/* Override the standard prettyprint style*/
+.prettyprint{
+    transition: width 0.5s linear;
+    -webkit-transition: all 0.5s linear;
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
+    word-wrap: break-word !important;
+    line-height: 24px !important;
+    margin-bottom: 30px;
+}
+hr.styled {
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.36), rgba(0,0,0,0)); 
+}
+
+.combined-box input {
+    background-color: #ffffff;
+    cursor: hand
+}
+
+.together {
+    height: 20px;
+    width:100px;
+}
+
+.copy_on_clip { cursor: hand}
+
+img {margin-top: 2px;}
+
+img.permalink {height: 12px; width: 15px;}
+
+.pull-right {
+    padding-left: 5px;
+}

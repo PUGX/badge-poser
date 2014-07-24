@@ -1,0 +1,45 @@
+download_svg_alias:
+    path: /{repository}/downloads.svg
+    defaults:
+        _controller: PUGXBadgeBundle:Downloads:downloads
+        type: "total"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]
+
+download_type_svg_alias:
+    path: /{repository}/d/{type}.svg
+    defaults:
+        _controller: PUGXBadgeBundle:Badge/Downloads:downloads
+        type: "total"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        type: "total|daily|monthly"
+    methods:  [GET]
+
+badge_version_svg_alias:
+    path: /{repository}/version.svg
+    defaults:
+        _controller: PUGXBadgeBundle:Badge/Version:version
+        latest: "stable"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]
+
+version_latest_svg_alias:
+    path: /{repository}/v/{latest}.svg
+    defaults:
+        _controller: PUGXBadgeBundle:Badge/Version:version
+        latest: "stable"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        latest: "stable|unstable"
+    methods:  [GET]
+
+badge_license_svg_alias:
+    path: /{repository}/license.svg
+    defaults:
+        _controller: PUGXBadgeBundle:Badge/License:license
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    methods:  [GET]

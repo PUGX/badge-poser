@@ -1,21 +1,22 @@
+pugx_controller:
+    resource: "@PUGXBadgeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 pugx_badge:
-    path:      /{repository}/downloads.png
-    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads}
-    methods:  [GET]
-    requirements:
-       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+    resource: "@PUGXBadgeBundle/Controller/Badge"
+    type:     annotation
+    prefix:   /
 
-pugx_badge_stat:
-    path:      /{repository}/d/{type}.png
-    defaults:  { _controller: PUGXBadgeBundle:Badge:downloads, type: 'total' }
-    methods:  [GET]
+pugx_badge_packagist:
+    path: /packages/{repository}
+    host: "packagist.org"
+    schemes:  [https]
     requirements:
-      type: total|daily|monthly
-      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
 
-pugx_badge_last:
-    path:      /{repository}/stable.png
-    defaults:  { _controller: PUGXBadgeBundle:Badge:lastStable }
-    methods:  [GET]
-    requirements:
-      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+redirects:
+    resource: "@PUGXBadgeBundle/Resources/config/routing/routing_redirects.yml"
+
+aliases:
+    resource: "@PUGXBadgeBundle/Resources/config/routing/routing_aliases.yml"

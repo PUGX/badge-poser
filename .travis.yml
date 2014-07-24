@@ -1,14 +1,24 @@
 language: php
 
 php:
-  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
+  - hhvm
+
+services:
+  - redis-server
 
 matrix:
   allow_failures:
-    - php: 5.5
+    - php: hhvm
 
 before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev install
+    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
+
+script:
+  - bin/phpunit -v
+  
+notifications:
+  email:
+    - liuggio@gmail.com
