@@ -11,6 +11,7 @@
 namespace PUGX\Badge\Infrastructure;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use PUGX\Badge\Model\Image;
 
 /**
@@ -23,10 +24,11 @@ class ResponseFactory
         $response = new Response((string) $image, $status);
 
         $response->headers->set('Content-Type', 'image/svg+xml;charset=utf-8');
-        $response->headers->set('Content-Disposition', 'inline; filename="'.$image->getOutputFileName().'"');
+        $contentDisposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_INLINE, $image->getOutputFileName());
+        $response->headers->set('Content-Disposition', $contentDisposition);
 
-        $cacheControl = sprintf('public, maxage=%s, s-maxage=%s', $maxage, $smaxage);
-        $response->headers->set('Cache-Control', $cacheControl);
+        $response->setMaxAge($maxage);
+        $response->setSharedMaxAge($smaxage);
 
         return $response;
     }
