@@ -67,7 +67,7 @@ class Image
     private function cleanName()
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
-        $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+        $clean = preg_replace("/[^a-zA-Z0-9_|+ -]/", '', $clean);
         $clean = strtolower(trim($clean, '- '));
 
         return $clean;
