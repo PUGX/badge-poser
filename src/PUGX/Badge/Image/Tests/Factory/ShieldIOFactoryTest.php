@@ -13,6 +13,11 @@ class ShieldIOFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        
+       $d=cal_days_in_month(CAL_GREGORIAN,10,2005);
+        echo "There was $d days in October 2005";
+        
+        phpinfo();
         $this->httpClient = $this->getMock('\Guzzle\Http\ClientInterface');
         $this->urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $this->imageCreator = new ShieldIOFactory($this->httpClient, $this->urlGenerator);
