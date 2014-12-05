@@ -52,7 +52,7 @@ php composer.phar install
 For Production purpose you need Redis.
 
 ## Donation
-By now Badge Poser serves billion of images per month. We really dream to move all our code on Amazon AWS but is up to you. 
+Badge Poser serves billion of images per month. We really dream to move all our code on Amazon AWS but is up to you.
 
 If you use Badge Poser and you like it, pleas consider to donate. **Thank you!**
 
