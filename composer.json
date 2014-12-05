@@ -20,8 +20,7 @@
             "PUGX\\Badge\\": "src/Badge/src/",
             "PUGX\\BadgeBundle\\": "src/PUGX/BadgeBundle/",
             "PUGX\\StatsBundle\\": "src/PUGX/StatsBundle/"
-        },
-        "psr-0": { "PUGX": "src/PUGX/" }
+        }
     },
     "autoload-dev": {
         "psr-4": { "PUGX\\Badge\\": "src/Badge/tests/" }
