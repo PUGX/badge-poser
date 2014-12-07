@@ -52,16 +52,11 @@ php composer.phar install
 For Production purpose you need Redis.
 
 ## Donation
-Badge Poser serves billion of images per month. We really dream to move all our code on Amazon AWS but is up to you.
+Badge Poser serves billion of images per month. We really dream to move all of our code on Amazon AWS but is up to you.
 
-If you use Badge Poser and you like it, pleas consider to donate. **Thank you!**
+If you use Badge Poser and you like it, please consider to donate. **Thank you!**
 
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="centered-content">
-	<input type="hidden" name="cmd" value="_s-xclick">
-    <input type="hidden" name="hosted_button_id" value="ETT4JRJARLTSC">
-    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
-</form>
+<a href='https://pledgie.com/campaigns/27612'><img alt='Click here to lend your support to: Badge Poser needs your help and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27612.png?skin_name=chrome' border='0' ></a>
 
 ## This project is HHVM approved :)
 
