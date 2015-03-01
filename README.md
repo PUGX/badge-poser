@@ -1,7 +1,7 @@
 Badge-Poser
 ===========
 
-Use shields for you packagist.org repository, that shows how many times your project has been downloaded from Packagist.org
+Use shields for your packagist.org repository that shows how many times your project has been downloaded from packagist.org
 or its latest stable version.
 
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
@@ -17,17 +17,17 @@ or its latest stable version.
 
 ## Why a composer badge?
 
-Not only because all the other languages already had it, but having the latest stable release in the readme could save time.
+Not only because all the other languages already have it, but having the latest stable release in the readme could save time.
 
 ## Contribution
 
 Active contribution and patches are very welcome.
-See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open) there are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).
-To keep things in shape we have quite a bunch of unit tests. If you're submitting pull requests please
+See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open). There are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).
+To keep things in shape we have a bunch of unit tests. If you're submitting pull requests please
 make sure that they are still passing and if you add functionality please
-take a look at the coverage as well it should be pretty high :)
+take a look at the coverage as well, it should be pretty high. :)
 
-- First fork or clone the repository
+- First, fork or clone the repository:
 
 ```
 git clone git://github.com/PUGX/badge-poser.git
@@ -49,7 +49,7 @@ php composer.phar install
 
 - Production
 
-For Production purpose you need Redis.
+For Production purposes you need Redis.
 
 ## This project is HHVM approved :)
 
