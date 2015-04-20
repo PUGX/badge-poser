@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use PUGX\Badge\Infrastructure\ResponseFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DownloadsController.
@@ -56,10 +57,14 @@ class DownloadsController extends ContainerAware
      * @todo: remove container
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function downloadsAction($repository, $type, $format = 'svg')
+    public function downloadsAction(Request $request, $repository, $type, $format = 'svg')
     {
         $this->useCase = $this->container->get('use_case_badge_downloads');
         $this->imageFactory = $this->container->get('image_factory');
+
+        if ($request->query->get('format') == 'plastic') {
+            $format = 'plastic';
+        }
 
         $badge = $this->useCase->createDownloadsBadge($repository, $type, $format);
 

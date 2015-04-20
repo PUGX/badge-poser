@@ -7,16 +7,23 @@
     <parameters>
         <parameter key="image_factory.class">PUGX\Badge\Service\ImageFactory</parameter>
         <parameter key="poser.svg_render.class">PUGX\Poser\Render\SvgRender</parameter>
+        <parameter key="poser.svg_flat_render.class">PUGX\Poser\Render\SvgFlatRender</parameter>
         <parameter key="poser.class">PUGX\Poser\Poser</parameter>
     </parameters>
 
     <services>
 
-        <service id="poser.svg_render" class="%poser.svg_render.class%"  public="false">
+        <service id="poser.svg_plastic_render" class="%poser.svg_render.class%"  public="false">
+        </service>
+
+        <service id="poser.svg_flat_render" class="%poser.svg_flat_render.class%"  public="false">
         </service>
 
         <service id="poser" class="%poser.class%">
-            <argument type="service" id="poser.svg_render" />
+            <argument type="collection">
+                <argument type="service" id="poser.svg_flat_render" />
+                <argument type="service" id="poser.svg_plastic_render"/>
+            </argument>
         </service>
 
         <service id="image_factory" class="%image_factory.class%">

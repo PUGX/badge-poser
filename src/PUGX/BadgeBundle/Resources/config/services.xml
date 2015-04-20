@@ -24,7 +24,7 @@
         </service>
 
         <service id="snippet_generator" class="%snippet_generator.class%">
-            <argument type="service" id="router" />
+            <argument type="service" id="router"/>
             <argument>%pugx_badge.badges%</argument>
             <argument>%pugx_badge.allin_badges%</argument>
         </service>

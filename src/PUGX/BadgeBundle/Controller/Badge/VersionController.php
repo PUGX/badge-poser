@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use PUGX\Badge\Infrastructure\ResponseFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class LicenseController.
@@ -52,8 +53,12 @@ class VersionController extends ContainerAware
      *
      * @return Response
      */
-    public function versionAction($repository, $latest, $format='svg')
+    public function versionAction(Request $request, $repository, $latest, $format='svg')
     {
+        if ($request->query->get('format') == 'plastic') {
+            $format = 'plastic';
+        }
+
         $this->useCase = $this->container->get('use_case_badge_version');
         $this->imageFactory = $this->container->get('image_factory');
 

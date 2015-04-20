@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use PUGX\Badge\Infrastructure\ResponseFactory;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class LicenseController.
  * License action for badges.
@@ -43,10 +45,14 @@ class LicenseController extends ContainerAware
      *
      * @return Response
      */
-    public function licenseAction($repository, $format='svg')
+    public function licenseAction(Request $request, $repository, $format='svg')
     {
         $this->useCase = $this->container->get('use_case_badge_license');
         $this->imageFactory = $this->container->get('image_factory');
+
+        if ($request->query->get('format') == 'plastic') {
+            $format = 'plastic';
+        }
 
         $badge = $this->useCase->createLicenseBadge($repository, $format);
         $image = $this->imageFactory->createFromBadge($badge);
