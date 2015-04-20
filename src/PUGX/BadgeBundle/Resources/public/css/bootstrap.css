@@ -5722,7 +5722,6 @@ a.badge:focus {
 
 .btn .label,
 .btn .badge {
-  position: relative;
   top: -1px;
 }
 

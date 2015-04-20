@@ -49,7 +49,8 @@ php composer.phar install
 
 - Production
 
-For Production purposes you need Redis.
+1. For Production purposes you need Redis.
+2. Update the contributors `bin/extract_contributors.php  > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
 
 ## This project is HHVM approved :)
 

@@ -217,40 +217,40 @@
 
 </div>
 
-<div class=" container-narrow">
+<div class=" container">
+
 
     <hr>
 
-    <div class="footer">
+    <div class="row-fluid  offset2 span6">
+
+        <h4>Other formats</h4>
         <p>
-            Badge Poser is a <a href="http://pugx.github.io" target="_blank">PUGX</a> initiative,
-            see the full list of <a href="https://github.com/PUGX/badge-poser/graphs/contributors" target="_blank">contributors</a>.
+            If you want to use the old fashioned 'plastic' badges use the <code>?format=plastic</code>
+            <img src="{{ path('pugx_badge_license',{'repository': 'pugx/badge-poser'}) }}?format=plastic">
         </p>
-    </div>
-    <hr>
 
-    <div class="row-fluid">
-        <h4>Sponsors</h4>
+    </div>
+
+
+    <hr>
+    <div class="row offset2 span8">
+
+        <h4>Contributors</h4>
+        <h5><a href="https://github.com/Pugx/badge-poser">github/Pugx/badge-poser</a> and <a href="https://github.com/badges/poser">github/badges/poser</a></h5>
         <ul class="thumbnails">
-            <li class="span4">
-                <div class="thumbnail">
-                    <span class="badge pull-right">Server</span>
-                    <a href="http://www.ideato.it"  title="Ideato | Web ideas for sale"><img src="{{ asset('bundles/pugxbadge/img/ideato-srl.png') }}" alt="Ideato SRL" style="width: 300px; height: 75px"></a>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <span class="badge pull-right">Monitoring and Statistics</span>
-                    <a href="http://tvision.github.io" title="Tvision software team"><img src="{{ asset('bundles/pugxbadge/img/tvision.jpg') }}" alt="Tvision-team" style="height: 75px;"></a>
-                </div>
-            </li>
-            <li class="span4">
-                <div class="thumbnail">
-                    <span class="badge pull-right">SSL certificate</span>
-                    <a href="https://www.godaddy.com/ssl/ssl-open-source.aspx" title="Godaddy Free opensource SSL certificates"><img src="{{ asset('bundles/pugxbadge/img/godaddy-logo.png') }}" alt="Go-Daddy" style="width: 200px; height: 75px"></a>
-                </div>
-            </li>
+            {# place here the output of the script bin/extract_contributors.php #}
+            {% include 'PUGXBadgeBundle:Page:contributors.html.twig' %}
         </ul>
+    </div>
+
+
+
+    <div class="row offset1 span6">
+        <hr>
+        <div class="footer">
+            <p>Thanks to Godaddy for the free SSL.</p>
+        </div>
     </div>
 </div>
 

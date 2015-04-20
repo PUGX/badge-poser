@@ -835,6 +835,7 @@
   .thumbnails > li {
     float: none;
     margin-left: 0;
+      position:relative;
   }
   [class*="span"],
   .uneditable-input[class*="span"],
