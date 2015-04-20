@@ -28,7 +28,7 @@ class PageController extends ContainerAware
     /**
      * @Route("/",
      * name = "pugx_page_home",
-     * defaults = {"repository" = "leaphly/cart-bundle"}
+     * defaults = {"repository" = "phpunit/phpunit"}
      * )
      *
      * @Route("/show/{repository}",
