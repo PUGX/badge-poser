@@ -1,7 +1,7 @@
 download_svg_alias:
     path: /{repository}/downloads.svg
     defaults:
-        _controller: PUGXBadgeBundle:Downloads:downloads
+        _controller: PUGXBadgeBundle:Badge/Downloads:downloads
         type: "total"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"

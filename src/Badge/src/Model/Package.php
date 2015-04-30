@@ -113,7 +113,7 @@ class Package
     {
         $extra = $version->getExtra();
         if (null !== $extra
-            && null !== $extra["branch-alias"]
+            && isset($extra["branch-alias"])
             && is_array($extra["branch-alias"])
         ) {
             return $extra["branch-alias"];
