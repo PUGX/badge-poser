@@ -52,6 +52,13 @@ php composer.phar install
 1. For Production purposes you need Redis.
 2. Update the contributors `bin/extract_contributors.php  > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
 
+## Donation
+Badge Poser serves billion of images per month. We really dream to move all of our code on Amazon AWS but is up to you.
+
+If you use Badge Poser and you like it, please consider to donate. **Thank you!**
+
+<a href='https://pledgie.com/campaigns/27612'><img alt='Click here to lend your support to: Badge Poser needs your help and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/27612.png?skin_name=chrome' border='0' ></a>
+
 ## This project is HHVM approved :)
 
 Try:
