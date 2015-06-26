@@ -31,6 +31,14 @@ abstract class BaseCreatePackagistImage
     {
         $package = $this->fetchPackage($repository);
         $text = $this->prepareText($package, $context);
+        try{
+            $package = $this->fetchPackage($repository);
+            $text = $this->prepareText($package, $context);
+        }catch(\Exception $e) {
+            $subject = ' - ';
+            $text = ' - ';
+            $color = '7A7A7A';
+        }
 
         return $this->createBadge($subject, $text, $color, $format);
     }
