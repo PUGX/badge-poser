@@ -2,17 +2,25 @@
 
 namespace PUGX\BadgeBundle\Controller\Badge;
 
+use PUGX\Badge\Model\UseCase\CreateErrorBadge;
+use PUGX\Badge\Service\ImageFactory;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Response;
 use PUGX\Badge\Infrastructure\ResponseFactory;
 
 class KernelExceptionListener
 {
-    /** @var CreateErrorBadge */
+    /**
+     * @var CreateErrorBadge
+     */
     private $useCase;
+
+    /**
+     * @var ImageFactory
+     */
     private $imageFactory;
 
-    public function __construct($useCase, $imageFactory)
+    public function __construct(CreateErrorBadge $useCase, ImageFactory $imageFactory)
     {
         $this->useCase = $useCase;
         $this->imageFactory = $imageFactory;
@@ -24,8 +32,6 @@ class KernelExceptionListener
             return;
         }
 
-        $request = $event->getRequest()->getRequestFormat();
-
         $badge = $this->useCase->createErrorBadge($event->getException(), 'svg');
         $image = $this->imageFactory->createFromBadge($badge);
 
@@ -35,10 +41,6 @@ class KernelExceptionListener
 
     private function isABadgeController($controllerName)
     {
-        if (strpos($controllerName, 'PUGX\BadgeBundle\Controller\Badge') === 0) {
-            return true;
-        }
-
-        return false;
+        return strpos($controllerName, 'PUGX\BadgeBundle\Controller\Badge') === 0;
     }
 }
