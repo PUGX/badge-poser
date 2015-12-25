@@ -57,6 +57,8 @@ class VersionController extends ContainerAware
     {
         if ($request->query->get('format') == 'plastic') {
             $format = 'plastic';
+        } elseif ($request->query->get('format') == 'flat-square') {
+            $format = 'flat-square';
         }
 
         $this->useCase = $this->container->get('use_case_badge_version');
