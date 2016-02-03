@@ -64,6 +64,8 @@ class DownloadsController extends ContainerAware
 
         if ($request->query->get('format') == 'plastic') {
             $format = 'plastic';
+        } elseif ($request->query->get('format') == 'flat-square') {
+            $format = 'flat-square';
         }
 
         $badge = $this->useCase->createDownloadsBadge($repository, $type, $format);
