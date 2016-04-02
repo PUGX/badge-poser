@@ -62,8 +62,8 @@ class DownloadsController extends ContainerAware
         $this->useCase = $this->container->get('use_case_badge_downloads');
         $this->imageFactory = $this->container->get('image_factory');
 
-        if ($request->query->get('format') == 'plastic') {
-            $format = 'plastic';
+        if (in_array($request->query->get('format'), $this->container->get('poser')->validFormats())) {
+            $format = $request->query->get('format');
         }
 
         $badge = $this->useCase->createDownloadsBadge($repository, $type, $format);

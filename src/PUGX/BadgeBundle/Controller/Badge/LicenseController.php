@@ -50,8 +50,8 @@ class LicenseController extends ContainerAware
         $this->useCase = $this->container->get('use_case_badge_license');
         $this->imageFactory = $this->container->get('image_factory');
 
-        if ($request->query->get('format') == 'plastic') {
-            $format = 'plastic';
+        if (in_array($request->query->get('format'), $this->container->get('poser')->validFormats())) {
+            $format = $request->query->get('format');
         }
 
         $badge = $this->useCase->createLicenseBadge($repository, $format);
