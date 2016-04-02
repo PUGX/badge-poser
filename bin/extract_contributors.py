@@ -40,6 +40,7 @@ s = """
 """
 
 print "{# created "+str(datetime.date.today())+" #}"
+print "{# do not modify it, this is a read-only file created by bin/extract_contributor.py #}"
 
 template = Template(s)
 print template.render(contributor=result)
