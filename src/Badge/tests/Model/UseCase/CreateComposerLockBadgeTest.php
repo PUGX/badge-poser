@@ -23,20 +23,24 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
 {
     /** @var CreateComposerLockBadge $useCase */
     private $useCase;
-    /** @var PUGX\Badge\Model\PackageRepositoryInterface*/
+    /** @var \PUGX\Badge\Model\PackageRepositoryInterface */
     private $repository;
+
+    private $client;
 
     public function setUp()
     {
         $this->repository = $this->getMock('\PUGX\Badge\Model\PackageRepositoryInterface');
-        $this->useCase = new CreateComposerLockBadge($this->repository);
+        $this->client = $this->getMock('\Guzzle\Http\Client');
+        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client);
     }
-    
-    public function testShouldCreateComposerLockBadge()
+
+    /**
+     * @dataProvider shouldCreateComposerLockBadgeProvider
+     */
+    public function testShouldCreateComposerLockBadge($returnCode, $expected)
     {
-        $package = $this->getMockBuilder('\PUGX\Badge\Model\Package')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $package = $this->getMockWithoutInvokingTheOriginalConstructor('\PUGX\Badge\Model\Package');
 
         $package->expects($this->once())
             ->method('hasStableVersion')
@@ -50,8 +54,40 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
+        $repo = $this->getMockWithoutInvokingTheOriginalConstructor('\Packagist\Api\Result\Package');
+        $repo->expects($this->once())
+            ->method('getRepository')
+            ->will($this->returnValue('RepoURI'));
+
+        $package->expects($this->once())
+            ->method('getOriginalObject')
+            ->will($this->returnValue($repo));
+
+        $response = $this->getMockWithoutInvokingTheOriginalConstructor('\Guzzle\Http\Message\Response');
+        $response->expects($this->once())
+            ->method('getStatusCode')
+            ->will($this->returnValue($returnCode));
+
+        $request = $this->getMockWithoutInvokingTheOriginalConstructor('\Guzzle\Http\Message\RequestInterface');
+        $request->expects($this->once())
+            ->method('getResponse')
+            ->will($this->returnValue($response));
+
+        $this->client->expects($this->once())
+            ->method('head')
+            ->will($this->returnValue($request));
+
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
-        $this->assertEquals('v2.0', $badge->getStatus());
+        $this->assertEquals($expected, $badge->getStatus());
+    }
+
+    public function shouldCreateComposerLockBadgeProvider()
+    {
+        return array(
+            array(200, 'commited'),
+            array(404, 'uncommited'),
+            array(500, 'checking'),
+        );
     }
 }

@@ -11,19 +11,37 @@
 namespace PUGX\Badge\Model\UseCase;
 
 use Guzzle\Http\Client;
+use PUGX\Badge\Model\PackageRepositoryInterface;
 
 /**
  * Create the 'license' image using a generator `Poser`
  */
-class CreateComposerLockadge extends BaseCreatePackagistImage
+class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
     const COLOR_COMMITED   = '28a3df';
     const COLOR_UNCOMMITED = 'e68718';
-    const LOCK_COMMITED    = 'committed';
-    const SUBJECT          = '.lock';
+    const COLOR_ERROR      = 'aa0000';
+    const LOCK_COMMITED    = 'commited';
     const LOCK_UNCOMMITED  = 'uncommited';
+    const LOCK_ERROR       = 'checking';
+    const SUBJECT          = '.lock';
+    const SUBJECT_ERROR    = 'Error';
 
-    protected $text = self::LOCK_UNCOMMITED;
+    protected $text = self::LOCK_ERROR;
+
+
+    /** @var Client */
+    protected $client;
+
+    /**
+     * @param PackageRepositoryInterface $packageRepository
+     * @param Client $client
+     */
+    public function __construct(PackageRepositoryInterface $packageRepository, Client $client)
+    {
+        $this->packageRepository = $packageRepository;
+        $this->client = $client;
+    }
     /**
      * @param string $repository
      * @param string $format
@@ -32,19 +50,37 @@ class CreateComposerLockadge extends BaseCreatePackagistImage
      */
     public function createComposerLockBadge($repository, $format = 'svg')
     {
-        $repo = str_replace('.git', '', $repository->getOriginalObject()->getRepository());
+        $repo = str_replace('.git', '', $this->packageRepository
+            ->fetchByRepository($repository)
+            ->getOriginalObject()
+            ->getRepository()
+        );
 
-        $client = new Client();
-        $response = $client->get($repo . '/blob/master/composer.lock');
+        $response = $this->client->head(
+            $repo . '/blob/master/composer.lock',
+            array(),
+            array(
+                'timeout'         => 2,
+                'connect_timeout' => 1,
+            )
+        );
+        
+        $status = $response->getResponse()->getStatusCode();
 
-        $this->text = self::LOCK_UNCOMMITED;
-        $color      = self::COLOR_UNCOMMITED;
-        if ($response->getResponse()->getStatusCode() != 200) {
+        $this->text = self::LOCK_ERROR;
+        $color      = self::COLOR_ERROR;
+        $subject    = self::SUBJECT_ERROR;
+        if (200 === $status) {
             $this->text = self::LOCK_COMMITED;
             $color      = self::COLOR_COMMITED;
+            $subject    = self::SUBJECT;
+        } elseif (404 === $status) {
+            $this->text = self::LOCK_UNCOMMITED;
+            $color      = self::COLOR_UNCOMMITED;
+            $subject    = self::SUBJECT;
         }
 
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format);
+        return $this->createBadgeFromRepository($repository, $subject, $color, $format);
     }
 
     protected function prepareText($package, $context = null)
