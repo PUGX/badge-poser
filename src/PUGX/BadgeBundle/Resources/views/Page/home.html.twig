@@ -220,6 +220,30 @@
                             </a>
                         </div>
                     </div>
+
+                    <hr>
+
+                    <div class="row-fluid">
+                        <h4>Composer.lock available</h4>
+
+                        <a title="copy to clipboard" class="copy_on_clip"
+                           data-clipboard-target="composerlock_markdown"
+                           data-clipboard-text="-">
+                            <img class="spinned composerlock_img" src="{{ path('pugx_badge_composerlock',{'repository': repository}) }}">
+                        </a>
+
+                        <div class="input-prepend input-append pull-right combined-box">
+                            <span class="add-on">markdown</span>
+                            <input id="composerlock_markdown" readonly="readonly" class="input-large -input" type="text"
+                                   value="[![composer.lock available]({{ url('pugx_badge_composerlock',{'repository': repository}) }})]({{ url('pugx_badge_packagist',{'repository': repository}) }})"
+                            >
+                            <a title="copy to clipboard" class="add-on copy_on_clip btn composerlock_clip"
+                               data-clipboard-target="composerlock_markdown"
+                               data-clipboard-text="-">
+                                <i class="icon-share"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </article>
         </div>

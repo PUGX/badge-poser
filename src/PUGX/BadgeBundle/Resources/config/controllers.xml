@@ -32,7 +32,7 @@
         <!-- composer.lock -->
         <service id="use_case_badge_composerlock" class="PUGX\Badge\Model\UseCase\CreateComposerLockBadge">
             <argument type="service" id="package_repository" />
-            <argument type="service" id="image_http_client" />
+            <argument type="service" id="http_client" />
         </service>
 
 

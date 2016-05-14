@@ -56,16 +56,18 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $response = $this->client->head(
+        $request = $this->client->head(
             $repo . '/blob/master/composer.lock',
             array(),
             array(
                 'timeout'         => 2,
                 'connect_timeout' => 1,
+                'exceptions'      => false,
             )
         );
-        
-        $status = $response->getResponse()->getStatusCode();
+
+        $response = $this->client->send($request);
+        $status = $response->getStatusCode();
 
         $this->text = self::LOCK_ERROR;
         $color      = self::COLOR_ERROR;

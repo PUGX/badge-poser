@@ -34,9 +34,8 @@ class ComposerlockController extends ContainerAware
      * Version action.
      *
      * @param string $repository repository
-     * @param string $latest     latest
      *
-     * @Route("/{repository}/composer.lock",
+     * @Route("/{repository}/composerlock",
      *     name="pugx_badge_composerlock",
      *     requirements={"repository" = "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"}
      *     )
@@ -45,7 +44,7 @@ class ComposerlockController extends ContainerAware
      *
      * @return Response
      */
-    public function composerlockAction(Request $request, $repository, $latest, $format='svg')
+    public function composerlockAction(Request $request, $repository, $format='svg')
     {
         if ($request->query->get('format') == 'plastic') {
             $format = 'plastic';
