@@ -34,9 +34,8 @@ assetic:
             jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.6.jar
 
 pugx_badge:
-    allin_badges: ['latest_stable_version', 'total', 'latest_unstable_version', 'license', 'composerlock']
+    allin_badges: ['latest_stable_version', 'total', 'latest_unstable_version', 'license']
     badges:
-        - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
         - { name: 'latest_stable_version', label: 'Latest Stable Version', route: "pugx_badge_version_latest", latest: 'stable'}
         - { name: 'total', label: 'Total Downloads', route: "pugx_badge_download" }
         - { name: 'latest_unstable_version', label: 'Latest Unstable Version', route: "pugx_badge_version_latest", latest: 'unstable'}
@@ -44,6 +43,7 @@ pugx_badge:
         - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_download_type", type: 'monthly'}
         - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_download_type", type: 'daily'}
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
+        - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
 
 
 snc_redis:

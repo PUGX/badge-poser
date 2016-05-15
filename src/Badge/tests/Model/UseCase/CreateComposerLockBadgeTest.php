@@ -69,13 +69,14 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnCode));
 
         $request = $this->getMockWithoutInvokingTheOriginalConstructor('\Guzzle\Http\Message\RequestInterface');
-        $request->expects($this->once())
-            ->method('getResponse')
-            ->will($this->returnValue($response));
-
+        
         $this->client->expects($this->once())
             ->method('head')
             ->will($this->returnValue($request));
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->will($this->returnValue($response));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
