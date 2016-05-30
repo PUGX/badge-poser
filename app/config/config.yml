@@ -43,6 +43,7 @@ pugx_badge:
         - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_download_type", type: 'monthly'}
         - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_download_type", type: 'daily'}
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
+        - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
 
 
 snc_redis:

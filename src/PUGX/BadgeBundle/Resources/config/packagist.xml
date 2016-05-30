@@ -19,5 +19,8 @@
             <argument type="service" id="packagist_client"/>
             <argument>%badge_package.class%</argument>
         </service>
+
+        <service id="http_client" class="Guzzle\Http\Client">
+        </service>
     </services>
 </container>
