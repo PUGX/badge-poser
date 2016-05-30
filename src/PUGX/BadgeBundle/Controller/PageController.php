@@ -48,10 +48,12 @@ class PageController extends ContainerAware
         $poser = $this->container->get('poser');
         $prefix = sprintf('More than %s', number_format($redisReader->totalAccess()));
         $text = 'badges served !!';
-
+        $formats = array_diff($poser->validFormats(), ["svg"]);
+ 
         return array(
             'repository' => $repository,
-            'badges_served_svg' => $poser->generate($prefix, $text, 'CC0066', 'svg')
+            'badges_served_svg' => $poser->generate($prefix, $text, 'CC0066', 'flat'),
+            'formats' => $formats
             );
     }
 

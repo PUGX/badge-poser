@@ -42,18 +42,11 @@
             <article>
                 <h3 class="centered-content"><strong>Be a poser!</strong></h3>
                 <p>
-                    Use shields for your <a href="https://packagist.org">packagist.org</a> repository, showing how many times your project has been downloaded from Packagist.org or its latest stable version.
+                    Use shields with your composer PHP repository,
+                    info and stats like
+                    how many times your project has been downloaded or its latest stable version,
+                    are taken  from  <a href="https://packagist.org">packagist</a>. Enjoy.
                 </p>
-                <hr class="styled">
-                    <h3 class="centered-content"><em>Donation</em></h3>
-                    <p>Badge Poser serves billion of images per month. We really dream to move all of our code on Amazon AWS but is up to you.<br> If you use Badge Poser and you like it, please consider to donate. <strong>Thank you!</strong></p>
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="centered-content">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="ETT4JRJARLTSC">
-                        <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-                        <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
-                    </form>
-
                 <hr class="styled">
                 <h3 class="centered-content">Show the markdown for your Badges</h3>
 
@@ -155,7 +148,6 @@
 
                     <div class="row-fluid">
                         <h4>License</h4>
-
                         <a title="copy to clipboard" class="copy_on_clip"
                            data-clipboard-target="license_markdown"
                            data-clipboard-text="-">
@@ -174,7 +166,6 @@
                             </a>
                         </div>
                     </div>
-
                     <hr>
 
                     <div class="row-fluid">
@@ -201,13 +192,11 @@
 
                     <div class="row-fluid">
                         <h4>Daily downloads</h4>
-
                         <a title="copy to clipboard" class="copy_on_clip"
                            data-clipboard-target="daily_markdown"
                            data-clipboard-text="-">
                             <img class="spinned daily_img" src="{{ path('pugx_badge_download_type',{'repository': repository, 'type':'daily'}) }}">
                         </a>
-
                         <div class="input-prepend input-append pull-right combined-box">
                             <span class="add-on">markdown</span>
                             <input id="daily_markdown" readonly="readonly" class="input-large -input" type="text"
@@ -248,43 +237,44 @@
             </article>
         </div>
     </div>
-
 </div>
 
 <div class=" container">
-
-
     <hr>
-
     <div class="row-fluid  offset2 span6">
-
-        <h4>Other formats</h4>
+        <h4>Other styles</h4>
         <p>
-            If you want to use the old fashioned 'plastic' badges use the <code>?format=plastic</code>
-            <img src="{{ path('pugx_badge_license',{'repository': 'pugx/badge-poser'}) }}?format=plastic">
+            If you want to use the old fashioned 'plastic' badges or the new 'flat-square':
         </p>
-
+            {% for format in formats %}
+                <div class="row offset1"><span class="span2"><code>?format={{ format }}</code></span><span class="span2 offset1"><img src="{{ path('pugx_badge_license',{'repository': 'pugx/badge-poser'}) }}?format={{ format }}"></span>
+                </div>
+            {% endfor %}
     </div>
-
-
     <hr>
     <div class="row offset2 span8">
-
         <h4>Contributors</h4>
         <h5><a href="https://github.com/Pugx/badge-poser">github/Pugx/badge-poser</a> and <a href="https://github.com/badges/poser">github/badges/poser</a></h5>
         <ul class="thumbnails">
-            {# place here the output of the script bin/extract_contributors.php #}
+            {# place here the output of the script bin/extract_contributors.py #}
             {% include 'PUGXBadgeBundle:Page:contributors.html.twig' %}
         </ul>
     </div>
-
-
-
-    <div class="row offset1 span6">
+    <div class="row offset2 span9">
         <hr>
         <div class="footer">
-            <p>Thanks to Godaddy for the free SSL.</p>
+            <p>A big thank you also to <a href="https://letsencrypt.org/" target="_blank" rel="nofollow">LetsEncrypt</a> for the free SSL.</p>
         </div>
+
+        <hr class="styled">
+        <h3 class="centered-content"><em>Call for Donation</em></h3>
+        <p>Badge Poser serves a lot of images per month. <br> We really dream to move all of our code on Amazon AWS but is up to you.<br> If you use Badge Poser and you like it, please consider to donate. <strong>Thank you!</strong></p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="centered-content">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="ETT4JRJARLTSC">
+            <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+            <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+        </form>
     </div>
 </div>
 

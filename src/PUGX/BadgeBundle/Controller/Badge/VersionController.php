@@ -55,8 +55,8 @@ class VersionController extends ContainerAware
      */
     public function versionAction(Request $request, $repository, $latest, $format='svg')
     {
-        if ($request->query->get('format') == 'plastic') {
-            $format = 'plastic';
+        if (in_array($request->query->get('format'), $this->container->get('poser')->validFormats())) {
+            $format = $request->query->get('format');
         }
 
         $this->useCase = $this->container->get('use_case_badge_version');

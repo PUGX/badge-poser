@@ -38,7 +38,7 @@
         "predis/predis": "0.8.*",
         "snc/redis-bundle": "~1.1",
         "guzzle/plugin-cache": "*",
-        "badges/poser": "v1.1"
+        "badges/poser": "v1.2.2"
     },
     "require-dev": {
         "guzzle/plugin-mock": "*",

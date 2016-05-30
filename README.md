@@ -67,3 +67,9 @@ Try:
 hhvm ./bin/phpunit
 ```
 
+## Extract contributors
+
+In order to update the contributors section:
+
+1. install it running `pip install pygithub3 && pip install Jinja2`
+2. `python bin/extract_contributors.py  > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`

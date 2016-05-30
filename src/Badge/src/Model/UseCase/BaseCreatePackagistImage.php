@@ -29,8 +29,6 @@ abstract class BaseCreatePackagistImage
 
     protected function createBadgeFromRepository($repository, $subject, $color, $format = 'svg', $context = null)
     {
-        $package = $this->fetchPackage($repository);
-        $text = $this->prepareText($package, $context);
         try{
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
