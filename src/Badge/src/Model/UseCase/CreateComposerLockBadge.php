@@ -18,8 +18,8 @@ use PUGX\Badge\Model\PackageRepositoryInterface;
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITED   = '28a3df';
-    const COLOR_UNCOMMITED = 'e68718';
+    const COLOR_COMMITED   = 'e6b800';
+    const COLOR_UNCOMMITED = 'b38f00';
     const COLOR_ERROR      = 'aa0000';
     const LOCK_COMMITED    = 'commited';
     const LOCK_UNCOMMITED  = 'uncommited';
@@ -67,7 +67,10 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
         );
 
         $response = $this->client->send($request);
-        $status = $response->getStatusCode();
+        $status = 500;
+        if ($request) {
+            $status = $response->getStatusCode();
+        }
 
         $this->text = self::LOCK_ERROR;
         $color      = self::COLOR_ERROR;
