@@ -22,16 +22,4 @@ class DownloadsControllerTest extends PackagistWebTestCase
         $client->request('GET', '/pugx/badge-poser/d/total');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
-
-    public function testIfPackageDoesntExist()
-    {
-        $data = '{"status":"error","message":"Package not found"}';
-
-        $packagistClient = $this->createPackagistClient($data, 500);
-
-        $client = static::createClient();
-        static::$kernel->getContainer()->set('packagist_client', $packagistClient);
-        $client->request('GET', '/pugx/microsoft-lover/d/total');
-        $this->assertTrue($client->getResponse()->isServerError());
-    }
 }

@@ -46,6 +46,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client->request('GET', '/pugx/badge-poser/d/total');
         ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'downloadsAction');
+        ob_end_flush();
     }
 
     public function testOnLatestStableActionStatisticShouldBeCreated()
@@ -56,6 +57,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client->request('GET', '/pugx/badge-poser/version');
         ob_clean();
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
+        ob_end_flush();
     }
 
     public function testOnLatestUnstableActionStatisticShouldBeCreated()
@@ -66,8 +68,8 @@ class FunctionalControllerTest extends StatsFunctionalTest
         $client->request('GET', '/pugx/badge-poser/v/unstable');
         ob_clean();
         $this->assertTrue($client->getResponse()->isSuccessful());
-
         $this->checkStatsCalls($client, 'pugx/badge-poser', 'versionAction');
+        ob_end_flush();
     }
 
     /**
