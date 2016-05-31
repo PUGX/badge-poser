@@ -18,7 +18,7 @@ before_install:
 
 install:
   - composer update
-  
+
 script:
   - bin/phpunit -v
   
