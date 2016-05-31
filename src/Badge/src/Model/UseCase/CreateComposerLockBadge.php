@@ -18,8 +18,8 @@ use PUGX\Badge\Model\PackageRepositoryInterface;
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITED   = 'e6b800';
-    const COLOR_UNCOMMITED = 'b38f00';
+    const COLOR_COMMITED   = 'e60073';
+    const COLOR_UNCOMMITED = '99004d';
     const COLOR_ERROR      = 'aa0000';
     const LOCK_COMMITED    = 'commited';
     const LOCK_UNCOMMITED  = 'uncommited';

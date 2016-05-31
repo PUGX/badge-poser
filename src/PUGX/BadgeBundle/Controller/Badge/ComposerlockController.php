@@ -18,15 +18,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use PUGX\Badge\Infrastructure\ResponseFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LicenseController.
- * License action for badges.
+ * Class Composer lock.
+ * Composer-lock action for badges.
  *
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Leonardo Proietti <leonardo.proietti@gmail.com>
- * @author Simone Fumagalli <simone@iliveinperego.com>
- * @author Andrea Giuliano <giulianoand@gmail.com>
+ * @author Andreas Heigl <andreas@heigl.org>
  */
 class ComposerlockController extends ContainerAware
 {

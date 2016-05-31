@@ -39,7 +39,7 @@ class Package
      *
      * @param ApiPackage $apiPackage
      *
-     * @return PackageInterface
+     * @return Package
      */
     public static function createFromApi(ApiPackage $apiPackage)
     {

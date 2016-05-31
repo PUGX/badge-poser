@@ -35,7 +35,7 @@
         "sensio/framework-extra-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/packagist-api": "~1.0",
-        "predis/predis": "0.8.*",
+        "predis/predis": "^1.0",
         "snc/redis-bundle": "~1.1",
         "guzzle/plugin-cache": "*",
         "badges/poser": "v1.2.2"
