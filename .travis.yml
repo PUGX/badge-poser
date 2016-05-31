@@ -13,9 +13,12 @@ matrix:
   allow_failures:
     - php: hhvm
 
-before_script:
-    - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
+before_install:
+  - composer selfupdate
 
+install:
+  - composer update
+  
 script:
   - bin/phpunit -v
   
