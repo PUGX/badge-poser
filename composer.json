@@ -2,7 +2,7 @@
     "name": "pugx/badge-poser",
     "description": "Poser, add badges on your readme, such as downloads number or latest version.",
     "keywords": ["composer", "packagist", "badge", "pin"],
-    "homepage": "https://github.com/PUGX",
+    "homepage": "https://poser.pugx.org",
     "type": "symfony-project",
     "license": "MIT",
     "authors": [
@@ -37,13 +37,13 @@
         "knplabs/packagist-api": "~1.0",
         "predis/predis": "^1.0",
         "snc/redis-bundle": "~1.1",
-        "guzzle/plugin-cache": "*",
+        "guzzle/plugin-cache": "3.9.2",
         "badges/poser": "v1.2.2"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "*",
+        "guzzle/plugin-mock": "3.9.2",
         "phpunit/phpunit": "@stable",
-        "phake/phake": "~1"
+        "phake/phake": "1.0.8"
     },
     "scripts": {
         "post-install-cmd": [
@@ -64,15 +64,11 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        },
-        "branch-alias": {
-            "dev-master": "2.4.x-dev"
         }
     }
 }

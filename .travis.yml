@@ -1,27 +1,17 @@
 language: php
 
+sudo: required
+
 php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - hhvm
+  - '5.6'
 
 services:
   - redis-server
 
-matrix:
-  allow_failures:
-    - php: hhvm
+before_script:
+  - phpenv config-rm xdebug.ini
+  - composer install
 
-before_install:
-  - composer selfupdate
-
-install:
-  - composer update
-
-script:
-  - bin/phpunit -v
-  
 notifications:
   email:
     - liuggio@gmail.com
