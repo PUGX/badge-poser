@@ -9,6 +9,7 @@ or its latest stable version.
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.svg)](http://travis-ci.org/PUGX/badge-poser)
 [![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.svg)](https://packagist.org/packages/pugx/badge-poser)
+[![composer.lock available](https://poser.pugx.org/pugx/badge-poser/composerlock.svg)](https://packagist.org/packages/pugx/badge-poser)
 
 ## How to create your own Badge
 -  Go to the [Badge Poser](https://poser.pugx.org) website
