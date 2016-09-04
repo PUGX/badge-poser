@@ -35,6 +35,11 @@
             <argument type="service" id="http_client" />
         </service>
 
+        <!-- .gitattributes -->
+        <service id="use_case_badge_gitattributes" class="PUGX\Badge\Model\UseCase\CreateGitattributesBadge">
+            <argument type="service" id="package_repository" />
+            <argument type="service" id="http_client" />
+        </service>
 
         <!-- kernel Exception -->
         <service id="use_case_badge_error" class="PUGX\Badge\Model\UseCase\CreateErrorBadge">
