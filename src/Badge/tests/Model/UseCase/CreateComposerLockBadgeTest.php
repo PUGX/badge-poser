@@ -69,7 +69,7 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnCode));
 
         $request = $this->getMockWithoutInvokingTheOriginalConstructor('\Guzzle\Http\Message\RequestInterface');
-        
+
         $this->client->expects($this->once())
             ->method('head')
             ->will($this->returnValue($request));
@@ -86,8 +86,8 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
     public function shouldCreateComposerLockBadgeProvider()
     {
         return array(
-            array(200, 'commited'),
-            array(404, 'uncommited'),
+            array(200, 'committed'),
+            array(404, 'uncommitted'),
             array(500, 'checking'),
         );
     }

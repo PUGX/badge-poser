@@ -18,14 +18,14 @@ use PUGX\Badge\Model\PackageRepositoryInterface;
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITED   = 'e60073';
-    const COLOR_UNCOMMITED = '99004d';
-    const COLOR_ERROR      = 'aa0000';
-    const LOCK_COMMITED    = 'commited';
-    const LOCK_UNCOMMITED  = 'uncommited';
-    const LOCK_ERROR       = 'checking';
-    const SUBJECT          = '.lock';
-    const SUBJECT_ERROR    = 'Error';
+    const COLOR_COMMITTED   = 'e60073';
+    const COLOR_UNCOMMITTED = '99004d';
+    const COLOR_ERROR       = 'aa0000';
+    const LOCK_COMMITTED    = 'committed';
+    const LOCK_UNCOMMITTED  = 'uncommitted';
+    const LOCK_ERROR        = 'checking';
+    const SUBJECT           = '.lock';
+    const SUBJECT_ERROR     = 'Error';
 
     protected $text = self::LOCK_ERROR;
 
@@ -76,12 +76,12 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
         $color      = self::COLOR_ERROR;
         $subject    = self::SUBJECT_ERROR;
         if (200 === $status) {
-            $this->text = self::LOCK_COMMITED;
-            $color      = self::COLOR_COMMITED;
+            $this->text = self::LOCK_COMMITTED;
+            $color      = self::COLOR_COMMITTED;
             $subject    = self::SUBJECT;
         } elseif (404 === $status) {
-            $this->text = self::LOCK_UNCOMMITED;
-            $color      = self::COLOR_UNCOMMITED;
+            $this->text = self::LOCK_UNCOMMITTED;
+            $color      = self::COLOR_UNCOMMITTED;
             $subject    = self::SUBJECT;
         }
 
