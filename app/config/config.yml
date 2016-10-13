@@ -44,6 +44,7 @@ pugx_badge:
         - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_download_type", type: 'daily'}
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
         - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
+        - { name: 'gitattributes', label: '.gitattributes', route: "pugx_badge_gitattributes" }
 
 
 snc_redis:
