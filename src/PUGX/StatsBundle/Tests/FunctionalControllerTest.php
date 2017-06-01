@@ -11,8 +11,12 @@
 
 namespace PUGX\StatsBundle\Tests;
 
-use PUGX\StatsBundle\Test\StatsFunctionalTest;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Packagist\Api\Client;
+use PUGX\StatsBundle\Test\StatsFunctionalTest;
 
 class FunctionalControllerTest extends StatsFunctionalTest
 {
@@ -28,13 +32,8 @@ class FunctionalControllerTest extends StatsFunctionalTest
 
     private function createPackagistClient($data, $status = 200)
     {
-        $packagistResponse = new \Guzzle\Http\Message\Response($status);
-        $packagistResponse->setBody($data);
-        $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
-        $plugin->addResponse($packagistResponse);
-        $clientHttp = new \Guzzle\Http\Client();
-        $clientHttp->addSubscriber($plugin);
-
+        $mock = new MockHandler([new Response($status, [], $data)]);
+        $clientHttp = new GuzzleClient(['handler' => HandlerStack::create($mock)]);
         return new Client($clientHttp);
     }
 

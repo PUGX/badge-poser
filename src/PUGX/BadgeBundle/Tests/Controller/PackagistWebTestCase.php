@@ -11,6 +11,10 @@
 
 namespace PUGX\BadgeBundle\Tests\Controller;
 
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Packagist\Api\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -27,14 +31,8 @@ class PackagistWebTestCase extends WebTestCase
 
     private function createHttpClient($data, $status = 200)
     {
-        $packagistResponse = new \Guzzle\Http\Message\Response($status);
-        $packagistResponse->setBody($data);
-        $plugin = new \Guzzle\Plugin\Mock\MockPlugin();
-        $plugin->addResponse($packagistResponse);
-        $clientHttp = new \Guzzle\Http\Client();
-        $clientHttp->addSubscriber($plugin);
-
-        return $clientHttp;
+        $mock = new MockHandler([new Response($status, [], $data)]);
+        return new GuzzleClient(['handler' => HandlerStack::create($mock)]);
     }
 
     protected function createPackagistClient($data = null, $status = 200)
