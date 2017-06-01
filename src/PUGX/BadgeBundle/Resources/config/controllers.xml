@@ -14,6 +14,11 @@
             <argument type="service" id="packagist_client" />
         </service>
 
+        <!-- Dependents -->
+        <service id="use_case_badge_dependents" class="PUGX\Badge\Model\UseCase\CreateDependentsBadge">
+            <argument type="service" id="package_repository" />
+        </service>
+
         <!-- Download -->
         <service id="use_case_badge_downloads" class="PUGX\Badge\Model\UseCase\CreateDownloadsBadge">
             <argument type="service" id="package_repository" />

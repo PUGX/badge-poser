@@ -277,6 +277,11 @@ class Package
         return $this->getOriginalObject()->getVersions();
     }
 
+    public function getDependents()
+    {
+        return $this->getOriginalObject()->getDependents();
+    }
+
     private function setOriginalObject(ApiPackage $originalObject)
     {
         $this->originalObject = $originalObject;
