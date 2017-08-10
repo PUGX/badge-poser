@@ -1,9 +1,11 @@
 language: php
 
-sudo: required
+sudo: false
 
 php:
-  - '5.6'
+  - 5.6
+  - 7.0
+  - 7.1
 
 services:
   - redis-server
