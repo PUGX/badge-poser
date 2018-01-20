@@ -27,6 +27,8 @@
     },
     "require": {
         "php": ">=5.3.3",
+        "ext-gd": "*",
+        "ext-curl": "*",
         "symfony/symfony": "~2.3",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
