@@ -31,7 +31,7 @@ class PackagistWebTestCase extends WebTestCase
     private function createHttpClient($data, $status = 200)
     {
         return new \GuzzleHttp\Client([
-            'handler' => HandlerStack::create(new MockHandler([
+            'handler' => new HandlerStack(new MockHandler([
                 new Response($status, [], $data),
             ])),
         ]);

@@ -32,7 +32,7 @@ class FunctionalControllerTest extends StatsFunctionalTest
     private function createPackagistClient($data, $status = 200)
     {
         return new Client(new \GuzzleHttp\Client([
-            'handler' => HandlerStack::create(new MockHandler([
+            'handler' => new HandlerStack(new MockHandler([
                 new Response($status, [], $data),
             ])),
         ]));
