@@ -2,11 +2,13 @@ version: '2'
 
 services:
   php:
-    image: php:5.6
+    build:
+      context: docker/dev/php
     depends_on:
       - redis
     volumes:
       - .:/var/www/badge-poser
+    working_dir: /var/www/badge-poser
 
   redis:
     image: redis
