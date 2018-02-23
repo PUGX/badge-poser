@@ -1,6 +1,0 @@
-parameters:
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretButEnoughToGetABronzeMedal
-    redis_hostname:    localhost
-    redis_database_default: 0
-    redis_database_cache: 1

@@ -1,10 +1,17 @@
-app/cache/*
-app/logs/*
-app/config/parameters.yml
-app/bootstrap*
-bin/*
-!bin/extract_contributors.py
-vendor/
-web/bundles
-web/css
-web/js
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-pack ###

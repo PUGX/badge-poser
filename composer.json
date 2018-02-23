@@ -15,60 +15,63 @@
             "homepage": "https://github.com/PUGX/badge-poser/contributors"
         }
     ],
+    "require": {
+        "php": "^7.0.8",
+        "ext-iconv": "*",
+        "badges/poser": "^1.2",
+        "sensio/framework-extra-bundle": "^5.1",
+        "symfony/asset": "^3.4",
+        "symfony/console": "^3.4",
+        "symfony/flex": "^1.0",
+        "symfony/framework-bundle": "^3.4",
+        "symfony/lts": "^3",
+        "symfony/webpack-encore-pack": "^1.0",
+        "symfony/yaml": "^3.4"
+    },
+    "require-dev": {
+        "symfony/debug-pack": "^1.0",
+        "symfony/dotenv": "^3.4"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
-            "PUGX\\Badge\\": "src/Badge/src/",
-            "PUGX\\BadgeBundle\\": "src/PUGX/BadgeBundle/",
-            "PUGX\\StatsBundle\\": "src/PUGX/StatsBundle/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": { "PUGX\\Badge\\": "src/Badge/tests/" }
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
     },
-    "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "~2.3",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.3",
-        "sensio/distribution-bundle": "~2.3",
-        "sensio/framework-extra-bundle": "~2.3",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "knplabs/packagist-api": "~1.0",
-        "predis/predis": "^1.0",
-        "snc/redis-bundle": "~1.1",
-        "guzzle/plugin-cache": "3.9.2",
-        "badges/poser": "v1.2.2"
-    },
-    "require-dev": {
-        "guzzle/plugin-mock": "3.9.2",
-        "phpunit/phpunit": "@stable",
-        "phake/phake": "1.0.8"
+    "replace": {
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
     },
     "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
+        },
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "@auto-scripts"
         ]
     },
-    "config": {
-        "bin-dir": "bin"
+    "conflict": {
+        "symfony/symfony": "*"
     },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-web-dir": "web",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+        "symfony": {
+            "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
+            "allow-contrib": false
         }
     }
 }

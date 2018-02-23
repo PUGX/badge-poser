@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+
+  webserver:
+    image: nginx:alpine
+    container_name: badge-poser-webserver
+    working_dir: /application
+    depends_on:
+      - php-fpm
+    ports:
+      - '80:80'
+    volumes:
+        - .:/application
+        - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  php-fpm:
+    build: docker/dev/php-fpm
+    container_name: badge-poser-php-fpm
+    working_dir: /application
+    depends_on:
+      - redis
+    ports:
+        - "9000"
+    volumes:
+      - .:/application
+      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+  redis:
+    image: redis
