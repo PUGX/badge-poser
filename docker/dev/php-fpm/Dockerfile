@@ -8,6 +8,8 @@ RUN apk add --no-cache --virtual .persistent-deps \
     curl \
     icu-libs \
     zlib \
+    vim \
+    bash \
     file
 
 RUN set -xe \
@@ -36,6 +38,16 @@ RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev lib
   NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
   docker-php-ext-install -j${NPROC} gd && \
   apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
+
+# install redis
+RUN apk add --no-cache --virtual build-dependencies autoconf g++ make git \
+  && docker-php-source extract \
+  && pecl install \
+    redis \
+  && docker-php-ext-enable \
+    redis \
+  && docker-php-source delete \
+  && apk del build-dependencies
 
 # Install XDebug
 RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \

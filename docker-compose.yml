@@ -25,6 +25,16 @@ services:
     ports:
         - "9000"
 
+  node:
+    container_name: badge-poser-node
+    image: node:alpine
+    user: "node"
+    volumes:
+      - .:/application:cached
+    working_dir: /application
+
   redis:
     image: redis
     container_name: badge-poser-redis
+    ports:
+      - "6379:6379"
