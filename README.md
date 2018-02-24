@@ -35,13 +35,26 @@ git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
 ```
 
-- Install App:
+#### Install App:
 
-``` bash
-docker-composer up
-composer install
-yarn install 
-yarn watch
+- Build/run containers in detached mode
+```bash
+$ docker-compose build
+$ docker-compose up
+```
+
+
+- Prepare the Symfony application
+```bash
+$ docker-compose exec php-fpm bash
+$ composer install
+```
+
+
+- Build frontend
+```bash
+$ docker-compose run --rm node yarn install
+$ docker-compose run --rm node yarn [dev|watch|build]
 ```
 
 now go to [http://localhost](http://localhost)
