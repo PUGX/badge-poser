@@ -7,11 +7,11 @@ services:
     working_dir: /application
     depends_on:
       - php-fpm
+    volumes:
+      - .:/application:cached
+      - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - '80:80'
-    volumes:
-        - .:/application
-        - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 
   php-fpm:
     build: docker/dev/php-fpm
@@ -19,11 +19,12 @@ services:
     working_dir: /application
     depends_on:
       - redis
+    volumes:
+      - .:/application:cached
+      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini:ro
     ports:
         - "9000"
-    volumes:
-      - .:/application
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
 
   redis:
     image: redis
+    container_name: badge-poser-redis
