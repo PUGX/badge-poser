@@ -49,11 +49,15 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
      */
     public function createGitattributesBadge($repository, $format = 'svg')
     {
-        $repo = str_replace('.git', '', $this->packageRepository
-            ->fetchByRepository($repository)
-            ->getOriginalObject()
-            ->getRepository()
-        );
+        try {
+            $repo = str_replace('.git', '', $this->packageRepository
+                ->fetchByRepository($repository)
+                ->getOriginalObject()
+                ->getRepository()
+            );
+        } catch (\Exception $e) {
+            return $this->createDefaultBadge( $format);
+        }
 
         $request = $this->client->head(
             $repo . '/blob/master/.gitattributes',
