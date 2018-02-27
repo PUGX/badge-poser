@@ -18,5 +18,4 @@ class HomeController extends Controller
             'home/index.html.twig', []
         );
     }
-
 }
