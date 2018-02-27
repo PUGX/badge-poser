@@ -26,7 +26,11 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+
     Redis:
         class: Redis
 
     App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
+    GuzzleHttp\Client: ~
+    GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
+    Packagist\Api\Client: ~
