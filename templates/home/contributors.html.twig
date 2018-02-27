@@ -1,0 +1,18 @@
+<section class="container-fluid contributors">
+    <div class="container">
+        <h2>Contributors</h2>
+        <small>Thank you!</small>
+        <div class="row d-flex">
+            {% for contributor in contributors %}
+            <a href="{{ contributor.profileUrl }}" target="_blank" rel="noopener noreferrer" class="col-4 col-md-2">
+                <div class="card bg-dark text-white">
+                    <img class="card-img" src="{{ contributor.profileImg }}" alt="{{ contributor.username}} ">
+                    <div class="card-overlay">
+                        <span>{{ contributor.username }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>

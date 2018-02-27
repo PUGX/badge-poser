@@ -1,0 +1,24 @@
+.search-input {
+  margin: 10px auto;
+  height: 2.4rem;
+  border: 0;
+  width: 30vw;
+  padding: 0 .4rem;
+  border-bottom: 2px solid #bbb;
+  box-shadow: 0 0 8px -4px #333;
+  border-radius: 2px;
+  transition: border-color .15s ease-in-out;
+
+  &:focus {
+    border-bottom-color: $primary;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .awesomplete {
+    width: 100%;
+    .search-input {
+      width: 100%;
+    }
+  }
+}

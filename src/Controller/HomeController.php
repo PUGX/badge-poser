@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Contributors\Model\Contributor;
 use App\Contributors\Service\Repository as ContributorsRepository;
+use App\Service\SnippetGeneratorInterface;
 use App\Stats\Reader\ReaderInterface;
 use PUGX\Poser\Poser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,8 +18,9 @@ class HomeController extends Controller
     /**
      * @param string $repository
      * @param ContributorsRepository $contributorsRepository
-     * @param ReaderInterface        $redisReader
-     * @param Poser                  $poser
+     * @param ReaderInterface $redisReader
+     * @param Poser $poser
+     * @param SnippetGeneratorInterface $generator
      *
      * @return Response
      */
@@ -26,7 +28,8 @@ class HomeController extends Controller
         string $repository,
         ContributorsRepository $contributorsRepository,
         ReaderInterface $redisReader,
-        Poser $poser
+        Poser $poser,
+        SnippetGeneratorInterface $generator
     ): Response {
         $prefix = sprintf('More than %s', number_format($redisReader->totalAccess()));
         $text = 'badges served!!!';
@@ -39,6 +42,7 @@ class HomeController extends Controller
             'home/index.html.twig',
             [
                 'repository' => $repository,
+                'badges' => $generator->generateAllSnippets($repository),
                 'badges_served_svg' => $poser->generate($prefix, $text, 'CC0066', 'flat'),
                 'formats' => $formats,
                 'contributors' => $contributors,
