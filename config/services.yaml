@@ -25,3 +25,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Packagist\Api\Client: ~
+    GuzzleHttp\Client: ~
+    GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
+
