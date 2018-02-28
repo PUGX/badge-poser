@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2.2-zts-node-browsers
+        environment:
+          - APP_ENV=test
+          - APP_SECRET=notReallyNeededHere
+          - REDIS_URL=redis://localhost
+      - image: redis
+
+    working_directory: ~/app
+    steps:
+      - checkout
+      
+      - run: 
+          name: install system packages
+          command: sudo apt-get install -qqy libzip-dev
+
+      - run: 
+          name: install php packages
+          command: sudo docker-php-ext-install zip iconv
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run: 
+          name: install project dependencies
+          command: composer install -n --no-progress --no-suggest
+ 
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: 
+          name: run tests
+          command: bin/phpunit -d memory_limit=-1 --coverage-html=coverage
+ 
+      - store_artifacts:
+          path: coverage
+
