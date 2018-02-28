@@ -42,17 +42,23 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Contributors\Service\RepositoryInterface: '@App\Contributors\Service\Repository'
 
-    Predis\Client: '@snc_redis.default'
+    App\Service\SnippetGenerator:
+            arguments:
+                - '@router'
+                - '%pugx_badge_allin_badges%'
+                - '%pugx_badge_badges%'
+    App\Service\SnippetGeneratorInterface: '@App\Service\SnippetGenerator'
+
+    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
+
+    Github\Client: ~
+    Github\ResultPager: ~
 
     GuzzleHttp\Client: ~
     GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
-    App\Service\SnippetGeneratorInterface: '@App\Service\SnippetGenerator'
-    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
+
     Packagist\Api\Client: ~
 
-    App\Service\SnippetGenerator:
-        arguments:
-            - '@router'
-            - '%pugx_badge_allin_badges%'
-            - '%pugx_badge_badges%'
+    Predis\Client: '@snc_redis.default'

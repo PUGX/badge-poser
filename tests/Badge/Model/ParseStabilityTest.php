@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Badge\Package\Tests;
+namespace App\Tests\Badge\Model;
 
 use Packagist\Api\Result\Package\Version;
 use App\Badge\Model\Package;

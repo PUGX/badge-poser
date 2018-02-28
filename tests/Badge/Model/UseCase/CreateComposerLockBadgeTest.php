@@ -11,7 +11,7 @@
 
 namespace App\Tests\Badge\UseCase;
 
-use App\Badge\Package\Package;
+use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\ClientInterface;
@@ -25,14 +25,14 @@ class CreateComposerLockBadgeTest extends TestCase
 {
     /** @var CreateComposerLockBadge $useCase */
     private $useCase;
-    /** @var \App\Tests\Badge\Model\PackageRepositoryInterface */
+    /** @var PackageRepositoryInterface */
     private $repository;
 
     private $client;
 
     public function setUp()
     {
-        $this->repository = $this->getMockForAbstractClass('\App\Badge\Model\PackageRepositoryInterface');
+        $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->client = $this->getMockBuilder(ClientInterface::class)
             ->setMethods(['head', 'send'])
             ->getMockForAbstractClass();

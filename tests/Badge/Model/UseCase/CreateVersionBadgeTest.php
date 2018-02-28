@@ -11,7 +11,7 @@
 
 namespace App\Tests\Badge\UseCase;
 
-use App\Badge\Package\Package;
+use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateVersionBadge;
 use PHPUnit\Framework\TestCase;
 
@@ -24,12 +24,12 @@ class CreateVersionBadgeTest extends TestCase
 {
     /** @var $useCase */
     private $useCase;
-    /** @var App\Badge\Model\PackageRepositoryInterface*/
+    /** @var PackageRepositoryInterface */
     private $repository;
 
     public function setUp()
     {
-        $this->repository = $this->createMock('\App\Badge\Model\PackageRepositoryInterface');
+        $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateVersionBadge($this->repository);
     }
 
