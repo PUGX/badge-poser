@@ -3,7 +3,7 @@
 namespace App\Badge\Service;
 
 use App\Badge\Model\Badge;
-use App\Poser\Poser;
+use PUGX\Poser\Poser;
 use App\Badge\Model\Image;
 
 class ImageFactory
