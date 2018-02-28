@@ -1,0 +1,29 @@
+language: php
+sudo: false
+dist: trusty
+
+php:
+  - '7.2'
+
+services:
+  - redis-server
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+before_install:
+  - phpenv config-rm xdebug.ini
+  - composer self-update
+  - composer global require hirak/prestissimo
+
+install:
+  - travis_retry travis_wait composer update --no-interaction --prefer-dist --prefer-stable $COMPOSER_OPTIONS
+
+script:
+  - bin/phpunit -v
+
+notifications:
+  email:
+    - liuggio@gmail.com
+    - a.giannantonio@gmail.com
