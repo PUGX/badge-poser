@@ -2,6 +2,8 @@
 
 namespace App\Stats\Persister;
 
+use Predis\Client as Redis;
+
 final class RedisPersister implements PersisterInterface
 {
     const KEY_PREFIX = 'STAT';
@@ -17,7 +19,7 @@ final class RedisPersister implements PersisterInterface
     private $keyList;
 
     public function __construct(
-        \Redis $redis,
+        Redis $redis,
         string $keyTotal = self::KEY_TOTAL,
         string $keyPrefix = self::KEY_PREFIX,
         string $keyHash = self::KEY_HASH_NAME,

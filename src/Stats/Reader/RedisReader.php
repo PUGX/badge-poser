@@ -2,6 +2,8 @@
 
 namespace App\Stats\Reader;
 
+use Predis\Client as Redis;
+
 final class RedisReader implements ReaderInterface
 {
     const KEY_PREFIX = 'STAT';
@@ -12,7 +14,7 @@ final class RedisReader implements ReaderInterface
     private $keyPrefix;
 
     public function __construct(
-        \Redis $redis,
+        Redis $redis,
         string $keyTotal = self::KEY_TOTAL,
         string $keyPrefix = self::KEY_PREFIX
     ) {

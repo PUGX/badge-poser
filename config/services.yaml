@@ -27,8 +27,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-    Redis:
-        class: Redis
+    Predis\Client: '@snc_redis.default'
 
     App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
     GuzzleHttp\Client: ~
