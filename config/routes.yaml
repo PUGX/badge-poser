@@ -1,3 +1,31 @@
-#index:
-#    path: /
-#    defaults: { _controller: 'App\Controller\DefaultController::index' }
+home:
+    path: /
+    defaults: { _controller: 'App\Controller\HomeController::index' }
+
+snippet_all:
+    path: /snippet/all/
+    defaults: { _controller: 'App\Controller\SnippetController::all' }
+
+pugx_badge_version_latest:
+    path: /
+
+pugx_badge_license:
+    path: /
+
+pugx_badge_download:
+    path: /
+
+pugx_badge_download_type:
+    path: /
+
+pugx_badge_version:
+    path: /
+
+pugx_badge_composerlock:
+    path: /
+
+pugx_badge_gitattributes:
+    path: /
+
+pugx_badge_packagist:
+    path: /

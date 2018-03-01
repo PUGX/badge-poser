@@ -46,7 +46,7 @@ final class NullPersister implements PersisterInterface
      */
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
     {
-        static::$incrementRepositoryAccessTypeCalled = array($repository, $type);
+        static::$incrementRepositoryAccessTypeCalled = [$repository, $type];
 
         return $this;
     }
