@@ -7,3 +7,9 @@ services:
     # aliases are prefixed with test. For example:
     #
     # test.App\Service\MyService: '@App\Service\MyService'
+
+    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\NullPersister'
+    App\Service\SnippetGeneratorInterface: '@App\Tests\Service\SnippetGeneratorStub'
+
+    App\Tests\Service\SnippetGeneratorStub:
+        class: App\Tests\Service\SnippetGeneratorStub

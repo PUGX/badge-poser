@@ -2,44 +2,91 @@
 
 namespace App\Service;
 
-use Doctrine\Common\Cache\Cache;
-use Packagist\Api\Client;
+use GuzzleHttp\ClientInterface;
+use Predis\Profile\Factory;
 
 class CachedClient
 {
-    protected $cache = null;
-    protected $TTLSearch = 900;
-    protected $TTLGet = 900;
-    protected $TTLAll= 900;
-    protected $client;
+    /**
+     * @var ClientInterface
+     */
+    protected $httpClient;
 
-    public function __construct(Client $client, Cache $cache, $TTLSearch, $TTLGet, $TTLAll)
+    protected $cache;
+
+    /**
+     * @var Factory
+     */
+    protected $resultFactory;
+
+    /**
+     * @var int
+     */
+    protected $TTLSearch = 900;
+
+    /**
+     * @var int
+     */
+    protected $TTLGet = 900;
+
+    /**
+     * @var int
+     */
+    protected $TTLAll= 900;
+
+    public function setTTLAll(int $TTLAll): void
     {
-        $this->cache = $cache;
-        $this->client = $client;
-        $this->TTLSearch = $TTLSearch;
-        $this->TTLGet = $TTLGet;
         $this->TTLAll = $TTLAll;
     }
 
-    public function getTTLAll()
+    public function getTTLAll(): int
     {
         return $this->TTLAll;
     }
 
-    public function getTTLGet()
+    public function setTTLGet(int $TTLGet): void
+    {
+        $this->TTLGet = $TTLGet;
+    }
+
+    public function getTTLGet(): int
     {
         return $this->TTLGet;
     }
 
-    public function getTTLSearch()
+    public function setTTLSearch(int $TTLSearch): void
+    {
+        $this->TTLSearch = $TTLSearch;
+    }
+
+    public function getTTLSearch(): int
     {
         return $this->TTLSearch;
     }
 
-    public function setResultFactory($resultFactory)
+    public function setHttpClient(ClientInterface $httpClient): void
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public function getHttpClient(): ClientInterface
+    {
+        return $this->httpClient;
+    }
+
+    public function setResultFactory(Factory $resultFactory): void
     {
         $this->resultFactory = $resultFactory;
+    }
+
+    public function getResultFactory(): Factory
+    {
+        return $this->resultFactory;
+    }
+
+    public function setCache($cache): void
+    {
+        $this->cache = $cache;
     }
 
     public function getCache()
@@ -47,23 +94,24 @@ class CachedClient
         return $this->cache;
     }
 
-    private function getPrefixKey($method, $argument)
+    /**
+     * return a Key for the cache.
+     */
+    private function getPrefixKey(string $method, $argument): string
     {
         return sprintf("%s.%s", $method, json_encode($argument));
     }
 
-    public function search($query, array $filters = array())
+    public function search($query, array $filters = [])
     {
         $key = $this->getPrefixKey(__METHOD__, $query);
 
         if ($this->getCache()->contains($key)) {
             $results = $this->getCache()->fetch($key);
-
-            return $results;
+        } else {
+            $results = parent::search($query);
+            $this->getCache()->save($key, $results, $this->TTLSearch);
         }
-
-        $results = $this->client->search($query, $filters);
-        $this->getCache()->save($key, $results, $this->TTLSearch);
 
         return $results;
     }
@@ -75,24 +123,23 @@ class CachedClient
         if ($this->getCache()->contains($key)) {
             $result = $this->getCache()->fetch($key);
         } else {
-            $result = $this->client->get($package);
+            $result = parent::get($package);
             $this->getCache()->save($key, $result, $this->TTLGet);
         }
 
         return $result;
     }
 
-    public function all(array $filters = array())
+    public function all(array $filters = [])
     {
         $key = $this->getPrefixKey(__METHOD__, $filters);
 
         if ($this->getCache()->contains($key)) {
             $results = $this->getCache()->fetch($key);
-
-            return $results;
+        } else {
+            $results = parent::all($filters);
+            $this->getCache()->save($key, $results, $this->TTLAll);
         }
-        $results = $this->client->all($filters);
-        $this->getCache()->save($key, $results, $this->TTLAll);
 
         return $results;
     }

@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.0.8",
+        "php": "^7.2",
         "ext-iconv": "*",
         "badges/poser": "^1.2",
         "knplabs/packagist-api": "^1.5",
@@ -32,6 +32,7 @@
         "symfony/yaml": "^3.4"
     },
     "require-dev": {
+        "symfony/browser-kit": "^3.4",
         "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "^3.4",
         "symfony/phpunit-bridge": "^3.4"

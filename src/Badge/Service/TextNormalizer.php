@@ -17,7 +17,7 @@ class TextNormalizer
     public function normalize($number, $precision = 2)
     {
             $number = $this->normalizeNumber($number);
-            $units = array('', ' k', ' M', ' G', ' T');
+            $units = ['', ' k', ' M', ' G', ' T'];
 
             $pow = floor(($number ? log($number) : 0) / log(1000));
             $pow = min($pow, count($units) - 1);

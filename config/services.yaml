@@ -1,6 +1,22 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    pugx_badge_allin_badges:
+        - 'latest_stable_version'
+        - 'total'
+        - 'latest_unstable_version'
+        - 'license'
+
+    pugx_badge_badges:
+        - { name: 'latest_stable_version', label: 'Latest Stable Version', route: "pugx_badge_version_latest", latest: 'stable'}
+        - { name: 'total', label: 'Total Downloads', route: "pugx_badge_download" }
+        - { name: 'latest_unstable_version', label: 'Latest Unstable Version', route: "pugx_badge_version_latest", latest: 'unstable'}
+        - { name: 'license', label: 'License', route: "pugx_badge_license"}
+        - { name: 'monthly', label: 'Monthly Downloads', route: "pugx_badge_download_type", type: 'monthly'}
+        - { name: 'daily', label: 'Daily Downloads', route: "pugx_badge_download_type", type: 'daily'}
+        - { name: 'version', label: 'Version', route: "pugx_badge_version" }
+        - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
+        - { name: 'gitattributes', label: '.gitattributes', route: "pugx_badge_gitattributes" }
 
 services:
     # default configuration for services in *this* file
@@ -29,7 +45,14 @@ services:
 
     Predis\Client: '@snc_redis.default'
 
-    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
     GuzzleHttp\Client: ~
     GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
+    App\Service\SnippetGeneratorInterface: '@App\Service\SnippetGenerator'
+    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
     Packagist\Api\Client: ~
+
+    App\Service\SnippetGenerator:
+        arguments:
+            - '@router'
+            - '%pugx_badge_allin_badges%'
+            - '%pugx_badge_badges%'
