@@ -9,14 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Badge\Package\Tests;
+namespace App\Tests\Badge\Service;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Badge\Service\TextNormalizer;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-class TextNormalizerTest extends WebTestCase
+class TextNormalizerTest extends TestCase
 {
+    /** @var TextNormalizer */
     private $normalizer;
 
     public function setUp()

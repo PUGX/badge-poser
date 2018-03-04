@@ -35,18 +35,21 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param Client $client
+     * @param ClientInterface $client
      */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
         $this->packageRepository = $packageRepository;
         $this->client = $client;
     }
+
     /**
      * @param string $repository
      * @param string $format
      *
      * @return \App\Badge\Model\Badge
+     * @throws \App\Badge\Model\UnexpectedValueException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function createComposerLockBadge($repository, $format = 'svg')
     {
