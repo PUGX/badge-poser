@@ -1,3 +1,6 @@
+parameters:
+    pugx.poser.class: 'App\Tests\Service\PoserStub'
+
 services:
     _defaults:
         public: true
@@ -10,6 +13,8 @@ services:
 
     App\Service\SnippetGeneratorInterface: '@App\Tests\Service\SnippetGeneratorStub'
     App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\NullPersister'
+
+    App\Service\ReaderInterface: '@App\Service\RedisReader'
 
     App\Tests\Service\SnippetGeneratorStub:
         class: App\Tests\Service\SnippetGeneratorStub

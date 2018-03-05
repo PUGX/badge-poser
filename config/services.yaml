@@ -18,6 +18,9 @@ parameters:
         - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
         - { name: 'gitattributes', label: '.gitattributes', route: "pugx_badge_gitattributes" }
 
+    redis.reader.class: 'Snc\RedisBundle\DependencyInjection\SncRedisExtension'
+    pugx.poser.class: 'PUGX\Poser\Poser'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -39,8 +42,10 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Service\ReaderInterface: '@App\Service\RedisReader'
+
+    App\Service\RedisReader:
+        arguments: [ '@Predis\Client' ]
 
     App\Contributors\Service\RepositoryInterface: '@App\Contributors\Service\Repository'
 
@@ -62,3 +67,17 @@ services:
     Packagist\Api\Client: ~
 
     Predis\Client: '@snc_redis.default'
+
+    PUGX\Poser\SvgFlatRender:
+            class: PUGX\Poser\Render\SvgFlatRender
+
+    PUGX\Poser\SvgFlatSquareRender:
+        class: PUGX\Poser\Render\SvgFlatSquareRender
+
+    PUGX\Poser\SvgPlasticRender:
+        class: PUGX\Poser\Render\SvgRender
+
+    PUGX\Poser\Poser:
+        class: '%pugx.poser.class%'
+        arguments:
+            $renders: [ '@PUGX\Poser\SvgPlasticRender', '@PUGX\Poser\SvgFlatRender', '@PUGX\Poser\SvgFlatSquareRender' ]
