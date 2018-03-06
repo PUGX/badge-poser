@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-gd": "*",
         "ext-iconv": "*",
         "badges/poser": "^1.2",
         "knplabs/packagist-api": "^1.5",
