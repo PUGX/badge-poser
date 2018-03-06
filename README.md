@@ -4,6 +4,7 @@ Badge-Poser
 Use shields for your packagist.org repository that shows how many times your project has been downloaded from packagist.org
 or its latest stable version.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/444149b914ad4157bcb39c20a4f3f71d)](https://app.codacy.com/app/JellyBellyDev/badge-poser?utm_source=github.com&utm_medium=referral&utm_content=PUGX/badge-poser&utm_campaign=badger)
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.svg)](http://travis-ci.org/PUGX/badge-poser)
