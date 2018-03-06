@@ -12,6 +12,8 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use GuzzleHttp\Exception\BadResponseException;
+use UnexpectedValueException;
 
 /**
  * Create the 'error' badge with the standard Font and standard Image.
@@ -27,14 +29,19 @@ class CreateErrorBadge
     /**
      * @param $exception
      * @param $format
-     * @return string
+     * @return Badge
      */
-    public function createErrorBadge($exception, $format)
+    public function createErrorBadge($exception, $format): Badge
     {
         return $this->createBadge($exception, $format);
     }
 
-    protected function createBadge($exception, $format)
+    /**
+     * @param $exception
+     * @param $format
+     * @return Badge
+     */
+    protected function createBadge($exception, $format): Badge
     {
         $subject =  'error';
         $status = self::ERROR_TEXT_GENERIC;

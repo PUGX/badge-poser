@@ -62,3 +62,17 @@ services:
     Packagist\Api\Client: ~
 
     Predis\Client: '@snc_redis.default'
+
+    PUGX\Poser\Poser:
+        class: ~
+        arguments:
+            $renders: [ '@PUGX\Poser\SvgPlasticRender', '@PUGX\Poser\SvgFlatRender', '@PUGX\Poser\SvgFlatSquareRender' ]
+
+    PUGX\Poser\SvgPlasticRender:
+        class: PUGX\Poser\Render\SvgRender
+
+    PUGX\Poser\SvgFlatRender:
+        class: PUGX\Poser\Render\SvgFlatRender
+
+    PUGX\Poser\SvgFlatSquareRender:
+        class: PUGX\Poser\Render\SvgFlatSquareRender

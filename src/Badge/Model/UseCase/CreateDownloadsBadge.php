@@ -11,9 +11,13 @@
 
 namespace App\Badge\Model\UseCase;
 
+
+use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Service\TextNormalizer;
 use App\Badge\Service\NormalizerInterface;
 use App\Badge\Model\PackageRepositoryInterface;
+use InvalidArgumentException;
 
 /**
  * Create the 'downloads' image with the standard Font and standard Image.
@@ -23,7 +27,7 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     CONST COLOR = '007ec6';
     CONST SUBJECT = 'downloads';
 
-    /** @var \App\Badge\Service\TextNormalizer */
+    /** @var TextNormalizer */
     private $normalizer;
 
     /**
@@ -44,14 +48,19 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
      * @param $repository
      * @param $type
      * @param $format
-     *
-     * @return \App\Badge\Model\Badge
+     * @return Badge
+     * @throws InvalidArgumentException
      */
-    public function createDownloadsBadge($repository, $type, $format)
+    public function createDownloadsBadge($repository, $type, $format): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format, $type);
     }
 
+    /**
+     * @param Package $package
+     * @param null $context
+     * @return mixed|string
+     */
     protected function prepareText($package, $context = null)
     {
         $text = $this->normalizer->normalize($package->getPackageDownloads($context));

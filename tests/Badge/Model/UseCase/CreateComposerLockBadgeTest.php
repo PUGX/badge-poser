@@ -20,6 +20,7 @@ use GuzzleHttp\ClientInterface;
  * Class LicenseImageCreatorTest
  *
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Andrea Giannantonio <a.giannantonio@gmail.com>
  */
 class CreateComposerLockBadgeTest extends TestCase
 {
@@ -27,14 +28,14 @@ class CreateComposerLockBadgeTest extends TestCase
     private $useCase;
     /** @var PackageRepositoryInterface */
     private $repository;
-
+    /** @var ClientInterface */
     private $client;
 
     public function setUp()
     {
         $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->client = $this->getMockBuilder(ClientInterface::class)
-            ->setMethods(['head', 'send'])
+            ->setMethods(['request'])
             ->getMockForAbstractClass();
         $this->useCase = new CreateComposerLockBadge($this->repository, $this->client);
     }
@@ -74,21 +75,15 @@ class CreateComposerLockBadgeTest extends TestCase
             ->will($this->returnValue($repo));
 
         $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\Guzzle\Http\Message\Response',
-            ['getStatusCode']
+            '\Psr\Http\Message\ResponseInterface',
+            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
         );
         $response->expects($this->once())
             ->method('getStatusCode')
             ->will($this->returnValue($returnCode));
 
-        $request = $this->createMockWithoutInvokingTheOriginalConstructor('Psr\Http\Message\RequestInterface');
-
         $this->client->expects($this->once())
-            ->method('head')
-            ->will($this->returnValue($request));
-
-        $this->client->expects($this->once())
-            ->method('send')
+            ->method('request')
             ->will($this->returnValue($response));
 
         $repository = 'App\Tests/badge-poser';

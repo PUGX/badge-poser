@@ -7,25 +7,51 @@ snippet_all:
     defaults: { _controller: 'App\Controller\SnippetController::all' }
 
 pugx_badge_version_latest:
-    path: /
+    path: /{repository}/v/{latest}
+    controller: App\Controller\Badge\VersionController::versionAction
+    defaults:   { latest: "stable" }
+    requirements:
+        latest: "stable|unstable"
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_license:
-    path: /
+    path: /{repository}/license
+    controller: App\Controller\Badge\LicenseController::licenseAction
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_download:
-    path: /
+    path: /{repository}/downloads
+    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    defaults:   { type: "total" }
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_download_type:
-    path: /
+    path: /{repository}/d/{type}
+    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    requirements:
+        type: "total|daily|monthly"
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_version:
-    path: /
+    path:       /{repository}/version
+    controller: App\Controller\Badge\VersionController::versionAction
+    defaults:   { latest: "stable" }
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_composerlock:
-    path: /
+    path: /{repository}/composerlock
+    controller: App\Controller\Badge\ComposerLockController:composerLockAction
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_gitattributes:
-    path: /
+    path: /{repository}/gitattributes
+    controller: App\Controller\Badge\GitAttributesController::gitAttributesAction
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
 
 pugx_badge_packagist:
     path: /

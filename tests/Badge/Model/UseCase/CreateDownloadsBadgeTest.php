@@ -11,18 +11,21 @@
 
 namespace App\Tests\Badge\UseCase;
 
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use PHPUnit\Framework\TestCase;
+
 /**
  * Class DownloadsImageCreatorTest
  *
  * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Andrea Giannantonio <a.giannantonio@gmail.com>
  */
 class CreateDownloadsBadgeTest extends TestCase
 {
-    /** @var $useCase */
+    /** @var CreateDownloadsBadge */
     private $useCase;
     /** @var PackageRepositoryInterface */
     private $repository;
@@ -35,7 +38,7 @@ class CreateDownloadsBadgeTest extends TestCase
 
     public function testShouldCreateDownloadsBadge()
     {
-        $package = $this->getMockBuilder('\App\Tests\Badge\Model\Package')
+        $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPackageDownloads'])
             ->getMock();

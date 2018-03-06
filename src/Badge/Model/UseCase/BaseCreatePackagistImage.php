@@ -11,8 +11,12 @@
 
 namespace App\Badge\Model\UseCase;
 
+
 use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 abstract class BaseCreatePackagistImage
 {
@@ -27,7 +31,16 @@ abstract class BaseCreatePackagistImage
         $this->packageRepository = $packageRepository;
     }
 
-    protected function createBadgeFromRepository($repository, $subject, $color, $format = 'svg', $context = null)
+    /**
+     * @param $repository
+     * @param $subject
+     * @param $color
+     * @param string $format
+     * @param null $context
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    protected function createBadgeFromRepository($repository, $subject, $color, $format = 'svg', $context = null): Badge
     {
         try{
             $package = $this->fetchPackage($repository);
@@ -41,15 +54,33 @@ abstract class BaseCreatePackagistImage
         return $this->createBadge($subject, $text, $color, $format);
     }
 
-    protected function fetchPackage($repository)
+    /**
+     * @param $repository
+     * @return Package
+     * @throws UnexpectedValueException
+     */
+    protected function fetchPackage($repository): Package
     {
        return $this->packageRepository->fetchByRepository($repository);
     }
 
-    protected function createBadge($subject, $status, $color, $format)
+    /**
+     * @param $subject
+     * @param $status
+     * @param $color
+     * @param $format
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    protected function createBadge($subject, $status, $color, $format): Badge
     {
         return new Badge($subject, $status, $color, $format);
     }
 
+    /**
+     * @param $package
+     * @param null $context
+     * @return mixed
+     */
     abstract protected function prepareText($package, $context = null);
 }

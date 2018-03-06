@@ -10,13 +10,15 @@
  */
 namespace App\Badge\Model\UseCase;
 
-use Guzzle\Http\Client;
+use App\Badge\Model\Badge;
 use App\Badge\Model\PackageRepositoryInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Create the 'gitattributes' image using a generator `Poser`
  */
-class CreateGitattributesBadge extends BaseCreatePackagistImage
+class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
     const COLOR_COMMITTED            = '96d490';
     const COLOR_UNCOMMITTED          = 'ad6c4b';
@@ -29,25 +31,30 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
 
     protected $text = self::GITATTRIBUTES_ERROR;
 
-    /** @var Client */
+    /** @var PackageRepositoryInterface */
+    protected $packageRepository;
+
+    /** @var ClientInterface */
     protected $client;
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param Client $client
+     * @param ClientInterface Client $client
      */
-    public function __construct(PackageRepositoryInterface $packageRepository, Client $client)
+    public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
-        $this->packageRepository = $packageRepository;
+        parent::__construct($packageRepository);
         $this->client = $client;
     }
+
     /**
      * @param string $repository
      * @param string $format
      *
-     * @return \App\Badge\Model\Badge
+     * @return Badge
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createGitattributesBadge($repository, $format = 'svg')
+    public function createGitAttributesBadge($repository, $format = 'svg'): Badge
     {
         $repo = str_replace('.git', '', $this->packageRepository
             ->fetchByRepository($repository)
@@ -55,19 +62,18 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $request = $this->client->head(
+        $response = $this->client->request(
+            'HEAD',
             $repo . '/blob/master/.gitattributes',
-            array(),
-            array(
-                'timeout'         => 2,
-                'connect_timeout' => 1,
-                'exceptions'      => false,
-            )
+            [
+                RequestOptions::TIMEOUT => 2,
+                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::HTTP_ERRORS => false,
+            ]
         );
 
-        $response = $this->client->send($request);
         $status = 500;
-        if ($request) {
+        if ($response) {
             $status = $response->getStatusCode();
         }
 
@@ -92,7 +98,12 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
         );
     }
 
-    protected function prepareText($package, $context = null)
+    /**
+     * @param $package
+     * @param null $context
+     * @return string
+     */
+    protected function prepareText($package, $context = null): string
     {
         return $this->text;
     }

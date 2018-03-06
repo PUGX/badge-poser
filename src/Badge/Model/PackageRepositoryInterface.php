@@ -11,6 +11,9 @@
 
 namespace App\Badge\Model;
 
+
+use UnexpectedValueException;
+
 /**
  * This class is intended to load ApiPackage, create, and work with the Package object
  *
