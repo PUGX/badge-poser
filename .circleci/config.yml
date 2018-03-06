@@ -15,11 +15,15 @@ jobs:
       
       - run: 
           name: install system packages
-          command: sudo apt-get install -qqy libzip-dev
+          command: sudo apt-get install -qqy libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
 
       - run: 
           name: install php packages
-          command: sudo docker-php-ext-install zip iconv
+          command: sudo docker-php-ext-install zip iconv gd
+
+      - run:
+          name: configure php packages
+          command: sudo docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
       - restore_cache:
           keys:
