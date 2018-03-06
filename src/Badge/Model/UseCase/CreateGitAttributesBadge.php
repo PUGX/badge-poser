@@ -10,44 +10,54 @@
  */
 namespace App\Badge\Model\UseCase;
 
-use Guzzle\Http\Client;
+use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Create the 'gitattributes' image using a generator `Poser`
  */
-class CreateGitattributesBadge extends BaseCreatePackagistImage
+class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITTED            = '96d490';
-    const COLOR_UNCOMMITTED          = 'ad6c4b';
-    const COLOR_ERROR                = 'aa0000';
-    const GITATTRIBUTES_COMMITTED    = 'committed';
-    const GITATTRIBUTES_UNCOMMITTED  = 'uncommitted';
-    const GITATTRIBUTES_ERROR        = 'checking';
-    const SUBJECT                    = '.gitattributes';
-    const SUBJECT_ERROR              = 'Error';
+    private const COLOR_COMMITTED            = '96d490';
+    private const COLOR_UNCOMMITTED          = 'ad6c4b';
+    private const COLOR_ERROR                = 'aa0000';
+    private const GITATTRIBUTES_COMMITTED    = 'committed';
+    private const GITATTRIBUTES_UNCOMMITTED  = 'uncommitted';
+    private const GITATTRIBUTES_ERROR        = 'checking';
+    private const SUBJECT                    = '.gitattributes';
+    private const SUBJECT_ERROR              = 'Error';
 
     protected $text = self::GITATTRIBUTES_ERROR;
 
-    /** @var Client */
+    /** @var ClientInterface */
     protected $client;
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param Client $client
+     * @param ClientInterface Client $client
      */
-    public function __construct(PackageRepositoryInterface $packageRepository, Client $client)
+    public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
-        $this->packageRepository = $packageRepository;
+        parent::__construct($packageRepository);
         $this->client = $client;
     }
+
     /**
      * @param string $repository
      * @param string $format
      *
-     * @return \App\Badge\Model\Badge
+     * @return Badge
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     * @throws GuzzleException
      */
-    public function createGitattributesBadge($repository, $format = 'svg')
+    public function createGitAttributesBadge(string $repository, string $format = 'svg'): Badge
     {
         $repo = str_replace('.git', '', $this->packageRepository
             ->fetchByRepository($repository)
@@ -55,19 +65,18 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $request = $this->client->head(
+        $response = $this->client->request(
+            'HEAD',
             $repo . '/blob/master/.gitattributes',
-            array(),
-            array(
-                'timeout'         => 2,
-                'connect_timeout' => 1,
-                'exceptions'      => false,
-            )
+            [
+                RequestOptions::TIMEOUT => 2,
+                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::HTTP_ERRORS => false,
+            ]
         );
 
-        $response = $this->client->send($request);
         $status = 500;
-        if ($request) {
+        if (null !== $response) {
             $status = $response->getStatusCode();
         }
 
@@ -92,7 +101,12 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
         );
     }
 
-    protected function prepareText($package, $context = null)
+    /**
+     * @param Package $package
+     * @param null|string $context
+     * @return string
+     */
+    protected function prepareText(Package $package, $context = null): string
     {
         return $this->text;
     }

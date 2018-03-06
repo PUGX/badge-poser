@@ -8,22 +8,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Badge\Model;
 
 class Badge
 {
-    CONST DEFAULT_FORMAT = 'svg';
+    private CONST DEFAULT_FORMAT = 'svg';
     private $subject;
     private $status;
     private $color;
     private $format;
 
-    public function __construct($subject, $status, $color, $format = self::DEFAULT_FORMAT)
+    public function __construct(string $subject, string $status, string $color, string $format = self::DEFAULT_FORMAT)
     {
         $this->subject = $this->escapeValue($subject);
-        $this->status  = $this->escapeValue($status);
-        $this->format  = $this->escapeValue($format);
-        $this->color   = $color;
+        $this->status = $this->escapeValue($status);
+        $this->format = $this->escapeValue($format);
+        $this->color = $color;
 
         if (!$this->isValidColorHex($this->color)) {
             throw new \InvalidArgumentException(sprintf('Color not valid %s', $this->color));
@@ -33,15 +34,15 @@ class Badge
     /**
      * @return string the Hexadecimal #FFFFFF.
      */
-    public function getHexColor()
+    public function getHexColor(): string
     {
-        return '#'.$this->color;
+        return '#' . $this->color;
     }
 
     /**
      * @return string the format of the image eg. `svg`.
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
@@ -49,7 +50,7 @@ class Badge
     /**
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -57,7 +58,7 @@ class Badge
     /**
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -72,7 +73,11 @@ class Badge
         );
     }
 
-    private function escapeValue($value)
+    /**
+     * @param $value
+     * @return string
+     */
+    private function escapeValue($value): string
     {
         $pattern = array(
             // '/([^_])_([^_])/g', // damn it global doesn't work in PHP
@@ -96,6 +101,10 @@ class Badge
     }
 
 
+    /**
+     * @param $color
+     * @return false|int
+     */
     private function isValidColorHex($color)
     {
         $color = ltrim($color, "#");

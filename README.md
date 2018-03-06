@@ -4,9 +4,9 @@ Badge-Poser
 Use shields for your packagist.org repository that shows how many times your project has been downloaded from packagist.org
 or its latest stable version.
 
+[![CircleCI](https://circleci.com/gh/PUGX/badge-poser/tree/release%2Fv3.0.0.svg?style=svg)](https://circleci.com/gh/PUGX/badge-poser/tree/release%2Fv3.0.0)
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.svg)](https://packagist.org/packages/pugx/badge-poser)
-[![Build Status](https://secure.travis-ci.org/PUGX/badge-poser.svg)](http://travis-ci.org/PUGX/badge-poser)
 [![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![composer.lock available](https://poser.pugx.org/pugx/badge-poser/composerlock)](https://packagist.org/packages/pugx/badge-poser)

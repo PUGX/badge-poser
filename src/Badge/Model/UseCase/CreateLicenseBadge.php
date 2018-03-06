@@ -11,27 +11,37 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
+use InvalidArgumentException;
+
 /**
  * Create the 'license' image using a generator `Poser`
  */
 class CreateLicenseBadge extends BaseCreatePackagistImage
 {
-    CONST COLOR = '428F7E';
-    CONST SUBJECT = 'license';
-    CONST TEXT_NO_LICENSE = 'no';
+    private CONST COLOR = '428F7E';
+    private CONST SUBJECT = 'license';
+    private CONST TEXT_NO_LICENSE = 'no';
 
     /**
      * @param string $repository
      * @param string $format
      *
-     * @return \App\Badge\Model\Badge
+     * @return Badge
+     * @throws InvalidArgumentException
      */
-    public function createLicenseBadge($repository, $format = 'svg')
+    public function createLicenseBadge(string $repository, string $format = 'svg'): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
-    protected function prepareText($package, $context = null)
+    /**
+     * @param Package $package
+     * @param null|string $context
+     * @return mixed|string
+     */
+    protected function prepareText(Package $package, $context = null)
     {
         $license = $package->getLicense();
         if (empty($license)) {

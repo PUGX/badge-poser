@@ -11,8 +11,12 @@
 
 namespace App\Badge\Model\UseCase;
 
+
 use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 abstract class BaseCreatePackagistImage
 {
@@ -27,7 +31,16 @@ abstract class BaseCreatePackagistImage
         $this->packageRepository = $packageRepository;
     }
 
-    protected function createBadgeFromRepository($repository, $subject, $color, $format = 'svg', $context = null)
+    /**
+     * @param string $repository
+     * @param string $subject
+     * @param string $color
+     * @param string $format
+     * @param string|null $context
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', $context = null): Badge
     {
         try{
             $package = $this->fetchPackage($repository);
@@ -41,15 +54,33 @@ abstract class BaseCreatePackagistImage
         return $this->createBadge($subject, $text, $color, $format);
     }
 
-    protected function fetchPackage($repository)
+    /**
+     * @param string $repository
+     * @return Package
+     * @throws UnexpectedValueException
+     */
+    protected function fetchPackage(string $repository): Package
     {
        return $this->packageRepository->fetchByRepository($repository);
     }
 
-    protected function createBadge($subject, $status, $color, $format)
+    /**
+     * @param string $subject
+     * @param string $status
+     * @param string $color
+     * @param string $format
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    protected function createBadge(string $subject, string $status, string $color, string $format): Badge
     {
         return new Badge($subject, $status, $color, $format);
     }
 
-    abstract protected function prepareText($package, $context = null);
+    /**
+     * @param Package $package
+     * @param null|string $context
+     * @return mixed
+     */
+    abstract protected function prepareText(Package $package, $context = null);
 }

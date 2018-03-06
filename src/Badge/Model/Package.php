@@ -41,11 +41,9 @@ class Package
      *
      * @return Package
      */
-    public static function createFromApi(ApiPackage $apiPackage)
+    public static function createFromApi(ApiPackage $apiPackage): Package
     {
-        $package = new self($apiPackage);
-
-        return $package;
+        return new self($apiPackage);
     }
 
     /**
@@ -55,7 +53,7 @@ class Package
      *
      * @return string
      */
-    public function getPackageDownloads($type)
+    public function getPackageDownloads(string $type): ?string
     {
         $statsType = 'get' . ucfirst($type);
         if (($download = $this->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
@@ -68,7 +66,7 @@ class Package
      *
      * @return Package
      */
-    private function calculateLatestVersions()
+    private function calculateLatestVersions(): Package
     {
         $versions = $this->getVersions();
 
@@ -109,7 +107,7 @@ class Package
      *
      * @return null|array
      */
-    private function getBranchAliases(ApiPackage\Version $version)
+    private function getBranchAliases(ApiPackage\Version $version): ?array
     {
         $extra = $version->getExtra();
         if (null !== $extra
@@ -134,7 +132,7 @@ class Package
      *
      * @return string
      */
-    public static function parseStability($version)
+    public static function parseStability(string $version): string
     {
         $version = preg_replace('{#.+$}i', '', $version);
 

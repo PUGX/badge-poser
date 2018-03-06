@@ -10,25 +10,29 @@
  */
 namespace App\Badge\Model\UseCase;
 
-use GuzzleHttp\ClientInterface;
+use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Create the 'license' image using a generator `Poser`
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITTED   = 'e60073';
-    const COLOR_UNCOMMITTED = '99004d';
-    const COLOR_ERROR       = 'aa0000';
-    const LOCK_COMMITTED    = 'committed';
-    const LOCK_UNCOMMITTED  = 'uncommitted';
-    const LOCK_ERROR        = 'checking';
-    const SUBJECT           = '.lock';
-    const SUBJECT_ERROR     = 'Error';
+    private const COLOR_COMMITTED   = 'e60073';
+    private const COLOR_UNCOMMITTED = '99004d';
+    private const COLOR_ERROR       = 'aa0000';
+    private const LOCK_COMMITTED    = 'committed';
+    private const LOCK_UNCOMMITTED  = 'uncommitted';
+    private const LOCK_ERROR        = 'checking';
+    private const SUBJECT           = '.lock';
+    private const SUBJECT_ERROR     = 'Error';
 
     protected $text = self::LOCK_ERROR;
-
 
     /** @var ClientInterface */
     protected $client;
@@ -39,7 +43,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
      */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
-        $this->packageRepository = $packageRepository;
+        parent::__construct($packageRepository);
         $this->client = $client;
     }
 
@@ -47,11 +51,12 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
      * @param string $repository
      * @param string $format
      *
-     * @return \App\Badge\Model\Badge
-     * @throws \App\Badge\Model\UnexpectedValueException
+     * @return Badge
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createComposerLockBadge($repository, $format = 'svg')
+    public function createComposerLockBadge(string $repository, string $format = 'svg'): Badge
     {
         $repo = str_replace('.git', '', $this->packageRepository
             ->fetchByRepository($repository)
@@ -59,19 +64,18 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $request = $this->client->head(
+        $response = $this->client->request(
+            'HEAD',
             $repo . '/blob/master/composer.lock',
-            array(),
-            array(
-                'timeout'         => 2,
-                'connect_timeout' => 1,
-                'exceptions'      => false,
-            )
+            [
+                RequestOptions::TIMEOUT => 2,
+                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::HTTP_ERRORS => false,
+            ]
         );
 
-        $response = $this->client->send($request);
         $status = 500;
-        if ($request) {
+        if (null !== $response) {
             $status = $response->getStatusCode();
         }
 
@@ -91,7 +95,12 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, $subject, $color, $format);
     }
 
-    protected function prepareText($package, $context = null)
+    /**
+     * @param Package $package
+     * @param null|string $context
+     * @return string
+     */
+    protected function prepareText(Package $package, $context = null): string
     {
         return $this->text;
     }

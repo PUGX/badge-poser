@@ -21,6 +21,10 @@ RUN docker-php-ext-install intl
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install zip
 
+# Fixup by https://github.com/php-earth/docker-php/issues/3
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
 # Install apcu and opcache
 RUN pecl install \
     apcu-${APCU_VERSION} \

@@ -11,6 +11,7 @@
 
 namespace App\Tests\Badge\UseCase;
 
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateVersionBadge;
 use PHPUnit\Framework\TestCase;
@@ -19,10 +20,11 @@ use PHPUnit\Framework\TestCase;
  * Class LicenseImageCreatorTest
  *
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Andrea Giannantonio <a.giannantonio@gmail.com>
  */
 class CreateVersionBadgeTest extends TestCase
 {
-    /** @var $useCase */
+    /** @var CreateVersionBadge */
     private $useCase;
     /** @var PackageRepositoryInterface */
     private $repository;
@@ -35,7 +37,7 @@ class CreateVersionBadgeTest extends TestCase
 
     public function testShouldCreateLicenseBadge()
     {
-        $package = $this->getMockBuilder('\App\Badge\Model\Package')
+        $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -51,8 +53,8 @@ class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
-        $repository = 'App\Tests/badge-poser';
-        $badge = $this->useCase->createStableBadge($package);
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createStableBadge($repository);
         $this->assertEquals('v2.0', $badge->getStatus());
     }
 }

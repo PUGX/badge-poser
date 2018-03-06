@@ -11,10 +11,10 @@
 
 namespace App\Badge\Infrastructure\Package;
 
+use App\Badge\Model\PackageRepositoryInterface;
+use App\Badge\Model\Package;
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package as ApiPackage;
-use App\Badge\Model\PackageRepositoryInterface;
-
 use \UnexpectedValueException;
 
 /**
@@ -27,7 +27,7 @@ class PackageRepository implements PackageRepositoryInterface
     private static $packageClass;
     private $client;
 
-    public function __construct(Client $packagistClient, $packageClass = '\App\Badge\Model\Package')
+    public function __construct(Client $packagistClient, $packageClass = Package::class)
     {
         self::$packageClass = $packageClass;
         $this->client = $packagistClient;
@@ -42,11 +42,13 @@ class PackageRepository implements PackageRepositoryInterface
      *
      * @throws UnexpectedValueException
      */
-    public function fetchByRepository($repository)
+    public function fetchByRepository(string $repository): Package
     {
         $apiPackage = $this->client->get($repository);
+
         if ($apiPackage && $apiPackage instanceof ApiPackage) {
             // create a new Package from the ApiPackage
+            /** @var Package $class */
             $class = self::$packageClass;
 
             return $class::createFromApi($apiPackage);

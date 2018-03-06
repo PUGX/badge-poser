@@ -11,6 +11,7 @@
 
 namespace App\Tests\Badge\UseCase;
 
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateLicenseBadge;
 use PHPUnit\Framework\TestCase;
@@ -19,10 +20,11 @@ use PHPUnit\Framework\TestCase;
  * Class LicenseImageCreatorTest
  *
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Andrea Giannantonio <a.giannantonio@gmail.com>
  */
 class CreateLicenseBadgeTest extends TestCase
 {
-    /** @var $useCase */
+    /** @var CreateLicenseBadge */
     private $useCase;
     /** @var PackageRepositoryInterface */
     private $repository;
@@ -35,7 +37,7 @@ class CreateLicenseBadgeTest extends TestCase
 
     public function testShouldCreateLicenseBadge()
     {
-        $package = $this->getMockBuilder('\App\Tests\Badge\Model\Package')
+        $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
             ->setMethods(['getLicense'])
             ->getMock();
@@ -48,8 +50,8 @@ class CreateLicenseBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
-        $repository = 'App\Tests/badge-poser';
-        $badge = $this->useCase->createLicenseBadge($package);
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createLicenseBadge($repository);
         $this->assertEquals('MIT', $badge->getStatus());
     }
 }
