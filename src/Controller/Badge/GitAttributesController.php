@@ -47,8 +47,8 @@ class GitAttributesController extends Controller
         CreateGitAttributesBadge $createGitAttributesBadge,
         ImageFactory $imageFactory,
         $repository,
-        $format = 'svg'): Response
-    {
+        $format = 'svg'
+    ): Response {
         if ($request->query->get('format') === 'plastic') {
             $format = 'plastic';
         }

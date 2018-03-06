@@ -53,7 +53,7 @@ class Package
      *
      * @return string
      */
-    public function getPackageDownloads($type): ?string
+    public function getPackageDownloads(string $type): ?string
     {
         $statsType = 'get' . ucfirst($type);
         if (($download = $this->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
@@ -132,7 +132,7 @@ class Package
      *
      * @return string
      */
-    public static function parseStability($version): string
+    public static function parseStability(string $version): string
     {
         $version = preg_replace('{#.+$}i', '', $version);
 

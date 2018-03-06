@@ -52,8 +52,8 @@ class LicenseController extends Controller
         CreateLicenseBadge $createLicenseBadge,
         ImageFactory $imageFactory,
         $repository,
-        $format = 'svg'): Response
-    {
+        $format = 'svg'
+    ): Response {
         if (\in_array($request->query->get('format'), $poser->validFormats(), true)) {
             $format = $request->query->get('format');
         }

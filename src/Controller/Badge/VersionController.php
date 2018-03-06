@@ -55,8 +55,8 @@ class VersionController extends Controller
         CreateVersionBadge $createVersionBadge,
         $repository,
         $latest,
-        $format = 'svg'): Response
-    {
+        $format = 'svg'
+    ): Response {
         if (\in_array($request->query->get('format'), $poser->validFormats(), true)) {
             $format = $request->query->get('format');
         }

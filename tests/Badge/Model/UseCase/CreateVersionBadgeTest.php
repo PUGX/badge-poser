@@ -53,8 +53,8 @@ class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
-        $repository = 'App\Tests/badge-poser';
-        $badge = $this->useCase->createStableBadge($package);
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createStableBadge($repository);
         $this->assertEquals('v2.0', $badge->getStatus());
     }
 }

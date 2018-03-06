@@ -11,28 +11,29 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use UnexpectedValueException;
 
 /**
  * Create the 'gitattributes' image using a generator `Poser`
  */
 class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITTED            = '96d490';
-    const COLOR_UNCOMMITTED          = 'ad6c4b';
-    const COLOR_ERROR                = 'aa0000';
-    const GITATTRIBUTES_COMMITTED    = 'committed';
-    const GITATTRIBUTES_UNCOMMITTED  = 'uncommitted';
-    const GITATTRIBUTES_ERROR        = 'checking';
-    const SUBJECT                    = '.gitattributes';
-    const SUBJECT_ERROR              = 'Error';
+    private const COLOR_COMMITTED            = '96d490';
+    private const COLOR_UNCOMMITTED          = 'ad6c4b';
+    private const COLOR_ERROR                = 'aa0000';
+    private const GITATTRIBUTES_COMMITTED    = 'committed';
+    private const GITATTRIBUTES_UNCOMMITTED  = 'uncommitted';
+    private const GITATTRIBUTES_ERROR        = 'checking';
+    private const SUBJECT                    = '.gitattributes';
+    private const SUBJECT_ERROR              = 'Error';
 
     protected $text = self::GITATTRIBUTES_ERROR;
-
-    /** @var PackageRepositoryInterface */
-    protected $packageRepository;
 
     /** @var ClientInterface */
     protected $client;
@@ -52,9 +53,11 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
      * @param string $format
      *
      * @return Badge
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     * @throws GuzzleException
      */
-    public function createGitAttributesBadge($repository, $format = 'svg'): Badge
+    public function createGitAttributesBadge(string $repository, string $format = 'svg'): Badge
     {
         $repo = str_replace('.git', '', $this->packageRepository
             ->fetchByRepository($repository)
@@ -73,7 +76,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
         );
 
         $status = 500;
-        if ($response) {
+        if (null !== $response) {
             $status = $response->getStatusCode();
         }
 
@@ -99,11 +102,11 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param $package
-     * @param null $context
+     * @param Package $package
+     * @param null|string $context
      * @return string
      */
-    protected function prepareText($package, $context = null): string
+    protected function prepareText(Package $package, $context = null): string
     {
         return $this->text;
     }

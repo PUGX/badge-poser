@@ -51,7 +51,7 @@ class CreateDownloadsBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
-        $repository = 'App\Tests/badge-poser';
+        $repository = 'PUGX/badge-poser';
 
         $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
 

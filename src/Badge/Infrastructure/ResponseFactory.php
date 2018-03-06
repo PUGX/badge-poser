@@ -13,13 +13,23 @@ namespace App\Badge\Infrastructure;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use App\Badge\Model\Image;
+use InvalidArgumentException;
 
 /**
  * @author Giulio De Donato <liuggio@gmail.com>
+ * @author Andrea Giannantonio <a.giannantonio@gmail.com>
  */
 class ResponseFactory
 {
-    public static function createFromImage(Image $image, $status, $maxage = 3600, $smaxage = 3600)
+    /**
+     * @param Image $image
+     * @param int $status
+     * @param int $maxage
+     * @param int $smaxage
+     * @return Response
+     * @throws InvalidArgumentException
+     */
+    public static function createFromImage(Image $image, int $status, $maxage = 3600, $smaxage = 3600): Response
     {
         $response = new Response((string) $image, $status);
 

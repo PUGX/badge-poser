@@ -50,8 +50,8 @@ class ComposerLockController extends Controller
         ImageFactory $imageFactory,
         CreateComposerLockBadge $composerLockBadge,
         $repository,
-        $format='svg'): Response
-    {
+        $format = 'svg'
+    ): Response {
         if ($request->query->get('format') === 'plastic') {
             $format = 'plastic';
         }

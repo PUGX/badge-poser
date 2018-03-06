@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-
+use InvalidArgumentException;
 
 class BadgeSubscriber implements EventSubscriberInterface
 {
@@ -36,6 +36,10 @@ class BadgeSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param GetResponseForExceptionEvent $event
+     * @throws InvalidArgumentException
+     */
     public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         if (!$this->isABadgeController($event->getRequest()->get('_controller'))) {

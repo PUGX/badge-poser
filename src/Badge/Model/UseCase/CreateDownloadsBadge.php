@@ -24,8 +24,8 @@ use InvalidArgumentException;
  */
 class CreateDownloadsBadge extends BaseCreatePackagistImage
 {
-    CONST COLOR = '007ec6';
-    CONST SUBJECT = 'downloads';
+    private CONST COLOR = '007ec6';
+    private CONST SUBJECT = 'downloads';
 
     /** @var TextNormalizer */
     private $normalizer;
@@ -45,23 +45,23 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param $repository
-     * @param $type
-     * @param $format
+     * @param string $repository
+     * @param string $type
+     * @param string $format
      * @return Badge
      * @throws InvalidArgumentException
      */
-    public function createDownloadsBadge($repository, $type, $format): Badge
+    public function createDownloadsBadge(string $repository, string $type, string $format): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format, $type);
     }
 
     /**
      * @param Package $package
-     * @param null $context
+     * @param null|string $context
      * @return mixed|string
      */
-    protected function prepareText($package, $context = null)
+    protected function prepareText(Package $package, $context = null)
     {
         $text = $this->normalizer->normalize($package->getPackageDownloads($context));
         $when = '';

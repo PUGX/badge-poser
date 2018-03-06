@@ -30,5 +30,5 @@ interface PackageRepositoryInterface
      *
      * @throws UnexpectedValueException
      */
-    public function fetchByRepository($repository);
+    public function fetchByRepository(string $repository): Package;
 }

@@ -42,7 +42,7 @@ class PackageRepository implements PackageRepositoryInterface
      *
      * @throws UnexpectedValueException
      */
-    public function fetchByRepository($repository): Package
+    public function fetchByRepository(string $repository): Package
     {
         $apiPackage = $this->client->get($repository);
 

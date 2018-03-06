@@ -26,7 +26,7 @@ class Image
     /** @var string */
     private $format;
 
-    private function __construct($name, $content, $format)
+    private function __construct(string $name, string $content, string $format)
     {
         $this->name = $name;
         $this->content = $content;
@@ -42,12 +42,12 @@ class Image
     }
 
     /**
-     * @param $name
-     * @param $content
-     * @param  string $format
+     * @param string $name
+     * @param string $content
+     * @param string $format
      * @return Image
      */
-    public static function create($name, $content, $format = 'svg')
+    public static function create(string $name, string $content, string $format = 'svg'): Image
     {
         $content = (string) $content;
 
@@ -59,12 +59,15 @@ class Image
      *
      * @return string
      */
-    public function getOutputFileName()
+    public function getOutputFileName(): string
     {
         return sprintf('%s.%s', $this->cleanName(), $this->format);
     }
 
-    private function cleanName()
+    /**
+     * @return string
+     */
+    private function cleanName(): string
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
         $clean = preg_replace("/[^a-zA-Z0-9_|+ -]/", '', $clean);

@@ -10,16 +10,32 @@
  */
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
+use InvalidArgumentException;
+
 /**
  * Create the 'license' image using a generator `Poser`
  */
 class CreateVersionBadge extends BaseCreatePackagistImage
 {
-    CONST COLOR_STABLE = '28a3df';
-    CONST COLOR_UNSTABLE = 'e68718';
-    CONST SUBJECT_STABLE = 'stable';
-    CONST SUBJECT_UNSTABLE = 'unstable';
-    CONST TEXT_NO_STABLE_RELEASE = 'No Release';
+    private CONST COLOR_STABLE = '28a3df';
+    private CONST COLOR_UNSTABLE = 'e68718';
+    private CONST SUBJECT_STABLE = 'stable';
+    private CONST SUBJECT_UNSTABLE = 'unstable';
+    private CONST TEXT_NO_STABLE_RELEASE = 'No Release';
+
+    /**
+     * @param string $repository
+     * @param string $format
+     *
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    public function createStableBadge(string $repository, string $format = 'svg'): Badge
+    {
+        return $this->createBadgeFromRepository($repository, self::SUBJECT_STABLE, self::COLOR_STABLE, $format, 'stable');
+    }
 
     /**
      * @param string $repository
@@ -27,29 +43,23 @@ class CreateVersionBadge extends BaseCreatePackagistImage
      *
      * @return \App\Badge\Model\Badge
      */
-    public function createStableBadge($repository, $format = 'svg')
-    {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT_STABLE, self::COLOR_STABLE, $format, 'stable');
-    }
-
-    /**
-     * @param $repository
-     * @param string $format
-     *
-     * @return \App\Badge\Model\Badge
-     */
-    public function createUnstableBadge($repository, $format = 'svg')
+    public function createUnstableBadge(string $repository, string $format = 'svg'): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT_UNSTABLE, self::COLOR_UNSTABLE, $format, 'unstable');
     }
 
-    protected function prepareText($package, $context = null)
+    /**
+     * @param Package $package
+     * @param null|string $context
+     * @return mixed|string
+     */
+    protected function prepareText(Package $package, $context = null)
     {
-        if ('stable' == $context && $package->hasStableVersion()) {
-            return $package->getLatestStableVersion();
-        } elseif ('stable' == $context) {
-            return self::TEXT_NO_STABLE_RELEASE;
-        } elseif ($package->hasUnstableVersion()) {
+        if ('stable' === $context) {
+            return $package->hasStableVersion() ? $package->getLatestStableVersion() : self::TEXT_NO_STABLE_RELEASE;
+        }
+
+        if ($package->hasUnstableVersion()) {
             return $package->getLatestUnstableVersion();
         }
 

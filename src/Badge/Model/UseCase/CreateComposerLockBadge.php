@@ -11,9 +11,11 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
@@ -21,14 +23,14 @@ use UnexpectedValueException;
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
-    const COLOR_COMMITTED   = 'e60073';
-    const COLOR_UNCOMMITTED = '99004d';
-    const COLOR_ERROR       = 'aa0000';
-    const LOCK_COMMITTED    = 'committed';
-    const LOCK_UNCOMMITTED  = 'uncommitted';
-    const LOCK_ERROR        = 'checking';
-    const SUBJECT           = '.lock';
-    const SUBJECT_ERROR     = 'Error';
+    private const COLOR_COMMITTED   = 'e60073';
+    private const COLOR_UNCOMMITTED = '99004d';
+    private const COLOR_ERROR       = 'aa0000';
+    private const LOCK_COMMITTED    = 'committed';
+    private const LOCK_UNCOMMITTED  = 'uncommitted';
+    private const LOCK_ERROR        = 'checking';
+    private const SUBJECT           = '.lock';
+    private const SUBJECT_ERROR     = 'Error';
 
     protected $text = self::LOCK_ERROR;
 
@@ -50,10 +52,11 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
      * @param string $format
      *
      * @return Badge
+     * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createComposerLockBadge($repository, $format = 'svg'): Badge
+    public function createComposerLockBadge(string $repository, string $format = 'svg'): Badge
     {
         $repo = str_replace('.git', '', $this->packageRepository
             ->fetchByRepository($repository)
@@ -72,7 +75,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
         );
 
         $status = 500;
-        if ($response) {
+        if (null !== $response) {
             $status = $response->getStatusCode();
         }
 
@@ -93,11 +96,11 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param $package
-     * @param null $context
+     * @param Package $package
+     * @param null|string $context
      * @return string
      */
-    protected function prepareText($package, $context = null): string
+    protected function prepareText(Package $package, $context = null): string
     {
         return $this->text;
     }

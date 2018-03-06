@@ -32,15 +32,15 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param $repository
-     * @param $subject
-     * @param $color
+     * @param string $repository
+     * @param string $subject
+     * @param string $color
      * @param string $format
-     * @param null $context
+     * @param string|null $context
      * @return Badge
      * @throws InvalidArgumentException
      */
-    protected function createBadgeFromRepository($repository, $subject, $color, $format = 'svg', $context = null): Badge
+    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', $context = null): Badge
     {
         try{
             $package = $this->fetchPackage($repository);
@@ -55,32 +55,32 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param $repository
+     * @param string $repository
      * @return Package
      * @throws UnexpectedValueException
      */
-    protected function fetchPackage($repository): Package
+    protected function fetchPackage(string $repository): Package
     {
        return $this->packageRepository->fetchByRepository($repository);
     }
 
     /**
-     * @param $subject
-     * @param $status
-     * @param $color
-     * @param $format
+     * @param string $subject
+     * @param string $status
+     * @param string $color
+     * @param string $format
      * @return Badge
      * @throws InvalidArgumentException
      */
-    protected function createBadge($subject, $status, $color, $format): Badge
+    protected function createBadge(string $subject, string $status, string $color, string $format): Badge
     {
         return new Badge($subject, $status, $color, $format);
     }
 
     /**
-     * @param $package
-     * @param null $context
+     * @param Package $package
+     * @param null|string $context
      * @return mixed
      */
-    abstract protected function prepareText($package, $context = null);
+    abstract protected function prepareText(Package $package, $context = null);
 }

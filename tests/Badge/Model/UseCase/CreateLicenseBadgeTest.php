@@ -50,8 +50,8 @@ class CreateLicenseBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->returnValue($package));
 
-        $repository = 'App\Tests/badge-poser';
-        $badge = $this->useCase->createLicenseBadge($package);
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createLicenseBadge($repository);
         $this->assertEquals('MIT', $badge->getStatus());
     }
 }

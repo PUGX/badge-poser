@@ -11,8 +11,9 @@ class TextNormalizer
 {
     /**
      * @param $number
-     * @param  int    $precision
+     * @param int $precision
      * @return string
+     * @throws InvalidArgumentException
      */
     public function normalize($number, $precision = 2)
     {

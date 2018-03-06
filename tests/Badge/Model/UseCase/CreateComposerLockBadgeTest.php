@@ -86,7 +86,7 @@ class CreateComposerLockBadgeTest extends TestCase
             ->method('request')
             ->will($this->returnValue($response));
 
-        $repository = 'App\Tests/badge-poser';
+        $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
         $this->assertEquals($expected, $badge->getStatus());
     }
