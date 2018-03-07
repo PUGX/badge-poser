@@ -15,6 +15,7 @@ use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\ClientInterface;
+use RuntimeException;
 
 /**
  * Class LicenseImageCreatorTest
@@ -89,6 +90,37 @@ class CreateComposerLockBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
         $this->assertEquals($expected, $badge->getStatus());
+    }
+
+    public function testShouldCreateDefaultBadgeOnError()
+    {
+        $package = $this->createMockWithoutInvokingTheOriginalConstructor(
+            '\App\Badge\Model\Package',
+            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
+        );
+
+        $this->repository->expects($this->any())
+            ->method('fetchByRepository')
+            ->will($this->returnValue($package));
+
+        $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
+            '\Packagist\Api\Result\Package',
+            ['getRepository']
+        );
+        $repo->expects($this->once())
+            ->method('getRepository')
+            ->will($this->throwException(new RuntimeException()));
+
+        $package->expects($this->once())
+            ->method('getOriginalObject')
+            ->will($this->returnValue($repo));
+
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createComposerLockBadge($repository);
+
+        $this->assertEquals(' - ', $badge->getSubject());
+        $this->assertEquals(' - ', $badge->getStatus());
+        $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
     public function shouldCreateComposerLockBadgeProvider()
