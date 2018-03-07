@@ -27,6 +27,10 @@
         <env name="GITHUB_SECRET" value="password_or_token"/>
         <!-- ###- knplabs/github-api ### -->
 
+        <!-- ###+ sentry/sentry-symfony ### -->
+        <env name="SENTRY_DSN" value=""/>
+        <!-- ###- sentry/sentry-symfony ### -->
+
     </php>
 
     <testsuites>
