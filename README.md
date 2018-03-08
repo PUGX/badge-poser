@@ -40,7 +40,7 @@ cd badge-poser
 - Build/run containers in detached mode
 ```bash
 $ docker-compose build
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 
