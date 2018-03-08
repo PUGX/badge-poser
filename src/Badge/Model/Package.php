@@ -341,6 +341,14 @@ class Package
     }
 
     /**
+     * @return integer
+     */
+    public function getDependents() : int
+    {
+        return $this->getOriginalObject()->getDependents();
+    }
+
+    /**
      * @param ApiPackage $originalObject
      */
     private function setOriginalObject(ApiPackage $originalObject): void
