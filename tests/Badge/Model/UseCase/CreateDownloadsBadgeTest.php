@@ -56,6 +56,19 @@ class CreateDownloadsBadgeTest extends TestCase
         $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
 
         $this->assertEquals('102 today', $badge->getStatus());
+    }
 
+    public function testShouldCreateDefaultBadgeOnError()
+    {
+        $this->repository->expects($this->any())
+            ->method('fetchByRepository')
+            ->will($this->throwException(new \RuntimeException()));
+
+        $repository = 'PUGX/badge-poser';
+        $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
+
+        $this->assertEquals(' - ', $badge->getSubject());
+        $this->assertEquals(' - ', $badge->getStatus());
+        $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

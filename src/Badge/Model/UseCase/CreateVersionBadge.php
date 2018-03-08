@@ -41,7 +41,8 @@ class CreateVersionBadge extends BaseCreatePackagistImage
      * @param string $repository
      * @param string $format
      *
-     * @return \App\Badge\Model\Badge
+     * @return Badge
+     * @throws InvalidArgumentException
      */
     public function createUnstableBadge(string $repository, string $format = 'svg'): Badge
     {

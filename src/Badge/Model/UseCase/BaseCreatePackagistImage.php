@@ -42,13 +42,11 @@ abstract class BaseCreatePackagistImage
      */
     protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', $context = null): Badge
     {
-        try{
+        try {
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
-        }catch(\Exception $e) {
-            $subject = ' - ';
-            $text = ' - ';
-            $color = '7A7A7A';
+        } catch (\Exception $e) {
+            return $this->createDefaultBadge($format);
         }
 
         return $this->createBadge($subject, $text, $color, $format);
@@ -75,6 +73,20 @@ abstract class BaseCreatePackagistImage
     protected function createBadge(string $subject, string $status, string $color, string $format): Badge
     {
         return new Badge($subject, $status, $color, $format);
+    }
+
+    /**
+     * @param string $format
+     * @return Badge
+     * @throws InvalidArgumentException
+     */
+    protected function createDefaultBadge(string $format)
+    {
+        $subject = ' - ';
+        $text = ' - ';
+        $color = '7A7A7A';
+
+        return $this->createBadge($subject, $text, $color, $format);
     }
 
     /**
