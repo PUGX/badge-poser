@@ -42,4 +42,29 @@ class DownloadsControllerTest extends WebTestCase
         $client->request('GET', '/pugx/badge-poser/d/monthly');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+
+    public function testDownloadsActionSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/downloads.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testDownloadsTotalActionSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/d/total.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testDownloadsActionPngRedirectSvg()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/pugx/badge-poser/downloads.png');
+        $crawler = $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertContains('/pugx/badge-poser/downloads', $crawler->getUri());
+    }
 }

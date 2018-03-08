@@ -43,4 +43,28 @@ class VersionControllerTest extends WebTestCase
         $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
     }
 
+    public function testLatestStableActionSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/version.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testLatestUnstableActionSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/v/unstable.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testLatestStableActionPngRedirectSvg()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/pugx/badge-poser/version.png');
+        $crawler = $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertContains('/pugx/badge-poser/version', $crawler->getUri());
+    }
 }

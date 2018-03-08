@@ -1,57 +1,14 @@
 home:
     path: /
-    defaults: { _controller: 'App\Controller\HomeController::index' }
+    controller: App\Controller\HomeController::indexAction
 
 snippet_all:
     path: /snippet/all/
     defaults: { _controller: 'App\Controller\SnippetController::all' }
 
-pugx_badge_version_latest:
-    path: /{repository}/v/{latest}
-    controller: App\Controller\Badge\VersionController::versionAction
-    defaults:   { latest: "stable" }
-    requirements:
-        latest: "stable|unstable"
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_license:
-    path: /{repository}/license
-    controller: App\Controller\Badge\LicenseController::licenseAction
-    requirements:
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_download:
-    path: /{repository}/downloads
-    controller: App\Controller\Badge\DownloadsController::downloadsAction
-    defaults:   { type: "total" }
-    requirements:
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_download_type:
-    path: /{repository}/d/{type}
-    controller: App\Controller\Badge\DownloadsController::downloadsAction
-    requirements:
-        type: "total|daily|monthly"
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_version:
-    path:       /{repository}/version
-    controller: App\Controller\Badge\VersionController::versionAction
-    defaults:   { latest: "stable" }
-    requirements:
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_composerlock:
-    path: /{repository}/composerlock
-    controller: App\Controller\Badge\ComposerLockController:composerLockAction
-    requirements:
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
-pugx_badge_gitattributes:
-    path: /{repository}/gitattributes
-    controller: App\Controller\Badge\GitAttributesController::gitAttributesAction
-    requirements:
-        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
-
 pugx_badge_packagist:
-    path: /
+    path: /packages/{repository}
+    host: "packagist.org"
+    schemes:  [https]
+    requirements:
+      repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"

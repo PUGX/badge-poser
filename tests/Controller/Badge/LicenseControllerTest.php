@@ -22,4 +22,22 @@ class LicenseControllerTest extends WebTestCase
         $client->request('GET', '/pugx/badge-poser/license');
         $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
     }
+
+    public function testLicenseActionSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/license.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function testLicenseActionPngRedirectSvg()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/pugx/badge-poser/license.png');
+        $crawler = $client->followRedirect();
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertContains('/pugx/badge-poser/license', $crawler->getUri());
+    }
 }

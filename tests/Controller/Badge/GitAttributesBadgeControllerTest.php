@@ -18,7 +18,7 @@ class GitAttributesBadgeControllerTest extends WebTestCase
     /**
      * @group gitattributes
      */
-    public function testGitattributesResponseUncommitted()
+    public function testGitAttributesResponseUncommitted()
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes');
@@ -35,7 +35,7 @@ class GitAttributesBadgeControllerTest extends WebTestCase
     /**
      * @group gitattributes
      */
-    public function testGitattributesResponseCommitted()
+    public function testGitAttributesResponseCommitted()
     {
         $client = static::createClient();
         $client->request('GET', '/stolt/lean-package-validator/gitattributes');
@@ -47,5 +47,12 @@ class GitAttributesBadgeControllerTest extends WebTestCase
 
         $this->assertRegExp('/.gitattributes/', $svgContent);
         $this->assertRegExp('/committed/', $svgContent);
+    }
+
+    public function testGitAttributesSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/gitattributes.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
     }
 }

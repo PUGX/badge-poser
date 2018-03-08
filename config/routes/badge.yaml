@@ -1,0 +1,67 @@
+pugx_badge_version:
+    path:       /{repository}/version.{_ext}
+    controller: App\Controller\Badge\VersionController::versionAction
+    defaults:
+        latest: "stable"
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_version_latest:
+    path: /{repository}/v/{latest}.{_ext}
+    controller: App\Controller\Badge\VersionController::versionAction
+    defaults:
+        latest: "stable"
+        _ext: "svg"
+    requirements:
+        latest: "stable|unstable"
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_license:
+    path: /{repository}/license.{_ext}
+    controller: App\Controller\Badge\LicenseController::licenseAction
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_download:
+    path: /{repository}/downloads.{_ext}
+    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    defaults:
+        type: "total"
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_download_type:
+    path: /{repository}/d/{type}.{_ext}
+    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    defaults:
+        _ext: "svg"
+    requirements:
+        type: "total|daily|monthly"
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_composerlock:
+    path: /{repository}/composerlock.{_ext}
+    controller: App\Controller\Badge\ComposerLockController:composerLockAction
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_gitattributes:
+    path: /{repository}/gitattributes.{_ext}
+    controller: App\Controller\Badge\GitAttributesController::gitAttributesAction
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
