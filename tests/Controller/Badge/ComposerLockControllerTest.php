@@ -21,4 +21,12 @@ class ComposerLockControllerTest extends WebTestCase
         $client->request('GET', '/pugx/badge-poser/composerlock');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+
+    public function testComposerLockSvgExplicit()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/pugx/badge-poser/composerlock.svg');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
 }
