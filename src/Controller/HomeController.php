@@ -13,7 +13,7 @@ class HomeController extends Controller
      * @param ContributorsRepository $contributorsRepository
      * @return Response
      */
-    public function indexAction(ContributorsRepository $contributorsRepository): Response
+    public function index(ContributorsRepository $contributorsRepository): Response
     {
         /** @var Contributor[] $contributors */
         $contributors = $contributorsRepository->all();

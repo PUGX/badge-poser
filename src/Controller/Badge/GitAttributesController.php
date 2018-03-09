@@ -40,9 +40,10 @@ class GitAttributesController extends Controller
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      *
+     * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function gitAttributesAction(
+    public function gitAttributes(
         Request $request,
         CreateGitAttributesBadge $createGitAttributesBadge,
         ImageFactory $imageFactory,
