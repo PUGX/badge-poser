@@ -1,6 +1,6 @@
 pugx_badge_version:
     path:       /{repository}/version.{_ext}
-    controller: App\Controller\Badge\VersionController::versionAction
+    controller: App\Controller\Badge\VersionController::version
     defaults:
         latest: "stable"
         _ext: "svg"
@@ -10,7 +10,7 @@ pugx_badge_version:
 
 pugx_badge_version_latest:
     path: /{repository}/v/{latest}.{_ext}
-    controller: App\Controller\Badge\VersionController::versionAction
+    controller: App\Controller\Badge\VersionController::version
     defaults:
         latest: "stable"
         _ext: "svg"
@@ -21,7 +21,7 @@ pugx_badge_version_latest:
 
 pugx_badge_license:
     path: /{repository}/license.{_ext}
-    controller: App\Controller\Badge\LicenseController::licenseAction
+    controller: App\Controller\Badge\LicenseController::license
     defaults:
         _ext: "svg"
     requirements:
@@ -30,7 +30,7 @@ pugx_badge_license:
 
 pugx_badge_download:
     path: /{repository}/downloads.{_ext}
-    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    controller: App\Controller\Badge\DownloadsController::downloads
     defaults:
         type: "total"
         _ext: "svg"
@@ -40,7 +40,7 @@ pugx_badge_download:
 
 pugx_badge_download_type:
     path: /{repository}/d/{type}.{_ext}
-    controller: App\Controller\Badge\DownloadsController::downloadsAction
+    controller: App\Controller\Badge\DownloadsController::downloads
     defaults:
         _ext: "svg"
     requirements:
@@ -50,7 +50,7 @@ pugx_badge_download_type:
 
 pugx_badge_composerlock:
     path: /{repository}/composerlock.{_ext}
-    controller: App\Controller\Badge\ComposerLockController:composerLockAction
+    controller: App\Controller\Badge\ComposerLockController:composerLock
     defaults:
         _ext: "svg"
     requirements:
@@ -59,7 +59,7 @@ pugx_badge_composerlock:
 
 pugx_badge_gitattributes:
     path: /{repository}/gitattributes.{_ext}
-    controller: App\Controller\Badge\GitAttributesController::gitAttributesAction
+    controller: App\Controller\Badge\GitAttributesController::gitAttributes
     defaults:
         _ext: "svg"
     requirements:

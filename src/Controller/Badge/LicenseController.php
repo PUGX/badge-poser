@@ -45,8 +45,9 @@ class LicenseController extends Controller
      * @return Response
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
+     * @throws \InvalidArgumentException
      */
-    public function licenseAction(
+    public function license(
         Request $request,
         Poser $poser,
         CreateLicenseBadge $createLicenseBadge,

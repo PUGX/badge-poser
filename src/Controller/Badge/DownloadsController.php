@@ -47,8 +47,9 @@ class DownloadsController extends Controller
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      *
+     * @throws \InvalidArgumentException
      */
-    public function downloadsAction(
+    public function downloads(
         Request $request,
         Poser $poser,
         CreateDownloadsBadge $createDownloadsBadge,

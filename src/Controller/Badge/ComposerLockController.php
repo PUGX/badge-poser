@@ -40,12 +40,13 @@ class ComposerLockController extends Controller
      *
      * @param string $format
      * @return Response
+     * @throws \InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      */
-    public function composerLockAction(
+    public function composerLock(
         Request $request,
         ImageFactory $imageFactory,
         CreateComposerLockBadge $composerLockBadge,

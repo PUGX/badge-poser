@@ -47,8 +47,9 @@ class VersionController extends Controller
      * @return Response
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
+     * @throws \InvalidArgumentException
      */
-    public function versionAction(
+    public function version(
         Request $request,
         Poser $poser,
         ImageFactory $imageFactory,
