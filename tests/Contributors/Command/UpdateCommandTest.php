@@ -7,6 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * Class UpdateCommandTest
+ * @package App\Tests\Contributors\Command
+ */
 class UpdateCommandTest extends KernelTestCase
 {
     public function testExecute()

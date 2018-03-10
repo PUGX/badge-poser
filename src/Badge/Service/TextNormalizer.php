@@ -5,7 +5,9 @@ namespace App\Badge\Service;
 use InvalidArgumentException;
 
 /**
+ * Class TextNormalizer
  * Transform numbers to readable format.
+ * @package App\Badge\Service
  */
 class TextNormalizer
 {
@@ -15,7 +17,7 @@ class TextNormalizer
      * @return string
      * @throws InvalidArgumentException
      */
-    public function normalize($number, $precision = 2)
+    public function normalize($number, $precision = 2): string
     {
             $number = $this->normalizeNumber($number);
             $units = ['', ' k', ' M', ' G', ' T'];
@@ -36,7 +38,7 @@ class TextNormalizer
      * @return int
      * @throws InvalidArgumentException
      */
-    private function normalizeNumber($number)
+    private function normalizeNumber($number): int
     {
         if (!is_numeric($number)) {
             throw new InvalidArgumentException('Number expected');

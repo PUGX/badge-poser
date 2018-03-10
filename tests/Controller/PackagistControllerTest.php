@@ -4,6 +4,10 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class PackagistControllerTest
+ * @package App\Tests\Controller
+ */
 class PackagistControllerTest extends WebTestCase
 {
     public function testSearch()

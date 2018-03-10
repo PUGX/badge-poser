@@ -21,10 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class GitAttributesController.
- *
- * @author Raphael Stolt <raphael.stolt@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class GitAttributesController
+ * @package App\Controller\Badge
  */
 class GitAttributesController extends Controller
 {

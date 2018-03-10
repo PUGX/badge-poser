@@ -13,6 +13,10 @@ namespace App\Tests\Basge\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class VersionControllerTest
+ * @package App\Tests\Basge\Controller
+ */
 class VersionControllerTest extends WebTestCase
 {
     public function testLatestStableAction()

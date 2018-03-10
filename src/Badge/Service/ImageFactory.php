@@ -6,6 +6,10 @@ use App\Badge\Model\Badge;
 use PUGX\Poser\Poser;
 use App\Badge\Model\Image;
 
+/**
+ * Class ImageFactory
+ * @package App\Badge\Service
+ */
 class ImageFactory
 {
     /**

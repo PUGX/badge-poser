@@ -4,13 +4,17 @@ namespace App\Stats\Persister;
 
 use Predis\Client as Redis;
 
+/**
+ * Class RedisPersister
+ * @package App\Stats\Persister
+ */
 final class RedisPersister implements PersisterInterface
 {
-    const KEY_PREFIX = 'STAT';
-    const KEY_TOTAL = 'TOTAL';
-    const KEY_HASH_NAME = 'REPO';
-    const KEY_LIST_NAME = 'LIST';
-    const KEY_REFERER_SUFFIX = 'REFE';
+    private const KEY_PREFIX = 'STAT';
+    private const KEY_TOTAL = 'TOTAL';
+    private const KEY_HASH_NAME = 'REPO';
+    private const KEY_LIST_NAME = 'LIST';
+    private const KEY_REFERER_SUFFIX = 'REFE';
 
     private $redis;
     private $keyTotal;
@@ -32,7 +36,9 @@ final class RedisPersister implements PersisterInterface
         $this->keyList = $this->concatenateKeys($keyPrefix, $keyList);
     }
 
-
+    /**
+     * @return PersisterInterface
+     */
     public function incrementTotalAccess(): PersisterInterface
     {
         $this->redis->incr($this->keyTotal);
@@ -49,6 +55,10 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
+    /**
+     * @param string $repository
+     * @return PersisterInterface
+     */
     public function incrementRepositoryAccess(string $repository): PersisterInterface
     {
         $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), self::KEY_TOTAL, 1);
@@ -65,6 +75,11 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
+    /**
+     * @param string $repository
+     * @param string $type
+     * @return PersisterInterface
+     */
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
     {
         $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $type, 1);
@@ -72,6 +87,11 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
+    /**
+     * @param string $repository
+     * @param int $maxListLength
+     * @return PersisterInterface
+     */
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
         $this->redis->zAdd($this->keyList, time() ,$repository);
@@ -79,6 +99,10 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
+    /**
+     * @param string $url
+     * @return PersisterInterface
+     */
     public function addReferer(string $url): PersisterInterface
     {
         $this->redis->zAdd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time() ,$url);

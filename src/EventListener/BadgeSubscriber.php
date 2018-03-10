@@ -11,6 +11,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use InvalidArgumentException;
 
+/**
+ * Class BadgeSubscriber
+ * @package App\EventListener
+ */
 class BadgeSubscriber implements EventSubscriberInterface
 {
     /**
@@ -29,6 +33,9 @@ class BadgeSubscriber implements EventSubscriberInterface
         $this->imageFactory = $imageFactory;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -53,6 +60,10 @@ class BadgeSubscriber implements EventSubscriberInterface
         $event->setResponse($response);
     }
 
+    /**
+     * @param $controllerName
+     * @return bool
+     */
     private function isABadgeController($controllerName): bool
     {
         return strpos($controllerName, 'App\Controller\Badge') === 0;

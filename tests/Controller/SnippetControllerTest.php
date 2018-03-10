@@ -4,6 +4,10 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class SnippetControllerTest
+ * @package App\Tests\Controller
+ */
 class SnippetControllerTest extends WebTestCase
 {
     public function testAllAction()

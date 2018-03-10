@@ -6,6 +6,10 @@ use Packagist\Api\Result\Package\Version;
 use App\Badge\Model\Package;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ParseStabilityTest
+ * @package App\Tests\Badge\Model
+ */
 class ParseStabilityTest extends TestCase
 {
     /**

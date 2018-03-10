@@ -13,6 +13,10 @@ namespace App\Tests\Basge\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class GitAttributesBadgeControllerTest
+ * @package App\Tests\Basge\Controller
+ */
 class GitAttributesBadgeControllerTest extends WebTestCase
 {
     /**

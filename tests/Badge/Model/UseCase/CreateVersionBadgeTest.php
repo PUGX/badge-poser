@@ -17,10 +17,8 @@ use App\Badge\Model\UseCase\CreateVersionBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class LicenseImageCreatorTest
- *
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class CreateVersionBadgeTest
+ * @package App\Tests\Badge\UseCase
  */
 class CreateVersionBadgeTest extends TestCase
 {

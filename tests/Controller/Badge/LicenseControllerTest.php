@@ -13,6 +13,10 @@ namespace App\Tests\Basge\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class LicenseControllerTest
+ * @package App\Tests\Basge\Controller
+ */
 class LicenseControllerTest extends WebTestCase
 {
     public function testLicenseAction()

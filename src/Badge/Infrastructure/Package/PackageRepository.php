@@ -18,9 +18,9 @@ use Packagist\Api\Result\Package as ApiPackage;
 use \UnexpectedValueException;
 
 /**
+ * Class PackageRepository
  * This class is intended to load ApiPackage, create, and work with the Package object
- *
- * @author Giulio De Donato <liuggio@gmail.com>
+ * @package App\Badge\Infrastructure\Package
  */
 class PackageRepository implements PackageRepositoryInterface
 {

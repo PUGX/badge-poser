@@ -15,9 +15,9 @@ namespace App\Badge\Model;
 use UnexpectedValueException;
 
 /**
+ * Interface PackageRepositoryInterface
  * This class is intended to load ApiPackage, create, and work with the Package object
- *
- * @author Giulio De Donato <liuggio@gmail.com>
+ * @package App\Badge\Model
  */
 interface PackageRepositoryInterface
 {

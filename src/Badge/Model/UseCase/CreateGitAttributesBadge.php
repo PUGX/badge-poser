@@ -20,7 +20,9 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
+ * Class CreateGitAttributesBadge
  * Create the 'gitattributes' image using a generator `Poser`
+ * @package App\Badge\Model\UseCase
  */
 class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {

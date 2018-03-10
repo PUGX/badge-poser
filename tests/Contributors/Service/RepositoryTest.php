@@ -12,6 +12,10 @@ use Github\ResultPager;
 use PHPUnit\Framework\TestCase;
 use Predis\Client as Redis;
 
+/**
+ * Class RepositoryTest
+ * @package App\Tests\Contributors\Service
+ */
 class RepositoryTest extends TestCase
 {
     private const API_CAN_VISIT = 'https://helloacm.com/api/can-visit/';

@@ -22,14 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DownloadsController.
+ * Class DownloadsController
  * Download action for badges.
- *
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Leonardo Proietti <leonardo.proietti@gmail.com>
- * @author Simone Fumagalli <simone@iliveinperego.com>
- * @author Andrea Giuliano <giulianoand@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * @package App\Controller\Badge
  */
 class DownloadsController extends Controller
 {

@@ -18,13 +18,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class SearchPackagistController.
- *
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Leonardo Proietti <leonardo.proietti@gmail.com>
- * @author Simone Fumagalli <simone@iliveinperego.com>
- * @author Andrea Giuliano <giulianoand@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class PackagistController
+ * @package App\Controller
  */
 class PackagistController extends Controller
 {

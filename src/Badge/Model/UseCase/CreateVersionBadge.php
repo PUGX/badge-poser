@@ -15,7 +15,9 @@ use App\Badge\Model\Package;
 use InvalidArgumentException;
 
 /**
- * Create the 'license' image using a generator `Poser`
+ * Class CreateVersionBadge
+ * Create the 'version' image using a generator `Poser`
+ * @package App\Badge\Model\UseCase
  */
 class CreateVersionBadge extends BaseCreatePackagistImage
 {

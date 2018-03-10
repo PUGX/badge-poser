@@ -18,7 +18,9 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
+ * Class CreateErrorBadge
  * Create the 'error' badge with the standard Font and standard Image.
+ * @package App\Badge\Model\UseCase
  */
 class CreateErrorBadge
 {

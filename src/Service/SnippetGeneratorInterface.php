@@ -3,9 +3,8 @@
 namespace App\Service;
 
 /**
- * Class SnippetGenerator
- *
- * @author Simone Di Maulo <toretto460@gmail.com>
+ * Interface SnippetGeneratorInterface
+ * @package App\Service
  */
 interface SnippetGeneratorInterface
 {

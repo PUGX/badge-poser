@@ -5,6 +5,10 @@ namespace App\Tests\Badge\Model;
 use PHPUnit\Framework\TestCase;
 use App\Badge\Model\Badge;
 
+/**
+ * Class BadgeTest
+ * @package App\Tests\Badge\Model
+ */
 class BadgeTest extends TestCase
 {
     public function testCreation()

@@ -3,7 +3,9 @@
 namespace App\Badge\Service;
 
 /**
+ * Interface NormalizerInterface
  * Transform numbers to readable format.
+ * @package App\Badge\Service
  */
 interface NormalizerInterface
 {

@@ -18,10 +18,8 @@ use GuzzleHttp\ClientInterface;
 use RuntimeException;
 
 /**
- * Class LicenseImageCreatorTest
- *
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class CreateComposerLockBadgeTest
+ * @package App\Tests\Badge\UseCase
  */
 class CreateComposerLockBadgeTest extends TestCase
 {

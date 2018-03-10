@@ -9,6 +9,10 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
+/**
+ * Class StatsSubscriberTest
+ * @package App\Tests\EventListener
+ */
 final class StatsSubscriberTest extends WebTestCase
 {
     protected $persister;

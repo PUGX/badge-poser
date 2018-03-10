@@ -8,6 +8,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class UpdateCommand
+ * @package App\Contributors\Command
+ */
 class UpdateCommand extends Command
 {
     private $repository;
