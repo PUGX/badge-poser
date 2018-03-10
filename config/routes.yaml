@@ -12,3 +12,8 @@ pugx_badge_packagist:
     schemes:  [https]
     requirements:
       repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
+
+search_packagist:
+    path: /search_packagist
+    controller: App\Controller\PackagistController::search
+    methods:  [GET]
