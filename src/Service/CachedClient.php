@@ -5,6 +5,10 @@ namespace App\Service;
 use GuzzleHttp\ClientInterface;
 use Predis\Profile\Factory;
 
+/**
+ * Class CachedClient
+ * @package App\Service
+ */
 class CachedClient
 {
     /**

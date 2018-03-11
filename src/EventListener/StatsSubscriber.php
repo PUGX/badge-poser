@@ -9,9 +9,9 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * Class StatsSubscriber
  * This class is intended to collect and store usage statistic on Redis.
- *
- * @author Giulio De Donato <liuggio@gmail.com>
+ * @package App\EventListener
  */
 class StatsSubscriber implements EventSubscriberInterface
 {
@@ -22,6 +22,9 @@ class StatsSubscriber implements EventSubscriberInterface
         $this->client = $client;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -29,7 +32,10 @@ class StatsSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    /**
+     * @param FilterControllerEvent $event
+     */
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $controller = $event->getController();
         $request = $event->getRequest();

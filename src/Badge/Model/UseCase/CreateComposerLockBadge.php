@@ -19,7 +19,9 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
+ * Class CreateComposerLockBadge
  * Create the 'license' image using a generator `Poser`
+ * @package App\Badge\Model\UseCase
  */
 class CreateComposerLockBadge extends BaseCreatePackagistImage
 {

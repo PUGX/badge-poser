@@ -12,10 +12,9 @@
 namespace App\Badge\Model;
 
 /**
- * Class Image, an Image value Object
- *
- * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
- * @author Giulio De Donato <liuggio@gmail.com>
+ * Class Image
+ * An Image value Object
+ * @package App\Badge\Model
  */
 class Image
 {

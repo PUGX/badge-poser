@@ -13,6 +13,10 @@ namespace App\Tests\Basge\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class ComposerLockControllerTest
+ * @package App\Tests\Basge\Controller
+ */
 class ComposerLockControllerTest extends WebTestCase
 {
     public function testComposerLockAction()

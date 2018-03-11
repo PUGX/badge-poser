@@ -7,6 +7,10 @@ namespace App\Tests\Contributors\Model;
 use App\Contributors\Model\Contributor;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ContributorTest
+ * @package App\Tests\Contributors\Model
+ */
 class ContributorTest extends TestCase
 {
     public function testCreation()

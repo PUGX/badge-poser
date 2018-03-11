@@ -17,11 +17,8 @@ use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class DownloadsImageCreatorTest
- *
- * @author Claudio D'Alicandro <claudio.dalicandro@gmail.com>
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class CreateDownloadsBadgeTest
+ * @package App\Tests\Badge\UseCase
  */
 class CreateDownloadsBadgeTest extends TestCase
 {

@@ -16,8 +16,8 @@ use App\Badge\Model\Image;
 use InvalidArgumentException;
 
 /**
- * @author Giulio De Donato <liuggio@gmail.com>
- * @author Andrea Giannantonio <a.giannantonio@gmail.com>
+ * Class ResponseFactory
+ * @package App\Badge\Infrastructure
  */
 class ResponseFactory
 {

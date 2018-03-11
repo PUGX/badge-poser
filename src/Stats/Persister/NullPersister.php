@@ -2,6 +2,10 @@
 
 namespace App\Stats\Persister;
 
+/**
+ * Class NullPersister
+ * @package App\Stats\Persister
+ */
 final class NullPersister implements PersisterInterface
 {
     public static $incrementTotalAccessCalled = false;

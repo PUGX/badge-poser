@@ -18,6 +18,10 @@ use App\Badge\Model\PackageRepositoryInterface;
 use InvalidArgumentException;
 use UnexpectedValueException;
 
+/**
+ * Class BaseCreatePackagistImage
+ * @package App\Badge\Model\UseCase
+ */
 abstract class BaseCreatePackagistImage
 {
     /** @var PackageRepositoryInterface */
@@ -80,7 +84,7 @@ abstract class BaseCreatePackagistImage
      * @return Badge
      * @throws InvalidArgumentException
      */
-    protected function createDefaultBadge(string $format)
+    protected function createDefaultBadge(string $format): Badge
     {
         $subject = ' - ';
         $text = ' - ';

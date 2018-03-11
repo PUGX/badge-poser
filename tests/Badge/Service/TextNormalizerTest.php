@@ -15,6 +15,10 @@ use App\Badge\Service\TextNormalizer;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class TextNormalizerTest
+ * @package App\Tests\Badge\Service
+ */
 class TextNormalizerTest extends TestCase
 {
     /** @var TextNormalizer */

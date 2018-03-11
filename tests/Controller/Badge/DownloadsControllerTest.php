@@ -13,6 +13,10 @@ namespace App\Tests\Basge\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class DownloadsControllerTest
+ * @package App\Tests\Basge\Controller
+ */
 class DownloadsControllerTest extends WebTestCase
 {
     public function testDownloadsAction()

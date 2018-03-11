@@ -14,9 +14,9 @@ namespace App\Badge\Model;
 use Packagist\Api\Result\Package as ApiPackage;
 
 /**
- * Class Package, decorates the Packagist Package.
- *
- * @author Giulio De Donato <liuggio@gmail.com>
+ * Class Package
+ * Decorates the Packagist Package.
+ * @package App\Badge\Model
  */
 class Package
 {

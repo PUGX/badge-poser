@@ -20,7 +20,9 @@ use App\Badge\Model\PackageRepositoryInterface;
 use InvalidArgumentException;
 
 /**
+ * Class CreateDownloadsBadge
  * Create the 'downloads' image with the standard Font and standard Image.
+ * @package App\Badge\Model\UseCase
  */
 class CreateDownloadsBadge extends BaseCreatePackagistImage
 {
@@ -60,6 +62,7 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
      * @param Package $package
      * @param null|string $context
      * @return mixed|string
+     * @throws \InvalidArgumentException
      */
     protected function prepareText(Package $package, $context = null)
     {

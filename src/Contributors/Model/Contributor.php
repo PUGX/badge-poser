@@ -2,7 +2,10 @@
 
 namespace App\Contributors\Model;
 
-
+/**
+ * Class Contributor
+ * @package App\Contributors\Model
+ */
 class Contributor
 {
     /** @var string */

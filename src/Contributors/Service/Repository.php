@@ -7,6 +7,10 @@ use Github\Client;
 use Github\ResultPager;
 use Predis\Client as Redis;
 
+/**
+ * Class Repository
+ * @package App\Contributors\Service
+ */
 class Repository implements RepositoryInterface
 {
     private const REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';

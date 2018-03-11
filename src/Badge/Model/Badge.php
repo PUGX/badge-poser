@@ -11,6 +11,10 @@
 
 namespace App\Badge\Model;
 
+/**
+ * Class Badge
+ * @package App\Badge\Model
+ */
 class Badge
 {
     private CONST DEFAULT_FORMAT = 'svg';

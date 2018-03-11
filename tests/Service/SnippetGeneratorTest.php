@@ -6,6 +6,10 @@ use App\Service\SnippetGenerator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class SnippetGeneratorTest
+ * @package App\Tests\Service
+ */
 class SnippetGeneratorTest extends TestCase
 {
     public function testGenerateAllSnippets()

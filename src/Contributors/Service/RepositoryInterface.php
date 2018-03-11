@@ -3,7 +3,10 @@
 
 namespace App\Contributors\Service;
 
-
+/**
+ * Interface RepositoryInterface
+ * @package App\Contributors\Service
+ */
 interface RepositoryInterface
 {
     /**

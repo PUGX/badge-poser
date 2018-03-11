@@ -7,8 +7,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class SnippetGenerator
- *
- * @author Simone Di Maulo <toretto460@gmail.com>
+ * @package App\Service
  */
 class SnippetGenerator implements SnippetGeneratorInterface
 {
@@ -46,6 +45,10 @@ class SnippetGenerator implements SnippetGeneratorInterface
         $this->packagistRoute = $packagist_route;
     }
 
+    /**
+     * @param string $repository
+     * @return array
+     */
     public function generateAllSnippets(string $repository): array
     {
         $snippets = [];
@@ -69,16 +72,28 @@ class SnippetGenerator implements SnippetGeneratorInterface
         return $snippets;
     }
 
+    /**
+     * @param array $badge
+     * @param string $repository
+     * @return string
+     * @throws \Exception
+     */
     public function generateMarkdown(array $badge, string $repository): string
     {
         return sprintf(
-            "[![%s](%s)](%s)",
+            '[![%s](%s)](%s)',
             $badge['label'],
             $this->generateImg($badge, $repository),
             $this->generateRepositoryLink($repository)
         );
     }
 
+    /**
+     * @param array $badge
+     * @param string $repository
+     * @return string
+     * @throws \Exception
+     */
     public function generateImg(array $badge, string $repository): string
     {
         $badge['repository'] = $repository;
@@ -87,18 +102,30 @@ class SnippetGenerator implements SnippetGeneratorInterface
         return $this->router->generate($badge['route'], $parameters, true);
     }
 
+    /**
+     * @param string $repository
+     * @return string
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     */
     public function generateRepositoryLink(string $repository): string
     {
         return $this->router->generate($this->packagistRoute, ['repository' => $repository], true);
     }
 
+    /**
+     * @param array $badge
+     * @return array
+     * @throws \RuntimeException
+     */
     private function compileRouteParametersForBadge(array $badge): array
     {
         $parameters = [];
         $route = $this->routes->get($badge['route']);
 
         if (!$route) {
-            throw new \Exception(sprintf('The route "%s" was not found', $badge['route']));
+            throw new \RuntimeException(sprintf('The route "%s" was not found', $badge['route']));
         }
 
         $routeParameters = array_keys(array_merge($route->getDefaults(), $route->getRequirements()));
