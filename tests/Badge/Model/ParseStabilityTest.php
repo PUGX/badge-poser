@@ -14,13 +14,15 @@ class ParseStabilityTest extends TestCase
 {
     /**
      * @dataProvider getVersionAndStability
+     * @param $version
+     * @param $stable
      */
-    public function testParseStability($version, $stable)
+    public function testParseStability($version, $stable): void
     {
         $this->assertEquals(Package::parseStability($version), $stable);
     }
 
-    public static function getVersionAndStability()
+    public static function getVersionAndStability(): array
     {
         return array(
             array('1.0.0', 'stable'),
@@ -38,10 +40,12 @@ class ParseStabilityTest extends TestCase
             array('v2.3.0-BETA2', 'beta'),
             array('v2.1.10', 'stable'),
             array('v2.2.1', 'stable'),
+            array('0.1.0-alpha1', 'alpha'),
+            array('0.1.0-alpha', 'alpha'),
         );
     }
 
-    protected function createVersion(array $branches)
+    protected function createVersion(array $branches): array
     {
         $versions = array();
         foreach ($branches as $branch) {
