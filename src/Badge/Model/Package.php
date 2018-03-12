@@ -20,13 +20,20 @@ use Packagist\Api\Result\Package as ApiPackage;
  */
 class Package
 {
+    /** @var string */
     private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
+    /** @var string */
     private $license;
+    /** @var ApiPackage */
     private $originalObject;
-    private $latestStableVersion = null;
-    private $latestUnstableVersion = null;
-    private $latestStableVersionNormalized = null;
-    private $latestUnstableVersionNormalized = null;
+    /** @var string */
+    private $latestStableVersion;
+    /** @var string */
+    private $latestUnstableVersion;
+    /** @var string */
+    private $latestStableVersionNormalized;
+    /** @var string */
+    private $latestUnstableVersionNormalized;
 
     private function __construct(ApiPackage $apiPackage)
     {
@@ -56,7 +63,7 @@ class Package
     public function getPackageDownloads(string $type): ?string
     {
         $statsType = 'get' . ucfirst($type);
-        if (($download = $this->getDownloads()) && $download instanceof \Packagist\Api\Result\Package\Downloads) {
+        if (($download = $this->getDownloads()) && $download instanceof ApiPackage\Downloads) {
             return $download->{$statsType}();
         }
     }
@@ -81,7 +88,7 @@ class Package
             }
 
             $functionName = 'Unstable';
-            if ('stable' == self::parseStability($currentVersionName)) {
+            if ('stable' === self::parseStability($currentVersionName)) {
                 $functionName = 'Stable';
             }
 
@@ -90,8 +97,8 @@ class Package
                 $this->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
 
                 $license = $version->getLicense();
-                if (is_array($license) && count($license)>0) {
-                    $license = implode(',',$license);
+                if (\is_array($license) && \count($license) > 0) {
+                    $license = implode(',', $license);
                 }
                 $this->setLicense($license);
             }
@@ -110,11 +117,8 @@ class Package
     private function getBranchAliases(ApiPackage\Version $version): ?array
     {
         $extra = $version->getExtra();
-        if (null !== $extra
-            && isset($extra["branch-alias"])
-            && is_array($extra["branch-alias"])
-        ) {
-            return $extra["branch-alias"];
+        if (null !== $extra && isset($extra['branch-alias']) && \is_array($extra['branch-alias'])) {
+            return $extra['branch-alias'];
         }
 
         return null;
@@ -160,122 +164,186 @@ class Package
         return 'stable';
     }
 
-    public function getLicense()
+    /**
+     * @return null|string
+     */
+    public function getLicense(): ?string
     {
         return $this->license;
     }
 
-    public function getLatestStableVersion()
+    /**
+     * @return null|string
+     */
+    public function getLatestStableVersion(): ?string
     {
         return $this->latestStableVersion;
     }
 
-    public function hasStableVersion()
+    /**
+     * @return bool
+     */
+    public function hasStableVersion(): bool
     {
-        return isset($this->latestStableVersion);
+        return null !== $this->latestStableVersion;
     }
 
-    public function getLatestUnstableVersion()
+    /**
+     * @return null|string
+     */
+    public function getLatestUnstableVersion(): ?string
     {
         return $this->latestUnstableVersion;
     }
 
     /**
-     * @return null
+     * @return null|string
      */
-    public function getLatestStableVersionNormalized()
+    public function getLatestStableVersionNormalized(): ?string
     {
         return $this->latestStableVersionNormalized;
     }
 
-    public function getLatestUnstableVersionNormalized()
+    /**
+     * @return null|string
+     */
+    public function getLatestUnstableVersionNormalized(): ?string
     {
         return $this->latestUnstableVersionNormalized;
     }
 
-    public function hasUnstableVersion()
+    /**
+     * @return bool
+     */
+    public function hasUnstableVersion(): bool
     {
-        return isset($this->latestUnstableVersion);
+        return null !== $this->latestUnstableVersion;
     }
 
-    public function getOriginalObject()
+    /**
+     * @return ApiPackage
+     */
+    public function getOriginalObject(): ApiPackage
     {
         return $this->originalObject;
     }
 
-    private function setLatestUnstableVersionNormalized($latestUnstableVersionNormalized)
+    /**
+     * @param string $latestUnstableVersionNormalized
+     */
+    private function setLatestUnstableVersionNormalized(string $latestUnstableVersionNormalized)
     {
         $this->latestUnstableVersionNormalized = $latestUnstableVersionNormalized;
     }
 
-    private function setLicense($license)
+    /**
+     * @param string $license
+     */
+    private function setLicense(string $license): void
     {
         $this->license = $license;
     }
 
-    private function setLatestStableVersion($version)
+    /**
+     * @param string $version
+     */
+    private function setLatestStableVersion(string $version): void
     {
         $this->latestStableVersion = $version;
     }
 
-    private function setLatestUnstableVersion($version)
+    /**
+     * @param string $version
+     */
+    private function setLatestUnstableVersion(string $version): void
     {
         $this->latestUnstableVersion = $version;
     }
 
-    private function setLatestStableVersionNormalized($latestStableVersionNormalized)
+    /**
+     * @param string $latestStableVersionNormalized
+     */
+    private function setLatestStableVersionNormalized(string $latestStableVersionNormalized): void
     {
         $this->latestStableVersionNormalized = $latestStableVersionNormalized;
     }
 
-    // original object's property
-
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->getOriginalObject()->getName();
     }
 
-    public function getDescription()
+    /**
+     * @return string
+     */
+    public function getDescription(): string
     {
         return $this->getOriginalObject()->getDescription();
     }
 
-    public function getDownloads()
+    /**
+     * @return ApiPackage\Downloads
+     */
+    public function getDownloads(): ApiPackage\Downloads
     {
         return $this->getOriginalObject()->getDownloads();
     }
 
-    public function getFavers()
+    /**
+     * @return string
+     */
+    public function getFavers(): string
     {
         return $this->getOriginalObject()->getFavers();
     }
 
-    public function getMaintainers()
+    /**
+     * @return array
+     */
+    public function getMaintainers(): array
     {
         return $this->getOriginalObject()->getMaintainers();
     }
 
-    public function getTime()
+    /**
+     * @return string
+     */
+    public function getTime(): string
     {
         return $this->getOriginalObject()->getTime();
     }
 
-    public function getRepository()
+    /**
+     * @return string
+     */
+    public function getRepository(): string
     {
         return $this->getOriginalObject()->getRepository();
     }
 
-    public function getType()
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
         return $this->getOriginalObject()->getType();
     }
 
-    public function getVersions()
+    /**
+     * @return ApiPackage\Version[]
+     */
+    public function getVersions(): array
     {
         return $this->getOriginalObject()->getVersions();
     }
 
-    private function setOriginalObject(ApiPackage $originalObject)
+    /**
+     * @param ApiPackage $originalObject
+     */
+    private function setOriginalObject(ApiPackage $originalObject): void
     {
         $this->originalObject = $originalObject;
     }
