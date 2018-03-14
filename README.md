@@ -27,6 +27,8 @@ See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open). 
 To keep things in shape we have a bunch of unit tests. If you're submitting pull requests please
 make sure that they are still passing and if you add functionality please
 take a look at the coverage as well, it should be pretty high. :)
+Last, but not least, respect coding standards
+(we use [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) for that);
 
 - First, fork or clone the repository:
 
@@ -65,4 +67,10 @@ now go to [http://localhost](http://localhost)
 
 ``` bash
 docker-compose exec php-fpm ./bin/phpunit
+```
+
+- Run php-cs-fixer:
+
+``` bash
+docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
 ```
