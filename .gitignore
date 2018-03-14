@@ -14,3 +14,7 @@
 /node_modules/
 /public/build/
 ###< symfony/webpack-encore-pack ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
