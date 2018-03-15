@@ -30,7 +30,7 @@ class SuggestersController extends Controller
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      */
-    public function dependentsAction(
+    public function suggesters(
         Request $request,
         Poser $poser,
         CreateSuggestersBadge $createSuggestersBadge,
