@@ -5,8 +5,7 @@ namespace App\Stats\Reader;
 use Predis\Client as Redis;
 
 /**
- * Class RedisReader
- * @package App\Stats\Reader
+ * Class RedisReader.
  */
 final class RedisReader implements ReaderInterface
 {
@@ -30,6 +29,7 @@ final class RedisReader implements ReaderInterface
     /**
      * @param string $prefix
      * @param string $keyName
+     *
      * @return string
      */
     private function concatenateKeys(string $prefix, string $keyName): string

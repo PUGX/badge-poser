@@ -14,54 +14,53 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class DownloadsControllerTest
- * @package App\Tests\Basge\Controller
+ * Class DownloadsControllerTest.
  */
 class DownloadsControllerTest extends WebTestCase
 {
-    public function testDownloadsAction()
+    public function testDownloadsAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/downloads');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsTotalAction()
+    public function testDownloadsTotalAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/total');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsDailyAction()
+    public function testDownloadsDailyAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/daily');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsMonthlyAction()
+    public function testDownloadsMonthlyAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/monthly');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsActionSvgExplicit()
+    public function testDownloadsActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/downloads.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsTotalActionSvgExplicit()
+    public function testDownloadsTotalActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/total.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDownloadsActionPngRedirectSvg()
+    public function testDownloadsActionPngRedirectSvg(): void
     {
         $client = static::createClient();
 

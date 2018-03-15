@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
- * Class StatsSubscriberTest
- * @package App\Tests\EventListener
+ * Class StatsSubscriberTest.
  */
 final class StatsSubscriberTest extends WebTestCase
 {
@@ -64,7 +63,7 @@ final class StatsSubscriberTest extends WebTestCase
         $this->controllerEvent->expects($this->once())->method('getRequest')
             ->will($this->returnValue($this->request));
         $this->controllerEvent->expects($this->once())->method('getController')
-            ->will($this->returnValue(array($controller, $method)));
+            ->will($this->returnValue([$controller, $method]));
 
         $this->persister
             ->expects($this->once())

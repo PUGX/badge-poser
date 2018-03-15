@@ -5,12 +5,11 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class PackagistControllerTest
- * @package App\Tests\Controller
+ * Class PackagistControllerTest.
  */
 class PackagistControllerTest extends WebTestCase
 {
-    public function testSearch()
+    public function testSearch(): void
     {
         $expectedData = json_decode('[{"id":"pugx\/badge-poser","description":"Poser, add badges on your readme, such as downloads number or latest version."}]', true);
 

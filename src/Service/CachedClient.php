@@ -6,8 +6,7 @@ use GuzzleHttp\ClientInterface;
 use Predis\Profile\Factory;
 
 /**
- * Class CachedClient
- * @package App\Service
+ * Class CachedClient.
  */
 class CachedClient
 {
@@ -36,7 +35,7 @@ class CachedClient
     /**
      * @var int
      */
-    protected $TTLAll= 900;
+    protected $TTLAll = 900;
 
     public function setTTLAll(int $TTLAll): void
     {
@@ -103,7 +102,7 @@ class CachedClient
      */
     private function getPrefixKey(string $method, $argument): string
     {
-        return sprintf("%s.%s", $method, json_encode($argument));
+        return sprintf('%s.%s', $method, json_encode($argument));
     }
 
     public function search($query, array $filters = [])

@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
@@ -21,19 +22,18 @@ use UnexpectedValueException;
 
 /**
  * Class CreateGitAttributesBadge
- * Create the 'gitattributes' image using a generator `Poser`
- * @package App\Badge\Model\UseCase
+ * Create the 'gitattributes' image using a generator `Poser`.
  */
 class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
-    private const COLOR_COMMITTED            = '96d490';
-    private const COLOR_UNCOMMITTED          = 'ad6c4b';
-    private const COLOR_ERROR                = 'aa0000';
-    private const GITATTRIBUTES_COMMITTED    = 'committed';
-    private const GITATTRIBUTES_UNCOMMITTED  = 'uncommitted';
-    private const GITATTRIBUTES_ERROR        = 'checking';
-    private const SUBJECT                    = '.gitattributes';
-    private const SUBJECT_ERROR              = 'Error';
+    private const COLOR_COMMITTED = '96d490';
+    private const COLOR_UNCOMMITTED = 'ad6c4b';
+    private const COLOR_ERROR = 'aa0000';
+    private const GITATTRIBUTES_COMMITTED = 'committed';
+    private const GITATTRIBUTES_UNCOMMITTED = 'uncommitted';
+    private const GITATTRIBUTES_ERROR = 'checking';
+    private const SUBJECT = '.gitattributes';
+    private const SUBJECT_ERROR = 'Error';
 
     protected $text = self::GITATTRIBUTES_ERROR;
 
@@ -42,7 +42,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param ClientInterface Client $client
+     * @param ClientInterface Client     $client
      */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
@@ -55,6 +55,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
      * @param string $format
      *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws GuzzleException
@@ -72,7 +73,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
         $response = $this->client->request(
             'HEAD',
-            $repo . '/blob/master/.gitattributes',
+            $repo.'/blob/master/.gitattributes',
             [
                 RequestOptions::TIMEOUT => 2,
                 RequestOptions::CONNECT_TIMEOUT => 1,
@@ -86,16 +87,16 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
         }
 
         $this->text = self::GITATTRIBUTES_ERROR;
-        $color      = self::COLOR_ERROR;
-        $subject    = self::SUBJECT_ERROR;
+        $color = self::COLOR_ERROR;
+        $subject = self::SUBJECT_ERROR;
         if (200 === $status) {
             $this->text = self::GITATTRIBUTES_COMMITTED;
-            $color      = self::COLOR_COMMITTED;
-            $subject    = self::SUBJECT;
+            $color = self::COLOR_COMMITTED;
+            $subject = self::SUBJECT;
         } elseif (404 === $status) {
             $this->text = self::GITATTRIBUTES_UNCOMMITTED;
-            $color      = self::COLOR_UNCOMMITTED;
-            $subject    = self::SUBJECT;
+            $color = self::COLOR_UNCOMMITTED;
+            $subject = self::SUBJECT;
         }
 
         return $this->createBadgeFromRepository(
@@ -107,8 +108,9 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return string
      */
     protected function prepareText(Package $package, $context = null): string

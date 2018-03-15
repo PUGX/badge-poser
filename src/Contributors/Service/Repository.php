@@ -8,8 +8,7 @@ use Github\ResultPager;
 use Predis\Client as Redis;
 
 /**
- * Class Repository
- * @package App\Contributors\Service
+ * Class Repository.
  */
 class Repository implements RepositoryInterface
 {
@@ -39,7 +38,6 @@ class Repository implements RepositoryInterface
             }
 
             return $this->getContributors();
-
         } catch (\Exception $e) {
             return [];
         }
@@ -73,6 +71,7 @@ class Repository implements RepositoryInterface
 
     /**
      * @param bool $setCache
+     *
      * @return Contributor[]
      */
     private function getContributors($setCache = true): array
@@ -98,6 +97,7 @@ class Repository implements RepositoryInterface
     /**
      * @param $username
      * @param $repoName
+     *
      * @return array
      */
     private function getContributorsByGithub($username, $repoName): array

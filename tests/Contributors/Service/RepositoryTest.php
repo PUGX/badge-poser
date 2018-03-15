@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Tests\Contributors\Service;
-
 
 use App\Contributors\Model\Contributor;
 use App\Contributors\Service\Repository;
@@ -13,8 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Predis\Client as Redis;
 
 /**
- * Class RepositoryTest
- * @package App\Tests\Contributors\Service
+ * Class RepositoryTest.
  */
 class RepositoryTest extends TestCase
 {
@@ -28,7 +25,7 @@ class RepositoryTest extends TestCase
     /** @var Repository */
     private $repository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->redis = $this->getMockBuilder(Redis::class)
             ->disableOriginalConstructor()->getMock();
@@ -64,9 +61,9 @@ class RepositoryTest extends TestCase
         foreach ($contributors as $k => $contributor) {
             $this->assertInstanceOf(Contributor::class, $contributor);
 
-            if ($k === 'liuggio') {
+            if ('liuggio' === $k) {
                 $this->assertEquals('liuggio', $contributor->getUsername());
-            } elseif ($k === 'leopro') {
+            } elseif ('leopro' === $k) {
                 $this->assertEquals('leopro', $contributor->getUsername());
             }
 
@@ -88,11 +85,11 @@ class RepositoryTest extends TestCase
         $this->assertEquals(\count($fetchAllValueExpect), $count);
     }
 
-    private function checkUrl($url)
+    private function checkUrl($url): void
     {
-        $data = file_get_contents(self::API_CAN_VISIT . '?url=' . $url);
+        $data = file_get_contents(self::API_CAN_VISIT.'?url='.$url);
         $result = json_decode($data, true);
-        $this->assertEquals(true, $result['result']);
+        $this->assertTrue($result['result']);
         $this->assertEquals(200, $result['code']);
     }
 
@@ -102,43 +99,43 @@ class RepositoryTest extends TestCase
             0 => [
                 'login' => 'liuggio',
                 'id' => 530406,
-                'avatar_url' => "https://avatars1.githubusercontent.com/u/530406?v=4",
-                'gravatar_id' => "",
-                'url' => "https://api.github.com/users/liuggio",
-                'html_url' => "https://github.com/liuggio",
-                'followers_url' => "https://api.github.com/users/liuggio/followers",
-                'following_url' => "https://api.github.com/users/liuggio/following{/other_user}",
-                'gists_url' => "https://api.github.com/users/liuggio/gists{/gist_id}",
-                'starred_url' => "https://api.github.com/users/liuggio/starred{/owner}{/repo}",
-                'subscriptions_url' => "https://api.github.com/users/liuggio/subscriptions",
-                'organizations_url' => "https://api.github.com/users/liuggio/orgs",
-                'repos_url' => "https://api.github.com/users/liuggio/repos",
-                'events_url' => "https://api.github.com/users/liuggio/events{/privacy}",
-                'received_events_url' => "https://api.github.com/users/liuggio/received_events",
-                'type' => "User",
+                'avatar_url' => 'https://avatars1.githubusercontent.com/u/530406?v=4',
+                'gravatar_id' => '',
+                'url' => 'https://api.github.com/users/liuggio',
+                'html_url' => 'https://github.com/liuggio',
+                'followers_url' => 'https://api.github.com/users/liuggio/followers',
+                'following_url' => 'https://api.github.com/users/liuggio/following{/other_user}',
+                'gists_url' => 'https://api.github.com/users/liuggio/gists{/gist_id}',
+                'starred_url' => 'https://api.github.com/users/liuggio/starred{/owner}{/repo}',
+                'subscriptions_url' => 'https://api.github.com/users/liuggio/subscriptions',
+                'organizations_url' => 'https://api.github.com/users/liuggio/orgs',
+                'repos_url' => 'https://api.github.com/users/liuggio/repos',
+                'events_url' => 'https://api.github.com/users/liuggio/events{/privacy}',
+                'received_events_url' => 'https://api.github.com/users/liuggio/received_events',
+                'type' => 'User',
                 'site_admin' => false,
                 'contributions' => 186,
             ],
             1 => [
                 'login' => 'leopro',
                 'id' => 1370900,
-                'avatar_url' => "https://avatars2.githubusercontent.com/u/1370900?v=4",
-                'gravatar_id' => "",
-                'url' => "https://api.github.com/users/leopro",
-                'html_url' => "https://github.com/leopro",
-                'followers_url' => "https://api.github.com/users/leopro/followers",
-                'following_url' => "https://api.github.com/users/leopro/following{/other_user}",
-                'gists_url' => "https://api.github.com/users/leopro/gists{/gist_id}",
-                'starred_url' => "https://api.github.com/users/leopro/starred{/owner}{/repo}",
-                'subscriptions_url' => "https://api.github.com/users/leopro/subscriptions",
-                'organizations_url' => "https://api.github.com/users/leopro/orgs",
-                'repos_url' => "https://api.github.com/users/leopro/repos",
-                'events_url' => "https://api.github.com/users/leopro/events{/privacy}",
-                'received_events_url' => "https://api.github.com/users/leopro/received_events",
-                'type' => "User",
+                'avatar_url' => 'https://avatars2.githubusercontent.com/u/1370900?v=4',
+                'gravatar_id' => '',
+                'url' => 'https://api.github.com/users/leopro',
+                'html_url' => 'https://github.com/leopro',
+                'followers_url' => 'https://api.github.com/users/leopro/followers',
+                'following_url' => 'https://api.github.com/users/leopro/following{/other_user}',
+                'gists_url' => 'https://api.github.com/users/leopro/gists{/gist_id}',
+                'starred_url' => 'https://api.github.com/users/leopro/starred{/owner}{/repo}',
+                'subscriptions_url' => 'https://api.github.com/users/leopro/subscriptions',
+                'organizations_url' => 'https://api.github.com/users/leopro/orgs',
+                'repos_url' => 'https://api.github.com/users/leopro/repos',
+                'events_url' => 'https://api.github.com/users/leopro/events{/privacy}',
+                'received_events_url' => 'https://api.github.com/users/leopro/received_events',
+                'type' => 'User',
                 'site_admin' => false,
                 'contributions' => 29,
-            ]
+            ],
         ];
     }
 }

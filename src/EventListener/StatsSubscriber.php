@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * Class StatsSubscriber
  * This class is intended to collect and store usage statistic on Redis.
- * @package App\EventListener
  */
 class StatsSubscriber implements EventSubscriberInterface
 {
@@ -28,7 +27,7 @@ class StatsSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::CONTROLLER  => 'onKernelController',
+            KernelEvents::CONTROLLER => 'onKernelController',
         ];
     }
 
@@ -59,7 +58,7 @@ class StatsSubscriber implements EventSubscriberInterface
      */
     private function isRoutedFromHome(Request $request): bool
     {
-        return (strpos($request->get('_route'), 'home') !== false);
+        return false !== strpos($request->get('_route'), 'home');
     }
 
     /**

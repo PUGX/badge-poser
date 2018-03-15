@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Tests\Contributors\Command;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -8,12 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Class UpdateCommandTest
- * @package App\Tests\Contributors\Command
+ * Class UpdateCommandTest.
  */
 class UpdateCommandTest extends KernelTestCase
 {
-    public function testExecute()
+    public function testExecute(): void
     {
         $kernel = static::createKernel();
         $kernel->boot();
@@ -36,6 +34,7 @@ class UpdateCommandTest extends KernelTestCase
     private function getNumbers($str)
     {
         preg_match_all('/\d+/', $str, $matches);
+
         return $matches[0];
     }
 }

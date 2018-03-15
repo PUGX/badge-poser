@@ -3,17 +3,16 @@
 namespace App\Badge\Service;
 
 use App\Badge\Model\Badge;
-use PUGX\Poser\Poser;
 use App\Badge\Model\Image;
+use PUGX\Poser\Poser;
 
 /**
- * Class ImageFactory
- * @package App\Badge\Service
+ * Class ImageFactory.
  */
 class ImageFactory
 {
     /**
-     * @var Poser $generator
+     * @var Poser
      */
     private $generator;
 
@@ -24,6 +23,7 @@ class ImageFactory
 
     /**
      * @param Badge $badge
+     *
      * @return Image
      */
     public function createFromBadge(Badge $badge): Image

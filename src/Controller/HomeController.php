@@ -2,19 +2,19 @@
 
 namespace App\Controller;
 
-use App\Contributors\Service\Repository as ContributorsRepository;
 use App\Contributors\Model\Contributor;
+use App\Contributors\Service\Repository as ContributorsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class HomeController
- * @package App\Controller
+ * Class HomeController.
  */
 class HomeController extends Controller
 {
     /**
      * @param ContributorsRepository $contributorsRepository
+     *
      * @return Response
      */
     public function index(ContributorsRepository $contributorsRepository): Response
@@ -24,7 +24,7 @@ class HomeController extends Controller
 
         return $this->render(
             'home/index.html.twig', [
-                'contributors' => $contributors
+                'contributors' => $contributors,
             ]
         );
     }

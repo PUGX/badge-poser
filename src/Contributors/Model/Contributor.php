@@ -3,8 +3,7 @@
 namespace App\Contributors\Model;
 
 /**
- * Class Contributor
- * @package App\Contributors\Model
+ * Class Contributor.
  */
 class Contributor
 {
@@ -22,7 +21,7 @@ class Contributor
         $this->profileImg = $profileImg;
     }
 
-    public static function create($username, $profileUrl, $profileImg): Contributor
+    public static function create($username, $profileUrl, $profileImg): self
     {
         return new self($username, $profileUrl, $profileImg);
     }
@@ -55,5 +54,4 @@ class Contributor
     {
         return $this->username;
     }
-
 }

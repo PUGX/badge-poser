@@ -6,23 +6,22 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class SnippetGenerator
- * @package App\Service
+ * Class SnippetGenerator.
  */
 class SnippetGenerator implements SnippetGeneratorInterface
 {
     /**
-     * @var RouterInterface $router
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var array $badges
+     * @var array
      */
     private $badges;
 
     /**
-     * @var array $allInBadges
+     * @var array
      */
     private $allInBadges;
 
@@ -32,7 +31,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
     private $routes;
 
     /**
-     * @var string $packagistRoute
+     * @var string
      */
     private $packagistRoute;
 
@@ -47,6 +46,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
 
     /**
      * @param string $repository
+     *
      * @return array
      */
     public function generateAllSnippets(string $repository): array
@@ -57,8 +57,8 @@ class SnippetGenerator implements SnippetGeneratorInterface
         foreach ($this->badges as $badge) {
             $markdown = $this->generateMarkdown($badge, $repository);
             $snippets[$badge['name']] = [
-                'markdown'  => $markdown,
-                'img'       => $this->generateImg($badge, $repository)
+                'markdown' => $markdown,
+                'img' => $this->generateImg($badge, $repository),
             ];
 
             if (in_array($badge['name'], $this->allInBadges)) {
@@ -73,9 +73,11 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param array $badge
+     * @param array  $badge
      * @param string $repository
+     *
      * @return string
+     *
      * @throws \Exception
      */
     public function generateMarkdown(array $badge, string $repository): string
@@ -89,9 +91,11 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param array $badge
+     * @param array  $badge
      * @param string $repository
+     *
      * @return string
+     *
      * @throws \Exception
      */
     public function generateImg(array $badge, string $repository): string
@@ -104,7 +108,9 @@ class SnippetGenerator implements SnippetGeneratorInterface
 
     /**
      * @param string $repository
+     *
      * @return string
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -116,7 +122,9 @@ class SnippetGenerator implements SnippetGeneratorInterface
 
     /**
      * @param array $badge
+     *
      * @return array
+     *
      * @throws \RuntimeException
      */
     private function compileRouteParametersForBadge(array $badge): array

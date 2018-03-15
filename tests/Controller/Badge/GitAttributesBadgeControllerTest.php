@@ -14,15 +14,14 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class GitAttributesBadgeControllerTest
- * @package App\Tests\Basge\Controller
+ * Class GitAttributesBadgeControllerTest.
  */
 class GitAttributesBadgeControllerTest extends WebTestCase
 {
     /**
      * @group gitattributes
      */
-    public function testGitAttributesResponseUncommitted()
+    public function testGitAttributesResponseUncommitted(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes');
@@ -39,7 +38,7 @@ class GitAttributesBadgeControllerTest extends WebTestCase
     /**
      * @group gitattributes
      */
-    public function testGitAttributesResponseCommitted()
+    public function testGitAttributesResponseCommitted(): void
     {
         $client = static::createClient();
         $client->request('GET', '/stolt/lean-package-validator/gitattributes');
@@ -53,7 +52,7 @@ class GitAttributesBadgeControllerTest extends WebTestCase
         $this->assertRegExp('/committed/', $svgContent);
     }
 
-    public function testGitAttributesSvgExplicit()
+    public function testGitAttributesSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes.svg');

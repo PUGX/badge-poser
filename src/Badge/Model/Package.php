@@ -16,7 +16,6 @@ use Packagist\Api\Result\Package as ApiPackage;
 /**
  * Class Package
  * Decorates the Packagist Package.
- * @package App\Badge\Model
  */
 class Package
 {
@@ -37,8 +36,8 @@ class Package
 
     private function __construct(ApiPackage $apiPackage)
     {
-       $this->setOriginalObject($apiPackage);
-       $this->calculateLatestVersions();
+        $this->setOriginalObject($apiPackage);
+        $this->calculateLatestVersions();
     }
 
     /**
@@ -48,7 +47,7 @@ class Package
      *
      * @return Package
      */
-    public static function createFromApi(ApiPackage $apiPackage): Package
+    public static function createFromApi(ApiPackage $apiPackage): self
     {
         return new self($apiPackage);
     }
@@ -62,7 +61,7 @@ class Package
      */
     public function getPackageDownloads(string $type): ?string
     {
-        $statsType = 'get' . ucfirst($type);
+        $statsType = 'get'.ucfirst($type);
         if (($download = $this->getDownloads()) && $download instanceof ApiPackage\Downloads) {
             return $download->{$statsType}();
         }
@@ -73,12 +72,11 @@ class Package
      *
      * @return Package
      */
-    private function calculateLatestVersions(): Package
+    private function calculateLatestVersions(): self
     {
         $versions = $this->getVersions();
 
         foreach ($versions as $name => $version) {
-
             $currentVersionName = $version->getVersion();
             $versionNormalized = $version->getVersionNormalized();
 
@@ -92,9 +90,9 @@ class Package
                 $functionName = 'Stable';
             }
 
-            if (version_compare($versionNormalized, $this->{'getLatest' . $functionName . 'VersionNormalized'}()) > 0) {
-                $this->{'setLatest' . $functionName . 'Version'}($currentVersionName);
-                $this->{'setLatest' . $functionName . 'VersionNormalized'}($versionNormalized);
+            if (version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
+                $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
+                $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
 
                 $license = $version->getLicense();
                 if (\is_array($license) && \count($license) > 0) {
@@ -144,7 +142,7 @@ class Package
             return 'dev';
         }
 
-        preg_match('{' . self::$modifierRegex . '$}i', strtolower($version), $match);
+        preg_match('{'.self::$modifierRegex.'$}i', strtolower($version), $match);
         if (!empty($match[3])) {
             return 'dev';
         }
@@ -231,7 +229,7 @@ class Package
     /**
      * @param string $latestUnstableVersionNormalized
      */
-    private function setLatestUnstableVersionNormalized(string $latestUnstableVersionNormalized)
+    private function setLatestUnstableVersionNormalized(string $latestUnstableVersionNormalized): void
     {
         $this->latestUnstableVersionNormalized = $latestUnstableVersionNormalized;
     }

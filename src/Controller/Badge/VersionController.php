@@ -11,13 +11,12 @@
 
 namespace App\Controller\Badge;
 
-
 use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateVersionBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,23 +24,24 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class VersionController
  * Version action for badges.
- * @package App\Controller\Badge
  */
 class VersionController extends Controller
 {
     /**
      * Version action.
      *
-     * @param Request $request
-     * @param Poser $poser
-     * @param ImageFactory $imageFactory
+     * @param Request            $request
+     * @param Poser              $poser
+     * @param ImageFactory       $imageFactory
      * @param CreateVersionBadge $createVersionBadge
-     * @param string $repository repository
-     * @param string $latest latest
-     * @param string $format
+     * @param string             $repository         repository
+     * @param string             $latest             latest
+     * @param string             $format
+     *
      * @return Response
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
+     *
      * @throws \InvalidArgumentException
      */
     public function version(
@@ -57,7 +57,7 @@ class VersionController extends Controller
             $format = $request->query->get('format');
         }
 
-        $function = 'create' . ucfirst($latest) . 'Badge';
+        $function = 'create'.ucfirst($latest).'Badge';
 
         $badge = $createVersionBadge->{$function}($repository, $format);
         $image = $imageFactory->createFromBadge($badge);

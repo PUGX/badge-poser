@@ -14,26 +14,26 @@ namespace App\Controller\Badge;
 use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateGitAttributesBadge;
 use App\Badge\Service\ImageFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class GitAttributesController
- * @package App\Controller\Badge
+ * Class GitAttributesController.
  */
 class GitAttributesController extends Controller
 {
     /**
      * .gitAttributes action.
      *
-     * @param Request $request
+     * @param Request                  $request
      * @param CreateGitAttributesBadge $createGitAttributesBadge
-     * @param ImageFactory $imageFactory
-     * @param string $repository repository
-     * @param string $format
+     * @param ImageFactory             $imageFactory
+     * @param string                   $repository               repository
+     * @param string                   $format
+     *
      * @return Response
      * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
@@ -48,7 +48,7 @@ class GitAttributesController extends Controller
         $repository,
         $format = 'svg'
     ): Response {
-        if ($request->query->get('format') === 'plastic') {
+        if ('plastic' === $request->query->get('format')) {
             $format = 'plastic';
         }
 

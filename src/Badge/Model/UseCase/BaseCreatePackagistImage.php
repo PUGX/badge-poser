@@ -11,7 +11,6 @@
 
 namespace App\Badge\Model\UseCase;
 
-
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -19,8 +18,7 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
- * Class BaseCreatePackagistImage
- * @package App\Badge\Model\UseCase
+ * Class BaseCreatePackagistImage.
  */
 abstract class BaseCreatePackagistImage
 {
@@ -36,12 +34,14 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $subject
-     * @param string $color
-     * @param string $format
+     * @param string      $repository
+     * @param string      $subject
+     * @param string      $color
+     * @param string      $format
      * @param string|null $context
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', $context = null): Badge
@@ -58,12 +58,14 @@ abstract class BaseCreatePackagistImage
 
     /**
      * @param string $repository
+     *
      * @return Package
+     *
      * @throws UnexpectedValueException
      */
     protected function fetchPackage(string $repository): Package
     {
-       return $this->packageRepository->fetchByRepository($repository);
+        return $this->packageRepository->fetchByRepository($repository);
     }
 
     /**
@@ -71,7 +73,9 @@ abstract class BaseCreatePackagistImage
      * @param string $status
      * @param string $color
      * @param string $format
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     protected function createBadge(string $subject, string $status, string $color, string $format): Badge
@@ -81,7 +85,9 @@ abstract class BaseCreatePackagistImage
 
     /**
      * @param string $format
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     protected function createDefaultBadge(string $format): Badge
@@ -94,8 +100,9 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return mixed
      */
     abstract protected function prepareText(Package $package, $context = null);

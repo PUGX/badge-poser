@@ -1,19 +1,16 @@
 <?php
 
-
 namespace App\Tests\Contributors\Model;
-
 
 use App\Contributors\Model\Contributor;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ContributorTest
- * @package App\Tests\Contributors\Model
+ * Class ContributorTest.
  */
 class ContributorTest extends TestCase
 {
-    public function testCreation()
+    public function testCreation(): void
     {
         $contributor = Contributor::create('JellyBellyDev', 'http://profileUrl', 'http://profileImg');
 
@@ -23,7 +20,7 @@ class ContributorTest extends TestCase
         $this->assertEquals('http://profileImg', $contributor->getProfileImg());
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $contributor = Contributor::create('JellyBellyDev', 'http://profileUrl', 'http://profileImg');
 

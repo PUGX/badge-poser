@@ -11,16 +11,15 @@
 
 namespace App\Badge\Infrastructure\Package;
 
-use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\Package;
+use App\Badge\Model\PackageRepositoryInterface;
 use Packagist\Api\Client;
 use Packagist\Api\Result\Package as ApiPackage;
-use \UnexpectedValueException;
+use UnexpectedValueException;
 
 /**
  * Class PackageRepository
- * This class is intended to load ApiPackage, create, and work with the Package object
- * @package App\Badge\Infrastructure\Package
+ * This class is intended to load ApiPackage, create, and work with the Package object.
  */
 class PackageRepository implements PackageRepositoryInterface
 {

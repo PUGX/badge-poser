@@ -17,8 +17,7 @@ use App\Badge\Model\UseCase\CreateVersionBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class CreateVersionBadgeTest
- * @package App\Tests\Badge\UseCase
+ * Class CreateVersionBadgeTest.
  */
 class CreateVersionBadgeTest extends TestCase
 {
@@ -27,13 +26,13 @@ class CreateVersionBadgeTest extends TestCase
     /** @var PackageRepositoryInterface */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateVersionBadge($this->repository);
     }
 
-    public function testShouldCreateLicenseBadge()
+    public function testShouldCreateLicenseBadge(): void
     {
         $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
@@ -56,7 +55,7 @@ class CreateVersionBadgeTest extends TestCase
         $this->assertEquals('v2.0', $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $this->repository->expects($this->any())
             ->method('fetchByRepository')

@@ -17,8 +17,7 @@ use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class CreateDownloadsBadgeTest
- * @package App\Tests\Badge\UseCase
+ * Class CreateDownloadsBadgeTest.
  */
 class CreateDownloadsBadgeTest extends TestCase
 {
@@ -27,13 +26,13 @@ class CreateDownloadsBadgeTest extends TestCase
     /** @var PackageRepositoryInterface */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateDownloadsBadge($this->repository);
     }
 
-    public function testShouldCreateDownloadsBadge()
+    public function testShouldCreateDownloadsBadge(): void
     {
         $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
@@ -55,7 +54,7 @@ class CreateDownloadsBadgeTest extends TestCase
         $this->assertEquals('102 today', $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $this->repository->expects($this->any())
             ->method('fetchByRepository')

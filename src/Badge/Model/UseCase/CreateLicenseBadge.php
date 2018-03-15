@@ -17,20 +17,20 @@ use InvalidArgumentException;
 
 /**
  * Class CreateLicenseBadge
- * Create the 'license' image using a generator `Poser`
- * @package App\Badge\Model\UseCase
+ * Create the 'license' image using a generator `Poser`.
  */
 class CreateLicenseBadge extends BaseCreatePackagistImage
 {
-    private CONST COLOR = '428F7E';
-    private CONST SUBJECT = 'license';
-    private CONST TEXT_NO_LICENSE = 'no';
+    private const COLOR = '428F7E';
+    private const SUBJECT = 'license';
+    private const TEXT_NO_LICENSE = 'no';
 
     /**
      * @param string $repository
      * @param string $format
      *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     public function createLicenseBadge(string $repository, string $format = 'svg'): Badge
@@ -39,8 +39,9 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return mixed|string
      */
     protected function prepareText(Package $package, $context = null)

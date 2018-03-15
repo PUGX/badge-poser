@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Contributors\Command;
 
 use App\Contributors\Service\Repository;
@@ -9,8 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class UpdateCommand
- * @package App\Contributors\Command
+ * Class UpdateCommand.
  */
 class UpdateCommand extends Command
 {
@@ -24,7 +22,7 @@ class UpdateCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             // the name of the command (the part after "bin/console")
@@ -36,7 +34,7 @@ class UpdateCommand extends Command
             ->setHelp('This command update contributors of badge poser...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([

@@ -3,8 +3,7 @@
 namespace App\Stats\Persister;
 
 /**
- * Class NullPersister
- * @package App\Stats\Persister
+ * Class NullPersister.
  */
 final class NullPersister implements PersisterInterface
 {
@@ -57,7 +56,8 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Add the repository to the list of the latest accessed.
-     *S
+     *S.
+     *
      * @param string $repository
      * @param int    $maxListLength
      *
@@ -83,5 +83,4 @@ final class NullPersister implements PersisterInterface
 
         return $this;
     }
-
 }
