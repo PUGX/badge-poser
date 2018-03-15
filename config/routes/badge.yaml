@@ -65,3 +65,21 @@ pugx_badge_gitattributes:
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
         _ext: "svg"
+
+pugx_badge_dependents:
+    path: /{repository}/dependents.{_ext}
+    controller: App\Controller\Badge\DependentsController::dependents
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"
+
+pugx_badge_suggesters:
+    path: /{repository}/suggesters.{_ext}
+    controller: App\Controller\Badge\SuggestersController::suggesters
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        _ext: "svg"

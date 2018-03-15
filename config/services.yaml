@@ -17,6 +17,8 @@ parameters:
         - { name: 'version', label: 'Version', route: "pugx_badge_version" }
         - { name: 'composerlock', label: 'composer.lock', route: "pugx_badge_composerlock" }
         - { name: 'gitattributes', label: '.gitattributes', route: "pugx_badge_gitattributes" }
+        - { name: 'dependents', label: 'Dependents', route: "pugx_badge_dependents"}
+        - { name: 'suggesters', label: 'Suggesters', route: "pugx_badge_suggesters"}
 
 services:
     # default configuration for services in *this* file
