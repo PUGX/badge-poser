@@ -34,14 +34,4 @@ class SuggestersControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testSuggestersActionPngRedirectSvg()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/pugx/badge-poser/suggesters.png');
-        $crawler = $client->followRedirect();
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('/pugx/badge-poser/suggesters', $crawler->getUri());
-    }
 }

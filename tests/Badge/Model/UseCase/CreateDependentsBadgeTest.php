@@ -50,7 +50,7 @@ class CreateDependentsBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDependentsBadge($repository);
         $this->assertEquals(CreateDependentsBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateDependentsBadge::COLOR, $badge->getHexColor());
+        $this->assertEquals('#'.CreateDependentsBadge::COLOR, $badge->getHexColor());
         $this->assertEquals('1', $badge->getStatus());
     }
 
@@ -63,8 +63,8 @@ class CreateDependentsBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDependentsBadge($repository);
 
-        $this->assertEquals(CreateDependentsBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateDependentsBadge::COLOR, $badge->getHexColor());
-        $this->assertEquals('0', $badge->getStatus());
+        $this->assertEquals(' - ', $badge->getSubject());
+        $this->assertEquals(' - ', $badge->getStatus());
+        $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

@@ -50,7 +50,7 @@ class CreateSuggestersBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);
         $this->assertEquals(CreateSuggestersBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateSuggestersBadge::COLOR, $badge->getHexColor());
+        $this->assertEquals('#'.CreateSuggestersBadge::COLOR, $badge->getHexColor());
         $this->assertEquals('3', $badge->getStatus());
     }
 
@@ -63,8 +63,8 @@ class CreateSuggestersBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);
 
-        $this->assertEquals(CreateSuggestersBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateSuggestersBadge::COLOR, $badge->getHexColor());
-        $this->assertEquals('0', $badge->getStatus());
+        $this->assertEquals(' - ', $badge->getSubject());
+        $this->assertEquals(' - ', $badge->getStatus());
+        $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

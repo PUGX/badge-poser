@@ -34,14 +34,4 @@ class DependentsControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testDependentsActionPngRedirectSvg()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/pugx/badge-poser/dependents.png');
-        $crawler = $client->followRedirect();
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('/pugx/badge-poser/dependents', $crawler->getUri());
-    }
 }
