@@ -13,13 +13,12 @@ namespace App\Tests\Badge\UseCase;
 
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
-use PHPUnit\Framework\TestCase;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * Class CreateComposerLockBadgeTest
- * @package App\Tests\Badge\UseCase
+ * Class CreateComposerLockBadgeTest.
  */
 class CreateComposerLockBadgeTest extends TestCase
 {
@@ -30,7 +29,7 @@ class CreateComposerLockBadgeTest extends TestCase
     /** @var ClientInterface */
     private $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->client = $this->getMockBuilder(ClientInterface::class)
@@ -50,10 +49,10 @@ class CreateComposerLockBadgeTest extends TestCase
     /**
      * @dataProvider shouldCreateComposerLockBadgeProvider
      */
-    public function testShouldCreateComposerLockBadge($returnCode, $expected)
+    public function testShouldCreateComposerLockBadge($returnCode, $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\App\Badge\Model\Package', 
+            '\App\Badge\Model\Package',
             ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
         );
 
@@ -90,7 +89,7 @@ class CreateComposerLockBadgeTest extends TestCase
         $this->assertEquals($expected, $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\App\Badge\Model\Package',
@@ -123,10 +122,10 @@ class CreateComposerLockBadgeTest extends TestCase
 
     public function shouldCreateComposerLockBadgeProvider()
     {
-        return array(
-            array(200, 'committed'),
-            array(404, 'uncommitted'),
-            array(500, 'checking'),
-        );
+        return [
+            [200, 'committed'],
+            [404, 'uncommitted'],
+            [500, 'checking'],
+        ];
     }
 }

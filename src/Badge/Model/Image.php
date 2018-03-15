@@ -13,8 +13,7 @@ namespace App\Badge\Model;
 
 /**
  * Class Image
- * An Image value Object
- * @package App\Badge\Model
+ * An Image value Object.
  */
 class Image
 {
@@ -33,7 +32,7 @@ class Image
     }
 
     /**
-     * Returns the image content as binary string
+     * Returns the image content as binary string.
      */
     public function __toString()
     {
@@ -44,9 +43,10 @@ class Image
      * @param string $name
      * @param string $content
      * @param string $format
+     *
      * @return Image
      */
-    public static function create(string $name, string $content, string $format = 'svg'): Image
+    public static function create(string $name, string $content, string $format = 'svg'): self
     {
         $content = (string) $content;
 
@@ -69,7 +69,7 @@ class Image
     private function cleanName(): string
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
-        $clean = preg_replace("/[^a-zA-Z0-9_|+ -]/", '', $clean);
+        $clean = preg_replace('/[^a-zA-Z0-9_|+ -]/', '', $clean);
         $clean = strtolower(trim($clean, '- '));
 
         return $clean;

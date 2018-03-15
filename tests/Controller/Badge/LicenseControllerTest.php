@@ -14,12 +14,11 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class LicenseControllerTest
- * @package App\Tests\Basge\Controller
+ * Class LicenseControllerTest.
  */
 class LicenseControllerTest extends WebTestCase
 {
-    public function testLicenseAction()
+    public function testLicenseAction(): void
     {
         $client = static::createClient();
 
@@ -27,14 +26,14 @@ class LicenseControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
     }
 
-    public function testLicenseActionSvgExplicit()
+    public function testLicenseActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/license.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testLicenseActionPngRedirectSvg()
+    public function testLicenseActionPngRedirectSvg(): void
     {
         $client = static::createClient();
 

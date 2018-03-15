@@ -12,12 +12,11 @@
 namespace App\Badge\Model;
 
 /**
- * Class Badge
- * @package App\Badge\Model
+ * Class Badge.
  */
 class Badge
 {
-    private CONST DEFAULT_FORMAT = 'svg';
+    private const DEFAULT_FORMAT = 'svg';
     private $subject;
     private $status;
     private $color;
@@ -36,11 +35,11 @@ class Badge
     }
 
     /**
-     * @return string the Hexadecimal #FFFFFF.
+     * @return string the Hexadecimal #FFFFFF
      */
     public function getHexColor(): string
     {
-        return '#' . $this->color;
+        return '#'.$this->color;
     }
 
     /**
@@ -69,7 +68,7 @@ class Badge
 
     public function __toString()
     {
-        return sprintf("%s-%s-%s.%s",
+        return sprintf('%s-%s-%s.%s',
             $this->subject,
             $this->status,
             $this->color,
@@ -79,24 +78,25 @@ class Badge
 
     /**
      * @param $value
+     *
      * @return string
      */
     private function escapeValue($value): string
     {
-        $pattern = array(
+        $pattern = [
             // '/([^_])_([^_])/g', // damn it global doesn't work in PHP
             '/([^_])_$/',
             '/^_([^_])/',
             '/__/',
             '/--+/',
-        );
-        $replacement = array(
+        ];
+        $replacement = [
             //'$1 $2',
             '$1 ',
             ' $1',
             '°§*¼',
             '-',
-        );
+        ];
         $ret = preg_replace($pattern, $replacement, $value);
         $ret = str_replace('_', ' ', $ret);    // this fix the php pgrep_replace is not global :(
         $ret = str_replace('°§*¼', '_', $ret); // this fix the php pgrep_replace is not global :(
@@ -104,14 +104,14 @@ class Badge
         return $ret;
     }
 
-
     /**
      * @param $color
+     *
      * @return false|int
      */
     private function isValidColorHex($color)
     {
-        $color = ltrim($color, "#");
+        $color = ltrim($color, '#');
         $regex = '/^[0-9a-fA-F]{6}$/';
 
         return preg_match($regex, $color);

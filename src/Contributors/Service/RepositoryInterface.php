@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Contributors\Service;
 
 /**
- * Interface RepositoryInterface
- * @package App\Contributors\Service
+ * Interface RepositoryInterface.
  */
 interface RepositoryInterface
 {

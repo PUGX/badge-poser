@@ -14,23 +14,21 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class ComposerLockControllerTest
- * @package App\Tests\Basge\Controller
+ * Class ComposerLockControllerTest.
  */
 class ComposerLockControllerTest extends WebTestCase
 {
-    public function testComposerLockAction()
+    public function testComposerLockAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/composerlock');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testComposerLockSvgExplicit()
+    public function testComposerLockSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/composerlock.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
-
 }

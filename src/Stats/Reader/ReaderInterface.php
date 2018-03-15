@@ -3,8 +3,7 @@
 namespace App\Stats\Reader;
 
 /**
- * Interface ReaderInterface
- * @package App\Stats\Reader
+ * Interface ReaderInterface.
  */
 interface ReaderInterface
 {

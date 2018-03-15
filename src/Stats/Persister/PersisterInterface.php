@@ -3,8 +3,7 @@
 namespace App\Stats\Persister;
 
 /**
- * Interface PersisterInterface
- * @package App\Stats\Persister
+ * Interface PersisterInterface.
  */
 interface PersisterInterface
 {

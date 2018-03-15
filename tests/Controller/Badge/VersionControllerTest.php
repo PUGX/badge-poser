@@ -14,12 +14,11 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class VersionControllerTest
- * @package App\Tests\Basge\Controller
+ * Class VersionControllerTest.
  */
 class VersionControllerTest extends WebTestCase
 {
-    public function testLatestStableAction()
+    public function testLatestStableAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version');
@@ -27,7 +26,7 @@ class VersionControllerTest extends WebTestCase
         $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
     }
 
-    public function testLatestVStableAction()
+    public function testLatestVStableAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/stable');
@@ -37,7 +36,7 @@ class VersionControllerTest extends WebTestCase
         $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
     }
 
-    public function testLatestUnstableAction()
+    public function testLatestUnstableAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/unstable');
@@ -47,21 +46,21 @@ class VersionControllerTest extends WebTestCase
         $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
     }
 
-    public function testLatestStableActionSvgExplicit()
+    public function testLatestStableActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testLatestUnstableActionSvgExplicit()
+    public function testLatestUnstableActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/unstable.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testLatestStableActionPngRedirectSvg()
+    public function testLatestStableActionPngRedirectSvg(): void
     {
         $client = static::createClient();
 

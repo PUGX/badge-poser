@@ -3,8 +3,7 @@
 namespace App\Service;
 
 /**
- * Interface SnippetGeneratorInterface
- * @package App\Service
+ * Interface SnippetGeneratorInterface.
  */
 interface SnippetGeneratorInterface
 {

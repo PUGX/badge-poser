@@ -5,8 +5,7 @@ namespace App\Stats\Persister;
 use Predis\Client as Redis;
 
 /**
- * Class RedisPersister
- * @package App\Stats\Persister
+ * Class RedisPersister.
  */
 final class RedisPersister implements PersisterInterface
 {
@@ -57,6 +56,7 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * @param string $repository
+     *
      * @return PersisterInterface
      */
     public function incrementRepositoryAccess(string $repository): PersisterInterface
@@ -78,6 +78,7 @@ final class RedisPersister implements PersisterInterface
     /**
      * @param string $repository
      * @param string $type
+     *
      * @return PersisterInterface
      */
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
@@ -89,23 +90,25 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * @param string $repository
-     * @param int $maxListLength
+     * @param int    $maxListLength
+     *
      * @return PersisterInterface
      */
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
-        $this->redis->zAdd($this->keyList, time() ,$repository);
+        $this->redis->zAdd($this->keyList, time(), $repository);
 
         return $this;
     }
 
     /**
      * @param string $url
+     *
      * @return PersisterInterface
      */
     public function addReferer(string $url): PersisterInterface
     {
-        $this->redis->zAdd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time() ,$url);
+        $this->redis->zAdd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time(), $url);
 
         return $this;
     }
@@ -124,7 +127,7 @@ final class RedisPersister implements PersisterInterface
     }
 
     /**
-     * Create the yearly key with prefix eg. 'total_2003'
+     * Create the yearly key with prefix eg. 'total_2003'.
      *
      * @param string    $prefix
      * @param \DateTime $datetime
@@ -137,7 +140,7 @@ final class RedisPersister implements PersisterInterface
     }
 
     /**
-     * Create the monthly key with prefix eg. 'total_2003_11'
+     * Create the monthly key with prefix eg. 'total_2003_11'.
      *
      * @param string    $prefix
      * @param \DateTime $datetime
@@ -150,7 +153,7 @@ final class RedisPersister implements PersisterInterface
     }
 
     /**
-     * Create the daily key with prefix eg. 'total_2003_11_29'
+     * Create the daily key with prefix eg. 'total_2003_11_29'.
      *
      * @param string    $prefix
      * @param \DateTime $datetime

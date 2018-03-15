@@ -8,25 +8,27 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Badge\Infrastructure;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use App\Badge\Model\Image;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
- * Class ResponseFactory
- * @package App\Badge\Infrastructure
+ * Class ResponseFactory.
  */
 class ResponseFactory
 {
     /**
      * @param Image $image
-     * @param int $status
-     * @param int $maxage
-     * @param int $smaxage
+     * @param int   $status
+     * @param int   $maxage
+     * @param int   $smaxage
+     *
      * @return Response
+     *
      * @throws InvalidArgumentException
      */
     public static function createFromImage(Image $image, int $status, $maxage = 3600, $smaxage = 3600): Response

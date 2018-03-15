@@ -9,16 +9,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class SnippetController
- * @package App\Controller
+ * Class SnippetController.
  */
 class SnippetController extends Controller
 {
     /**
      * Returns all snippets for a package.
-     * @param Request $request
+     *
+     * @param Request                   $request
      * @param SnippetGeneratorInterface $generator
+     *
      * @return JsonResponse
+     *
      * @throws \Exception
      */
     public function all(Request $request, SnippetGeneratorInterface $generator): JsonResponse
@@ -53,11 +55,13 @@ class SnippetController extends Controller
 
     /**
      * Validates a repository name.
+     *
      * @param string $repository
+     *
      * @return bool
      */
     private function isValidRepositoryName(string $repository): bool
     {
-        return (preg_match('/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?/', $repository) === 1);
+        return 1 === preg_match('/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?/', $repository);
     }
 }

@@ -18,26 +18,26 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class PackagistController
- * @package App\Controller
+ * Class PackagistController.
  */
 class PackagistController extends Controller
 {
     /**
-     * @param Request $request
+     * @param Request         $request
      * @param PackagistClient $packagistClient
+     *
      * @return JsonResponse
      */
     public function search(Request $request, PackagistClient $packagistClient): JsonResponse
     {
-        $responseContent = array();
+        $responseContent = [];
         $packageName = $request->query->get('name');
 
         $packagistResponse = $packagistClient->search($packageName);
 
         /** @var PackagistResult $package */
         foreach ($packagistResponse as $package) {
-            $responseContent[] = array('id' => $package->getName(), 'description' => $package->getDescription());
+            $responseContent[] = ['id' => $package->getName(), 'description' => $package->getDescription()];
         }
 
         return new JsonResponse($responseContent);

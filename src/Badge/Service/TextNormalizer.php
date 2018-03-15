@@ -7,27 +7,28 @@ use InvalidArgumentException;
 /**
  * Class TextNormalizer
  * Transform numbers to readable format.
- * @package App\Badge\Service
  */
 class TextNormalizer
 {
     /**
      * @param $number
      * @param int $precision
+     *
      * @return string
+     *
      * @throws InvalidArgumentException
      */
     public function normalize($number, $precision = 2): string
     {
-            $number = $this->normalizeNumber($number);
-            $units = ['', ' k', ' M', ' G', ' T'];
+        $number = $this->normalizeNumber($number);
+        $units = ['', ' k', ' M', ' G', ' T'];
 
-            $pow = floor(($number ? log($number) : 0) / log(1000));
-            $pow = min($pow, count($units) - 1);
+        $pow = floor(($number ? log($number) : 0) / log(1000));
+        $pow = min($pow, count($units) - 1);
 
-            $number /= pow(1000, $pow);
+        $number /= 1000 ** $pow;
 
-             return round($number, $precision) . $units[$pow];
+        return round($number, $precision).$units[$pow];
     }
 
     /**
@@ -36,6 +37,7 @@ class TextNormalizer
      * @param mixed $number number to be normalized
      *
      * @return int
+     *
      * @throws InvalidArgumentException
      */
     private function normalizeNumber($number): int
@@ -44,7 +46,7 @@ class TextNormalizer
             throw new InvalidArgumentException('Number expected');
         }
 
-        $number = floatval($number);
+        $number = (float) $number;
 
         if ($number < 0) {
             throw new InvalidArgumentException('The number expected was >= 0');

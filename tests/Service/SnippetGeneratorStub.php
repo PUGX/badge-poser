@@ -5,8 +5,7 @@ namespace App\Tests\Service;
 use App\Service\SnippetGeneratorInterface;
 
 /**
- * Class SnippetGeneratorStub
- * @package App\Tests\Service
+ * Class SnippetGeneratorStub.
  */
 class SnippetGeneratorStub implements SnippetGeneratorInterface
 {

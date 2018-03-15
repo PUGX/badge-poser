@@ -11,23 +11,21 @@
 
 namespace App\Badge\Model\UseCase;
 
-
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
-use App\Badge\Service\TextNormalizer;
-use App\Badge\Service\NormalizerInterface;
 use App\Badge\Model\PackageRepositoryInterface;
+use App\Badge\Service\NormalizerInterface;
+use App\Badge\Service\TextNormalizer;
 use InvalidArgumentException;
 
 /**
  * Class CreateDownloadsBadge
  * Create the 'downloads' image with the standard Font and standard Image.
- * @package App\Badge\Model\UseCase
  */
 class CreateDownloadsBadge extends BaseCreatePackagistImage
 {
-    private CONST COLOR = '007ec6';
-    private CONST SUBJECT = 'downloads';
+    private const COLOR = '007ec6';
+    private const SUBJECT = 'downloads';
 
     /** @var TextNormalizer */
     private $normalizer;
@@ -50,7 +48,9 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
      * @param string $repository
      * @param string $type
      * @param string $format
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     public function createDownloadsBadge(string $repository, string $type, string $format): Badge
@@ -59,9 +59,11 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return mixed|string
+     *
      * @throws \InvalidArgumentException
      */
     protected function prepareText(Package $package, $context = null)
@@ -74,6 +76,6 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
             $when = 'this month';
         }
 
-        return sprintf("%s %s", $text, $when);
+        return sprintf('%s %s', $text, $when);
     }
 }

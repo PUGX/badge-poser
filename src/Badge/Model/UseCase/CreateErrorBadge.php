@@ -12,28 +12,29 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
-use GuzzleHttp\Exception\BadResponseException;
 use Exception;
+use GuzzleHttp\Exception\BadResponseException;
 use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
  * Class CreateErrorBadge
  * Create the 'error' badge with the standard Font and standard Image.
- * @package App\Badge\Model\UseCase
  */
 class CreateErrorBadge
 {
-    private CONST COLOR = 'e05d44';
-    private CONST SUBJECT = 'error';
-    private CONST ERROR_TEXT_GENERIC = 'generic';
-    private CONST ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
-    private CONST ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
+    private const COLOR = 'e05d44';
+    private const SUBJECT = 'error';
+    private const ERROR_TEXT_GENERIC = 'generic';
+    private const ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
+    private const ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
     /**
      * @param Exception $exception
-     * @param string $format
+     * @param string    $format
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     public function createErrorBadge(Exception $exception, string $format): Badge
@@ -43,13 +44,15 @@ class CreateErrorBadge
 
     /**
      * @param Exception $exception
-     * @param string $format
+     * @param string    $format
+     *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      */
     protected function createBadge(Exception $exception, string $format): Badge
     {
-        $subject =  'error';
+        $subject = 'error';
         $status = self::ERROR_TEXT_GENERIC;
         if ($exception instanceof BadResponseException) {
             $status = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;

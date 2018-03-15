@@ -7,27 +7,26 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class SnippetGeneratorTest
- * @package App\Tests\Service
+ * Class SnippetGeneratorTest.
  */
 class SnippetGeneratorTest extends TestCase
 {
-    public function testGenerateAllSnippets()
+    public function testGenerateAllSnippets(): void
     {
-        $router  = $this->prophesize(RouterInterface::class)
+        $router = $this->prophesize(RouterInterface::class)
             ->reveal();
 
         $generator = new SnippetGenerator($router, [], []);
 
         $expected = [
             'clip_all' => [
-                'markdown' => ''
+                'markdown' => '',
             ],
             'repository' => [
                 'html' => 'vendor/package',
             ],
         ];
-        
+
         self::assertEquals($expected, $generator->generateAllSnippets('vendor/package'));
     }
 }

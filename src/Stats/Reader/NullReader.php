@@ -3,8 +3,7 @@
 namespace App\Stats\Reader;
 
 /**
- * Class NullReader
- * @package App\Stats\Reader
+ * Class NullReader.
  */
 final class NullReader implements ReaderInterface
 {
