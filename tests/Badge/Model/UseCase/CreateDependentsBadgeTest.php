@@ -17,7 +17,7 @@ use App\Badge\Model\UseCase\CreateDependentsBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class DependentsImageCreatorTest
+ * Class DependentsImageCreatorTest.
  */
 class CreateDependentsBadgeTest extends TestCase
 {
@@ -26,13 +26,13 @@ class CreateDependentsBadgeTest extends TestCase
     /** @var PackageRepositoryInterface */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateDependentsBadge($this->repository);
     }
 
-    public function testShouldCreateDependentsBadge()
+    public function testShouldCreateDependentsBadge(): void
     {
         $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
@@ -54,7 +54,7 @@ class CreateDependentsBadgeTest extends TestCase
         $this->assertEquals('1', $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $this->repository->expects($this->any())
             ->method('fetchByRepository')

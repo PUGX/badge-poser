@@ -14,12 +14,11 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class SuggestersControllerTest
- * @package App\Tests\Basge\Controller
+ * Class SuggestersControllerTest.
  */
 class SuggestersControllerTest extends WebTestCase
 {
-    public function testSuggestersAction()
+    public function testSuggestersAction(): void
     {
         $client = static::createClient();
 
@@ -27,11 +26,10 @@ class SuggestersControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
     }
 
-    public function testSuggestersActionSvgExplicit()
+    public function testSuggestersActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/suggesters.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
-
 }

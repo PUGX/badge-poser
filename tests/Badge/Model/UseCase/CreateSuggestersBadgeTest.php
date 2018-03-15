@@ -17,7 +17,7 @@ use App\Badge\Model\UseCase\CreateSuggestersBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SuggestersImageCreatorTest
+ * Class SuggestersImageCreatorTest.
  */
 class CreateSuggestersBadgeTest extends TestCase
 {
@@ -26,13 +26,13 @@ class CreateSuggestersBadgeTest extends TestCase
     /** @var PackageRepositoryInterface */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateSuggestersBadge($this->repository);
     }
 
-    public function testShouldCreateSuggestersBadge()
+    public function testShouldCreateSuggestersBadge(): void
     {
         $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
@@ -54,7 +54,7 @@ class CreateSuggestersBadgeTest extends TestCase
         $this->assertEquals('3', $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
