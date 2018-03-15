@@ -341,6 +341,22 @@ class Package
     }
 
     /**
+     * @return integer
+     */
+    public function getDependents() : int
+    {
+        return $this->getOriginalObject()->getDependents();
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSuggesters() : int
+    {
+        return $this->getOriginalObject()->getSuggesters();
+    }
+
+    /**
      * @param ApiPackage $originalObject
      */
     private function setOriginalObject(ApiPackage $originalObject): void
