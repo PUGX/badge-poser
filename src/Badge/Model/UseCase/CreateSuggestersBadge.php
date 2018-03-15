@@ -13,6 +13,9 @@ namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
+use App\Badge\Model\PackageRepositoryInterface;
+use App\Badge\Service\TextNormalizer;
+use App\Badge\Service\NormalizerInterface;
 
 /**
  * Create the 'suggesters' image with the standard Font and standard Image.
@@ -21,6 +24,23 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
 {
     CONST COLOR = '007ec6';
     CONST SUBJECT = 'suggesters';
+
+    /**
+     * @var NormalizerInterface
+     */
+    private $normalizer;
+
+    /**
+     * @param PackageRepositoryInterface $packageRepository
+     * @param NormalizerInterface        $textNormalizer
+     */
+    public function __construct(
+        PackageRepositoryInterface $packageRepository,
+        NormalizerInterface $textNormalizer = null
+    ) {
+        parent::__construct($packageRepository);
+        $this->normalizer = $textNormalizer ?? new TextNormalizer();
+    }
 
     /**
      * @param $repository
@@ -40,6 +60,11 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
      */
     protected function prepareText(Package $package, $context = null)
     {
-        return "{$package->getSuggesters()}";
+        $suggesters = $package->getSuggesters();
+        if ($suggesters === 0) {
+            return '0';
+        }
+
+        return $this->normalizer->normalize($suggesters);
     }
 }
