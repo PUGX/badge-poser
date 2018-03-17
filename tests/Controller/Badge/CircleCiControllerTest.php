@@ -14,12 +14,11 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class CircleCiControllerTest
- * @package App\Tests\Basge\Controller
+ * Class CircleCiControllerTest.
  */
 class CircleCiControllerTest extends WebTestCase
 {
-    public function testCircleCi()
+    public function testCircleCi(): void
     {
         $this->markTestSkipped();
         $client = static::createClient();
@@ -27,7 +26,7 @@ class CircleCiControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-    public function testCircleCiForBranch()
+    public function testCircleCiForBranch(): void
     {
         $this->markTestSkipped();
         $client = static::createClient();

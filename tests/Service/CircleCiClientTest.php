@@ -4,12 +4,10 @@ namespace App\Tests\Service;
 
 use App\Service\CircleCiClient;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 
 class CircleCiClientTest extends TestCase
 {
@@ -22,7 +20,7 @@ class CircleCiClientTest extends TestCase
     /** @var CircleCiClient */
     protected $circleCiClient;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->getMockBuilder(UrlGeneratorInterface::class)
             ->disableOriginalConstructor()->getMock();

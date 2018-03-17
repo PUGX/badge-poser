@@ -14,8 +14,8 @@ namespace App\Controller\Badge;
 use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Badge\Service\ImageFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,20 +24,21 @@ use UnexpectedValueException;
 /**
  * Class CircleCiController
  * CircleCi action for badges.
- * @package App\Controller\Badge
  */
 class CircleCiController extends Controller
 {
     /**
      * CircleCi action.
      *
-     * @param Request $request
-     * @param ImageFactory $imageFactory
+     * @param Request             $request
+     * @param ImageFactory        $imageFactory
      * @param CreateCircleCiBadge $circleCiBadge
-     * @param string $repository
-     * @param string $branch
-     * @param string $format
+     * @param string              $repository
+     * @param string              $branch
+     * @param string              $format
+     *
      * @return Response
+     *
      * @throws \InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -52,7 +53,7 @@ class CircleCiController extends Controller
         $branch = 'master',
         $format = 'svg'
     ): Response {
-        if ($request->query->get('format') === 'plastic') {
+        if ('plastic' === $request->query->get('format')) {
             $format = 'plastic';
         }
 

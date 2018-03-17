@@ -18,11 +18,9 @@ use App\Service\CircleCiClientInterface;
 use InvalidArgumentException;
 use UnexpectedValueException;
 
-
 /**
  * Class CreateCircleCiBadge
- * Create the 'CircleCi' image using a generator `Poser`
- * @package App\Badge\Model\UseCase
+ * Create the 'CircleCi' image using a generator `Poser`.
  */
 class CreateCircleCiBadge extends BaseCreatePackagistImage
 {
@@ -39,7 +37,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param CircleCiClientInterface $circleCiClient
+     * @param CircleCiClientInterface    $circleCiClient
      */
     public function __construct(PackageRepositoryInterface $packageRepository, CircleCiClientInterface $circleCiClient)
     {
@@ -53,6 +51,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
      * @param string $format
      *
      * @return Badge
+     *
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
@@ -67,12 +66,11 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
 
             $response = $this->circleCiClient->getBuilds($repository, $branch);
 
-            if ($response->getStatusCode() !== 200) {
+            if (200 !== $response->getStatusCode()) {
                 return $this->createDefaultBadge($format);
             }
 
             $builds = json_decode($response->getBody()->getContents(), true);
-
         } catch (\Exception $e) {
             return $this->createDefaultBadge($format);
         }
@@ -95,8 +93,9 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return string
      */
     protected function prepareText(Package $package, $context = null): string

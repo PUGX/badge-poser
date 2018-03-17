@@ -11,18 +11,17 @@
 
 namespace App\Tests\Badge\UseCase;
 
+use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Service\CircleCiClientInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
-use App\Badge\Model\Package;
-use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class CreateCircleCiBadgeTest
- * @package App\Tests\Badge\UseCase
+ * Class CreateCircleCiBadgeTest.
  */
 class CreateCircleCiBadgeTest extends TestCase
 {
@@ -33,7 +32,7 @@ class CreateCircleCiBadgeTest extends TestCase
     /** @var CircleCiClientInterface */
     private $circleCiClient;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->circleCiClient = $this->getMockBuilder(CircleCiClientInterface::class)
@@ -52,6 +51,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
     /**
      * @dataProvider shouldCreateCircleCiBadgeProvider
+     *
      * @param $status
      * @param $expected
      */
@@ -173,7 +173,6 @@ class CreateCircleCiBadgeTest extends TestCase
             ->method('getBuilds')
             ->will($this->returnValue($response));
 
-
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
 
@@ -207,7 +206,6 @@ class CreateCircleCiBadgeTest extends TestCase
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
             ->will($this->returnValue($response));
-
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
