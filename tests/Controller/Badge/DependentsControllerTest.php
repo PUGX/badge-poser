@@ -14,12 +14,11 @@ namespace App\Tests\Basge\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
- * Class DependentsControllerTest
- * @package App\Tests\Basge\Controller
+ * Class DependentsControllerTest.
  */
 class DependentsControllerTest extends WebTestCase
 {
-    public function testDependentsAction()
+    public function testDependentsAction(): void
     {
         $client = static::createClient();
 
@@ -27,21 +26,10 @@ class DependentsControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
     }
 
-    public function testDependentsActionSvgExplicit()
+    public function testDependentsActionSvgExplicit(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/dependents.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
-    }
-
-    public function testDependentsActionPngRedirectSvg()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/pugx/badge-poser/dependents.png');
-        $crawler = $client->followRedirect();
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('/pugx/badge-poser/dependents', $crawler->getUri());
     }
 }

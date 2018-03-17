@@ -14,16 +14,16 @@ namespace App\Badge\Model\UseCase;
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
-use App\Badge\Service\TextNormalizer;
 use App\Badge\Service\NormalizerInterface;
+use App\Badge\Service\TextNormalizer;
 
 /**
  * Create the 'suggesters' image with the standard Font and standard Image.
  */
 class CreateSuggestersBadge extends BaseCreatePackagistImage
 {
-    CONST COLOR = '007ec6';
-    CONST SUBJECT = 'suggesters';
+    public const COLOR = '007ec6';
+    public const SUBJECT = 'suggesters';
 
     /**
      * @var NormalizerInterface
@@ -48,20 +48,21 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
      *
      * @return Badge
      */
-    public function createSuggestersBadge(string $repository, string $format = 'svg') : Badge
+    public function createSuggestersBadge(string $repository, string $format = 'svg'): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return string
      */
     protected function prepareText(Package $package, $context = null)
     {
         $suggesters = $package->getSuggesters();
-        if ($suggesters === 0) {
+        if (0 === $suggesters) {
             return '0';
         }
 

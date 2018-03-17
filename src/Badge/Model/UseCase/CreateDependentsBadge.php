@@ -14,16 +14,16 @@ namespace App\Badge\Model\UseCase;
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
-use App\Badge\Service\TextNormalizer;
 use App\Badge\Service\NormalizerInterface;
+use App\Badge\Service\TextNormalizer;
 
 /**
  * Create the 'dependents' image with the standard Font and standard Image.
  */
 class CreateDependentsBadge extends BaseCreatePackagistImage
 {
-    const COLOR = '007ec6';
-    const SUBJECT = 'dependents';
+    public const COLOR = '007ec6';
+    public const SUBJECT = 'dependents';
 
     /**
      * @var NormalizerInterface
@@ -48,20 +48,21 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
      *
      * @return Badge
      */
-    public function createDependentsBadge(string $repository, string $format = 'svg') : Badge
+    public function createDependentsBadge(string $repository, string $format = 'svg'): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
     /**
-     * @param Package $package
+     * @param Package     $package
      * @param null|string $context
+     *
      * @return string
      */
     protected function prepareText(Package $package, $context = null)
     {
         $dependents = $package->getDependents();
-        if ($dependents === 0) {
+        if (0 === $dependents) {
             return '0';
         }
 

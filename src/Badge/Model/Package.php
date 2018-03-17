@@ -339,17 +339,17 @@ class Package
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getDependents() : int
+    public function getDependents(): int
     {
         return $this->getOriginalObject()->getDependents();
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getSuggesters() : int
+    public function getSuggesters(): int
     {
         return $this->getOriginalObject()->getSuggesters();
     }

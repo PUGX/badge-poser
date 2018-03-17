@@ -17,7 +17,7 @@ use App\Badge\Model\UseCase\CreateSuggestersBadge;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class SuggestersImageCreatorTest
+ * Class SuggestersImageCreatorTest.
  */
 class CreateSuggestersBadgeTest extends TestCase
 {
@@ -26,13 +26,13 @@ class CreateSuggestersBadgeTest extends TestCase
     /** @var PackageRepositoryInterface */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateSuggestersBadge($this->repository);
     }
 
-    public function testShouldCreateSuggestersBadge()
+    public function testShouldCreateSuggestersBadge(): void
     {
         $package = $this->getMockBuilder(Package::class)
             ->disableOriginalConstructor()
@@ -50,11 +50,11 @@ class CreateSuggestersBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);
         $this->assertEquals(CreateSuggestersBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateSuggestersBadge::COLOR, $badge->getHexColor());
+        $this->assertEquals('#'.CreateSuggestersBadge::COLOR, $badge->getHexColor());
         $this->assertEquals('3', $badge->getStatus());
     }
 
-    public function testShouldCreateDefaultBadgeOnError()
+    public function testShouldCreateDefaultBadgeOnError(): void
     {
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
@@ -63,8 +63,8 @@ class CreateSuggestersBadgeTest extends TestCase
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);
 
-        $this->assertEquals(CreateSuggestersBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals(CreateSuggestersBadge::COLOR, $badge->getHexColor());
-        $this->assertEquals('0', $badge->getStatus());
+        $this->assertEquals(' - ', $badge->getSubject());
+        $this->assertEquals(' - ', $badge->getStatus());
+        $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }
