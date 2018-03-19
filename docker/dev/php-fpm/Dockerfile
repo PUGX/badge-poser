@@ -75,5 +75,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
+COPY ./php-no-xdebug.sh /usr/local/bin/php-no-xdebug
+RUN chmod +x /usr/local/bin/php-no-xdebug
+
 ENTRYPOINT ["docker-app-entrypoint"]
 CMD ["php-fpm"]

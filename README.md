@@ -74,3 +74,10 @@ docker-compose exec php-fpm ./bin/phpunit
 ``` bash
 docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
 ```
+
+
+- Run php-cs-fixer disabling xdebug (it's much faster):
+
+``` bash
+docker-compose exec php-fpm bash php-no-xdebug ./vendor/bin/php-cs-fixer fix -v
+```
