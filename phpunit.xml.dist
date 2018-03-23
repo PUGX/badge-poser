@@ -31,6 +31,8 @@
         <env name="SENTRY_DSN" value=""/>
         <!-- ###- sentry/sentry-symfony ### -->
 
+        <env name="CIRCLE_CI_TOKEN" value=""/>
+
     </php>
 
     <testsuites>

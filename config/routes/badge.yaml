@@ -83,3 +83,14 @@ pugx_badge_suggesters:
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
         _ext: "svg"
+
+pugx_badge_circleci:
+    path: /{repository}/circleci/{branch}.{_ext}
+    controller: App\Controller\Badge\CircleCiController::status
+    defaults:
+        branch: "master"
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        branch: ".+"
+        _ext: "svg"

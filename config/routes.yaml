@@ -17,3 +17,13 @@ search_packagist:
     path: /search_packagist
     controller: App\Controller\PackagistController::search
     methods:  [GET]
+
+# https://circleci.com/api/v1.1/project/github/PUGX/badge-poser?filter=completed&limit=1
+# https://circleci.com/api/v1.1/project/github/PUGX/badge-poser/tree/release%2Fv3.0.0?filter=completed&limit=1
+circleci_api:
+    path: /api/v1.1/project/github/{repository}/tree/{branch}
+    host: "circleci.com"
+    schemes:  [https]
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
+        branch: ".+"
