@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Tests\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class HomeControllerTest extends WebTestCase
+{
+    /**
+     * @dataProvider provider
+     * @param string $path
+     */
+    public function testHome(string $path): void
+    {
+        $client = static::createClient();
+        $client->request('GET', $path);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function provider(): array
+    {
+        return [
+            ['/'],
+            ['/show/doctrine/orm'],
+        ];
+    }
+}

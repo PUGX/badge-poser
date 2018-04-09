@@ -42,6 +42,6 @@ final class RedisReader implements ReaderInterface
      */
     public function totalAccess(): int
     {
-        return $this->redis->get($this->keyTotal);
+        return (int) $this->redis->get($this->keyTotal);
     }
 }

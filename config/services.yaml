@@ -57,13 +57,21 @@ services:
     App\Service\CircleCiClientInterface: '@App\Service\CircleCiClient'
 
     App\Service\SnippetGenerator:
-            arguments:
-                - '@router'
-                - '%pugx_badge_allin_badges%'
-                - '%pugx_badge_badges%'
+        arguments:
+            - '@router'
+            - '%pugx_badge_allin_badges%'
+            - '%pugx_badge_badges%'
     App\Service\SnippetGeneratorInterface: '@App\Service\SnippetGenerator'
 
     App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
+
+    App\Stats\Reader\RedisReader:
+        arguments:
+          - '@Predis\Client'
+    App\Stats\Reader\ReaderInterface: '@App\Stats\Reader\RedisReader'
+
+
+    # Vendor services
 
     Github\Client: ~
     Github\ResultPager: ~

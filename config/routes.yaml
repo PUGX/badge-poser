@@ -1,6 +1,14 @@
 home:
     path: /
     controller: App\Controller\HomeController::index
+    defaults:
+        repository: "phpunit/phpunit"
+
+show:
+    path: /show/{repository}
+    controller: App\Controller\HomeController::index
+    requirements:
+        repository: '[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?'
 
 snippet_all:
     path: /snippet/all/
