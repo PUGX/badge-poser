@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * @param $repository
+     * @param string $repository
      * @param ContributorsRepository $contributorsRepository
      * @param ReaderInterface        $redisReader
      * @param Poser                  $poser
@@ -23,7 +23,7 @@ class HomeController extends Controller
      * @return Response
      */
     public function index(
-        $repository,
+        string $repository,
         ContributorsRepository $contributorsRepository,
         ReaderInterface $redisReader,
         Poser $poser
