@@ -8,9 +8,9 @@ class HomeControllerTest extends WebTestCase
 {
     /**
      * @dataProvider provider
-     * @param $path
+     * @param string $path
      */
-    public function testHome($path): void
+    public function testHome(string $path): void
     {
         $client = static::createClient();
         $client->request('GET', $path);
