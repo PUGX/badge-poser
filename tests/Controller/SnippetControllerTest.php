@@ -11,12 +11,14 @@ class SnippetControllerTest extends WebTestCase
 {
     public function testAllAction(): void
     {
-        $expectedData = ['all snippets for pugx/badge-poser'];
-
         $client = static::createClient();
         $client->request('GET', '/snippet/all/?repository=pugx/badge-poser');
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEquals($expectedData, json_decode($client->getResponse()->getContent(), true));
+        $response = $client->getResponse();
+        $content = json_decode($response->getContent(), true);
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertArrayHasKey('all', $content);
+        $this->assertArrayHasKey('badges', $content);
     }
 }
