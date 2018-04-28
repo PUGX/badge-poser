@@ -7,11 +7,16 @@
     "build": "encore production"
   },
   "dependencies": {
-    "raven-js": "^3.23.1"
+    "awesomplete": "^1.1.2",
+    "clipboard": "^1.7.1",
+    "promise-polyfill": "^7.1.2",
+    "raven-js": "^3.23.1",
+    "tooltip.js": "^1.1.7",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.19.0",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "webpack-notifier": "^1.5.1"

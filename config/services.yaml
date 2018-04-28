@@ -19,7 +19,7 @@ parameters:
         - { name: 'gitattributes', label: '.gitattributes', route: "pugx_badge_gitattributes" }
         - { name: 'dependents', label: 'Dependents', route: "pugx_badge_dependents"}
         - { name: 'suggesters', label: 'Suggesters', route: "pugx_badge_suggesters"}
-        - { name: 'circleci', label: 'build', route: "pugx_badge_circleci" }
+        - { name: 'circleci', label: 'CircleCI Build', route: "pugx_badge_circleci" }
 
     app.circle_ci_token: '%env(CIRCLE_CI_TOKEN)%'
 

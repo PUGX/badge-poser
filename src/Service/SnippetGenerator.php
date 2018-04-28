@@ -52,22 +52,24 @@ class SnippetGenerator implements SnippetGeneratorInterface
     public function generateAllSnippets(string $repository): array
     {
         $snippets = [];
-        $snippets['clip_all']['markdown'] = '';
+        $snippets['all']['markdown'] = '';
 
         foreach ($this->badges as $badge) {
             $markdown = $this->generateMarkdown($badge, $repository);
-            $snippets[$badge['name']] = [
+            $snippets['badges'][] = [
+                'name' => $badge['name'],
+                'label' => $badge['label'],
                 'markdown' => $markdown,
                 'img' => $this->generateImg($badge, $repository),
+                'featured' => in_array($badge['name'],$this->allInBadges)
             ];
 
             if (in_array($badge['name'], $this->allInBadges)) {
-                $snippets['clip_all']['markdown'] .= ' '.$markdown;
+                $snippets['all']['markdown'] .= ' '.$markdown;
             }
         }
 
-        $snippets['clip_all']['markdown'] = trim($snippets['clip_all']['markdown']);
-        $snippets['repository']['html'] = $repository;
+        $snippets['all']['markdown'] = trim($snippets['all']['markdown']);
 
         return $snippets;
     }
@@ -103,7 +105,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
         $badge['repository'] = $repository;
         $parameters = $this->compileRouteParametersForBadge($badge);
 
-        return $this->router->generate($badge['route'], $parameters, true);
+        return $this->router->generate($badge['route'], $parameters, RouterInterface::ABSOLUTE_URL);
     }
 
     /**

@@ -1,19 +1,131 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-center" style="margin-top: 100px">Be a poser v3.0.0</h1>
 
-    <div class="text-center">
-        {{ badges_served_svg | raw }}
-    </div>
-    <div class="text-center">
-        <a href="https://packagist.org/packages/pugx/badge-poser"><img src="https://poser.pugx.org/pugx/badge-poser/version"></a>
+    <a href="https://github.com/PUGX/badge-poser">
+        <img style="position: absolute; top: 0; right: 0; border: 0;"
+             src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+             alt="Fork me on GitHub"
+             data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png">
+    </a>
 
-        <a href="https://packagist.org/packages/pugx/badge-poser"><img src="https://poser.pugx.org/pugx/badge-poser/license"></a>
-    </div>
+    <section class="container-fluid head d-flex align-items-center">
+        <div class="container">
+            <h1>Badge Poser 🚀</h1>
+            {{ badges_served_svg | raw }}
+            <h2>Pimp your README with informational badges.</h2>
+            <div class="badges">
+                <a href="https://packagist.org/packages/pugx/badge-poser">
+                    <img src="https://poser.pugx.org/pugx/badge-poser/version">
+                </a>
 
-{% endblock %}
+                <a href="https://packagist.org/packages/pugx/badge-poser">
+                    <img src="https://poser.pugx.org/pugx/badge-poser/license">
+                </a>
+            </div>
 
-{% block javascripts %}
+            <a href="#badges" class="btn big">Get yours</a>
+
+        </div>
+    </section>
+
+    <section class="container search text-center">
+        <h3 class="text-center">😎 Be a poser! 😎</h3>
+        <p class="text-center">
+            Use badges in your PHP repository and show the world how many times
+            your project has been downloaded, or its latest stable version.
+            Every information is taken directly from <a href="https://packagist.org/">packagist</a>.
+            Enjoy!
+        </p>
+    </section>
+
+    <section class="container-fluid results" id="badges">
+        <div class="container">
+            <div class="search text-center">
+                <h3 class="text-center">Get your Badges</h3>
+                <input placeholder="Type the package" type="search" id="search-package" class="search-input" value="{{ repository }}"/>
+            </div>
+
+            <div class="readme">
+                <span class="title">
+                    <svg aria-hidden="true" class="octicon octicon-book" height="16" version="1.1" viewBox="0 0 16 16"
+                         width="16"><path fill-rule="evenodd"
+                                          d="M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z"></path></svg>
+                    Your README.md
+                </span>
+                <div class="content">
+                    <h2>
+                        Badges for <span id="package-name">{{ repository }}</span>
+                        <a id="permalink" title="Permalink for {{ repository }}" href="/show/{{ repository }}">¶</a>
+                    </h2>
+
+                    <div class="featured-badges">
+                        {% spaceless %}
+                            {% for badge in badges.badges if badge.featured %}
+                                <img class="badge" src="{{ badge.img }}">
+                            {% endfor %}
+                        {% endspaceless %}
+                    </div>
+
+                    <div class="copy">
+                        <button class="big" id="all-badges" data-clipboard-text="{{ badges.all.markdown }}">
+                            Copy All Badges
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid badges text-center">
+        <div class="container">
+            <div class="row d-flex" id="badges-container">
+                {% for badge in badges.badges %}
+                    <div class="col-12 col-md-6">
+                        <h4>{{ badge.label }}</h4>
+                        <img class="badge" src="{{ badge.img }}">
+
+                        <input
+                                class="badge-input"
+                                data-badge="{{ badge.name }}"
+                                readonly
+                                type="text"
+                                value="{{ badge.markdown }}" title="{{ badge.label }}">
+                        <button data-clipboard-target=".badge-input[data-badge='{{ badge.name }}']">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% include 'home/contributors.html.twig' %}
+
+    <section class="container-fluid footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Call for Donations</h3>
+                    <p>Badge Poser serves a lot of images per month.
+                        We really dream to move all of our code on Amazon AWS but is up to you.
+                        If you use Badge Poser and you like it, please consider to donate. Thank you!</p>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="centered-content">
+                        <input name="cmd" value="_s-xclick" type="hidden">
+                        <input name="hosted_button_id" value="ETT4JRJARLTSC" type="hidden">
+                        <input src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal – The safer, easier way to pay online." border="0" type="image">
+                        <img alt="" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" border="0" width="1" height="1">
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 align-items-center">
+                    <p>
+                        Header photo by&nbsp;<a href="https://unsplash.com/@nasa" rel="nofollow" target="_blank">NASA</a>
+                    </p>
+                    <p>
+                        SSL certificate by <a href="https://letsencrypt.org/" rel="nofollow" target="_blank">LetsEncrypt</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
