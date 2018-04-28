@@ -11,7 +11,27 @@ class SnippetGeneratorStub implements SnippetGeneratorInterface
 {
     public function generateAllSnippets(string $repository): array
     {
-        return ['all snippets for '.$repository];
+        return [
+            'all' => [
+                'markdown' => 'sample markdown'
+            ],
+            'badges' => [
+                [
+                    'name' => 'latest_stable_version',
+                    'label' => 'Latest Stable Version',
+                    'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
+                    'img' => 'http://localhost/phpunit/phpunit/v',
+                    'featured' => true
+                ],
+                [
+                    'name' => 'latest_stable_version',
+                    'label' => 'Latest Stable Version',
+                    'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
+                    'img' => 'http://localhost/phpunit/phpunit/v',
+                    'featured' => false
+                ]
+            ]
+        ];
     }
 
     public function generateMarkdown(array $badge, string $repository): string

@@ -19,12 +19,9 @@ class SnippetGeneratorTest extends TestCase
         $generator = new SnippetGenerator($router, [], []);
 
         $expected = [
-            'clip_all' => [
+            'all' => [
                 'markdown' => '',
-            ],
-            'repository' => [
-                'html' => 'vendor/package',
-            ],
+            ]
         ];
 
         self::assertEquals($expected, $generator->generateAllSnippets('vendor/package'));
