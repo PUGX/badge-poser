@@ -302,6 +302,9 @@
     "symfony/polyfill-apcu": {
         "version": "v1.7.0"
     },
+    "symfony/polyfill-ctype": {
+        "version": "v1.8.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.7.0"
     },
