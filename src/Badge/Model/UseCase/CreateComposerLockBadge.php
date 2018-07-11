@@ -62,17 +62,16 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     public function createComposerLockBadge(string $repository, string $format = 'svg'): Badge
     {
         try {
-            $repo = str_replace('.git', '', $this->packageRepository
-                ->fetchByRepository($repository)
-                ->getRepository()
-            );
+            /** @var Package $package */
+            $package = $this->fetchPackage($repository);
+            $repo = str_replace('.git', '', $package->getRepository());
         } catch (\Exception $e) {
             return $this->createDefaultBadge($format);
         }
 
         $response = $this->client->request(
             'HEAD',
-            $repo.'/blob/master/composer.lock',
+            $repo . '/blob/' . $package->getDefaultBranch() . '/composer.lock',
             [
                 RequestOptions::TIMEOUT => 2,
                 RequestOptions::CONNECT_TIMEOUT => 1,

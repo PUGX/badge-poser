@@ -33,23 +33,26 @@ class Package
     private $latestStableVersionNormalized;
     /** @var string */
     private $latestUnstableVersionNormalized;
+    /** @var string */
+    private $defaultBranch;
 
-    private function __construct(ApiPackage $apiPackage)
+    private function __construct(ApiPackage $apiPackage, array $repoGitHubData)
     {
         $this->setOriginalObject($apiPackage);
         $this->calculateLatestVersions();
+        $this->defaultBranch = $repoGitHubData['default_branch'];
     }
 
     /**
      * Create a new Package decorated with the Api Package.
      *
      * @param ApiPackage $apiPackage
-     *
+     * @param array $repoGitHubData
      * @return Package
      */
-    public static function createFromApi(ApiPackage $apiPackage): self
+    public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
     {
-        return new self($apiPackage);
+        return new self($apiPackage, $repoGitHubData);
     }
 
     /**
@@ -360,5 +363,13 @@ class Package
     private function setOriginalObject(ApiPackage $originalObject): void
     {
         $this->originalObject = $originalObject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultBranch(): string
+    {
+        return $this->defaultBranch;
     }
 }

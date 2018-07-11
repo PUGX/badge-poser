@@ -72,9 +72,9 @@ services:
 
 
     # Vendor services
-
-    Github\Client: ~
-    Github\ResultPager: ~
+    Cache\Adapter\Predis\PredisCachePool:
+        arguments:
+          - '@Predis\Client'
 
     GuzzleHttp\Client: ~
     GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'

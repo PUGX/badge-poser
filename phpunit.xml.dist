@@ -22,9 +22,9 @@
         <!-- ###- snc/redis-bundle ### -->
 
         <!-- ###+ knplabs/github-api ### -->
-        <env name="GITHUB_AUTH_METHOD" value="http_password"/>
-        <env name="GITHUB_USERNAME" value="username"/>
-        <env name="GITHUB_SECRET" value="password_or_token"/>
+        <env name="GITHUB_AUTH_METHOD" value="http_token"/>
+        <env name="GITHUB_USERNAME" value="token"/>
+        <env name="GITHUB_SECRET" value=""/>
         <!-- ###- knplabs/github-api ### -->
 
         <!-- ###+ sentry/sentry-symfony ### -->

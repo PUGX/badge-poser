@@ -53,7 +53,7 @@ class CreateComposerLockBadgeTest extends TestCase
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\App\Badge\Model\Package',
-            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
+            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject', 'getDefaultBranch']
         );
 
         $this->repository->expects($this->any())
@@ -71,6 +71,10 @@ class CreateComposerLockBadgeTest extends TestCase
         $package->expects($this->once())
             ->method('getOriginalObject')
             ->will($this->returnValue($repo));
+
+        $package->expects($this->once())
+            ->method('getDefaultBranch')
+            ->will($this->returnValue('master'));
 
         $response = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\Psr\Http\Message\ResponseInterface',

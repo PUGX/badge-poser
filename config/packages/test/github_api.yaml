@@ -1,0 +1,6 @@
+services:
+    Github\Client: ~
+
+    Github\ResultPager:
+        arguments:
+          - '@Github\Client'
