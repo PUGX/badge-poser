@@ -2,6 +2,18 @@
     "badges/poser": {
         "version": "v1.2.2"
     },
+    "cache/adapter-common": {
+        "version": "1.1.0"
+    },
+    "cache/hierarchical-cache": {
+        "version": "1.0.0"
+    },
+    "cache/predis-adapter": {
+        "version": "1.0.0"
+    },
+    "cache/tag-interop": {
+        "version": "1.0.0"
+    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },

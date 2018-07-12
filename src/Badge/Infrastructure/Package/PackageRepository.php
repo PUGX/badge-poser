@@ -13,7 +13,9 @@ namespace App\Badge\Infrastructure\Package;
 
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
-use Packagist\Api\Client;
+use Github\Api\Repo;
+use Github\Client as GitHubClient;
+use Packagist\Api\Client as PackagistClient;
 use Packagist\Api\Result\Package as ApiPackage;
 use UnexpectedValueException;
 
@@ -24,12 +26,14 @@ use UnexpectedValueException;
 class PackageRepository implements PackageRepositoryInterface
 {
     private static $packageClass;
-    private $client;
+    private $packagistClient;
+    private $githubClient;
 
-    public function __construct(Client $packagistClient, $packageClass = Package::class)
+    public function __construct(PackagistClient $packagistClient, GitHubClient $githubClient, $packageClass = Package::class)
     {
         self::$packageClass = $packageClass;
-        $this->client = $packagistClient;
+        $this->packagistClient = $packagistClient;
+        $this->githubClient = $githubClient;
     }
 
     /**
@@ -43,14 +47,25 @@ class PackageRepository implements PackageRepositoryInterface
      */
     public function fetchByRepository(string $repository): Package
     {
-        $apiPackage = $this->client->get($repository);
+        $apiPackage = $this->packagistClient->get($repository);
 
-        if ($apiPackage && $apiPackage instanceof ApiPackage) {
+        preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
+
+        if(isset($matches[4], $matches[5])) {
+            $username = $matches[4];
+            $repoName = $matches[5];
+
+            /** @var Repo $repoApi */
+            $repoApi = $this->githubClient->api('repo');
+            $repoGitHubData = $repoApi->show($username, $repoName);
+        }
+
+        if ($apiPackage && $apiPackage instanceof ApiPackage && !empty($repoGitHubData)) {
             // create a new Package from the ApiPackage
             /** @var Package $class */
             $class = self::$packageClass;
 
-            return $class::createFromApi($apiPackage);
+            return $class::createFromApi($apiPackage, $repoGitHubData);
         }
 
         throw new UnexpectedValueException(sprintf('Impossible to fetch package by "%s" repository.', $repository));

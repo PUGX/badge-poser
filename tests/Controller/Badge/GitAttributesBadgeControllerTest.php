@@ -18,38 +18,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class GitAttributesBadgeControllerTest extends WebTestCase
 {
-    /**
-     * @group gitattributes
-     */
-    public function testGitAttributesResponseUncommitted(): void
+    public function testGitAttributesAction(): void
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes');
-
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
-
-        $svgContent = $client->getResponse()->getContent();
-
-        $this->assertRegExp('/.gitattributes/', $svgContent);
-        $this->assertRegExp('/uncommitted/', $svgContent);
-    }
-
-    /**
-     * @group gitattributes
-     */
-    public function testGitAttributesResponseCommitted(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/stolt/lean-package-validator/gitattributes');
-
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
-
-        $svgContent = $client->getResponse()->getContent();
-
-        $this->assertRegExp('/.gitattributes/', $svgContent);
-        $this->assertRegExp('/committed/', $svgContent);
     }
 
     public function testGitAttributesSvgExplicit(): void

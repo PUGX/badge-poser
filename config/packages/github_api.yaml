@@ -1,6 +1,16 @@
 services:
     Github\Client:
         class: Github\Client
-        # Uncomment to enable authentication
         calls:
-            - ['authenticate', ['%env(GITHUB_USERNAME)%', '%env(GITHUB_SECRET)%', '%env(GITHUB_AUTH_METHOD)%']]
+            - method: authenticate
+              arguments:
+                  - '%env(GITHUB_USERNAME)%'
+                  - '%env(GITHUB_SECRET)%'
+                  - '%env(GITHUB_AUTH_METHOD)%'
+            - method: addCache
+              arguments:
+                  - '@Cache\Adapter\Predis\PredisCachePool'
+
+    Github\ResultPager:
+        arguments:
+          - '@Github\Client'
