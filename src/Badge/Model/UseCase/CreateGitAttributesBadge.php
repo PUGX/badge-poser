@@ -72,7 +72,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
         $response = $this->client->request(
             'HEAD',
-            $repo . '/blob/' . $package->getDefaultBranch() . '/.gitattributes',
+            $repo.'/blob/'.$package->getDefaultBranch().'/.gitattributes',
             [
                 RequestOptions::TIMEOUT => 2,
                 RequestOptions::CONNECT_TIMEOUT => 1,

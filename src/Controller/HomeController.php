@@ -16,10 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * @param string $repository
-     * @param ContributorsRepository $contributorsRepository
-     * @param ReaderInterface $redisReader
-     * @param Poser $poser
+     * @param string                    $repository
+     * @param ContributorsRepository    $contributorsRepository
+     * @param ReaderInterface           $redisReader
+     * @param Poser                     $poser
      * @param SnippetGeneratorInterface $generator
      *
      * @return Response

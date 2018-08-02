@@ -47,7 +47,8 @@ class Package
      * Create a new Package decorated with the Api Package.
      *
      * @param ApiPackage $apiPackage
-     * @param array $repoGitHubData
+     * @param array      $repoGitHubData
+     *
      * @return Package
      */
     public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
