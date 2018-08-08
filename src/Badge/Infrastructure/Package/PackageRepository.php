@@ -51,7 +51,7 @@ class PackageRepository implements PackageRepositoryInterface
 
         preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
 
-        if(isset($matches[4], $matches[5])) {
+        if (isset($matches[4], $matches[5])) {
             $username = $matches[4];
             $repoName = $matches[5];
 

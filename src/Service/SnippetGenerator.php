@@ -61,7 +61,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
                 'label' => $badge['label'],
                 'markdown' => $markdown,
                 'img' => $this->generateImg($badge, $repository),
-                'featured' => in_array($badge['name'],$this->allInBadges)
+                'featured' => in_array($badge['name'], $this->allInBadges),
             ];
 
             if (in_array($badge['name'], $this->allInBadges)) {

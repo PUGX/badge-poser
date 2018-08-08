@@ -16,7 +16,6 @@ use App\Badge\Model\UseCase\CreateLicenseBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +37,6 @@ class LicenseController extends Controller
      * @param string             $format
      *
      * @return Response
-     * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      *
      * @throws \InvalidArgumentException

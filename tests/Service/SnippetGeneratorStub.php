@@ -13,7 +13,7 @@ class SnippetGeneratorStub implements SnippetGeneratorInterface
     {
         return [
             'all' => [
-                'markdown' => 'sample markdown'
+                'markdown' => 'sample markdown',
             ],
             'badges' => [
                 [
@@ -21,16 +21,16 @@ class SnippetGeneratorStub implements SnippetGeneratorInterface
                     'label' => 'Latest Stable Version',
                     'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
                     'img' => 'http://localhost/phpunit/phpunit/v',
-                    'featured' => true
+                    'featured' => true,
                 ],
                 [
                     'name' => 'latest_stable_version',
                     'label' => 'Latest Stable Version',
                     'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
                     'img' => 'http://localhost/phpunit/phpunit/v',
-                    'featured' => false
-                ]
-            ]
+                    'featured' => false,
+                ],
+            ],
         ];
     }
 

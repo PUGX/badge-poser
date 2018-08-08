@@ -15,11 +15,9 @@ use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Badge\Service\ImageFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use UnexpectedValueException;
 
 /**
  * Class CircleCiController
@@ -39,10 +37,6 @@ class CircleCiController extends Controller
      *
      * @return Response
      *
-     * @throws \InvalidArgumentException
-     * @throws UnexpectedValueException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @Method({"GET"})
      * @Cache(maxage="3600", smaxage="3600", public=true)
      */
     public function status(

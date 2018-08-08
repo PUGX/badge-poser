@@ -21,7 +21,7 @@ class SnippetGeneratorTest extends TestCase
         $expected = [
             'all' => [
                 'markdown' => '',
-            ]
+            ],
         ];
 
         self::assertEquals($expected, $generator->generateAllSnippets('vendor/package'));
