@@ -1,6 +1,7 @@
 pugx_badge_version:
     path:       /{repository}/version.{_ext}
     controller: App\Controller\Badge\VersionController::version
+    methods: GET
     defaults:
         latest: "stable"
         _ext: "svg"
@@ -22,6 +23,7 @@ pugx_badge_version_latest:
 pugx_badge_license:
     path: /{repository}/license.{_ext}
     controller: App\Controller\Badge\LicenseController::license
+    methods: GET
     defaults:
         _ext: "svg"
     requirements:
@@ -31,6 +33,7 @@ pugx_badge_license:
 pugx_badge_download:
     path: /{repository}/downloads.{_ext}
     controller: App\Controller\Badge\DownloadsController::downloads
+    methods: GET
     defaults:
         type: "total"
         _ext: "svg"
@@ -51,6 +54,7 @@ pugx_badge_download_type:
 pugx_badge_composerlock:
     path: /{repository}/composerlock.{_ext}
     controller: App\Controller\Badge\ComposerLockController:composerLock
+    methods: GET
     defaults:
         _ext: "svg"
     requirements:
@@ -60,6 +64,7 @@ pugx_badge_composerlock:
 pugx_badge_gitattributes:
     path: /{repository}/gitattributes.{_ext}
     controller: App\Controller\Badge\GitAttributesController::gitAttributes
+    methods: GET
     defaults:
         _ext: "svg"
     requirements:
@@ -69,6 +74,7 @@ pugx_badge_gitattributes:
 pugx_badge_dependents:
     path: /{repository}/dependents.{_ext}
     controller: App\Controller\Badge\DependentsController::dependents
+    methods: GET
     defaults:
         _ext: "svg"
     requirements:
@@ -78,6 +84,7 @@ pugx_badge_dependents:
 pugx_badge_suggesters:
     path: /{repository}/suggesters.{_ext}
     controller: App\Controller\Badge\SuggestersController::suggesters
+    methods: GET
     defaults:
         _ext: "svg"
     requirements:
@@ -87,6 +94,7 @@ pugx_badge_suggesters:
 pugx_badge_circleci:
     path: /{repository}/circleci/{branch}.{_ext}
     controller: App\Controller\Badge\CircleCiController::status
+    methods: GET
     defaults:
         branch: "master"
         _ext: "svg"
