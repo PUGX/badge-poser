@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2.2-zts-node-browsers
+      - image: circleci/php:7.2-apache-stretch-node-browsers
         environment:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
@@ -33,7 +33,7 @@ jobs:
       - run: 
           name: install project dependencies
           command: composer install -n --no-progress --no-suggest
- 
+
       - save_cache:
           paths:
             - ./vendor
@@ -41,8 +41,8 @@ jobs:
 
       - run: 
           name: run tests
-          command: bin/phpunit -d memory_limit=-1 --coverage-html=coverage
- 
+          command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
+
       - store_artifacts:
           path: coverage
 
