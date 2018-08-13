@@ -6,10 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-/**
- * Class UpdateCommandTest.
- */
-class UpdateCommandTest extends KernelTestCase
+final class UpdateCommandTest extends KernelTestCase
 {
     public function testExecute(): void
     {
@@ -28,10 +25,10 @@ class UpdateCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $numbers = $this->getNumbers($output);
         $count = $numbers[0] ?? 0;
-        $this->assertGreaterThanOrEqual(31, $count);
+        $this->assertGreaterThanOrEqual(30, $count);
     }
 
-    private function getNumbers($str)
+    private function getNumbers(string $str): array
     {
         preg_match_all('/\d+/', $str, $matches);
 
