@@ -1,5 +1,10 @@
-Badge-Poser
-===========
+# Badge-Poser
+
+**NOTE:** Development has stopped on version 2 (master branch).
+
+Version 3 is under development and will be released soon. For new contributions, please use the version 3 release branch ([release/v3.0.0](https://github.com/PUGX/badge-poser/tree/release/v3.0.0)).
+
+---
 
 Use shields for your packagist.org repository that shows how many times your project has been downloaded from packagist.org
 or its latest stable version.
@@ -12,9 +17,10 @@ or its latest stable version.
 [![composer.lock available](https://poser.pugx.org/pugx/badge-poser/composerlock)](https://packagist.org/packages/pugx/badge-poser)
 
 ## How to create your own Badge
--  Go to the [Badge Poser](https://poser.pugx.org) website
--  Insert username/repository and click on `Show`
--  That's it!  Copy the Markdown into the README.md
+
+- Go to the [Badge Poser](https://poser.pugx.org) website
+- Insert username/repository and click on `Show`
+- That's it! Copy the Markdown into the README.md
 
 ## Why a composer badge?
 
@@ -37,23 +43,24 @@ cd badge-poser
 
 - Install vendors:
 
-``` bash
+```bash
 php composer.phar self-update
 php composer.phar install
 ```
 
 - Run phpunit:
 
-``` bash
+```bash
 ./bin/phpunit
 ```
 
 - Production
 
 1. For Production purposes you need Redis.
-2. Update the contributors `bin/extract_contributors.py  > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
+2. Update the contributors `bin/extract_contributors.py > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
 
 ## Donation
+
 Badge Poser serves billion of images per month. We really dream to move all of our code on Amazon AWS but is up to you.
 
 If you use Badge Poser and you like it, please consider to donate. **Thank you!**
@@ -62,7 +69,7 @@ If you use Badge Poser and you like it, please consider to donate. **Thank you!*
 
 Try:
 
-``` bash
+```bash
 hhvm ./bin/phpunit
 ```
 
@@ -71,4 +78,4 @@ hhvm ./bin/phpunit
 In order to update the contributors section:
 
 1. install it running `pip install pygithub3 && pip install Jinja2`
-2. `python bin/extract_contributors.py  > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
+2. `python bin/extract_contributors.py > src/PUGX/BadgeBundle/Resources/views/Page/contributors.html.twig`
