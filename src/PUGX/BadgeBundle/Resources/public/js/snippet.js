@@ -79,7 +79,7 @@ $(document).ready(function(){
         $.each(snippets_raw_data, function(idx, snippet) {
 
 		if (idx == 'repository') {
-			$('#' + idx + '_html').html(snippet.html).append('<a class="headerlink" href="show/'+snippet.html+'#badges" title="Permalink for '+snippet.html+' repository">¶</a>')
+			$('#' + idx + '_html').html(snippet.html).append('&nbsp;<a class="headerlink" href="show/'+snippet.html+'#badges" title="Permalink for '+snippet.html+' repository">¶</a>')
 			return true;
 		}
 
@@ -88,7 +88,7 @@ $(document).ready(function(){
 		}
 
                 $('#' + idx + '_markdown').attr('value', snippet.markdown);
-                
+
         });
     };
 
@@ -114,9 +114,9 @@ $(document).ready(function(){
                     }
                 }
         });
-    
+
         return false;
-    
+
     });
 
 });
