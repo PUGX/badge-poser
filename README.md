@@ -48,8 +48,13 @@ $ docker-compose up -d
 
 - Prepare the Symfony application
 ```bash
+# Create .env
+$ cp .env.dist .env
+
+# Install dependencies
 $ docker-compose exec php-fpm bash
 $ composer install
+
 ```
 
 
