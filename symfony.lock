@@ -224,9 +224,6 @@
     "symfony/cache": {
         "version": "v3.4.4"
     },
-    "symfony/class-loader": {
-        "version": "v3.4.4"
-    },
     "symfony/config": {
         "version": "v3.4.4"
     },
@@ -296,9 +293,6 @@
     "symfony/http-kernel": {
         "version": "v3.4.4"
     },
-    "symfony/lts": {
-        "version": "v3"
-    },
     "symfony/monolog-bridge": {
         "version": "v3.4.4"
     },
@@ -322,9 +316,6 @@
             "version": "3.3",
             "ref": "179470cb6492db92dffee208cfdb436f175c93b4"
         }
-    },
-    "symfony/polyfill-apcu": {
-        "version": "v1.7.0"
     },
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
