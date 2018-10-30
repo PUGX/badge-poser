@@ -27,7 +27,7 @@ services:
 
   node:
     container_name: badge-poser-node
-    image: node:alpine
+    image: node:8-alpine
     user: "node"
     volumes:
       - .:/application:cached
