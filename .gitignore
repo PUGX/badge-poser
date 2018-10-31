@@ -18,3 +18,5 @@
 ###> friendsofphp/php-cs-fixer ###
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
+yarn-error.log
