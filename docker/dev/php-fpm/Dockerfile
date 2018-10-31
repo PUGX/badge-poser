@@ -70,6 +70,9 @@ RUN echo "xdebug.idekey = PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
 COPY ./composer-install.sh /tmp/composer-install.sh
 RUN chmod +x /tmp/composer-install.sh && /tmp/composer-install.sh && rm /tmp/composer-install.sh
 
+# Install prestissimo
+RUN composer global require hirak/prestissimo
+
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
 RUN chmod +x /usr/local/bin/docker-app-entrypoint
 
