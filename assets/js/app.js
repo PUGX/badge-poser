@@ -83,6 +83,8 @@ const onInputChange = debounce(({target: target}) => {
         return;
     }
 
+    target.parentNode.classList.add("loading");
+
     fetch(`/search_packagist?name=${value}`)
         .then((response) => response.json())
         .then((data) => data.map((repository) => ({
@@ -91,6 +93,9 @@ const onInputChange = debounce(({target: target}) => {
         })))
         .then((list) => {
             awesomplete.list = list;
+        })
+        .finally(() => {
+            target.parentNode.classList.remove("loading");
         });
 }, 250);
 
