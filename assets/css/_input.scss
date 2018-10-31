@@ -9,9 +9,39 @@
   border-radius: 2px;
   transition: border-color .15s ease-in-out;
 
+
   &:focus {
     border-bottom-color: $primary;
   }
+}
+
+@keyframes loader {
+  0% {
+   -o-transform:rotate(0deg);
+   -webkit-transform:rotate(0deg);
+   transform:rotate(0deg)
+  }
+  to {
+   -o-transform:rotate(1turn);
+   -webkit-transform:rotate(1turn);
+   transform:rotate(1turn)
+  }
+}
+
+.awesomplete.loading::before{
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  animation: loader .7s linear infinite;
+  border-color: transparent transparent $primary $primary;
+  margin: calc(2.4rem / 2) 0;
 }
 
 @media screen and (max-width: 768px) {
