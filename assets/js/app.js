@@ -101,12 +101,20 @@ const onInputChange = debounce(({target: target}) => {
 
 searchInput.addEventListener("input", onInputChange);
 
+const readmeContainer = document.querySelector(".readme .content");
+const dimmer = makeElement("<div class='dimmer'></div>");
+
 searchInput.addEventListener("awesomplete-selectcomplete", function (e) {
     const {value: packageName} = e.text;
+
+    readmeContainer.appendChild(dimmer)
 
     fetch(`/snippet/all/?repository=${packageName}`)
         .then((res) => {
             changePackage(packageName);
             res.json().then(renderBadges);
+        })
+        .finally(()=> {
+            readmeContainer.removeChild(dimmer);
         });
 }, false);
