@@ -74,6 +74,7 @@ section.results {
       font-weight: bold;
     }
     .content {
+      position: relative;
       padding: 45px 45px 0px;
       word-wrap: break-word;
       background-color: #fff;
@@ -89,6 +90,32 @@ section.results {
         padding: 2em;
       }
     }
+  }
+}
+
+.dimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: rgba(255,255,255,.7);
+  
+  &::before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    animation: loader .7s linear infinite;
+    border-color: transparent transparent $primary $primary;
+    margin: -24px -24px;
   }
 }
 
