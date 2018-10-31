@@ -102,17 +102,13 @@ class Repository implements RepositoryInterface
      */
     private function getContributorsByGithub($username, $repoName): array
     {
-        try {
-            $repoApi = $this->client->api('repo');
-            $parameters = [$username, $repoName];
-            $results = $this->resultPager->fetchAll(
-                $repoApi,
-                'contributors',
-                $parameters
-            );
-        } catch (\Exception $e) {
-            return [];
-        }
+        $repoApi = $this->client->api('repo');
+        $parameters = [$username, $repoName];
+        $results = $this->resultPager->fetchAll(
+            $repoApi,
+            'contributors',
+            $parameters
+        );
 
         return $results;
     }
