@@ -4,14 +4,14 @@ namespace App\Controller;
 
 use App\Service\SnippetGeneratorInterface;
 use GuzzleHttp\Exception\BadResponseException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SnippetController.
  */
-class SnippetController extends Controller
+class SnippetController extends AbstractController
 {
     /**
      * Returns all snippets for a package.

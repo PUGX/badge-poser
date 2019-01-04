@@ -15,7 +15,7 @@ use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Badge\Service\ImageFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class CircleCiController
  * CircleCi action for badges.
  */
-class CircleCiController extends Controller
+class CircleCiController extends AbstractController
 {
     /**
      * CircleCi action.

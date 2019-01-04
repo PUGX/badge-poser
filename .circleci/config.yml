@@ -2,11 +2,12 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2-apache-stretch-node-browsers
+      - image: circleci/php:7.2.6-apache-stretch-node-browsers
         environment:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
           - REDIS_URL=redis://localhost
+          - SYMFONY_DEPRECATIONS_HELPER=weak_vendors
       - image: redis
 
     working_directory: ~/app
@@ -25,6 +26,10 @@ jobs:
           name: install php packages
           command: sudo docker-php-ext-install zip iconv gd
 
+      - run:
+          name: install prestissimo
+          command: composer global require hirak/prestissimo
+
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "composer.json" }}
@@ -33,16 +38,38 @@ jobs:
       - run: 
           name: install project dependencies
           command: composer install -n --no-progress --no-suggest
-
       - save_cache:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
 
-      - run: 
-          name: run tests
-          command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Node Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
+      - run:
+          name: build frontend
+          command: yarn build
+
+      - run:
+          name: checks that the YAML config files contain no syntax errors
+          command: ./bin/console lint:yaml config
+
+      - run:
+          name: checks that the Twig template files contain no syntax errors
+          command: ./bin/console lint:twig templates
+
+      - run: 
+          name: run phpunit tests
+          command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
       - store_artifacts:
           path: coverage
-

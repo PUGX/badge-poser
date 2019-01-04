@@ -16,7 +16,7 @@ use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DownloadsController
  * Download action for badges.
  */
-class DownloadsController extends Controller
+class DownloadsController extends AbstractController
 {
     /**
      * Downloads action.

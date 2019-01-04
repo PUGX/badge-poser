@@ -15,14 +15,14 @@ use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateGitAttributesBadge;
 use App\Badge\Service\ImageFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class GitAttributesController.
  */
-class GitAttributesController extends Controller
+class GitAttributesController extends AbstractController
 {
     /**
      * .gitAttributes action.
