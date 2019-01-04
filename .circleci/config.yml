@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2-apache-stretch-node-browsers
+      - image: circleci/php:7.2.6-apache-stretch-node-browsers
         environment:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
@@ -33,11 +33,27 @@ jobs:
       - run: 
           name: install project dependencies
           command: composer install -n --no-progress --no-suggest
-
       - save_cache:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Node Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Build frontend
+          command: yarn build
 
       - run: 
           name: run tests
@@ -45,4 +61,3 @@ jobs:
 
       - store_artifacts:
           path: coverage
-

@@ -1,0 +1,42 @@
+language: php
+sudo: false
+
+php:
+  - 7.2
+
+services:
+  - redis-server
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - $HOME/.composer/cache/files
+    - ./bin/.phpunit
+
+env:
+  global:
+    - SYMFONY_PHPUNIT_DIR=./bin/.phpunit
+    - SYMFONY_DEPRECATIONS_HELPER=29
+    - APP_ENV=test
+    - REDIS_URL=redis://localhost
+
+before_install:
+  - sudo apt-get install -qqy libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
+  - phpenv config-rm xdebug.ini
+  - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - composer self-update
+  - composer global require hirak/prestissimo
+
+install:
+  - yarn install
+  - composer install
+  - ./bin/phpunit install
+
+script:
+  - yarn build
+  - ./bin/phpunit
+  # this checks that the YAML config files contain no syntax errors
+  - ./bin/console lint:yaml config
+  # this checks that the Twig template files contain no syntax errors
+  - ./bin/console lint:twig templates
