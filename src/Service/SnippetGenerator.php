@@ -48,6 +48,8 @@ class SnippetGenerator implements SnippetGeneratorInterface
      * @param string $repository
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function generateAllSnippets(string $repository): array
     {
@@ -61,10 +63,10 @@ class SnippetGenerator implements SnippetGeneratorInterface
                 'label' => $badge['label'],
                 'markdown' => $markdown,
                 'img' => $this->generateImg($badge, $repository),
-                'featured' => in_array($badge['name'], $this->allInBadges),
+                'featured' => \in_array($badge['name'], $this->allInBadges, true),
             ];
 
-            if (in_array($badge['name'], $this->allInBadges)) {
+            if (\in_array($badge['name'], $this->allInBadges, true)) {
                 $snippets['all']['markdown'] .= ' '.$markdown;
             }
         }

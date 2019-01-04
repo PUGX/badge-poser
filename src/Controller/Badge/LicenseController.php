@@ -16,7 +16,7 @@ use App\Badge\Model\UseCase\CreateLicenseBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class LicenseController
  * License action for badges.
  */
-class LicenseController extends Controller
+class LicenseController extends AbstractController
 {
     /**
      * License action.

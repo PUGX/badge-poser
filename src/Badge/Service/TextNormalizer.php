@@ -24,7 +24,7 @@ class TextNormalizer
         $units = ['', ' k', ' M', ' G', ' T'];
 
         $pow = floor(($number ? log($number) : 0) / log(1000));
-        $pow = min($pow, count($units) - 1);
+        $pow = min($pow, \count($units) - 1);
 
         $number /= 1000 ** $pow;
 

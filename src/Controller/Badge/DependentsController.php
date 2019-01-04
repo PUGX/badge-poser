@@ -7,14 +7,14 @@ use App\Badge\Model\UseCase\CreateDependentsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DependentsController.
  */
-class DependentsController extends Controller
+class DependentsController extends AbstractController
 {
     /**
      * Dependents action.
