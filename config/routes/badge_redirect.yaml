@@ -1,7 +1,7 @@
 download_png_redirect:
     path: /{repository}/downloads.png
     defaults:
-        _controller: FrameworkBundle:Redirect:redirect
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: pugx_badge_download
         permanent: true
     requirements:
@@ -11,7 +11,7 @@ download_png_redirect:
 download_type_png_redirect:
     path: /{repository}/d/{type}.png
     defaults:
-        _controller: FrameworkBundle:Redirect:redirect
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: pugx_badge_download_type
         permanent: true
         type: "total"
@@ -23,7 +23,7 @@ download_type_png_redirect:
 badge_version_png_redirect:
     path: /{repository}/version.png
     defaults:
-        _controller: FrameworkBundle:Redirect:redirect
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: pugx_badge_version
         permanent: true
     requirements:
@@ -33,7 +33,7 @@ badge_version_png_redirect:
 version_latest_png_redirect:
     path: /{repository}/v/{latest}.png
     defaults:
-        _controller: FrameworkBundle:Redirect:redirect
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: pugx_badge_version_latest
         permanent: true
         latest: "stable"
@@ -45,7 +45,7 @@ version_latest_png_redirect:
 badge_license_png_redirect:
     path: /{repository}/license.png
     defaults:
-        _controller: FrameworkBundle:Redirect:redirect
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
         route: pugx_badge_license
         permanent: true
     requirements:

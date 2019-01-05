@@ -15,7 +15,7 @@ use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ImageFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use UnexpectedValueException;
@@ -24,7 +24,7 @@ use UnexpectedValueException;
  * Class ComposerLockController
  * Composer-lock action for badges.
  */
-class ComposerLockController extends Controller
+class ComposerLockController extends AbstractController
 {
     /**
      * ComposerLock action.

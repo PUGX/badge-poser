@@ -7,13 +7,13 @@ use App\Contributors\Service\Repository as ContributorsRepository;
 use App\Service\SnippetGeneratorInterface;
 use App\Stats\Reader\ReaderInterface;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class HomeController.
  */
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
     /**
      * @param string                    $repository

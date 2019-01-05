@@ -13,14 +13,14 @@ namespace App\Controller;
 
 use Packagist\Api\Client as PackagistClient;
 use Packagist\Api\Result\Result as PackagistResult;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class PackagistController.
  */
-class PackagistController extends Controller
+class PackagistController extends AbstractController
 {
     /**
      * @param Request         $request
