@@ -60,11 +60,11 @@
                     </h2>
 
                     <div class="featured-badges">
-                        {% spaceless %}
+                        {% filter spaceless %}
                             {% for badge in badges.badges if badge.featured %}
                                 <img class="badge" src="{{ badge.img }}">
                             {% endfor %}
-                        {% endspaceless %}
+                        {% endfilter %}
                     </div>
 
                     <div class="copy">
