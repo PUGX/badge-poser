@@ -36,8 +36,6 @@ class CircleCiController extends AbstractController
      * @param string              $format
      *
      * @return Response
-     *
-     * @Cache(maxage="3600", smaxage="3600", public=true)
      */
     public function status(
         Request $request,

@@ -32,29 +32,11 @@
             "ref": "cb4152ebcadbe620ea2261da1a1c5a9b8cea7672"
         }
     },
-    "doctrine/cache": {
-        "version": "v1.8.0"
-    },
-    "doctrine/collections": {
-        "version": "v1.5.0"
-    },
-    "doctrine/common": {
-        "version": "v2.10.0"
-    },
-    "doctrine/event-manager": {
-        "version": "v1.0.0"
-    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
     "doctrine/lexer": {
         "version": "v1.0.1"
-    },
-    "doctrine/persistence": {
-        "version": "v1.1.0"
-    },
-    "doctrine/reflection": {
-        "version": "v1.0.0"
     },
     "easycorp/easy-log-handler": {
         "version": "1.0",
@@ -148,15 +130,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        }
     },
     "sentry/sentry": {
         "version": "1.10.0"
@@ -288,9 +261,6 @@
         "version": "v1.10.0"
     },
     "symfony/polyfill-mbstring": {
-        "version": "v1.10.0"
-    },
-    "symfony/polyfill-php72": {
         "version": "v1.10.0"
     },
     "symfony/process": {

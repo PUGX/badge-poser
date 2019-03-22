@@ -6,7 +6,6 @@ use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateDependentsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +26,6 @@ class DependentsController extends AbstractController
      * @param string                $format
      *
      * @return Response
-     * @Cache(maxage="3600", smaxage="3600", public=true)
      */
     public function dependents(
         Request $request,
