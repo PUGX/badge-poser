@@ -41,6 +41,7 @@ class ResponseFactory
 
         $response->setMaxAge($maxage);
         $response->setSharedMaxAge($smaxage);
+        $response->setPublic();
 
         return $response;
     }

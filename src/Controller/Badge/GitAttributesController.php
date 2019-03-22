@@ -14,7 +14,6 @@ namespace App\Controller\Badge;
 use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateGitAttributesBadge;
 use App\Badge\Service\ImageFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +33,6 @@ class GitAttributesController extends AbstractController
      * @param string                   $format
      *
      * @return Response
-     * @Cache(maxage="3600", smaxage="3600", public=true)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException

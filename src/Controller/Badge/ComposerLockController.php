@@ -40,7 +40,6 @@ class ComposerLockController extends AbstractController
      * @throws \InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @Cache(maxage="3600", smaxage="3600", public=true)
      */
     public function composerLock(
         Request $request,
