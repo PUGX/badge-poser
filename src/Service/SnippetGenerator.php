@@ -26,7 +26,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
     private $allInBadges;
 
     /**
-     * @var null|RouteCollection
+     * @var RouteCollection|null
      */
     private $routes;
 
@@ -143,7 +143,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
         $routeParameters = array_keys(array_merge($route->getDefaults(), $route->getRequirements()));
 
         foreach ($routeParameters as $routeParameter) {
-            if (array_key_exists($routeParameter, $badge)) {
+            if (\array_key_exists($routeParameter, $badge)) {
                 $parameters[$routeParameter] = $badge[$routeParameter];
             }
         }

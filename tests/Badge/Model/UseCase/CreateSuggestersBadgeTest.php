@@ -41,11 +41,11 @@ class CreateSuggestersBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getSuggesters')
-            ->will($this->returnValue(3));
+            ->willReturn(3);
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);

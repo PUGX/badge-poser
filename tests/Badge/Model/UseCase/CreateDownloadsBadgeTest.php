@@ -41,11 +41,11 @@ class CreateDownloadsBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getPackageDownloads')
-            ->will($this->returnValue(102));
+            ->willReturn(102);
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
 

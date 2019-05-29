@@ -85,7 +85,7 @@ class Package
             $versionNormalized = $version->getVersionNormalized();
 
             $aliases = $this->getBranchAliases($version);
-            if (null !== $aliases && array_key_exists($currentVersionName, $aliases)) {
+            if (null !== $aliases && \array_key_exists($currentVersionName, $aliases)) {
                 $currentVersionName = $aliases[$currentVersionName];
             }
 
@@ -114,7 +114,7 @@ class Package
      *
      * @param ApiPackage\Version $version
      *
-     * @return null|array
+     * @return array|null
      */
     private function getBranchAliases(ApiPackage\Version $version): ?array
     {
@@ -167,7 +167,7 @@ class Package
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLicense(): ?string
     {
@@ -175,7 +175,7 @@ class Package
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLatestStableVersion(): ?string
     {
@@ -191,7 +191,7 @@ class Package
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLatestUnstableVersion(): ?string
     {
@@ -199,7 +199,7 @@ class Package
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLatestStableVersionNormalized(): ?string
     {
@@ -207,7 +207,7 @@ class Package
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getLatestUnstableVersionNormalized(): ?string
     {

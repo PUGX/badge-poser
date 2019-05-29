@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "awesomplete": "^1.1.3",
-    "clipboard": "^2.0.1",
+    "clipboard": "^2.0.4",
     "promise-polyfill": "^8.1.0",
     "raven-js": "^3.27.0",
-    "tooltip.js": "^1.3.0",
+    "tooltip.js": "^1.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {

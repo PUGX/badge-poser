@@ -60,7 +60,7 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
 
     /**
      * @param Package     $package
-     * @param null|string $context
+     * @param string|null $context
      *
      * @return mixed|string
      *

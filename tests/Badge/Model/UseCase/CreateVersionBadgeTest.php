@@ -40,15 +40,15 @@ class CreateVersionBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('hasStableVersion')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $package->expects($this->once())
             ->method('getLatestStableVersion')
-            ->will($this->returnValue('v2.0'));
+            ->willReturn('v2.0');
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createStableBadge($repository);

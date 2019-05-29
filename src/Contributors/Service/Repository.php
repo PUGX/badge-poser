@@ -54,7 +54,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     private function getContributorsByCache(): ?string
     {

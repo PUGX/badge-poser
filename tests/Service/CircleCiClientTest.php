@@ -40,19 +40,19 @@ class CircleCiClientTest extends TestCase
 
         $responseBody->expects($this->once())
             ->method('getContents')
-            ->will($this->returnValue(json_encode([['status' => 'success']])));
+            ->willReturn(json_encode([['status' => 'success']]));
 
         $response->expects($this->any())
             ->method('getStatusCode')
-            ->will($this->returnValue(200));
+            ->willReturn(200);
 
         $response->expects($this->any())
             ->method('getBody')
-            ->will($this->returnValue($responseBody));
+            ->willReturn($responseBody);
 
         $this->client->expects($this->any())
             ->method('request')
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $responseBuilds = $this->circleCiClient->getBuilds('pugx/badge-poser');
 
