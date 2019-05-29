@@ -58,7 +58,7 @@ class CreateComposerLockBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\Packagist\Api\Result\Package',
@@ -66,15 +66,15 @@ class CreateComposerLockBadgeTest extends TestCase
         );
         $repo->expects($this->once())
             ->method('getRepository')
-            ->will($this->returnValue('RepoURI'));
+            ->willReturn('RepoURI');
 
         $package->expects($this->once())
             ->method('getOriginalObject')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $package->expects($this->once())
             ->method('getDefaultBranch')
-            ->will($this->returnValue('master'));
+            ->willReturn('master');
 
         $response = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\Psr\Http\Message\ResponseInterface',
@@ -82,11 +82,11 @@ class CreateComposerLockBadgeTest extends TestCase
         );
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->will($this->returnValue($returnCode));
+            ->willReturn($returnCode);
 
         $this->client->expects($this->once())
             ->method('request')
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
@@ -102,7 +102,7 @@ class CreateComposerLockBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\Packagist\Api\Result\Package',
@@ -114,7 +114,7 @@ class CreateComposerLockBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getOriginalObject')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);

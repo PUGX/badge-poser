@@ -38,7 +38,7 @@ class RepositoryTest extends TestCase
 
         $this->client->expects($this->any())
             ->method('api')
-            ->will($this->returnValue($api));
+            ->willReturn($api);
 
         $this->resultPager = $this->getMockBuilder(ResultPager::class)
             ->disableOriginalConstructor()->getMock();
@@ -52,7 +52,7 @@ class RepositoryTest extends TestCase
 
         $this->resultPager->expects($this->any())
             ->method('fetchAll')
-            ->will($this->returnValue($fetchAllValueExpect));
+            ->willReturn($fetchAllValueExpect);
 
         $contributors = $this->repository->all();
 
@@ -78,7 +78,7 @@ class RepositoryTest extends TestCase
 
         $this->resultPager->expects($this->any())
             ->method('fetchAll')
-            ->will($this->returnValue($fetchAllValueExpect));
+            ->willReturn($fetchAllValueExpect);
 
         $count = $this->repository->updateCache();
 

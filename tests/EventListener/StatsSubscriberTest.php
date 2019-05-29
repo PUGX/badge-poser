@@ -45,11 +45,11 @@ final class StatsSubscriberTest extends WebTestCase
         $this->request->expects($this->at(0))
             ->method('get')
             ->with('repository')
-            ->will($this->returnValue($repository));
+            ->willReturn($repository);
         $this->request->expects($this->at(1))
             ->method('get')
             ->with('_route')
-            ->will($this->returnValue('route_xyz'));
+            ->willReturn('route_xyz');
 
         // adding referer
         $this->request->headers = $this->getMockBuilder(ParameterBag::class)
@@ -58,40 +58,40 @@ final class StatsSubscriberTest extends WebTestCase
         $this->request->headers->expects($this->once())
             ->method('get')
             ->with('referer')
-            ->will($this->returnValue($url));
+            ->willReturn($url);
 
         $this->controllerEvent->expects($this->once())->method('getRequest')
-            ->will($this->returnValue($this->request));
+            ->willReturn($this->request);
         $this->controllerEvent->expects($this->once())->method('getController')
-            ->will($this->returnValue([$controller, $method]));
+            ->willReturn([$controller, $method]);
 
         $this->persister
             ->expects($this->once())
             ->method('incrementTotalAccess')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $this->persister
             ->expects($this->once())
             ->method('incrementRepositoryAccess')
             ->with($repository)
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $this->persister
             ->expects($this->once())
             ->method('addRepositoryToLatestAccessed')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $this->persister
             ->expects($this->once())
             ->method('incrementRepositoryAccessType')
             ->with($repository, $method)
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $this->persister
             ->expects($this->once())
             ->method('addReferer')
             ->with($url)
-            ->will($this->returnSelf());
+            ->willReturnSelf();
 
         $this->listener->onKernelController($this->controllerEvent);
     }

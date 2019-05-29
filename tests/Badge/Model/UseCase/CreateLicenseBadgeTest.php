@@ -41,11 +41,11 @@ class CreateLicenseBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getLicense')
-            ->will($this->returnValue('MIT'));
+            ->willReturn('MIT');
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createLicenseBadge($repository);

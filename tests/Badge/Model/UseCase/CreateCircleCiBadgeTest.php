@@ -61,7 +61,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $this->createMockWithoutInvokingTheOriginalConstructor(
             \Packagist\Api\Result\Package::class,
@@ -75,22 +75,22 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->will($this->returnValue(200));
+            ->willReturn(200);
 
         $responseBody = $this->getMockBuilder(StreamInterface::class)
             ->getMockForAbstractClass();
 
         $responseBody->expects($this->once())
             ->method('getContents')
-            ->will($this->returnValue(json_encode([['status' => $status]])));
+            ->willReturn(json_encode([['status' => $status]]));
 
         $response->expects($this->once())
             ->method('getBody')
-            ->will($this->returnValue($responseBody));
+            ->willReturn($responseBody);
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
@@ -114,7 +114,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
             \Packagist\Api\Result\Package::class,
@@ -126,7 +126,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getOriginalObject')
-            ->will($this->returnValue($repo));
+            ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
@@ -142,7 +142,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $this->createMockWithoutInvokingTheOriginalConstructor(
             \Packagist\Api\Result\Package::class,
@@ -156,22 +156,22 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->will($this->returnValue(200));
+            ->willReturn(200);
 
         $responseBody = $this->getMockBuilder(StreamInterface::class)
             ->getMockForAbstractClass();
 
         $responseBody->expects($this->once())
             ->method('getContents')
-            ->will($this->returnValue(json_encode([])));
+            ->willReturn(json_encode([]));
 
         $response->expects($this->once())
             ->method('getBody')
-            ->will($this->returnValue($responseBody));
+            ->willReturn($responseBody);
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
@@ -187,7 +187,7 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $this->createMockWithoutInvokingTheOriginalConstructor(
             \Packagist\Api\Result\Package::class,
@@ -201,11 +201,11 @@ class CreateCircleCiBadgeTest extends TestCase
 
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->will($this->returnValue(404));
+            ->willReturn(404);
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);

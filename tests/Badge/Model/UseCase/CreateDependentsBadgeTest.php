@@ -41,11 +41,11 @@ class CreateDependentsBadgeTest extends TestCase
 
         $package->expects($this->once())
             ->method('getDependents')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->repository->expects($this->any())
             ->method('fetchByRepository')
-            ->will($this->returnValue($package));
+            ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDependentsBadge($repository);
