@@ -11,8 +11,8 @@ use InvalidArgumentException;
 class TextNormalizer
 {
     /**
-     * @param $number
-     * @param int $precision
+     * @param mixed $number
+     * @param int   $precision
      *
      * @return string
      *

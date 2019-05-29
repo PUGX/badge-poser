@@ -43,8 +43,8 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param $repository
-     * @param $format
+     * @param string $repository
+     * @param string $format
      *
      * @return Badge
      */

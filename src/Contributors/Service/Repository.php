@@ -95,12 +95,12 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param $username
-     * @param $repoName
+     * @param string $username
+     * @param string $repoName
      *
      * @return array
      */
-    private function getContributorsByGithub($username, $repoName): array
+    private function getContributorsByGithub(string $username, string $repoName): array
     {
         $repoApi = $this->client->api('repo');
         $parameters = [$username, $repoName];

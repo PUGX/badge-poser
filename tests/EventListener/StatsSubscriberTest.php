@@ -4,6 +4,7 @@ namespace App\Tests\EventListener;
 
 use App\EventListener\StatsSubscriber;
 use App\Stats\Persister\PersisterInterface;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,7 @@ final class StatsSubscriberTest extends WebTestCase
 
     public function testOnKernelController(): void
     {
-        $controller = new \StdClass();
+        $controller = new StdClass();
         $method = 'boomAction';
         $repository = 'pugx/badge-poser';
         $url = 'https://poser.pugx.org';

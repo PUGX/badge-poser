@@ -14,10 +14,10 @@ class ParseStabilityTest extends TestCase
     /**
      * @dataProvider getVersionAndStability
      *
-     * @param $version
-     * @param $stable
+     * @param string $version
+     * @param string $stable
      */
-    public function testParseStability($version, $stable): void
+    public function testParseStability(string $version, string $stable): void
     {
         $this->assertEquals(Package::parseStability($version), $stable);
     }

@@ -77,11 +77,11 @@ class Badge
     }
 
     /**
-     * @param $value
+     * @param string $value
      *
      * @return string
      */
-    private function escapeValue($value): string
+    private function escapeValue(string $value): string
     {
         $pattern = [
             // '/([^_])_([^_])/g', // damn it global doesn't work in PHP
@@ -105,11 +105,11 @@ class Badge
     }
 
     /**
-     * @param $color
+     * @param string $color
      *
      * @return false|int
      */
-    private function isValidColorHex($color)
+    private function isValidColorHex(string $color)
     {
         $color = ltrim($color, '#');
         $regex = '/^[0-9a-fA-F]{6}$/';

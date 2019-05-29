@@ -61,11 +61,11 @@ class BadgeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $controllerName
+     * @param string $controllerName
      *
      * @return bool
      */
-    private function isABadgeController($controllerName): bool
+    private function isABadgeController(string $controllerName): bool
     {
         return 0 === strpos($controllerName, 'App\Controller\Badge');
     }

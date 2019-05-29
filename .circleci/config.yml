@@ -73,3 +73,7 @@ jobs:
           command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
       - store_artifacts:
           path: coverage
+
+      - run:
+          name: run phpstan checks
+          command: vendor/bin/phpstan analyse

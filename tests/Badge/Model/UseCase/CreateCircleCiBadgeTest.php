@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Badge\UseCase;
+namespace App\Tests\Badge\Model\UseCase;
 
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -52,10 +52,10 @@ class CreateCircleCiBadgeTest extends TestCase
     /**
      * @dataProvider shouldCreateCircleCiBadgeProvider
      *
-     * @param $status
-     * @param $expected
+     * @param string $status
+     * @param string $expected
      */
-    public function testShouldCreateCircleCiBadge($status, $expected): void
+    public function testShouldCreateCircleCiBadge(string $status, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 

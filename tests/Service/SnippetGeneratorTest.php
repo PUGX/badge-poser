@@ -13,6 +13,7 @@ class SnippetGeneratorTest extends TestCase
 {
     public function testGenerateAllSnippets(): void
     {
+        /** @var RouterInterface $router */
         $router = $this->prophesize(RouterInterface::class)
             ->reveal();
 
