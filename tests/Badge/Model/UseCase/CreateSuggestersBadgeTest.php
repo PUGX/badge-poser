@@ -14,19 +14,20 @@ namespace App\Tests\Badge\Model\UseCase;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateSuggestersBadge;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class SuggestersImageCreatorTest.
  */
-class CreateSuggestersBadgeTest extends TestCase
+final class CreateSuggestersBadgeTest extends TestCase
 {
     /** @var CreateSuggestersBadge */
     private $useCase;
-    /** @var PackageRepositoryInterface */
+    /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateSuggestersBadge($this->repository);

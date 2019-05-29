@@ -15,6 +15,7 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Service\CircleCiClientInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -23,16 +24,16 @@ use RuntimeException;
 /**
  * Class CreateCircleCiBadgeTest.
  */
-class CreateCircleCiBadgeTest extends TestCase
+final class CreateCircleCiBadgeTest extends TestCase
 {
     /** @var CreateCircleCiBadge $useCase */
     private $useCase;
-    /** @var PackageRepositoryInterface */
+    /** @var PackageRepositoryInterface|MockObject */
     private $repository;
-    /** @var CircleCiClientInterface */
+    /** @var CircleCiClientInterface|MockObject */
     private $circleCiClient;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->circleCiClient = $this->getMockBuilder(CircleCiClientInterface::class)
@@ -41,7 +42,7 @@ class CreateCircleCiBadgeTest extends TestCase
         $this->useCase = new CreateCircleCiBadge($this->repository, $this->circleCiClient);
     }
 
-    private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = [])
+    private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = []): MockObject
     {
         return $this->getMockBuilder($classname)
             ->disableOriginalConstructor()

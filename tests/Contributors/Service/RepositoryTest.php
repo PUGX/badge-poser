@@ -7,20 +7,21 @@ use App\Contributors\Service\Repository;
 use Github\Api\ApiInterface;
 use Github\Client;
 use Github\ResultPager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Predis\Client as Redis;
 
 /**
  * Class RepositoryTest.
  */
-class RepositoryTest extends TestCase
+final class RepositoryTest extends TestCase
 {
     private const API_CAN_VISIT = 'https://helloacm.com/api/can-visit/';
-    /** @var Redis */
+    /** @var Redis|MockObject */
     private $redis;
-    /** @var Client */
+    /** @var Client|MockObject */
     private $client;
-    /** @var ResultPager */
+    /** @var ResultPager|MockObject */
     private $resultPager;
     /** @var Repository */
     private $repository;
