@@ -34,7 +34,7 @@ class UpdateCommand extends Command
             ->setHelp('This command update contributors of badge poser...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
@@ -50,5 +50,7 @@ class UpdateCommand extends Command
 
         // outputs a message without adding a "\n" at the end of the line
         $output->write('We have '.$count.' contributors!!!');
+
+        return 0;
     }
 }
