@@ -42,7 +42,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param ClientInterface Client     $client
+     * @param ClientInterface            $client
      */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {

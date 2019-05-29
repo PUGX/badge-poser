@@ -9,24 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Badge\UseCase;
+namespace App\Tests\Badge\Model\UseCase;
 
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateDownloadsBadge;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class CreateDownloadsBadgeTest.
  */
-class CreateDownloadsBadgeTest extends TestCase
+final class CreateDownloadsBadgeTest extends TestCase
 {
     /** @var CreateDownloadsBadge */
     private $useCase;
-    /** @var PackageRepositoryInterface */
+    /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->repository = $this->createMock(PackageRepositoryInterface::class);
         $this->useCase = new CreateDownloadsBadge($this->repository);

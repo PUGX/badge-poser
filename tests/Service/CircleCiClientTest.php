@@ -4,6 +4,7 @@ namespace App\Tests\Service;
 
 use App\Service\CircleCiClient;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -11,10 +12,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CircleCiClientTest extends TestCase
 {
-    /** @var UrlGeneratorInterface */
+    /** @var UrlGeneratorInterface|MockObject */
     protected $router;
 
-    /** @var ClientInterface */
+    /** @var ClientInterface|MockObject */
     protected $client;
 
     /** @var CircleCiClient */

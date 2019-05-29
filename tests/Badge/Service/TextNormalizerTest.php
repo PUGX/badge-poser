@@ -17,12 +17,12 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class TextNormalizerTest.
  */
-class TextNormalizerTest extends TestCase
+final class TextNormalizerTest extends TestCase
 {
     /** @var TextNormalizer */
     private $normalizer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->normalizer = new TextNormalizer();
     }
@@ -30,7 +30,7 @@ class TextNormalizerTest extends TestCase
     /**
      * @dataProvider getBadNumberToConvert
      */
-    public function testNumberToTextConversion($input, $output): void
+    public function testNumberToTextConversion(string $input, string $output): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -38,7 +38,7 @@ class TextNormalizerTest extends TestCase
         $this->assertEquals($output, $res);
     }
 
-    public static function getBadNumberToConvert()
+    public static function getBadNumberToConvert(): array
     {
         return [
             ['A', 'ERR 2 '],
@@ -49,13 +49,13 @@ class TextNormalizerTest extends TestCase
     /**
      * @dataProvider getGoodNumberToConvert
      */
-    public function testGoodNumberToTextConversion($input, $output): void
+    public function testGoodNumberToTextConversion(string $input, string $output): void
     {
         $res = $this->normalizer->normalize($input);
         $this->assertEquals($output, $res);
     }
 
-    public static function getGoodNumberToConvert()
+    public static function getGoodNumberToConvert(): array
     {
         return [
             [0,               '1'],

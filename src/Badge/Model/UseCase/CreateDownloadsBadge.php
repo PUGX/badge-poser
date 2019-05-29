@@ -27,14 +27,14 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     private const COLOR = '007ec6';
     private const SUBJECT = 'downloads';
 
-    /** @var TextNormalizer */
+    /** @var NormalizerInterface|null */
     private $normalizer;
 
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param NormalizerInterface        $textNormalizer
+     * @param NormalizerInterface|null   $textNormalizer
      */
-    public function __construct(PackageRepositoryInterface $packageRepository, NormalizerInterface $textNormalizer = null)
+    public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
     {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer;

@@ -3,12 +3,13 @@
 namespace App\Service;
 
 use GuzzleHttp\ClientInterface;
+use Packagist\Api\Client;
 use Predis\Profile\Factory;
 
 /**
  * Class CachedClient.
  */
-class CachedClient
+class CachedClient extends Client
 {
     /**
      * @var ClientInterface

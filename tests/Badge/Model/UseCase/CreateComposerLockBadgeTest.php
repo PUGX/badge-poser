@@ -9,27 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Tests\Badge\UseCase;
+namespace App\Tests\Badge\Model\UseCase;
 
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
  * Class CreateComposerLockBadgeTest.
  */
-class CreateComposerLockBadgeTest extends TestCase
+final class CreateComposerLockBadgeTest extends TestCase
 {
     /** @var CreateComposerLockBadge $useCase */
     private $useCase;
-    /** @var PackageRepositoryInterface */
+    /** @var PackageRepositoryInterface|MockObject */
     private $repository;
-    /** @var ClientInterface */
+    /** @var ClientInterface|MockObject */
     private $client;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
         $this->client = $this->getMockBuilder(ClientInterface::class)
@@ -124,7 +125,7 @@ class CreateComposerLockBadgeTest extends TestCase
         $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
-    public function shouldCreateComposerLockBadgeProvider()
+    public function shouldCreateComposerLockBadgeProvider(): array
     {
         return [
             [200, 'committed'],

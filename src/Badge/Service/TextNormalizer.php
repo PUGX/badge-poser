@@ -8,11 +8,11 @@ use InvalidArgumentException;
  * Class TextNormalizer
  * Transform numbers to readable format.
  */
-class TextNormalizer
+final class TextNormalizer implements NormalizerInterface
 {
     /**
-     * @param $number
-     * @param int $precision
+     * @param mixed $number
+     * @param int   $precision
      *
      * @return string
      *

@@ -86,3 +86,9 @@ docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
 ``` bash
 docker-compose exec php-fpm bash php-no-xdebug ./vendor/bin/php-cs-fixer fix -v
 ```
+
+- Run phpstan analyse:
+
+``` bash
+$ docker-compose exec php-fpm ./vendor/bin/phpstan analyse
+```

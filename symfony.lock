@@ -83,6 +83,33 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "nette/bootstrap": {
+        "version": "v3.0.0"
+    },
+    "nette/di": {
+        "version": "v3.0.0"
+    },
+    "nette/finder": {
+        "version": "v2.5.0"
+    },
+    "nette/neon": {
+        "version": "v3.0.0"
+    },
+    "nette/php-generator": {
+        "version": "v3.2.2"
+    },
+    "nette/robot-loader": {
+        "version": "v3.2.0"
+    },
+    "nette/schema": {
+        "version": "v1.0.0"
+    },
+    "nette/utils": {
+        "version": "v3.0.1"
+    },
+    "nikic/php-parser": {
+        "version": "v4.2.2"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
@@ -109,6 +136,18 @@
     },
     "php-http/promise": {
         "version": "v1.0.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.3.4"
+    },
+    "phpstan/phpstan": {
+        "version": "0.11.8"
+    },
+    "phpstan/phpstan-phpunit": {
+        "version": "0.11.2"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.11.6"
     },
     "predis/predis": {
         "version": "v1.1.1"

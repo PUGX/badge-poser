@@ -36,6 +36,9 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.13",
+        "phpstan/phpstan": "^0.11.8",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "phpstan/phpstan-symfony": "^0.11.6",
         "symfony/browser-kit": "*",
         "symfony/debug-pack": "*",
         "symfony/dotenv": "*",
