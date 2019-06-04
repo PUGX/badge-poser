@@ -10,6 +10,7 @@ services:
     volumes:
       - .:/application:cached
       - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./var/log/nginx/:/var/log/nginx:cached
     ports:
       - '80:80'
 
@@ -21,20 +22,20 @@ services:
       - redis
     volumes:
       - .:/application:cached
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini:ro
+      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini:ro
     ports:
         - "9000"
 
   node:
     container_name: badge-poser-node
-    image: node:8-alpine
+    image: node:10-alpine
     user: "node"
     volumes:
       - .:/application:cached
     working_dir: /application
 
   redis:
-    image: redis
+    image: redis:alpine
     container_name: badge-poser-redis
     ports:
       - "6379:6379"

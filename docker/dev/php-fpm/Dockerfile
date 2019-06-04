@@ -1,83 +1,18 @@
-FROM php:7.2-fpm-alpine
+FROM phpdockerio/php73-fpm:latest
 WORKDIR "/application"
 
-ENV APCU_VERSION 5.1.8
+# Fix debconf warnings upon build
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apk add --no-cache --virtual .persistent-deps \
-    git \
-    curl \
-    icu-libs \
-    zlib \
-    vim \
-    bash \
-    file
+# Install selected extensions and other stuff
+RUN apt-get update \
+    && apt-get -y --no-install-recommends install php-redis php-xdebug php7.3-bcmath php7.3-gd php7.3-intl php-msgpack php-yaml \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-RUN set -xe \
-    && apk add --no-cache --virtual .build-deps \
-        $PHPIZE_DEPS \
-        icu-dev \
-        zlib-dev
-RUN docker-php-ext-install intl
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install zip
-
-# Fixup by https://github.com/php-earth/docker-php/issues/3
-RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
-
-# Install apcu and opcache
-RUN pecl install \
-    apcu-${APCU_VERSION} \
-    && docker-php-ext-enable --ini-name 20-apcu.ini apcu \
-    && docker-php-ext-enable --ini-name 05-opcache.ini opcache \
-    && apk del .build-deps
-
-# Install GD extension
-RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev && \
-  docker-php-ext-configure gd \
-    --with-gd \
-    --with-freetype-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ && \
-  NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
-  docker-php-ext-install -j${NPROC} gd && \
-  apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
-
-# install redis
-RUN apk add --no-cache --virtual build-dependencies autoconf g++ make git \
-  && docker-php-source extract \
-  && pecl install \
-    redis \
-  && docker-php-ext-enable \
-    redis \
-  && docker-php-source delete \
-  && apk del build-dependencies
-
-# Install XDebug
-RUN apk --no-cache add pcre-dev ${PHPIZE_DEPS} \
-  && pecl install xdebug \
-  && docker-php-ext-enable xdebug \
-  && apk del pcre-dev ${PHPIZE_DEPS}
-RUN echo "xdebug.idekey = PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.default_enable = 1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable = 1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart = 1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_connect_back = 0" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.profiler_enable = 1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_host = 127.0.0.1" >> /usr/local/etc/php/conf.d/xdebug.ini
-
-# Install composer
-COPY ./composer-install.sh /tmp/composer-install.sh
-RUN chmod +x /tmp/composer-install.sh && /tmp/composer-install.sh && rm /tmp/composer-install.sh
+# Install git
+RUN apt-get update \
+    && apt-get -y install git \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install prestissimo
 RUN composer global require hirak/prestissimo
-
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-app-entrypoint
-RUN chmod +x /usr/local/bin/docker-app-entrypoint
-
-COPY ./php-no-xdebug.sh /usr/local/bin/php-no-xdebug
-RUN chmod +x /usr/local/bin/php-no-xdebug
-
-ENTRYPOINT ["docker-app-entrypoint"]
-CMD ["php-fpm"]

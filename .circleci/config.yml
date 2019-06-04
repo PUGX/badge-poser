@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2.6-apache-stretch-node-browsers
+      - image: circleci/php:7.3-fpm-stretch-node-browsers
         environment:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
@@ -73,6 +73,10 @@ jobs:
           command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
       - store_artifacts:
           path: coverage
+
+      - run:
+          name: run php-cs-fixer checks
+          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
 
       - run:
           name: run phpstan checks
