@@ -29,9 +29,9 @@
         "snc/redis-bundle": "^2.0",
         "symfony/asset": "*",
         "symfony/console": "*",
-        "symfony/flex": "^1.1",
+        "symfony/flex": "*",
         "symfony/framework-bundle": "*",
-        "symfony/webpack-encore-bundle": "^1.0",
+        "symfony/webpack-encore-bundle": "*",
         "symfony/yaml": "*"
     },
     "require-dev": {
@@ -87,7 +87,7 @@
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
-            "require": "4.2.*"
+            "require": "4.3.*"
         }
     }
 }
