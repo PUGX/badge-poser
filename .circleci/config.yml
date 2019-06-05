@@ -7,7 +7,7 @@ jobs:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
           - REDIS_URL=redis://localhost
-          - SYMFONY_DEPRECATIONS_HELPER='max[self]=0'
+          - SYMFONY_DEPRECATIONS_HELPER=max[self]=0
       - image: redis
 
     working_directory: ~/app
