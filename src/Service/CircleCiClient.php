@@ -2,34 +2,32 @@
 
 namespace App\Service;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Routing\Exception\InvalidParameterException;
-use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class CircleCiClient implements CircleCiClientInterface
 {
     /** @var UrlGeneratorInterface */
     protected $router;
 
-    /** @var ClientInterface */
-    protected $client;
+    /** @var HttpClientInterface */
+    protected $httpClient;
 
     /** @var string */
     protected $circleToken;
 
     /**
      * @param UrlGeneratorInterface $router
-     * @param ClientInterface       $client
+     * @param HttpClientInterface   $httpClient
      * @param string                $circleToken
      */
-    public function __construct(UrlGeneratorInterface $router, ClientInterface $client, string $circleToken)
+    public function __construct(UrlGeneratorInterface $router, HttpClientInterface $httpClient, string $circleToken)
     {
         $this->router = $router;
-        $this->client = $client;
+        $this->httpClient = $httpClient;
         $this->circleToken = $circleToken;
     }
 
@@ -39,17 +37,14 @@ class CircleCiClient implements CircleCiClientInterface
      *
      * @return ResponseInterface
      *
-     * @throws RouteNotFoundException
-     * @throws MissingMandatoryParametersException
-     * @throws InvalidParameterException
-     * @throws GuzzleException
+     * @throws TransportExceptionInterface
      */
     public function getBuilds(string $repository, string $branch = 'master'): ResponseInterface
     {
         $circleCiApiUrl = $this->router->generate('circleci_api', ['repository' => $repository, 'branch' => urlencode($branch)]);
 
-        return $this->client->request(
-            'GET',
+        return $this->httpClient->request(
+            Request::METHOD_GET,
             $circleCiApiUrl,
             [
                 'headers' => [

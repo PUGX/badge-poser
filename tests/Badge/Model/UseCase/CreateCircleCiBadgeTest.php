@@ -17,9 +17,8 @@ use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Service\CircleCiClientInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Class CreateCircleCiBadgeTest.
@@ -69,25 +68,16 @@ final class CreateCircleCiBadgeTest extends TestCase
             ['getRepository']
         );
 
-        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            ResponseInterface::class,
-            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
-        );
+        $response = $this->getMockBuilder(ResponseInterface::class)
+            ->disableOriginalConstructor()->getMock();
 
         $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $responseBody = $this->getMockBuilder(StreamInterface::class)
-            ->getMockForAbstractClass();
-
-        $responseBody->expects($this->once())
-            ->method('getContents')
-            ->willReturn(json_encode([['status' => $status]]));
-
         $response->expects($this->once())
-            ->method('getBody')
-            ->willReturn($responseBody);
+            ->method('getContent')
+            ->willReturn(json_encode([['status' => $status]]));
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
@@ -150,25 +140,16 @@ final class CreateCircleCiBadgeTest extends TestCase
             ['getRepository']
         );
 
-        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            ResponseInterface::class,
-            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
-        );
+        $response = $this->getMockBuilder(ResponseInterface::class)
+            ->disableOriginalConstructor()->getMock();
 
         $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $responseBody = $this->getMockBuilder(StreamInterface::class)
-            ->getMockForAbstractClass();
-
-        $responseBody->expects($this->once())
-            ->method('getContents')
-            ->willReturn(json_encode([]));
-
         $response->expects($this->once())
-            ->method('getBody')
-            ->willReturn($responseBody);
+            ->method('getContent')
+            ->willReturn(json_encode([]));
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
@@ -195,10 +176,12 @@ final class CreateCircleCiBadgeTest extends TestCase
             ['getRepository']
         );
 
-        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            ResponseInterface::class,
-            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
-        );
+//        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
+//            ResponseInterface::class,
+//            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
+//        );
+        $response = $this->getMockBuilder(ResponseInterface::class)
+            ->disableOriginalConstructor()->getMock();
 
         $response->expects($this->once())
             ->method('getStatusCode')
