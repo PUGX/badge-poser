@@ -3,20 +3,19 @@
 namespace App\Tests\Service;
 
 use App\Service\CircleCiClient;
-use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class CircleCiClientTest extends TestCase
 {
     /** @var UrlGeneratorInterface|MockObject */
     protected $router;
 
-    /** @var ClientInterface|MockObject */
-    protected $client;
+    /** @var HttpClientInterface|MockObject */
+    protected $httpClient;
 
     /** @var CircleCiClient */
     protected $circleCiClient;
@@ -26,32 +25,30 @@ class CircleCiClientTest extends TestCase
         $this->router = $this->getMockBuilder(UrlGeneratorInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->client = $this->getMockBuilder(ClientInterface::class)
+        $this->router->expects($this->any())
+            ->method('generate')
+            ->willReturn('fake-url-circleci-api');
+
+        $this->httpClient = $this->getMockBuilder(HttpClientInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->circleCiClient = new CircleCiClient($this->router, $this->client, 'fake-token');
+        $this->circleCiClient = new CircleCiClient($this->router, $this->httpClient, 'fake-token');
     }
 
     public function testGetBuilds(): void
     {
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
-        $responseBody = $this->getMockBuilder(StreamInterface::class)
-            ->getMockForAbstractClass();
 
-        $responseBody->expects($this->once())
-            ->method('getContents')
+        $response->expects($this->any())
+            ->method('getContent')
             ->willReturn(json_encode([['status' => 'success']]));
 
         $response->expects($this->any())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $response->expects($this->any())
-            ->method('getBody')
-            ->willReturn($responseBody);
-
-        $this->client->expects($this->any())
+        $this->httpClient->expects($this->any())
             ->method('request')
             ->willReturn($response);
 
@@ -59,10 +56,10 @@ class CircleCiClientTest extends TestCase
 
         $this->assertInstanceOf(ResponseInterface::class, $responseBuilds);
         $this->assertEquals($responseBuilds->getStatusCode(), 200);
-        $contents = $responseBuilds->getBody()->getContents();
-        $this->assertNotEmpty($contents);
-        $this->assertInternalType('string', $contents);
-        $contentsToArray = json_decode($contents, true);
-        $this->assertInternalType('array', $contentsToArray);
+        $content = $responseBuilds->getContent();
+        $this->assertNotEmpty($content);
+        $this->assertInternalType('string', $content);
+        $contentToArray = json_decode($content, true);
+        $this->assertInternalType('array', $contentToArray);
     }
 }

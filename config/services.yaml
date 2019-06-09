@@ -52,7 +52,7 @@ services:
     App\Service\CircleCiClient:
         arguments:
             - '@router'
-            - '@GuzzleHttp\Client'
+            - '@Symfony\Contracts\HttpClient\HttpClientInterface'
             - '%app.circle_ci_token%'
     App\Service\CircleCiClientInterface: '@App\Service\CircleCiClient'
 
