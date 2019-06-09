@@ -200,6 +200,9 @@
     "symfony/cache": {
         "version": "v4.2.1"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.1"
+    },
     "symfony/config": {
         "version": "v4.2.1"
     },
@@ -242,6 +245,9 @@
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
     },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.1"
+    },
     "symfony/filesystem": {
         "version": "v4.2.1"
     },
@@ -266,11 +272,20 @@
             "ref": "99d0a737bb3a14a25530fc8c528aa2a632f43079"
         }
     },
+    "symfony/http-client": {
+        "version": "v4.3.0"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v1.1.1"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.1"
     },
     "symfony/http-kernel": {
         "version": "v4.2.1"
+    },
+    "symfony/mime": {
+        "version": "v4.3.0"
     },
     "symfony/monolog-bridge": {
         "version": "v4.2.1"
@@ -299,8 +314,14 @@
     "symfony/polyfill-ctype": {
         "version": "v1.10.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.11.0"
     },
     "symfony/process": {
         "version": "v4.2.1"
@@ -319,6 +340,9 @@
     },
     "symfony/security-core": {
         "version": "v4.2.1"
+    },
+    "symfony/service-contracts": {
+        "version": "v1.1.2"
     },
     "symfony/stopwatch": {
         "version": "v4.2.1"
