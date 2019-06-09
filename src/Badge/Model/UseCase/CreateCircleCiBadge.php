@@ -16,6 +16,8 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Service\CircleCiClientInterface;
 use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 use UnexpectedValueException;
 
 /**
@@ -66,12 +68,12 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
 
             $response = $this->circleCiClient->getBuilds($repository, $branch);
 
-            if (200 !== $response->getStatusCode()) {
+            if (Response::HTTP_OK !== $response->getStatusCode()) {
                 return $this->createDefaultBadge($format);
             }
 
-            $builds = json_decode($response->getBody()->getContents(), true);
-        } catch (\Exception $e) {
+            $builds = json_decode($response->getContent(), true);
+        } catch (Throwable $e) {
             return $this->createDefaultBadge($format);
         }
 
