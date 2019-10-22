@@ -65,6 +65,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.0.0"
+    },
     "jean85/pretty-package-versions": {
         "version": "1.2"
     },
@@ -110,6 +113,9 @@
     "nikic/php-parser": {
         "version": "v4.2.2"
     },
+    "paragonie/random_compat": {
+        "version": "v9.99.99"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
@@ -118,6 +124,9 @@
     },
     "php-http/client-common": {
         "version": "1.9.0"
+    },
+    "php-http/curl-client": {
+        "version": "v1.7.1"
     },
     "php-http/discovery": {
         "version": "1.5.2"
@@ -158,6 +167,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
     "psr/http-message": {
         "version": "1.0.1"
     },
@@ -170,17 +182,26 @@
     "ralouphie/getallheaders": {
         "version": "2.0.5"
     },
+    "ramsey/uuid": {
+        "version": "3.8.0"
+    },
+    "sentry/sdk": {
+        "version": "2.0.4"
+    },
     "sentry/sentry": {
-        "version": "1.10.0"
+        "version": "2.2.2"
     },
     "sentry/sentry-symfony": {
-        "version": "1.0",
+        "version": "3.0",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
-            "version": "1.0",
-            "ref": "fa1a2dfc020798cd7076b5419596e72dca07047a"
-        }
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
     },
     "snc/redis-bundle": {
         "version": "2.0",
@@ -339,7 +360,7 @@
         }
     },
     "symfony/security-core": {
-        "version": "v4.2.1"
+        "version": "v4.3.5"
     },
     "symfony/service-contracts": {
         "version": "v1.1.2"
@@ -388,5 +409,8 @@
     },
     "twig/twig": {
         "version": "v2.6.0"
+    },
+    "zendframework/zend-diactoros": {
+        "version": "2.1.5"
     }
 }

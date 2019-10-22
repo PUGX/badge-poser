@@ -8,6 +8,7 @@ jobs:
           - APP_SECRET=notReallyNeededHere
           - REDIS_URL=redis://localhost
           - SYMFONY_DEPRECATIONS_HELPER=max[self]=0
+          - SENTRY_DSN=
       - image: redis
 
     working_directory: ~/app

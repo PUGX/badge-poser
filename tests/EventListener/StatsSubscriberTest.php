@@ -8,7 +8,7 @@ use stdClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * Class StatsSubscriberTest.
@@ -28,7 +28,7 @@ final class StatsSubscriberTest extends WebTestCase
         $this->persister = $this->getMockBuilder(PersisterInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->controllerEvent = $this->getMockBuilder(FilterControllerEvent::class)
+        $this->controllerEvent = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
