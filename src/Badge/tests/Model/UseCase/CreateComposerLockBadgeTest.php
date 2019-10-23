@@ -31,8 +31,7 @@ class CreateComposerLockBadgeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = $this->getMock('\PUGX\Badge\Model\PackageRepositoryInterface');
-        $this->client = $this->getMock('\Guzzle\Http\Client');
-        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client);
+        $this->useCase = new CreateComposerLockBadge($this->repository);
     }
 
     /**

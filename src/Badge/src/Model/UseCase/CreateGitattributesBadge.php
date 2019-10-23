@@ -10,7 +10,7 @@
  */
 namespace PUGX\Badge\Model\UseCase;
 
-use Guzzle\Http\Client;
+use Symfony\Component\HttpClient\HttpClient;
 use PUGX\Badge\Model\PackageRepositoryInterface;
 
 /**
@@ -29,17 +29,12 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
 
     protected $text = self::GITATTRIBUTES_ERROR;
 
-    /** @var Client */
-    protected $client;
-
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param Client $client
      */
-    public function __construct(PackageRepositoryInterface $packageRepository, Client $client)
+    public function __construct(PackageRepositoryInterface $packageRepository)
     {
         $this->packageRepository = $packageRepository;
-        $this->client = $client;
     }
     /**
      * @param string $repository
@@ -55,21 +50,15 @@ class CreateGitattributesBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $request = $this->client->head(
-            $repo . '/blob/master/.gitattributes',
-            array(),
-            array(
-                'timeout'         => 2,
-                'connect_timeout' => 1,
-                'exceptions'      => false,
-            )
-        );
+        $client = HttpClient::create();
 
-        $response = $this->client->send($request);
-        $status = 500;
-        if ($request) {
-            $status = $response->getStatusCode();
-        }
+        $response = $client->request('HEAD', $repo . '/blob/master/.gitattributes', array(
+            'timeout'         => 2,
+            'connect_timeout' => 1,
+            'exceptions'      => false,
+        ));
+
+        $status = $response->getStatusCode();
 
         $this->text = self::GITATTRIBUTES_ERROR;
         $color      = self::COLOR_ERROR;

@@ -10,7 +10,7 @@
  */
 namespace PUGX\Badge\Model\UseCase;
 
-use Guzzle\Http\Client;
+use Symfony\Component\HttpClient\HttpClient;
 use PUGX\Badge\Model\PackageRepositoryInterface;
 
 /**
@@ -29,18 +29,12 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
 
     protected $text = self::LOCK_ERROR;
 
-
-    /** @var Client */
-    protected $client;
-
     /**
      * @param PackageRepositoryInterface $packageRepository
-     * @param Client $client
      */
-    public function __construct(PackageRepositoryInterface $packageRepository, Client $client)
+    public function __construct(PackageRepositoryInterface $packageRepository)
     {
         $this->packageRepository = $packageRepository;
-        $this->client = $client;
     }
     /**
      * @param string $repository
@@ -56,21 +50,15 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             ->getRepository()
         );
 
-        $request = $this->client->head(
-            $repo . '/blob/master/composer.lock',
-            array(),
-            array(
+        $client = HttpClient::create();
+        $response = $client->request('HEAD',$repo . '/blob/master/composer.lock', array(
                 'timeout'         => 2,
                 'connect_timeout' => 1,
                 'exceptions'      => false,
             )
         );
 
-        $response = $this->client->send($request);
-        $status = 500;
-        if ($request) {
-            $status = $response->getStatusCode();
-        }
+        $status = $response->getStatusCode();
 
         $this->text = self::LOCK_ERROR;
         $color      = self::COLOR_ERROR;
