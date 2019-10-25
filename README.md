@@ -86,3 +86,5 @@ docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
 ``` bash
 $ docker-compose exec php-fpm ./vendor/bin/phpstan analyse
 ```
+
+A pre-commit git hook to run `phpunit`, `php-cs-fixer` and `phpstan` is automatically installed

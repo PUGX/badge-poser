@@ -37,6 +37,7 @@
         "symfony/yaml": "*"
     },
     "require-dev": {
+        "brainmaestro/composer-git-hooks": "^2.8",
         "friendsofphp/php-cs-fixer": "^2.13",
         "phpstan/phpstan": "^0.11.8",
         "phpstan/phpstan-phpunit": "^0.11.2",
@@ -76,16 +77,25 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "cghooks add --ignore-lock"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "cghooks update"
         ]
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "extra": {
+        "hooks": {
+            "pre-commit": [
+                "./bin/phpunit",
+                "./vendor/bin/php-cs-fixer fix -v",
+                "./vendor/bin/phpstan analyse"
+            ]
+        },
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
