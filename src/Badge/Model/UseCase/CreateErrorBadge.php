@@ -12,7 +12,7 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
-use Exception;
+use Throwable;
 use GuzzleHttp\Exception\BadResponseException;
 use InvalidArgumentException;
 use UnexpectedValueException;
@@ -24,42 +24,32 @@ use UnexpectedValueException;
 class CreateErrorBadge
 {
     private const COLOR = 'e05d44';
-    private const SUBJECT = 'error';
+    private const SUBJECT = 'error';    // TODO this private constant is unused
     private const ERROR_TEXT_GENERIC = 'generic';
     private const ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     private const ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
     /**
-     * @param Exception $exception
-     * @param string    $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
-    public function createErrorBadge(Exception $exception, string $format): Badge
+    public function createErrorBadge(Throwable $throwable, string $format): Badge
     {
-        return $this->createBadge($exception, $format);
+        return $this->createBadge($throwable, $format);
     }
 
     /**
-     * @param Exception $exception
-     * @param string    $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
-    protected function createBadge(Exception $exception, string $format): Badge
+    protected function createBadge(Throwable $throwable, string $format): Badge
     {
         $subject = 'error';
         $status = self::ERROR_TEXT_GENERIC;
-        if ($exception instanceof BadResponseException) {
+        if ($throwable instanceof BadResponseException) {
             $status = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
-        } elseif ($exception instanceof UnexpectedValueException) {
+        } elseif ($throwable instanceof UnexpectedValueException) {
             $status = self::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
-        return new Badge((string) $exception, $status, self::COLOR, $format);
+        return new Badge((string) $throwable, $status, self::COLOR, $format);
     }
 }

@@ -53,7 +53,7 @@ class BadgeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $badge = $this->useCase->createErrorBadge($event->getException(), 'svg');
+        $badge = $this->useCase->createErrorBadge($event->getThrowable(), 'svg');
         $image = $this->imageFactory->createFromBadge($badge);
 
         $response = ResponseFactory::createFromImage($image, Response::HTTP_INTERNAL_SERVER_ERROR);
