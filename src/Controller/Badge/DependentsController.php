@@ -18,14 +18,8 @@ class DependentsController extends AbstractController
     /**
      * Dependents action.
      *
-     * @param Request               $request
-     * @param Poser                 $poser
-     * @param CreateDependentsBadge $createDependentsBadge
-     * @param ImageFactory          $imageFactory
-     * @param string                $repository            repository
-     * @param string                $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $format
      */
     public function dependents(
         Request $request,

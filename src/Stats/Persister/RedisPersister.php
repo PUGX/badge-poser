@@ -35,9 +35,6 @@ final class RedisPersister implements PersisterInterface
         $this->keyList = $this->concatenateKeys($keyPrefix, $keyList);
     }
 
-    /**
-     * @return PersisterInterface
-     */
     public function incrementTotalAccess(): PersisterInterface
     {
         $this->redis->incr($this->keyTotal);
@@ -54,11 +51,6 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
-    /**
-     * @param string $repository
-     *
-     * @return PersisterInterface
-     */
     public function incrementRepositoryAccess(string $repository): PersisterInterface
     {
         $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), self::KEY_TOTAL, 1);
@@ -75,12 +67,6 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
-    /**
-     * @param string $repository
-     * @param string $type
-     *
-     * @return PersisterInterface
-     */
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
     {
         $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $type, 1);
@@ -88,12 +74,6 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
-    /**
-     * @param string $repository
-     * @param int    $maxListLength
-     *
-     * @return PersisterInterface
-     */
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
         $this->redis->zAdd($this->keyList, time(), $repository);
@@ -101,11 +81,6 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return PersisterInterface
-     */
     public function addReferer(string $url): PersisterInterface
     {
         $this->redis->zAdd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time(), $url);
@@ -115,11 +90,6 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * Generate the Key with the default prefix.
-     *
-     * @param string $prefix
-     * @param string $keyName
-     *
-     * @return string
      */
     private function concatenateKeys(string $prefix, string $keyName): string
     {
@@ -129,10 +99,7 @@ final class RedisPersister implements PersisterInterface
     /**
      * Create the yearly key with prefix eg. 'total_2003'.
      *
-     * @param string    $prefix
      * @param \DateTime $datetime
-     *
-     * @return string
      */
     private function createYearlyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -142,10 +109,7 @@ final class RedisPersister implements PersisterInterface
     /**
      * Create the monthly key with prefix eg. 'total_2003_11'.
      *
-     * @param string    $prefix
      * @param \DateTime $datetime
-     *
-     * @return string
      */
     private function createMonthlyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -155,10 +119,7 @@ final class RedisPersister implements PersisterInterface
     /**
      * Create the daily key with prefix eg. 'total_2003_11_29'.
      *
-     * @param string    $prefix
      * @param \DateTime $datetime
-     *
-     * @return string
      */
     private function createDailyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -169,9 +130,6 @@ final class RedisPersister implements PersisterInterface
      * format a date.
      *
      * @param \DateTime $datetime
-     * @param string    $format
-     *
-     * @return string
      */
     private function formatDate(\DateTime $datetime = null, string $format = 'Y_m_d'): string
     {

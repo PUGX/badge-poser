@@ -12,9 +12,9 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
-use Throwable;
 use GuzzleHttp\Exception\BadResponseException;
 use InvalidArgumentException;
+use Throwable;
 use UnexpectedValueException;
 
 /**

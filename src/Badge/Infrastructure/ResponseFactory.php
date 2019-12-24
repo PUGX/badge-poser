@@ -22,12 +22,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ResponseFactory
 {
     /**
-     * @param Image $image
-     * @param int   $status
-     * @param int   $maxage
-     * @param int   $smaxage
-     *
-     * @return Response
+     * @param int $maxage
+     * @param int $smaxage
      *
      * @throws InvalidArgumentException
      */

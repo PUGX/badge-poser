@@ -27,14 +27,9 @@ class CircleCiController extends AbstractController
     /**
      * CircleCi action.
      *
-     * @param Request             $request
-     * @param ImageFactory        $imageFactory
-     * @param CreateCircleCiBadge $circleCiBadge
-     * @param string              $repository
-     * @param string              $branch
-     * @param string              $format
-     *
-     * @return Response
+     * @param string $repository
+     * @param string $branch
+     * @param string $format
      */
     public function status(
         Request $request,

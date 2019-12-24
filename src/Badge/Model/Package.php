@@ -46,9 +46,6 @@ class Package
     /**
      * Create a new Package decorated with the Api Package.
      *
-     * @param ApiPackage $apiPackage
-     * @param array      $repoGitHubData
-     *
      * @return Package
      */
     public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
@@ -58,8 +55,6 @@ class Package
 
     /**
      * Take the Type of the Downloads (total, monthly or daily).
-     *
-     * @param string $type
      *
      * @return string
      */
@@ -111,10 +106,6 @@ class Package
 
     /**
      * Get all the branch aliases.
-     *
-     * @param ApiPackage\Version $version
-     *
-     * @return array|null
      */
     private function getBranchAliases(ApiPackage\Version $version): ?array
     {
@@ -133,10 +124,6 @@ class Package
      *
      * (c) Nils Adermann <naderman@naderman.de>
      * Jordi Boggiano <j.boggiano@seld.be>
-     *
-     * @param string $version
-     *
-     * @return string
      */
     public static function parseStability(string $version): string
     {
@@ -166,169 +153,106 @@ class Package
         return 'stable';
     }
 
-    /**
-     * @return string|null
-     */
     public function getLicense(): ?string
     {
         return $this->license;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLatestStableVersion(): ?string
     {
         return $this->latestStableVersion;
     }
 
-    /**
-     * @return bool
-     */
     public function hasStableVersion(): bool
     {
         return null !== $this->latestStableVersion;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLatestUnstableVersion(): ?string
     {
         return $this->latestUnstableVersion;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLatestStableVersionNormalized(): ?string
     {
         return $this->latestStableVersionNormalized;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLatestUnstableVersionNormalized(): ?string
     {
         return $this->latestUnstableVersionNormalized;
     }
 
-    /**
-     * @return bool
-     */
     public function hasUnstableVersion(): bool
     {
         return null !== $this->latestUnstableVersion;
     }
 
-    /**
-     * @return ApiPackage
-     */
     public function getOriginalObject(): ApiPackage
     {
         return $this->originalObject;
     }
 
-    /**
-     * @param string $latestUnstableVersionNormalized
-     */
     private function setLatestUnstableVersionNormalized(string $latestUnstableVersionNormalized): void
     {
         $this->latestUnstableVersionNormalized = $latestUnstableVersionNormalized;
     }
 
-    /**
-     * @param string $license
-     */
     private function setLicense(string $license): void
     {
         $this->license = $license;
     }
 
-    /**
-     * @param string $version
-     */
     private function setLatestStableVersion(string $version): void
     {
         $this->latestStableVersion = $version;
     }
 
-    /**
-     * @param string $version
-     */
     private function setLatestUnstableVersion(string $version): void
     {
         $this->latestUnstableVersion = $version;
     }
 
-    /**
-     * @param string $latestStableVersionNormalized
-     */
     private function setLatestStableVersionNormalized(string $latestStableVersionNormalized): void
     {
         $this->latestStableVersionNormalized = $latestStableVersionNormalized;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->getOriginalObject()->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->getOriginalObject()->getDescription();
     }
 
-    /**
-     * @return ApiPackage\Downloads
-     */
     public function getDownloads(): ApiPackage\Downloads
     {
         return $this->getOriginalObject()->getDownloads();
     }
 
-    /**
-     * @return string
-     */
     public function getFavers(): string
     {
         return $this->getOriginalObject()->getFavers();
     }
 
-    /**
-     * @return array
-     */
     public function getMaintainers(): array
     {
         return $this->getOriginalObject()->getMaintainers();
     }
 
-    /**
-     * @return string
-     */
     public function getTime(): string
     {
         return $this->getOriginalObject()->getTime();
     }
 
-    /**
-     * @return string
-     */
     public function getRepository(): string
     {
         return $this->getOriginalObject()->getRepository();
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->getOriginalObject()->getType();
@@ -342,33 +266,21 @@ class Package
         return $this->getOriginalObject()->getVersions();
     }
 
-    /**
-     * @return int
-     */
     public function getDependents(): int
     {
         return $this->getOriginalObject()->getDependents();
     }
 
-    /**
-     * @return int
-     */
     public function getSuggesters(): int
     {
         return $this->getOriginalObject()->getSuggesters();
     }
 
-    /**
-     * @param ApiPackage $originalObject
-     */
     private function setOriginalObject(ApiPackage $originalObject): void
     {
         $this->originalObject = $originalObject;
     }
 
-    /**
-     * @return string
-     */
     public function getDefaultBranch(): string
     {
         return $this->defaultBranch;

@@ -18,14 +18,8 @@ class SuggestersController extends AbstractController
     /**
      * Suggesters action.
      *
-     * @param Request               $request
-     * @param Poser                 $poser
-     * @param CreateSuggestersBadge $createSuggestersBadge
-     * @param ImageFactory          $imageFactory
-     * @param string                $repository            repository
-     * @param string                $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $format
      */
     public function suggesters(
         Request $request,

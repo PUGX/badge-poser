@@ -30,10 +30,6 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     /** @var NormalizerInterface|null */
     private $normalizer;
 
-    /**
-     * @param PackageRepositoryInterface $packageRepository
-     * @param NormalizerInterface|null   $textNormalizer
-     */
     public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
     {
         parent::__construct($packageRepository);
@@ -45,12 +41,6 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $type
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     public function createDownloadsBadge(string $repository, string $type, string $format): Badge
@@ -59,7 +49,6 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
      *
      * @return mixed|string

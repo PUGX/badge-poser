@@ -28,11 +28,6 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     private const TEXT_NO_STABLE_RELEASE = 'No Release';
 
     /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     public function createStableBadge(string $repository, string $format = 'svg'): Badge
@@ -41,11 +36,6 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     public function createUnstableBadge(string $repository, string $format = 'svg'): Badge
@@ -54,7 +44,6 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
      *
      * @return mixed|string

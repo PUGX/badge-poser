@@ -26,13 +26,8 @@ class GitAttributesController extends AbstractController
     /**
      * .gitAttributes action.
      *
-     * @param Request                  $request
-     * @param CreateGitAttributesBadge $createGitAttributesBadge
-     * @param ImageFactory             $imageFactory
-     * @param string                   $repository               repository
-     * @param string                   $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $format
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException

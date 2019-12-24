@@ -16,11 +16,6 @@ class SnippetController extends AbstractController
     /**
      * Returns all snippets for a package.
      *
-     * @param Request                   $request
-     * @param SnippetGeneratorInterface $generator
-     *
-     * @return JsonResponse
-     *
      * @throws \Exception
      */
     public function all(Request $request, SnippetGeneratorInterface $generator): JsonResponse
@@ -55,10 +50,6 @@ class SnippetController extends AbstractController
 
     /**
      * Validates a repository name.
-     *
-     * @param string $repository
-     *
-     * @return bool
      */
     private function isValidRepositoryName(string $repository): bool
     {

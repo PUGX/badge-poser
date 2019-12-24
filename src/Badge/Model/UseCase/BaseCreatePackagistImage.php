@@ -25,22 +25,13 @@ abstract class BaseCreatePackagistImage
     /** @var PackageRepositoryInterface */
     protected $packageRepository;
 
-    /**
-     * @param PackageRepositoryInterface $packageRepository
-     */
     public function __construct(PackageRepositoryInterface $packageRepository)
     {
         $this->packageRepository = $packageRepository;
     }
 
     /**
-     * @param string      $repository
-     * @param string      $subject
-     * @param string      $color
-     * @param string      $format
      * @param string|null $context
-     *
-     * @return Badge
      *
      * @throws InvalidArgumentException
      */
@@ -57,10 +48,6 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     *
-     * @return Package
-     *
      * @throws UnexpectedValueException
      */
     protected function fetchPackage(string $repository): Package
@@ -69,13 +56,6 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string $subject
-     * @param string $status
-     * @param string $color
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     protected function createBadge(string $subject, string $status, string $color, string $format): Badge
@@ -84,10 +64,6 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     protected function createDefaultBadge(string $format): Badge
@@ -100,7 +76,6 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
      *
      * @return mixed

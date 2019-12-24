@@ -26,20 +26,11 @@ final class RedisReader implements ReaderInterface
         $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
     }
 
-    /**
-     * @param string $prefix
-     * @param string $keyName
-     *
-     * @return string
-     */
     private function concatenateKeys(string $prefix, string $keyName): string
     {
         return sprintf('%s.%s', $prefix, $keyName);
     }
 
-    /**
-     * @return int
-     */
     public function totalAccess(): int
     {
         return (int) $this->redis->get($this->keyTotal);

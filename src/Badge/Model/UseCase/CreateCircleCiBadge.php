@@ -37,10 +37,6 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     /** @var CircleCiClientInterface */
     protected $circleCiClient;
 
-    /**
-     * @param PackageRepositoryInterface $packageRepository
-     * @param CircleCiClientInterface    $circleCiClient
-     */
     public function __construct(PackageRepositoryInterface $packageRepository, CircleCiClientInterface $circleCiClient)
     {
         parent::__construct($packageRepository);
@@ -48,12 +44,6 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $branch
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
@@ -95,10 +85,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
-     *
-     * @return string
      */
     protected function prepareText(Package $package, $context = null): string
     {

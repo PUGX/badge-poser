@@ -15,8 +15,6 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Increment by one the total accesses.
-     *
-     * @return PersisterInterface
      */
     public function incrementTotalAccess(): PersisterInterface
     {
@@ -29,8 +27,6 @@ final class NullPersister implements PersisterInterface
      * Increment by one the repository accesses.
      *
      * @param string $repository
-     *
-     * @return PersisterInterface
      */
     public function incrementRepositoryAccess($repository): PersisterInterface
     {
@@ -41,11 +37,6 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Increment by one the repository accesses type.
-     *
-     * @param string $repository
-     * @param string $type
-     *
-     * @return PersisterInterface
      */
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
     {
@@ -57,11 +48,6 @@ final class NullPersister implements PersisterInterface
     /**
      * Add the repository to the list of the latest accessed.
      *S.
-     *
-     * @param string $repository
-     * @param int    $maxListLength
-     *
-     * @return PersisterInterface
      */
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
@@ -72,10 +58,6 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Add the referrer to a subset.
-     *
-     * @param string $url
-     *
-     * @return PersisterInterface
      */
     public function addReferer(string $url): PersisterInterface
     {

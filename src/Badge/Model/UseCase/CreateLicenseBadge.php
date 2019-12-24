@@ -26,11 +26,6 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     private const TEXT_NO_LICENSE = 'no';
 
     /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      */
     public function createLicenseBadge(string $repository, string $format = 'svg'): Badge
@@ -39,7 +34,6 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
      *
      * @return mixed|string

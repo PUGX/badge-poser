@@ -19,11 +19,6 @@ class CircleCiClient implements CircleCiClientInterface
     /** @var string */
     protected $circleToken;
 
-    /**
-     * @param UrlGeneratorInterface $router
-     * @param HttpClientInterface   $httpClient
-     * @param string                $circleToken
-     */
     public function __construct(UrlGeneratorInterface $router, HttpClientInterface $httpClient, string $circleToken)
     {
         $this->router = $router;
@@ -32,11 +27,6 @@ class CircleCiClient implements CircleCiClientInterface
     }
 
     /**
-     * @param string $repository
-     * @param string $branch
-     *
-     * @return ResponseInterface
-     *
      * @throws TransportExceptionInterface
      */
     public function getBuilds(string $repository, string $branch = 'master'): ResponseInterface

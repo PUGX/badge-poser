@@ -26,25 +26,16 @@ class Contributor
         return new self($username, $profileUrl, $profileImg);
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @return string
-     */
     public function getProfileUrl(): string
     {
         return $this->profileUrl;
     }
 
-    /**
-     * @return string
-     */
     public function getProfileImg(): string
     {
         return $this->profileImg;

@@ -22,10 +22,6 @@ interface PackageRepositoryInterface
     /**
      * Returns package if founded.
      *
-     * @param string $repository
-     *
-     * @return Package
-     *
      * @throws UnexpectedValueException
      */
     public function fetchByRepository(string $repository): Package;

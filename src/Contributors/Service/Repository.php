@@ -43,9 +43,6 @@ class Repository implements RepositoryInterface
         }
     }
 
-    /**
-     * @return int
-     */
     public function updateCache(): int
     {
         $contributors = $this->getContributors();
@@ -53,9 +50,6 @@ class Repository implements RepositoryInterface
         return \count($contributors);
     }
 
-    /**
-     * @return string|null
-     */
     private function getContributorsByCache(): ?string
     {
         return $this->redis->get(self::REDIS_KEY_CONTRIBUTORS);
@@ -94,12 +88,6 @@ class Repository implements RepositoryInterface
         return $contributors;
     }
 
-    /**
-     * @param string $username
-     * @param string $repoName
-     *
-     * @return array
-     */
     private function getContributorsByGithub(string $username, string $repoName): array
     {
         $repoApi = $this->client->api('repo');

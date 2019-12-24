@@ -13,9 +13,6 @@ class ParseStabilityTest extends TestCase
 {
     /**
      * @dataProvider getVersionAndStability
-     *
-     * @param string $version
-     * @param string $stable
      */
     public function testParseStability(string $version, string $stable): void
     {

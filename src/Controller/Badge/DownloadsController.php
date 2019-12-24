@@ -28,15 +28,9 @@ class DownloadsController extends AbstractController
     /**
      * Downloads action.
      *
-     * @param Request              $request
-     * @param Poser                $poser
-     * @param CreateDownloadsBadge $createDownloadsBadge
-     * @param ImageFactory         $imageFactory
-     * @param string               $repository           repository
-     * @param string               $type                 badge type
-     * @param string               $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $type       badge type
+     * @param string $format
      *
      * @throws \InvalidArgumentException
      */

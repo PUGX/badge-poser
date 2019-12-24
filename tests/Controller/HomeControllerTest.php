@@ -8,8 +8,6 @@ class HomeControllerTest extends WebTestCase
 {
     /**
      * @dataProvider provider
-     *
-     * @param string $path
      */
     public function testHome(string $path): void
     {

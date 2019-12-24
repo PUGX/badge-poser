@@ -45,10 +45,6 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param string $repository
-     *
-     * @return array
-     *
      * @throws \Exception
      */
     public function generateAllSnippets(string $repository): array
@@ -77,11 +73,6 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param array  $badge
-     * @param string $repository
-     *
-     * @return string
-     *
      * @throws \Exception
      */
     public function generateMarkdown(array $badge, string $repository): string
@@ -95,11 +86,6 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param array  $badge
-     * @param string $repository
-     *
-     * @return string
-     *
      * @throws \Exception
      */
     public function generateImg(array $badge, string $repository): string
@@ -111,10 +97,6 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param string $repository
-     *
-     * @return string
-     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -125,10 +107,6 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
-     * @param array $badge
-     *
-     * @return array
-     *
      * @throws \RuntimeException
      */
     private function compileRouteParametersForBadge(array $badge): array
