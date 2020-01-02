@@ -7,7 +7,7 @@ parameters:
         container_xml_path: '%rootDir%/../../../var/cache/test/srcApp_KernelTestDebugContainer.xml'
         constant_hassers: false
     autoload_files:
-        - bin/.phpunit/phpunit-6.5/vendor/autoload.php
+        - bin/.phpunit/phpunit-6.5-0/vendor/autoload.php
 includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
