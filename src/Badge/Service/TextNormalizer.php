@@ -14,8 +14,6 @@ final class TextNormalizer implements NormalizerInterface
      * @param mixed $number
      * @param int   $precision
      *
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
     public function normalize($number, $precision = 2): string
@@ -35,8 +33,6 @@ final class TextNormalizer implements NormalizerInterface
      * This function transform a number to a float value or raise an Exception.
      *
      * @param mixed $number number to be normalized
-     *
-     * @return int
      *
      * @throws InvalidArgumentException
      */

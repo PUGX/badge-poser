@@ -50,17 +50,11 @@ class Badge
         return $this->format;
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
     public function getSubject(): string
     {
         return $this->subject;
@@ -76,11 +70,6 @@ class Badge
         );
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     private function escapeValue(string $value): string
     {
         $pattern = [
@@ -105,8 +94,6 @@ class Badge
     }
 
     /**
-     * @param string $color
-     *
      * @return false|int
      */
     private function isValidColorHex(string $color)

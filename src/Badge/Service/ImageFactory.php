@@ -21,11 +21,6 @@ class ImageFactory
         $this->generator = $generator;
     }
 
-    /**
-     * @param Badge $badge
-     *
-     * @return Image
-     */
     public function createFromBadge(Badge $badge): Image
     {
         $content = $this->generator->generate(

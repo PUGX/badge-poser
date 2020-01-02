@@ -21,9 +21,6 @@ class StatsSubscriber implements EventSubscriberInterface
         $this->client = $client;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -31,9 +28,6 @@ class StatsSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ControllerEvent $event
-     */
     public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
@@ -51,10 +45,6 @@ class StatsSubscriber implements EventSubscriberInterface
 
     /**
      * Return true if the the route of the Request is home.
-     *
-     * @param Request $request
-     *
-     * @return bool
      */
     private function isRoutedFromHome(Request $request): bool
     {
@@ -64,10 +54,7 @@ class StatsSubscriber implements EventSubscriberInterface
     /**
      * Persist data.
      *
-     * @param Request $request
-     * @param string  $controller The controller Name
-     *
-     * @return bool
+     * @param string $controller The controller Name
      */
     public function persistData(Request $request, $controller): bool
     {

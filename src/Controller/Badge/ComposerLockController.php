@@ -28,13 +28,8 @@ class ComposerLockController extends AbstractController
     /**
      * ComposerLock action.
      *
-     * @param Request                 $request
-     * @param ImageFactory            $imageFactory
-     * @param CreateComposerLockBadge $composerLockBadge
-     * @param string                  $repository        repository
-     * @param string                  $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $format
      *
      * @throws \InvalidArgumentException
      * @throws UnexpectedValueException

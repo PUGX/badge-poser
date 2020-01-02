@@ -15,15 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class HomeController extends AbstractController
 {
-    /**
-     * @param string                    $repository
-     * @param ContributorsRepository    $contributorsRepository
-     * @param ReaderInterface           $redisReader
-     * @param Poser                     $poser
-     * @param SnippetGeneratorInterface $generator
-     *
-     * @return Response
-     */
     public function index(
         string $repository,
         ContributorsRepository $contributorsRepository,

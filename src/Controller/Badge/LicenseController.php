@@ -28,14 +28,8 @@ class LicenseController extends AbstractController
     /**
      * License action.
      *
-     * @param Request            $request
-     * @param Poser              $poser
-     * @param CreateLicenseBadge $createLicenseBadge
-     * @param ImageFactory       $imageFactory
-     * @param string             $repository         repository
-     * @param string             $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $format
      *
      * @throws \InvalidArgumentException
      */

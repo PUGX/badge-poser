@@ -22,12 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PackagistController extends AbstractController
 {
-    /**
-     * @param Request         $request
-     * @param PackagistClient $packagistClient
-     *
-     * @return JsonResponse
-     */
     public function search(Request $request, PackagistClient $packagistClient): JsonResponse
     {
         $responseContent = [];

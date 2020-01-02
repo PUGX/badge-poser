@@ -31,8 +31,7 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
     private $normalizer;
 
     /**
-     * @param PackageRepositoryInterface $packageRepository
-     * @param NormalizerInterface        $textNormalizer
+     * @param NormalizerInterface $textNormalizer
      */
     public function __construct(
         PackageRepositoryInterface $packageRepository,
@@ -42,19 +41,12 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     */
     public function createDependentsBadge(string $repository, string $format = 'svg'): Badge
     {
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
      *
      * @return string

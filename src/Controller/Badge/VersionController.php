@@ -28,15 +28,9 @@ class VersionController extends AbstractController
     /**
      * Version action.
      *
-     * @param Request            $request
-     * @param Poser              $poser
-     * @param ImageFactory       $imageFactory
-     * @param CreateVersionBadge $createVersionBadge
-     * @param string             $repository         repository
-     * @param string             $latest             latest
-     * @param string             $format
-     *
-     * @return Response
+     * @param string $repository repository
+     * @param string $latest     latest
+     * @param string $format
      *
      * @throws \InvalidArgumentException
      */

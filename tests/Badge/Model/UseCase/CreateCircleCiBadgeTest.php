@@ -51,9 +51,6 @@ final class CreateCircleCiBadgeTest extends TestCase
 
     /**
      * @dataProvider shouldCreateCircleCiBadgeProvider
-     *
-     * @param string $status
-     * @param string $expected
      */
     public function testShouldCreateCircleCiBadge(string $status, string $expected): void
     {

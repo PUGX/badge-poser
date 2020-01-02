@@ -32,9 +32,6 @@ class BadgeSubscriber implements EventSubscriberInterface
         $this->imageFactory = $imageFactory;
     }
 
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -43,8 +40,6 @@ class BadgeSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ExceptionEvent $event
-     *
      * @throws InvalidArgumentException
      */
     public function onKernelException(ExceptionEvent $event): void
@@ -53,18 +48,13 @@ class BadgeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $badge = $this->useCase->createErrorBadge($event->getException(), 'svg');
+        $badge = $this->useCase->createErrorBadge($event->getThrowable(), 'svg');
         $image = $this->imageFactory->createFromBadge($badge);
 
         $response = ResponseFactory::createFromImage($image, Response::HTTP_INTERNAL_SERVER_ERROR);
         $event->setResponse($response);
     }
 
-    /**
-     * @param string $controllerName
-     *
-     * @return bool
-     */
     private function isABadgeController(string $controllerName): bool
     {
         return 0 === strpos($controllerName, 'App\Controller\Badge');

@@ -119,6 +119,9 @@
     "paragonie/random_compat": {
         "version": "v9.99.99"
     },
+    "php": {
+        "version": "7.2"
+    },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
@@ -266,6 +269,9 @@
     "symfony/dotenv": {
         "version": "v4.2.1"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.2"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
     },
@@ -370,6 +376,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.2.1"
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/twig-bridge": {
         "version": "v4.2.1"

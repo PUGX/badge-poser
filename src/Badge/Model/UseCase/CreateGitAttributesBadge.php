@@ -40,10 +40,6 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     /** @var ClientInterface */
     protected $client;
 
-    /**
-     * @param PackageRepositoryInterface $packageRepository
-     * @param ClientInterface            $client
-     */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
         parent::__construct($packageRepository);
@@ -51,11 +47,6 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws GuzzleException
@@ -107,10 +98,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
-     *
-     * @return string
      */
     protected function prepareText(Package $package, $context = null): string
     {

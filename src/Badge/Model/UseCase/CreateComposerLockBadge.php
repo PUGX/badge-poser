@@ -39,10 +39,6 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     /** @var ClientInterface */
     protected $client;
 
-    /**
-     * @param PackageRepositoryInterface $packageRepository
-     * @param ClientInterface            $client
-     */
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
         parent::__construct($packageRepository);
@@ -50,11 +46,6 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string $repository
-     * @param string $format
-     *
-     * @return Badge
-     *
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -101,10 +92,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param Package     $package
      * @param string|null $context
-     *
-     * @return string
      */
     protected function prepareText(Package $package, $context = null): string
     {

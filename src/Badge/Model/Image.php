@@ -40,10 +40,6 @@ class Image
     }
 
     /**
-     * @param string $name
-     * @param string $content
-     * @param string $format
-     *
      * @return Image
      */
     public static function create(string $name, string $content, string $format = 'svg'): self
@@ -55,17 +51,12 @@ class Image
 
     /**
      * Return the filename with file format.
-     *
-     * @return string
      */
     public function getOutputFileName(): string
     {
         return sprintf('%s.%s', $this->cleanName(), $this->format);
     }
 
-    /**
-     * @return string
-     */
     private function cleanName(): string
     {
         $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
