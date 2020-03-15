@@ -64,7 +64,7 @@ $ docker-compose run --rm node yarn install
 $ docker-compose run --rm node yarn [dev|watch|build]
 ```
 
-now go to [http://localhost](http://localhost)
+now go to [http://localhost:8001](http://localhost:8001)
 
 
 
