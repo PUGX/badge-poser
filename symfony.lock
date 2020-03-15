@@ -131,9 +131,6 @@
     "php-http/client-common": {
         "version": "1.9.0"
     },
-    "php-http/curl-client": {
-        "version": "v1.7.1"
-    },
     "php-http/discovery": {
         "version": "1.5.2"
     },
@@ -187,9 +184,6 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
-    },
-    "ramsey/uuid": {
-        "version": "3.8.0"
     },
     "sentry/sdk": {
         "version": "2.0.4"
@@ -350,6 +344,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.14.0"
+    },
     "symfony/process": {
         "version": "v4.2.1"
     },
@@ -418,8 +415,5 @@
     },
     "twig/twig": {
         "version": "v2.6.0"
-    },
-    "zendframework/zend-diactoros": {
-        "version": "2.1.5"
     }
 }
