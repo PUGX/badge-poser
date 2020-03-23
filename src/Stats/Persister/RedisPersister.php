@@ -76,14 +76,14 @@ final class RedisPersister implements PersisterInterface
 
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
-        $this->redis->zadd($this->keyList, [time() => $repository]);
+        $this->redis->zadd($this->keyList, [$repository => time()]);
 
         return $this;
     }
 
     public function addReferer(string $url): PersisterInterface
     {
-        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [time() => $url]);
+        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [$url => time()]);
 
         return $this;
     }
