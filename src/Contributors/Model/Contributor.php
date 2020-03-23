@@ -7,12 +7,9 @@ namespace App\Contributors\Model;
  */
 class Contributor
 {
-    /** @var string */
-    private $username;
-    /** @var string */
-    private $profileUrl;
-    /** @var string */
-    private $profileImg;
+    private string $username;
+    private string $profileUrl;
+    private string $profileImg;
 
     private function __construct($username, $profileUrl, $profileImg)
     {

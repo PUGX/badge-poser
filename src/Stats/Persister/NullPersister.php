@@ -7,11 +7,11 @@ namespace App\Stats\Persister;
  */
 final class NullPersister implements PersisterInterface
 {
-    public static $incrementTotalAccessCalled = false;
-    public static $incrementRepositoryAccessCalled = false;
-    public static $addRepositoryToLatestAccessedCalled = false;
-    public static $incrementRepositoryAccessTypeCalled = false;
-    public static $addReferrer = false;
+    public static bool $incrementTotalAccessCalled = false;
+    public static ?string $incrementRepositoryAccessCalled = null;
+    public static ?string $addRepositoryToLatestAccessedCalled = null;
+    public static ?array $incrementRepositoryAccessTypeCalled = null;
+    public static ?string $addReferrer = null;
 
     /**
      * Increment by one the total accesses.
@@ -25,10 +25,8 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Increment by one the repository accesses.
-     *
-     * @param string $repository
      */
-    public function incrementRepositoryAccess($repository): PersisterInterface
+    public function incrementRepositoryAccess(string $repository): PersisterInterface
     {
         static::$incrementRepositoryAccessCalled = $repository;
 

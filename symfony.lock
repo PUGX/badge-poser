@@ -120,7 +120,7 @@
         "version": "v9.99.99"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -340,9 +340,6 @@
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
-    },
-    "symfony/polyfill-php73": {
-        "version": "v1.11.0"
     },
     "symfony/polyfill-uuid": {
         "version": "v1.14.0"

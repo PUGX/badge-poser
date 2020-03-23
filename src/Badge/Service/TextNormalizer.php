@@ -12,11 +12,10 @@ final class TextNormalizer implements NormalizerInterface
 {
     /**
      * @param mixed $number
-     * @param int   $precision
      *
      * @throws InvalidArgumentException
      */
-    public function normalize($number, $precision = 2): string
+    public function normalize($number, int $precision = 2): string
     {
         $number = $this->normalizeNumber($number);
         $units = ['', ' k', ' M', ' G', ' T'];

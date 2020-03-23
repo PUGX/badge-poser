@@ -17,12 +17,9 @@ namespace App\Badge\Model;
  */
 class Image
 {
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $content;
-    /** @var string */
-    private $format;
+    private string $name;
+    private string $content;
+    private string$format;
 
     private function __construct(string $name, string $content, string $format)
     {

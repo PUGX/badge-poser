@@ -10,14 +10,11 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class CircleCiClient implements CircleCiClientInterface
 {
-    /** @var UrlGeneratorInterface */
-    protected $router;
+    protected UrlGeneratorInterface $router;
 
-    /** @var HttpClientInterface */
-    protected $httpClient;
+    protected HttpClientInterface $httpClient;
 
-    /** @var string */
-    protected $circleToken;
+    protected string $circleToken;
 
     public function __construct(UrlGeneratorInterface $router, HttpClientInterface $httpClient, string $circleToken)
     {

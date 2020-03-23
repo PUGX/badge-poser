@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class StatsSubscriber implements EventSubscriberInterface
 {
-    private $client;
+    private PersisterInterface $client;
 
     public function __construct(PersisterInterface $client)
     {

@@ -11,10 +11,7 @@ use PUGX\Poser\Poser;
  */
 class ImageFactory
 {
-    /**
-     * @var Poser
-     */
-    private $generator;
+    private Poser $generator;
 
     public function __construct(Poser $generator)
     {

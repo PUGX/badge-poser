@@ -14,9 +14,9 @@ class Repository implements RepositoryInterface
 {
     private const REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';
 
-    protected $redis;
-    protected $client;
-    protected $resultPager;
+    protected Redis $redis;
+    protected Client $client;
+    protected ResultPager $resultPager;
 
     public function __construct(Redis $redis, Client $client, ResultPager $resultPager)
     {

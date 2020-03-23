@@ -25,11 +25,11 @@ use UnexpectedValueException;
  */
 class PackageRepository implements PackageRepositoryInterface
 {
-    private static $packageClass;
-    private $packagistClient;
-    private $githubClient;
+    private static string $packageClass;
+    private PackagistClient $packagistClient;
+    private GitHubClient $githubClient;
 
-    public function __construct(PackagistClient $packagistClient, GitHubClient $githubClient, $packageClass = Package::class)
+    public function __construct(PackagistClient $packagistClient, GitHubClient $githubClient, string $packageClass = Package::class)
     {
         self::$packageClass = $packageClass;
         $this->packagistClient = $packagistClient;

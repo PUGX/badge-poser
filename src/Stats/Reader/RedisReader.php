@@ -12,9 +12,9 @@ final class RedisReader implements ReaderInterface
     private const KEY_PREFIX = 'STAT';
     private const KEY_TOTAL = 'TOTAL';
 
-    private $redis;
-    private $keyTotal;
-    private $keyPrefix;
+    private Redis $redis;
+    private string $keyTotal;
+    private string $keyPrefix;
 
     public function __construct(
         Redis $redis,

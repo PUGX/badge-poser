@@ -16,15 +16,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class BadgeSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var CreateErrorBadge
-     */
-    private $useCase;
+    private CreateErrorBadge $useCase;
 
-    /**
-     * @var ImageFactory
-     */
-    private $imageFactory;
+    private ImageFactory $imageFactory;
 
     public function __construct(CreateErrorBadge $useCase, ImageFactory $imageFactory)
     {

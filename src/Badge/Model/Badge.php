@@ -17,10 +17,10 @@ namespace App\Badge\Model;
 class Badge
 {
     private const DEFAULT_FORMAT = 'svg';
-    private $subject;
-    private $status;
-    private $color;
-    private $format;
+    private string $subject;
+    private string $status;
+    private string $color;
+    private string $format;
 
     public function __construct(string $subject, string $status, string $color, string $format = self::DEFAULT_FORMAT)
     {
