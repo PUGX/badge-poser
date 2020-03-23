@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production"
+    "build": "encore production --progress"
   },
   "dependencies": {
     "awesomplete": "^1.1.3",
@@ -15,10 +15,12 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.20.1",
-    "bootstrap": "^4.1.3",
-    "node-sass": "^4.9.4",
-    "sass-loader": "^6.0.7",
+    "@symfony/webpack-encore": "^0.28.0",
+    "bootstrap": "^4.3.1",
+    "core-js": "^3.0.0",
+    "node-sass": "^4.13.0",
+    "regenerator-runtime": "^0.13.2",
+    "sass-loader": "^7.0.1",
     "webpack-notifier": "^1.7.0"
   }
 }

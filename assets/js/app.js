@@ -5,6 +5,7 @@ import "./clipboard";
 import {makeElement, removeChildren} from "./elements-utils";
 import Promise from "promise-polyfill";
 import "whatwg-fetch";
+import "../scss/app.scss";
 
 if (!window.Promise) {
     window.Promise = Promise;
