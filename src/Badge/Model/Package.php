@@ -49,11 +49,8 @@ class Package
     public function getPackageDownloads(string $type): ?string
     {
         $statsType = 'get'.ucfirst($type);
-        if (($download = $this->getDownloads()) && $download instanceof ApiPackage\Downloads) {
-            return $download->{$statsType}();
-        }
 
-        return null;
+        return $this->getDownloads()->{$statsType}();
     }
 
     /**
@@ -80,7 +77,7 @@ class Package
             if (version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
-
+                /** @var string|array $license */
                 $license = $version->getLicense();
                 if (\is_array($license) && \count($license) > 0) {
                     $license = implode(',', $license);
