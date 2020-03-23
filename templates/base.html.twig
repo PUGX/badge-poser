@@ -11,7 +11,7 @@
 
     {% block stylesheets %}
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
     <script>
@@ -22,7 +22,7 @@
 {% block body %}{% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('build/js/app.js') }}"></script>
+    {{ encore_entry_script_tags('app') }}
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;

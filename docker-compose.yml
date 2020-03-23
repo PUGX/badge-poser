@@ -22,13 +22,13 @@ services:
       - redis
     volumes:
       - .:/application:cached
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini:ro
+      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
     ports:
         - "9000"
 
   node:
     container_name: badge-poser-node
-    image: node:10-alpine
+    image: node:12-alpine
     user: "node"
     volumes:
       - .:/application:cached
