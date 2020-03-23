@@ -22,12 +22,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class ResponseFactory
 {
     /**
-     * @param int $maxage
-     * @param int $smaxage
-     *
      * @throws InvalidArgumentException
      */
-    public static function createFromImage(Image $image, int $status, $maxage = 3600, $smaxage = 3600): Response
+    public static function createFromImage(Image $image, int $status, int $maxage = 3600, int $smaxage = 3600): Response
     {
         $response = new Response((string) $image, $status);
 

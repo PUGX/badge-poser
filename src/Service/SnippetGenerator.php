@@ -10,30 +10,15 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SnippetGenerator implements SnippetGeneratorInterface
 {
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
-    /**
-     * @var array
-     */
-    private $badges;
+    private array $badges;
 
-    /**
-     * @var array
-     */
-    private $allInBadges;
+    private array $allInBadges;
 
-    /**
-     * @var RouteCollection|null
-     */
-    private $routes;
+    private ?RouteCollection $routes;
 
-    /**
-     * @var string
-     */
-    private $packagistRoute;
+    private string $packagistRoute;
 
     public function __construct(RouterInterface $router, array $allInBadges, array $badges, string $packagist_route = 'pugx_badge_packagist')
     {

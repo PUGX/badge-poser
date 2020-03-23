@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-fpm-stretch-node-browsers
+      - image: circleci/php:7.4-fpm-node-browsers
         environment:
           - APP_ENV=test
           - APP_SECRET=notReallyNeededHere
@@ -21,7 +21,7 @@ jobs:
 
       - run:
           name: configure php packages
-          command: sudo docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+          command: sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
       - run: 
           name: install php packages

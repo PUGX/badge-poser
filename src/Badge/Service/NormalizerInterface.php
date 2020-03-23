@@ -8,5 +8,5 @@ namespace App\Badge\Service;
  */
 interface NormalizerInterface
 {
-    public function normalize($number, $precision = 2);
+    public function normalize($number, int $precision = 2): string;
 }

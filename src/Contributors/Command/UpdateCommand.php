@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class UpdateCommand extends Command
 {
-    private $repository;
+    private Repository $repository;
 
     public function __construct(Repository $repository)
     {

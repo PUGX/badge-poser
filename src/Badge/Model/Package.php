@@ -19,22 +19,14 @@ use Packagist\Api\Result\Package as ApiPackage;
  */
 class Package
 {
-    /** @var string */
-    private static $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
-    /** @var string */
-    private $license;
-    /** @var ApiPackage */
-    private $originalObject;
-    /** @var string */
-    private $latestStableVersion;
-    /** @var string */
-    private $latestUnstableVersion;
-    /** @var string */
-    private $latestStableVersionNormalized;
-    /** @var string */
-    private $latestUnstableVersionNormalized;
-    /** @var string */
-    private $defaultBranch;
+    private static string $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
+    private string $license;
+    private ApiPackage $originalObject;
+    private ?string $latestStableVersion = null;
+    private ?string $latestUnstableVersion = null;
+    private ?string $latestStableVersionNormalized = null;
+    private ?string $latestUnstableVersionNormalized = null;
+    private string $defaultBranch;
 
     private function __construct(ApiPackage $apiPackage, array $repoGitHubData)
     {
@@ -45,8 +37,6 @@ class Package
 
     /**
      * Create a new Package decorated with the Api Package.
-     *
-     * @return Package
      */
     public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
     {
@@ -55,8 +45,6 @@ class Package
 
     /**
      * Take the Type of the Downloads (total, monthly or daily).
-     *
-     * @return string
      */
     public function getPackageDownloads(string $type): ?string
     {
@@ -64,12 +52,12 @@ class Package
         if (($download = $this->getDownloads()) && $download instanceof ApiPackage\Downloads) {
             return $download->{$statsType}();
         }
+
+        return null;
     }
 
     /**
      * Set the latest Stable and the latest Unstable version from a Package.
-     *
-     * @return Package
      */
     private function calculateLatestVersions(): self
     {

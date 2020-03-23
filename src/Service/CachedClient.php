@@ -11,9 +11,6 @@ use Predis\Profile\Factory;
  */
 class CachedClient extends Client
 {
-    /**
-     * @var ClientInterface
-     */
     protected $httpClient;
 
     protected $cache;
@@ -23,20 +20,11 @@ class CachedClient extends Client
      */
     protected $resultFactory;
 
-    /**
-     * @var int
-     */
-    protected $TTLSearch = 900;
+    protected int $TTLSearch = 900;
 
-    /**
-     * @var int
-     */
-    protected $TTLGet = 900;
+    protected int $TTLGet = 900;
 
-    /**
-     * @var int
-     */
-    protected $TTLAll = 900;
+    protected int $TTLAll = 900;
 
     public function setTTLAll(int $TTLAll): void
     {

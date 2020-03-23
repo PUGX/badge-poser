@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -65,6 +65,7 @@
     },
     "replace": {
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php73": "*",
         "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*"

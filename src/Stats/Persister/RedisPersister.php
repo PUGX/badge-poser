@@ -15,11 +15,11 @@ final class RedisPersister implements PersisterInterface
     private const KEY_LIST_NAME = 'LIST';
     private const KEY_REFERER_SUFFIX = 'REFE';
 
-    private $redis;
-    private $keyTotal;
-    private $keyPrefix;
-    private $keyHash;
-    private $keyList;
+    private Redis $redis;
+    private string $keyTotal;
+    private string $keyPrefix;
+    private string $keyHash;
+    private string $keyList;
 
     public function __construct(
         Redis $redis,
@@ -53,37 +53,37 @@ final class RedisPersister implements PersisterInterface
 
     public function incrementRepositoryAccess(string $repository): PersisterInterface
     {
-        $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), self::KEY_TOTAL, 1);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), self::KEY_TOTAL, 1);
 
         $key = $this->createDailyKey(self::KEY_TOTAL);
-        $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $key, 1);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
 
         $key = $this->createMonthlyKey(self::KEY_TOTAL);
-        $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $key, 1);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
 
         $key = $this->createYearlyKey(self::KEY_TOTAL);
-        $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $key, 1);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $key, 1);
 
         return $this;
     }
 
     public function incrementRepositoryAccessType(string $repository, string $type): PersisterInterface
     {
-        $this->redis->hIncrBy($this->concatenateKeys($this->keyHash, $repository), $type, 1);
+        $this->redis->hincrby($this->concatenateKeys($this->keyHash, $repository), $type, 1);
 
         return $this;
     }
 
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
-        $this->redis->zAdd($this->keyList, time(), $repository);
+        $this->redis->zadd($this->keyList, [time() => $repository]);
 
         return $this;
     }
 
     public function addReferer(string $url): PersisterInterface
     {
-        $this->redis->zAdd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), time(), $url);
+        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [time() => $url]);
 
         return $this;
     }
