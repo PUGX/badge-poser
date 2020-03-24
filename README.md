@@ -37,54 +37,41 @@ git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
 ```
 
-#### Install App:
+- First Install App:
 
-- Build/run containers in detached mode
 ```bash
-$ docker-compose build
-$ docker-compose up -d
+$ make init
 ```
 
+now you can see the app on [http://localhost:8001](http://localhost:8001)
 
-- Prepare the Symfony application
+- Go away:
+
 ```bash
-# Create .env
-$ cp .env.dist .env
-
-# Install dependencies
-$ docker-compose exec php-fpm bash
-$ composer install
-
+$ make down
 ```
 
+- Return to work on App:
 
-- Build frontend
 ```bash
-$ docker-compose run --rm node yarn install
-$ docker-compose run --rm node yarn [dev|watch|build]
+$ make run
 ```
-
-now go to [http://localhost:8001](http://localhost:8001)
-
-
 
 - Run phpunit:
 
 ``` bash
-docker-compose exec php-fpm ./bin/phpunit
+$ make phpunit
 ```
 
-- Run php-cs-fixer:
+- Analyzes code (php-cs-fixer and phpstan):
 
 ``` bash
-docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
+$ make analyse
 ```
 
-
-- Run phpstan analyse:
-
+For the others allowed action execute:
 ``` bash
-$ docker-compose exec php-fpm ./vendor/bin/phpstan analyse
+$ make help
 ```
 
-A pre-commit git hook to run `phpunit`, `php-cs-fixer` and `phpstan` is automatically installed
+A pre-commit git hook to run `phpunit`, `php-cs-fixer` and `phpstan` is automatically installed.
