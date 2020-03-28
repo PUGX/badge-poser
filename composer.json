@@ -101,5 +101,11 @@
             "allow-contrib": false,
             "require": "4.4.*"
         }
-    }
+    },
+    "funding": [
+        {
+            "type": "paypal",
+            "url": "https://paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ETT4JRJARLTSC"
+        }
+    ]
 }
