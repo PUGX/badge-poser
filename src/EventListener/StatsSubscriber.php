@@ -31,6 +31,7 @@ class StatsSubscriber implements EventSubscriberInterface
     public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
+        /** @var Request|null $request */
         $request = $event->getRequest();
         /*
          * $controller passed can be either a class or a Closure. This is not usual in Symfony but it may happen.

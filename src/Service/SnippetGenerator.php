@@ -88,7 +88,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
      */
     public function generateRepositoryLink(string $repository): string
     {
-        return $this->router->generate($this->packagistRoute, ['repository' => $repository], true);
+        return $this->router->generate($this->packagistRoute, ['repository' => $repository]);
     }
 
     /**
