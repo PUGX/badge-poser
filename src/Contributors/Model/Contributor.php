@@ -11,14 +11,14 @@ class Contributor
     private string $profileUrl;
     private string $profileImg;
 
-    private function __construct($username, $profileUrl, $profileImg)
+    private function __construct(string $username, string $profileUrl, string $profileImg)
     {
         $this->username = $username;
         $this->profileUrl = $profileUrl;
         $this->profileImg = $profileImg;
     }
 
-    public static function create($username, $profileUrl, $profileImg): self
+    public static function create(string $username, string $profileUrl, string $profileImg): self
     {
         return new self($username, $profileUrl, $profileImg);
     }
