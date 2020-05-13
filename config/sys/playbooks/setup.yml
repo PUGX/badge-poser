@@ -1,0 +1,144 @@
+---
+- name: "Provision EC2"
+  hosts: "web-1"
+  become: true
+
+  # VARS
+  # ############################################################################
+
+  vars:
+    domain: poser.pugx.org
+    email: pugx@example.com
+    ntp_timezone: UTC
+    firewall_state: started
+    firewall_enabled_at_boot: true
+    firewall_allowed_tcp_ports: [22, 80, 443]
+    os_auth_pw_max_age: 99999
+    sysctl_overwrite:
+      vm.overcommit_memory: 1
+      net.ipv4.ip_forward: 1
+
+  # ROLES
+  # ############################################################################
+
+  roles:
+    - dev-sec.os-hardening
+    - geerlingguy.firewall
+    - geerlingguy.ntp
+
+  # TASKS
+  # ############################################################################
+
+  tasks:
+    # DEPENDENCIES
+    # #############
+
+    - name: "Enabling dependencies"
+      shell: |
+        curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
+        amazon-linux-extras enable nginx1 php7.4 redis4.0
+
+    - name: "Let's Encrypt"
+      shell: |
+        # Ref: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/SSL-on-amazon-linux-2.html#letsencrypt
+        wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/
+        rpm -Uvh dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-*.rpm
+        yum-config-manager --enable epel*
+
+    - name: Ensure Certbot renew is set in crontab
+      lineinfile:
+        path: /etc/crontab
+        line: "39 1,13 * * * root certbot renew --no-self-upgrade"
+      notify:
+      - restart cron
+
+    # PACKAGES
+    # #############
+
+    - name: "Install packages"
+      yum:
+        update_cache: yes
+        name:
+          - certbot
+          - curl
+          - gcc
+          - git
+          - htop
+          - libyaml-devel
+          - nginx
+          - nodejs
+          - php-bcmath
+          - php-devel
+          - php-fpm
+          - php-gd
+          - php-intl
+          - php-mbstring
+          - php-pear
+          - python2-certbot-nginx
+          - redis
+          - vim
+          - wget
+        state: present
+
+    - name: "Install additional extension"
+      shell: |
+        pecl channel-update pecl.php.net
+        pecl install msgpack redis yaml
+
+        mkdir /usr/lib/node_modules/node-sass
+        npm install -g yarn node-sass || true
+        npm rebuild node-sass
+
+    # TLS CERTIFICATE
+    # ################
+
+    - name: "Check if file /etc/nginx/dhparam.pem exists"
+      stat:
+        path: /etc/nginx/dhparam.pem
+      register: dhparam_pem
+    - name: "Generage DHParam"
+      shell: openssl dhparam -out /etc/nginx/dhparam.pem 2048
+      when: not dhparam_pem.stat.exists
+
+    - name: "Install TLS cert"
+      shell: |
+        mkdir -p /application/ssl
+        openssl req -x509 -nodes -newkey rsa:2048 -subj "/C=IT/emailAddress={{ email }}/ST=RM/O=PUGX/CN={{ domain }}/OU=IT/" -keyout /application/ssl/privkey.pem -out /application/ssl/fullchain.pem
+        certbot --nginx --agree-tos --redirect --hsts --staple-ocsp --email {{ email }} --domain {{ domain }} --preferred-challenges=http
+      ignore_errors: yes
+
+    # SERVICES
+    # ################
+
+    # TODO: Configure autostart of php, nginx, redis
+
+    - name: "Configure Nginx"
+      copy:
+        src: ../nginx.conf
+        dest: /etc/nginx/conf.d/badge-poser.conf
+      notify:
+      - restart nginx
+
+    - name: "Configure Redis"
+      copy:
+        src: ../redis.conf
+        dest: /etc/redis.conf
+      notify:
+      - restart redis
+
+  # HANDLERS
+  # ############################################################################
+
+  handlers:
+    - name: restart cron
+      service:
+        name: cron
+        state: restarted
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+    - name: restart redis
+      service:
+        name: redis
+        state: restarted

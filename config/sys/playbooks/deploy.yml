@@ -1,0 +1,72 @@
+---
+- name: "Deploy badge-poser"
+  hosts: "web-1"
+  become: true
+
+  # VARS
+  # ############################################################################
+
+  vars:
+    deploy_time: "{{ ansible_date_time.iso8601_basic_short }}"
+
+  # TASKS
+  # ############################################################################
+
+  tasks:
+    # CODE
+    # #####
+
+    - name: "Fetch the code"
+      git:
+        repo: git://github.com/PUGX/badge-poser.git
+        dest: "/application/releases/{{ deploy_time }}"
+
+    # ENV VARS
+    # #########
+
+    - name: "Check if file /application/.env.dist exists"
+      stat:
+        path: /application/.env.dist
+      register: shared_env
+
+    - name: "Configure env variables"
+      copy:
+        src: /application/releases/{{ deploy_time }}/.env.dist
+        dest: /application/
+      when: not shared_env.stat.exists
+
+    # APPLICATION
+    # ############
+
+    - name: "Install App"
+      shell: |
+        cd /application/releases/{{ deploy_time }}
+        cp /application/.env.dist /application/releases/{{ deploy_time }}.env
+
+        wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
+
+        php composer.phar install
+        yarn install
+        yarn dev
+
+    # RELEASE
+    # ########
+
+    - pause:
+        prompt: "Do you want to release the version {{ deploy_time }}?"
+
+    - name: "Release"
+      shell: |
+        ln -s /application/releases/{{ deploy_time }} /application/new
+        mv -T /application/new /application/current
+      notify:
+      - reload nginx
+
+  # HANDLERS
+  # ############################################################################
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded

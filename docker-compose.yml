@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.7'
 services:
 
   webserver:
@@ -15,7 +15,9 @@ services:
       - '8001:80'
 
   php-fpm:
-    build: docker/dev/php-fpm
+    build:
+      context: docker/dev/php-fpm
+      network: host
     container_name: badge-poser-php-fpm
     working_dir: /application
     depends_on:
