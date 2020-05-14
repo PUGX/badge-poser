@@ -31,7 +31,7 @@
 
     - name: "Configure env variables"
       copy:
-        src: /application/releases/{{ deploy_time }}/.env.dist
+        src: ../../../.env.dist
         dest: /application/
       when: not shared_env.stat.exists
 
