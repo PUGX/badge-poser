@@ -3,64 +3,90 @@
   hosts: "web-1"
   become: true
 
-  # VARS
-  # ############################################################################
-
-  vars:
-    deploy_time: "{{ ansible_date_time.iso8601_basic_short }}"
-
   # TASKS
   # ############################################################################
 
   tasks:
     # CODE
     # #####
+    - name: Initialize the deploy root and gather facts
+      deploy_helper:
+        path: /application
 
     - name: "Fetch the code"
       git:
         repo: git://github.com/PUGX/badge-poser.git
-        dest: "/application/releases/{{ deploy_time }}"
+        dest: "{{ deploy_helper.new_release_path }}"
 
     # ENV VARS
     # #########
 
     - name: "Check if file /application/.env.dist exists"
       stat:
-        path: /application/.env.dist
+        path: /application/shared/.env.dist
       register: shared_env
 
     - name: "Configure env variables"
       copy:
-        src: ../../../.env.dist
-        dest: /application/
+        src: "{{ deploy_helper.new_release_path }}/.env.dist"
+        dest: /application/shared/.env.dist
+        remote_src: yes
       when: not shared_env.stat.exists
 
     # APPLICATION
     # ############
 
-    - name: "Install App"
+    - name: "Copy .env"
+      copy:
+        src: /application/shared/.env.dist
+        dest: "{{ deploy_helper.new_release_path }}/.env"
+        remote_src: yes
+
+    - name: "Perform some build steps with composer"
+      composer:
+        command: install
+        no_dev: no
+        no_plugins: no
+        no_scripts: no
+        optimize_autoloader: yes
+        arguments: "--no-ansi --no-interaction --no-progress --no-suggest"
+        working_dir: "{{ deploy_helper.new_release_path }}"
+
+    - name: "Install packages based on package.json"
       shell: |
-        cd /application/releases/{{ deploy_time }}
-        cp /application/.env.dist /application/releases/{{ deploy_time }}.env
+        cd {{ deploy_helper.new_release_path }}
 
-        wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
+        yarn config set ignore-engines true
 
-        php composer.phar install
-        yarn install
-        yarn dev
+        yarn install --production
+
+        /usr/local/bin/composer require encore
+        yarn add @symfony/webpack-encore --production
+        yarn add sass-loader@^8.0.0 node-sass --dev
+
+        yarn build
 
     # RELEASE
     # ########
 
     - pause:
-        prompt: "Do you want to release the version {{ deploy_time }}?"
+        prompt: "Do you want to release the version {{ deploy_helper.new_release_path }}?"
 
     - name: "Release"
-      shell: |
-        ln -s /application/releases/{{ deploy_time }} /application/new
-        mv -T /application/new /application/current
+      deploy_helper:
+        path: /application
+        release: "{{ deploy_helper.new_release }}"
+        state: finalize
+        keep_releases: 10
       notify:
       - reload nginx
+
+    - name: "Reset opcache"
+      shell: |
+        curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
+        chmod +x cachetool.phar
+        php cachetool.phar opcache:reset --fcgi
+        rm cachetool.phar
 
   # HANDLERS
   # ############################################################################

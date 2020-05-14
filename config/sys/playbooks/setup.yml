@@ -8,7 +8,7 @@
 
   vars:
     domain: poser.pugx.org
-    email: pugx@example.com
+    email: pugroma@gmail.com
     ntp_timezone: UTC
     firewall_state: started
     firewall_enabled_at_boot: true
@@ -73,6 +73,7 @@
           - php-gd
           - php-intl
           - php-mbstring
+          - php-opcache
           - php-pear
           - python2-certbot-nginx
           - redis
@@ -88,6 +89,12 @@
         mkdir /usr/lib/node_modules/node-sass
         npm install -g yarn node-sass || true
         npm rebuild node-sass
+
+    - name: "Install composer"
+      shell: |
+        wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet
+        mv composer.phar /usr/local/bin/composer
+        chmod +x /usr/local/bin/composer
 
     # TLS CERTIFICATE
     # ################
@@ -119,6 +126,17 @@
       notify:
       - restart nginx
 
+    - name: "Configure PHP"
+      copy:
+        src: ../php.ini
+        dest: /etc/php.ini
+    - name: "Configure PHP opcache"
+      copy:
+        src: ../php.d/10-opcache.ini
+        dest: /etc/php.d/10-opcache.ini
+      notify:
+      - restart php
+
     - name: "Configure Redis"
       copy:
         src: ../redis.conf
@@ -137,6 +155,10 @@
     - name: restart nginx
       service:
         name: nginx
+        state: restarted
+    - name: restart php
+      service:
+        name: php-fpm
         state: restarted
     - name: restart redis
       service:
