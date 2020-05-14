@@ -66,6 +66,8 @@
 
         yarn build
 
+        chmod -R 777 var/cache var/log
+
     # RELEASE
     # ########
 
