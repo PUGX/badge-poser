@@ -1,0 +1,109 @@
+---
+- name: "Deploy badge-poser"
+  hosts: "web-1"
+  become: true
+
+  # TASKS
+  # ############################################################################
+
+  tasks:
+    # CODE
+    # #####
+    - name: Initialize the deploy root and gather facts
+      deploy_helper:
+        path: /application
+
+    - name: "Fetch the code"
+      git:
+        repo: git://github.com/PUGX/badge-poser.git
+        dest: "{{ deploy_helper.new_release_path }}"
+
+    # ENV VARS
+    # #########
+
+    - name: "Check if file /application/.env.dist exists"
+      stat:
+        path: /application/shared/.env.dist
+      register: shared_env
+
+    - name: "Configure env variables"
+      copy:
+        src: "{{ deploy_helper.new_release_path }}/.env.dist"
+        dest: /application/shared/.env.dist
+        remote_src: yes
+      when: not shared_env.stat.exists
+
+    # APPLICATION
+    # ############
+
+    - name: "Copy .env"
+      copy:
+        src: /application/shared/.env.dist
+        dest: "{{ deploy_helper.new_release_path }}/.env"
+        remote_src: yes
+
+    - name: "Perform some build steps with composer"
+      composer:
+        command: install
+        no_dev: no
+        no_plugins: no
+        no_scripts: no
+        optimize_autoloader: yes
+        arguments: "--no-ansi --no-interaction --no-progress --no-suggest"
+        working_dir: "{{ deploy_helper.new_release_path }}"
+
+    - name: "Install packages based on package.json"
+      shell: |
+        cd {{ deploy_helper.new_release_path }}
+
+        yarn config set ignore-engines true
+
+        yarn install --production
+
+        /usr/local/bin/composer require encore
+        yarn add @symfony/webpack-encore --production
+        yarn add sass-loader@^8.0.0 node-sass --dev
+
+        yarn build
+
+    - name: "Update contributors"
+      shell: |
+        cd {{ deploy_helper.new_release_path }}
+        ./bin/console app:contributors:update
+
+    - name: "Setfacl var folder permissions"
+      shell: |
+        HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f1` &&
+        setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var &&
+        setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var
+
+    # RELEASE
+    # ########
+
+    - pause:
+        prompt: "Do you want to release the version {{ deploy_helper.new_release_path }}?"
+
+    - name: "Release"
+      deploy_helper:
+        path: /application
+        release: "{{ deploy_helper.new_release }}"
+        state: finalize
+        keep_releases: 3
+      notify:
+      - reload nginx
+
+    - name: "Reset opcache"
+      shell: |
+        curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
+        chmod +x cachetool.phar
+        php cachetool.phar opcache:reset --fcgi
+        rm cachetool.phar
+
+  # HANDLERS
+  # ############################################################################
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
