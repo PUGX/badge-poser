@@ -66,7 +66,16 @@
 
         yarn build
 
-        chmod -R 777 var/cache var/log
+    - name: "Update contributors"
+      shell: |
+        cd {{ deploy_helper.new_release_path }}
+        ./bin/console app:contributors:update
+
+    - name: "Setfacl var folder permissions"
+      shell: |
+        HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f1` &&
+        setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var &&
+        setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var
 
     # RELEASE
     # ########
@@ -79,7 +88,7 @@
         path: /application
         release: "{{ deploy_helper.new_release }}"
         state: finalize
-        keep_releases: 10
+        keep_releases: 3
       notify:
       - reload nginx
 
