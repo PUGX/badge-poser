@@ -64,8 +64,8 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             'HEAD',
             $repo.'/blob/'.$package->getDefaultBranch().'/composer.lock',
             [
-                RequestOptions::TIMEOUT => 2,
-                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::TIMEOUT => 8,
+                RequestOptions::CONNECT_TIMEOUT => 5,
                 RequestOptions::HTTP_ERRORS => false,
             ]
         );
