@@ -79,10 +79,7 @@ class Package
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|array $license */
                 $license = $version->getLicense();
-                if (\is_array($license) && \count($license) > 0) {
-                    $license = implode(',', $license);
-                }
-                $this->setLicense($license);
+                $this->setLicense($this->normalizeLicense($license));
             }
         }
 
@@ -269,5 +266,21 @@ class Package
     public function getDefaultBranch(): string
     {
         return $this->defaultBranch;
+    }
+
+    /**
+     * @param string|array $licenseData
+     */
+    private function normalizeLicense($licenseData): string
+    {
+        if (!\is_array($licenseData)) {
+            return $licenseData;
+        }
+
+        if (\count($licenseData) > 0) {
+            return implode(',', $licenseData);
+        }
+
+        return '';
     }
 }
