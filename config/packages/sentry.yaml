@@ -1,2 +1,9 @@
 sentry:
     dsn: '%env(SENTRY_DSN)%'
+    messenger:
+        enabled: true # flushes Sentry messages at the end of each message handling
+        capture_soft_fails: true # captures exceptions marked for retry too
+    options:
+        environment: '%kernel.environment%'
+        excluded_exceptions: #exclude validation errors
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException

@@ -26,7 +26,7 @@
         "knplabs/packagist-api": "^1.5",
         "php-http/guzzle6-adapter": "^1.1",
         "predis/predis": "^1.1",
-        "sentry/sentry-symfony": "^3.2",
+        "sentry/sentry-symfony": "^3.5",
         "snc/redis-bundle": "^3.2",
         "symfony/asset": "*",
         "symfony/console": "*",
