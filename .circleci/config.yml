@@ -14,8 +14,8 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
-      
-      - run: 
+
+      - run:
           name: install system packages
           command: sudo apt-get install -qqy libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
 
@@ -23,7 +23,7 @@ jobs:
           name: configure php packages
           command: sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
-      - run: 
+      - run:
           name: install php packages
           command: sudo docker-php-ext-install zip iconv gd
 
@@ -36,7 +36,7 @@ jobs:
             - v1-dependencies-{{ checksum "composer.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: 
+      - run:
           name: install project dependencies
           command: composer install -n --no-progress --no-suggest
       - save_cache:
@@ -63,13 +63,13 @@ jobs:
 
       - run:
           name: checks that the YAML config files contain no syntax errors
-          command: ./bin/console lint:yaml config
+          command: ./bin/console lint:yaml config --parse-tags
 
       - run:
           name: checks that the Twig template files contain no syntax errors
           command: ./bin/console lint:twig templates
 
-      - run: 
+      - run:
           name: run phpunit tests
           command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
       - store_artifacts:
