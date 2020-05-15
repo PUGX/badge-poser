@@ -33,6 +33,8 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     private const LOCK_ERROR = 'checking';
     private const SUBJECT = '.lock';
     private const SUBJECT_ERROR = 'Error';
+    private const TIMEOUT_SECONDS = 8;
+    private const CONNECT_TIMEOUT_SECONDS = 5;
 
     protected $text = self::LOCK_ERROR;
 
@@ -64,8 +66,8 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             'HEAD',
             $repo.'/blob/'.$package->getDefaultBranch().'/composer.lock',
             [
-                RequestOptions::TIMEOUT => 2,
-                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::TIMEOUT => self::TIMEOUT_SECONDS,
+                RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT_SECONDS,
                 RequestOptions::HTTP_ERRORS => false,
             ]
         );
