@@ -20,7 +20,7 @@ use Packagist\Api\Result\Package as ApiPackage;
 class Package
 {
     private static string $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
-    private string $license;
+    private ?string $license = null;
     private ApiPackage $originalObject;
     private ?string $latestStableVersion = null;
     private ?string $latestUnstableVersion = null;
