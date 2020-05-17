@@ -22,8 +22,7 @@ use UnexpectedValueException;
  */
 abstract class BaseCreatePackagistImage
 {
-    /** @var PackageRepositoryInterface */
-    protected $packageRepository;
+    protected PackageRepositoryInterface $packageRepository;
 
     public function __construct(PackageRepositoryInterface $packageRepository)
     {
@@ -31,11 +30,9 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string|null $context
-     *
      * @throws InvalidArgumentException
      */
-    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', $context = null): Badge
+    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', ?string $context = null): Badge
     {
         try {
             $package = $this->fetchPackage($repository);
@@ -76,9 +73,7 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @param string|null $context
-     *
      * @return mixed
      */
-    abstract protected function prepareText(Package $package, $context = null);
+    abstract protected function prepareText(Package $package, ?string $context = null);
 }

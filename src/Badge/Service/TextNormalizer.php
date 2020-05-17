@@ -20,12 +20,12 @@ final class TextNormalizer implements NormalizerInterface
         $number = $this->normalizeNumber($number);
         $units = ['', ' k', ' M', ' G', ' T'];
 
-        $pow = floor(($number ? log($number) : 0) / log(1000));
-        $pow = min($pow, \count($units) - 1);
+        $pow = \floor(($number ? \log($number) : 0) / \log(1000));
+        $pow = \min($pow, \count($units) - 1);
 
         $number /= 1000 ** $pow;
 
-        return round($number, $precision).$units[$pow];
+        return \round($number, $precision).$units[$pow];
     }
 
     /**
@@ -37,7 +37,7 @@ final class TextNormalizer implements NormalizerInterface
      */
     private function normalizeNumber($number): int
     {
-        if (!is_numeric($number)) {
+        if (!\is_numeric($number)) {
             throw new InvalidArgumentException('Number expected');
         }
 
@@ -47,6 +47,6 @@ final class TextNormalizer implements NormalizerInterface
             throw new InvalidArgumentException('The number expected was >= 0');
         }
 
-        return max($number, 1);
+        return \max($number, 1);
     }
 }

@@ -22,8 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class CreateSuggestersBadgeTest extends TestCase
 {
-    /** @var CreateSuggestersBadge */
-    private $useCase;
+    private CreateSuggestersBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 

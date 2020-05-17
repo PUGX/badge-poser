@@ -23,8 +23,7 @@ use RuntimeException;
  */
 final class CreateComposerLockBadgeTest extends TestCase
 {
-    /** @var CreateComposerLockBadge $useCase */
-    private $useCase;
+    private CreateComposerLockBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
     /** @var ClientInterface|MockObject */

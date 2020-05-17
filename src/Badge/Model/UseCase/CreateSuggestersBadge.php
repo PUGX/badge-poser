@@ -25,17 +25,11 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
     public const COLOR = '007ec6';
     public const SUBJECT = 'suggesters';
 
-    /**
-     * @var NormalizerInterface
-     */
-    private $normalizer;
+    private NormalizerInterface $normalizer;
 
-    /**
-     * @param NormalizerInterface $textNormalizer
-     */
     public function __construct(
         PackageRepositoryInterface $packageRepository,
-        NormalizerInterface $textNormalizer = null
+        ?NormalizerInterface $textNormalizer = null
     ) {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
@@ -46,12 +40,7 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
-    /**
-     * @param string|null $context
-     *
-     * @return string
-     */
-    protected function prepareText(Package $package, $context = null)
+    protected function prepareText(Package $package, ?string $context = null): ?string
     {
         $suggesters = $package->getSuggesters();
         if (0 === $suggesters) {

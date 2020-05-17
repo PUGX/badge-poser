@@ -36,10 +36,9 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     private const TIMEOUT_SECONDS = 8;
     private const CONNECT_TIMEOUT_SECONDS = 5;
 
-    protected $text = self::LOCK_ERROR;
+    protected string $text = self::LOCK_ERROR;
 
-    /** @var ClientInterface */
-    protected $client;
+    protected ClientInterface $client;
 
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
@@ -57,7 +56,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
         try {
             /** @var Package $package */
             $package = $this->fetchPackage($repository);
-            $repo = str_replace('.git', '', $package->getRepository());
+            $repo = \str_replace('.git', '', $package->getRepository());
         } catch (\Exception $e) {
             return $this->createDefaultBadge($format);
         }

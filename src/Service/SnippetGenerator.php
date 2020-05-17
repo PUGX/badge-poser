@@ -52,7 +52,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
             }
         }
 
-        $snippets['all']['markdown'] = trim($snippets['all']['markdown']);
+        $snippets['all']['markdown'] = \trim($snippets['all']['markdown']);
 
         return $snippets;
     }
@@ -62,7 +62,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
      */
     public function generateMarkdown(array $badge, string $repository): string
     {
-        return sprintf(
+        return \sprintf(
             '[![%s](%s)](%s)',
             $badge['label'],
             $this->generateImg($badge, $repository),
@@ -100,10 +100,10 @@ class SnippetGenerator implements SnippetGeneratorInterface
         $route = $this->routes->get($badge['route']);
 
         if (!$route) {
-            throw new \RuntimeException(sprintf('The route "%s" was not found', $badge['route']));
+            throw new \RuntimeException(\sprintf('The route "%s" was not found', $badge['route']));
         }
 
-        $routeParameters = array_keys(array_merge($route->getDefaults(), $route->getRequirements()));
+        $routeParameters = \array_keys(\array_merge($route->getDefaults(), $route->getRequirements()));
 
         foreach ($routeParameters as $routeParameter) {
             if (\array_key_exists($routeParameter, $badge)) {

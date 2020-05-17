@@ -91,7 +91,7 @@ class CachedClient extends Client
      */
     private function getPrefixKey(string $method, $argument): string
     {
-        return sprintf('%s.%s', $method, json_encode($argument));
+        return \sprintf('%s.%s', $method, \json_encode($argument));
     }
 
     public function search($query, array $filters = [])

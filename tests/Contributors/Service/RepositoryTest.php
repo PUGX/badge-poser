@@ -17,41 +17,37 @@ use Predis\Client as Redis;
 final class RepositoryTest extends TestCase
 {
     private const API_CAN_VISIT = 'https://helloacm.com/api/can-visit/';
-    /** @var Redis|MockObject */
-    private $redis;
-    /** @var Client|MockObject */
-    private $client;
     /** @var ResultPager|MockObject */
     private $resultPager;
-    /** @var Repository */
-    private $repository;
+
+    private Repository $repository;
 
     protected function setUp(): void
     {
-        $this->redis = $this->getMockBuilder(Redis::class)
+        $redis = $this->getMockBuilder(Redis::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->client = $this->getMockBuilder(Client::class)
+        $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()->getMock();
 
         $api = $this->getMockBuilder(ApiInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->client->expects($this->any())
+        $client
             ->method('api')
             ->willReturn($api);
 
         $this->resultPager = $this->getMockBuilder(ResultPager::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->repository = new Repository($this->redis, $this->client, $this->resultPager);
+        $this->repository = new Repository($redis, $client, $this->resultPager);
     }
 
     public function testAll(): void
     {
         $fetchAllValueExpect = $this->getFakeResultPagerFetchAll();
 
-        $this->resultPager->expects($this->any())
+        $this->resultPager
             ->method('fetchAll')
             ->willReturn($fetchAllValueExpect);
 
@@ -77,7 +73,7 @@ final class RepositoryTest extends TestCase
     {
         $fetchAllValueExpect = $this->getFakeResultPagerFetchAll();
 
-        $this->resultPager->expects($this->any())
+        $this->resultPager
             ->method('fetchAll')
             ->willReturn($fetchAllValueExpect);
 
@@ -88,8 +84,8 @@ final class RepositoryTest extends TestCase
 
     private function checkUrl($url): void
     {
-        $data = file_get_contents(self::API_CAN_VISIT.'?url='.$url);
-        $result = json_decode($data, true);
+        $data = \file_get_contents(self::API_CAN_VISIT.'?url='.$url);
+        $result = \json_decode($data, true);
         $this->assertTrue($result['result']);
         $this->assertEquals(200, $result['code']);
     }

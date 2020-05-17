@@ -22,8 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class CreateLicenseBadgeTest extends TestCase
 {
-    /** @var CreateLicenseBadge */
-    private $useCase;
+    private CreateLicenseBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 

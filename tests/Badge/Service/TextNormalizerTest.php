@@ -19,8 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class TextNormalizerTest extends TestCase
 {
-    /** @var TextNormalizer */
-    private $normalizer;
+    private TextNormalizer $normalizer;
 
     protected function setUp(): void
     {

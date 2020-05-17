@@ -48,7 +48,7 @@ class Package
      */
     public function getPackageDownloads(string $type): ?string
     {
-        $statsType = 'get'.ucfirst($type);
+        $statsType = 'get'.\ucfirst($type);
 
         return $this->getDownloads()->{$statsType}();
     }
@@ -74,7 +74,7 @@ class Package
                 $functionName = 'Stable';
             }
 
-            if (version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
+            if (\version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|array $license */
@@ -109,13 +109,13 @@ class Package
      */
     public static function parseStability(string $version): string
     {
-        $version = preg_replace('{#.+$}i', '', $version);
+        $version = \preg_replace('{#.+$}i', '', $version);
 
-        if ('dev-' === substr($version, 0, 4) || '-dev' === substr($version, -4)) {
+        if ('dev-' === \substr($version, 0, 4) || '-dev' === \substr($version, -4)) {
             return 'dev';
         }
 
-        preg_match('{'.self::$modifierRegex.'$}i', strtolower($version), $match);
+        \preg_match('{'.self::$modifierRegex.'$}i', \strtolower($version), $match);
         if (!empty($match[3])) {
             return 'dev';
         }
@@ -278,7 +278,7 @@ class Package
         }
 
         if (\count($licenseData) > 0) {
-            return implode(',', $licenseData);
+            return \implode(',', $licenseData);
         }
 
         return '';

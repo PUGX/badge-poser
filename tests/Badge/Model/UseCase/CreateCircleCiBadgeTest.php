@@ -25,8 +25,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 final class CreateCircleCiBadgeTest extends TestCase
 {
-    /** @var CreateCircleCiBadge $useCase */
-    private $useCase;
+    private CreateCircleCiBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
     /** @var CircleCiClientInterface|MockObject */
@@ -74,7 +73,7 @@ final class CreateCircleCiBadgeTest extends TestCase
 
         $response->expects($this->once())
             ->method('getContent')
-            ->willReturn(json_encode([['status' => $status]]));
+            ->willReturn(\json_encode([['status' => $status]]));
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
@@ -146,7 +145,7 @@ final class CreateCircleCiBadgeTest extends TestCase
 
         $response->expects($this->once())
             ->method('getContent')
-            ->willReturn(json_encode([]));
+            ->willReturn(\json_encode([]));
 
         $this->circleCiClient->expects($this->once())
             ->method('getBuilds')

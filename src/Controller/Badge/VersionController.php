@@ -47,7 +47,7 @@ class VersionController extends AbstractController
             $format = $request->query->get('format');
         }
 
-        $function = 'create'.ucfirst($latest).'Badge';
+        $function = 'create'.\ucfirst($latest).'Badge';
 
         $badge = $createVersionBadge->{$function}($repository, $format);
         $image = $imageFactory->createFromBadge($badge);

@@ -23,7 +23,7 @@ class ImageFactory
         $content = $this->generator->generate(
             $badge->getSubject(),
             $badge->getStatus(),
-            trim($badge->getHexColor(), '#'),
+            \trim($badge->getHexColor(), '#'),
             $badge->getFormat()
         );
 

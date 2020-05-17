@@ -76,14 +76,14 @@ final class RedisPersister implements PersisterInterface
 
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
-        $this->redis->zadd($this->keyList, [$repository => time()]);
+        $this->redis->zadd($this->keyList, [$repository => \time()]);
 
         return $this;
     }
 
     public function addReferer(string $url): PersisterInterface
     {
-        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [$url => time()]);
+        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [$url => \time()]);
 
         return $this;
     }
@@ -93,7 +93,7 @@ final class RedisPersister implements PersisterInterface
      */
     private function concatenateKeys(string $prefix, string $keyName): string
     {
-        return sprintf('%s.%s', $prefix, $keyName);
+        return \sprintf('%s.%s', $prefix, $keyName);
     }
 
     /**
@@ -103,7 +103,7 @@ final class RedisPersister implements PersisterInterface
      */
     private function createYearlyKey(string $prefix, \DateTime $datetime = null): string
     {
-        return sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y'));
+        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y'));
     }
 
     /**
@@ -113,7 +113,7 @@ final class RedisPersister implements PersisterInterface
      */
     private function createMonthlyKey(string $prefix, \DateTime $datetime = null): string
     {
-        return sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m'));
+        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m'));
     }
 
     /**
@@ -123,7 +123,7 @@ final class RedisPersister implements PersisterInterface
      */
     private function createDailyKey(string $prefix, \DateTime $datetime = null): string
     {
-        return sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m_d'));
+        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m_d'));
     }
 
     /**

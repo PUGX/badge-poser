@@ -28,7 +28,7 @@ class CircleCiClient implements CircleCiClientInterface
      */
     public function getBuilds(string $repository, string $branch = 'master'): ResponseInterface
     {
-        $circleCiApiUrl = $this->router->generate('circleci_api', ['repository' => $repository, 'branch' => urlencode($branch)]);
+        $circleCiApiUrl = $this->router->generate('circleci_api', ['repository' => $repository, 'branch' => \urlencode($branch)]);
 
         return $this->httpClient->request(
             Request::METHOD_GET,

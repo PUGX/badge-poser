@@ -32,10 +32,9 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     private const TEXT_FAILING = 'failing';
     private const SUBJECT = 'build';
 
-    protected $text = self::SUBJECT;
+    protected string $text = self::SUBJECT;
 
-    /** @var CircleCiClientInterface */
-    protected $circleCiClient;
+    protected CircleCiClientInterface $circleCiClient;
 
     public function __construct(PackageRepositoryInterface $packageRepository, CircleCiClientInterface $circleCiClient)
     {
@@ -51,7 +50,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     {
         try {
             //check if the repo exist
-            str_replace('.git', '', $this->packageRepository
+            \str_replace('.git', '', $this->packageRepository
                 ->fetchByRepository($repository)
                 ->getRepository()
             );
@@ -62,7 +61,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
                 return $this->createDefaultBadge($format);
             }
 
-            $builds = json_decode($response->getContent(), true);
+            $builds = \json_decode($response->getContent(), true);
         } catch (Throwable $e) {
             return $this->createDefaultBadge($format);
         }
@@ -71,7 +70,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
             return $this->createDefaultBadge($format);
         }
 
-        $build = current($builds);
+        $build = \current($builds);
 
         if ('success' === $build['status']) {
             $color = self::COLOR_PASSING;
@@ -84,10 +83,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format);
     }
 
-    /**
-     * @param string|null $context
-     */
-    protected function prepareText(Package $package, $context = null): string
+    protected function prepareText(Package $package, ?string $context = null): string
     {
         return $this->text;
     }
