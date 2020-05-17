@@ -35,10 +35,9 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     private const SUBJECT = '.gitattributes';
     private const SUBJECT_ERROR = 'Error';
 
-    protected $text = self::GITATTRIBUTES_ERROR;
+    protected string $text = self::GITATTRIBUTES_ERROR;
 
-    /** @var ClientInterface */
-    protected $client;
+    protected ClientInterface $client;
 
     public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
     {
@@ -56,7 +55,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
         try {
             /** @var Package $package */
             $package = $this->fetchPackage($repository);
-            $repo = str_replace('.git', '', $package->getRepository());
+            $repo = \str_replace('.git', '', $package->getRepository());
         } catch (\Exception $e) {
             return $this->createDefaultBadge($format);
         }

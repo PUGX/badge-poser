@@ -51,14 +51,14 @@ class Image
      */
     public function getOutputFileName(): string
     {
-        return sprintf('%s.%s', $this->cleanName(), $this->format);
+        return \sprintf('%s.%s', $this->cleanName(), $this->format);
     }
 
     private function cleanName(): string
     {
-        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
-        $clean = preg_replace('/[^a-zA-Z0-9_|+ -]/', '', $clean);
-        $clean = strtolower(trim($clean, '- '));
+        $clean = \iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
+        $clean = \preg_replace('/[^a-zA-Z0-9_|+ -]/', '', $clean);
+        $clean = \strtolower(\trim($clean, '- '));
 
         return $clean;
     }

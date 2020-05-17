@@ -34,7 +34,7 @@ class Repository implements RepositoryInterface
             $contributorsByCache = $this->getContributorsByCache();
 
             if (null !== $contributorsByCache) {
-                return unserialize($contributorsByCache, ['allowed_classes' => true]);
+                return \unserialize($contributorsByCache, ['allowed_classes' => true]);
             }
 
             return $this->getContributors();
@@ -60,7 +60,7 @@ class Repository implements RepositoryInterface
      */
     private function setContributorsInCache($contributors): void
     {
-        $this->redis->set(self::REDIS_KEY_CONTRIBUTORS, serialize($contributors));
+        $this->redis->set(self::REDIS_KEY_CONTRIBUTORS, \serialize($contributors));
     }
 
     /**

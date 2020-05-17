@@ -17,8 +17,7 @@ class CircleCiClientTest extends TestCase
     /** @var HttpClientInterface|MockObject */
     protected $httpClient;
 
-    /** @var CircleCiClient */
-    protected $circleCiClient;
+    protected CircleCiClient $circleCiClient;
 
     protected function setUp(): void
     {
@@ -42,7 +41,7 @@ class CircleCiClientTest extends TestCase
 
         $response->expects($this->any())
             ->method('getContent')
-            ->willReturn(json_encode([['status' => 'success']]));
+            ->willReturn(\json_encode([['status' => 'success']]));
 
         $response->expects($this->any())
             ->method('getStatusCode')
@@ -59,7 +58,7 @@ class CircleCiClientTest extends TestCase
         $content = $responseBuilds->getContent();
         $this->assertNotEmpty($content);
         $this->assertInternalType('string', $content);
-        $contentToArray = json_decode($content, true);
+        $contentToArray = \json_decode($content, true);
         $this->assertInternalType('array', $contentToArray);
     }
 }

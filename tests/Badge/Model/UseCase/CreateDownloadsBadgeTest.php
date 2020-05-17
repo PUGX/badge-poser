@@ -22,8 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class CreateDownloadsBadgeTest extends TestCase
 {
-    /** @var CreateDownloadsBadge */
-    private $useCase;
+    private CreateDownloadsBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 

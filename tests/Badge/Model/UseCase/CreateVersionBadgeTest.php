@@ -22,8 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class CreateVersionBadgeTest extends TestCase
 {
-    /** @var CreateVersionBadge */
-    private $useCase;
+    private CreateVersionBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private $repository;
 

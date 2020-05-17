@@ -8,5 +8,8 @@ namespace App\Badge\Service;
  */
 interface NormalizerInterface
 {
+    /**
+     * @param string|int|float $number
+     */
     public function normalize($number, int $precision = 2): string;
 }

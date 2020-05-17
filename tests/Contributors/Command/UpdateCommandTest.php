@@ -30,7 +30,7 @@ final class UpdateCommandTest extends KernelTestCase
 
     private function getNumbers(string $str): array
     {
-        preg_match_all('/\d+/', $str, $matches);
+        \preg_match_all('/\d+/', $str, $matches);
 
         return $matches[0];
     }

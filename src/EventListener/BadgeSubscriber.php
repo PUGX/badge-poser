@@ -51,6 +51,6 @@ class BadgeSubscriber implements EventSubscriberInterface
 
     private function isABadgeController(?string $controllerName): bool
     {
-        return null !== $controllerName && 0 === strpos($controllerName, 'App\Controller\Badge');
+        return null !== $controllerName && 0 === \strpos($controllerName, 'App\Controller\Badge');
     }
 }

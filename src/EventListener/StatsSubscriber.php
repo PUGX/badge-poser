@@ -49,7 +49,7 @@ class StatsSubscriber implements EventSubscriberInterface
      */
     private function isRoutedFromHome(Request $request): bool
     {
-        return false !== strpos($request->get('_route'), 'home');
+        return false !== \strpos($request->get('_route'), 'home');
     }
 
     /**

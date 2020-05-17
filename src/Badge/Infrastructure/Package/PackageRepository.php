@@ -45,7 +45,7 @@ class PackageRepository implements PackageRepositoryInterface
     {
         $apiPackage = $this->packagistClient->get($repository);
 
-        preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
+        \preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
 
         if (isset($matches[4], $matches[5])) {
             $username = $matches[4];
@@ -64,6 +64,6 @@ class PackageRepository implements PackageRepositoryInterface
             return $class::createFromApi($apiPackage, $repoGitHubData);
         }
 
-        throw new UnexpectedValueException(sprintf('Impossible to fetch package by "%s" repository.', $repository));
+        throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
     }
 }

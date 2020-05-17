@@ -30,7 +30,7 @@ class Badge
         $this->color = $color;
 
         if (!$this->isValidColorHex($this->color)) {
-            throw new \InvalidArgumentException(sprintf('Color not valid %s', $this->color));
+            throw new \InvalidArgumentException(\sprintf('Color not valid %s', $this->color));
         }
     }
 
@@ -62,7 +62,7 @@ class Badge
 
     public function __toString()
     {
-        return sprintf('%s-%s-%s.%s',
+        return \sprintf('%s-%s-%s.%s',
             $this->subject,
             $this->status,
             $this->color,
@@ -86,9 +86,9 @@ class Badge
             '°§*¼',
             '-',
         ];
-        $ret = preg_replace($pattern, $replacement, $value);
-        $ret = str_replace('_', ' ', $ret);    // this fix the php pgrep_replace is not global :(
-        $ret = str_replace('°§*¼', '_', $ret); // this fix the php pgrep_replace is not global :(
+        $ret = \preg_replace($pattern, $replacement, $value);
+        $ret = \str_replace('_', ' ', $ret);    // this fix the php pgrep_replace is not global :(
+        $ret = \str_replace('°§*¼', '_', $ret); // this fix the php pgrep_replace is not global :(
 
         return $ret;
     }
@@ -98,9 +98,9 @@ class Badge
      */
     private function isValidColorHex(string $color)
     {
-        $color = ltrim($color, '#');
+        $color = \ltrim($color, '#');
         $regex = '/^[0-9a-fA-F]{6}$/';
 
-        return preg_match($regex, $color);
+        return \preg_match($regex, $color);
     }
 }

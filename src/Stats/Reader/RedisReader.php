@@ -14,7 +14,6 @@ final class RedisReader implements ReaderInterface
 
     private Redis $redis;
     private string $keyTotal;
-    private string $keyPrefix;
 
     public function __construct(
         Redis $redis,
@@ -22,13 +21,12 @@ final class RedisReader implements ReaderInterface
         string $keyPrefix = self::KEY_PREFIX
     ) {
         $this->redis = $redis;
-        $this->keyPrefix = $keyPrefix;
         $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
     }
 
     private function concatenateKeys(string $prefix, string $keyName): string
     {
-        return sprintf('%s.%s', $prefix, $keyName);
+        return \sprintf('%s.%s', $prefix, $keyName);
     }
 
     public function totalAccess(): int

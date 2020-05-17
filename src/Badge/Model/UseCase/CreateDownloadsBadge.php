@@ -27,17 +27,12 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     private const COLOR = '007ec6';
     private const SUBJECT = 'downloads';
 
-    /** @var NormalizerInterface|null */
-    private $normalizer;
+    private NormalizerInterface $normalizer;
 
     public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
     {
         parent::__construct($packageRepository);
-        $this->normalizer = $textNormalizer;
-
-        if (!$this->normalizer) {
-            $this->normalizer = new TextNormalizer();
-        }
+        $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
     /**
@@ -49,13 +44,11 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @param string|null $context
-     *
      * @return mixed|string
      *
      * @throws \InvalidArgumentException
      */
-    protected function prepareText(Package $package, $context = null)
+    protected function prepareText(Package $package, ?string $context = null)
     {
         $text = $this->normalizer->normalize($package->getPackageDownloads($context));
         $when = '';
@@ -65,6 +58,6 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
             $when = 'this month';
         }
 
-        return sprintf('%s %s', $text, $when);
+        return \sprintf('%s %s', $text, $when);
     }
 }
