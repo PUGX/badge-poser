@@ -10,6 +10,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SnippetGenerator implements SnippetGeneratorInterface
 {
+    private const PACKAGIST_ROUTE = 'pugx_badge_packagist';
+
     private RouterInterface $router;
 
     private array $badges;
@@ -20,13 +22,17 @@ class SnippetGenerator implements SnippetGeneratorInterface
 
     private string $packagistRoute;
 
-    public function __construct(RouterInterface $router, array $allInBadges, array $badges, string $packagist_route = 'pugx_badge_packagist')
-    {
+    public function __construct(
+        RouterInterface $router,
+        array $allInBadges,
+        array $badges,
+        string $packagistRoute = self::PACKAGIST_ROUTE
+    ) {
         $this->router = $router;
         $this->routes = $router->getRouteCollection();
         $this->allInBadges = $allInBadges;
         $this->badges = $badges;
-        $this->packagistRoute = $packagist_route;
+        $this->packagistRoute = $packagistRoute;
     }
 
     /**
@@ -60,7 +66,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
     /**
      * @throws \Exception
      */
-    public function generateMarkdown(array $badge, string $repository): string
+    private function generateMarkdown(array $badge, string $repository): string
     {
         return \sprintf(
             '[![%s](%s)](%s)',
@@ -73,7 +79,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
     /**
      * @throws \Exception
      */
-    public function generateImg(array $badge, string $repository): string
+    private function generateImg(array $badge, string $repository): string
     {
         $badge['repository'] = $repository;
         $parameters = $this->compileRouteParametersForBadge($badge);
@@ -86,7 +92,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      */
-    public function generateRepositoryLink(string $repository): string
+    private function generateRepositoryLink(string $repository): string
     {
         return $this->router->generate($this->packagistRoute, ['repository' => $repository]);
     }
