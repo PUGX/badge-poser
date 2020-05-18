@@ -34,6 +34,8 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     private const GITATTRIBUTES_ERROR = 'checking';
     private const SUBJECT = '.gitattributes';
     private const SUBJECT_ERROR = 'Error';
+    private const TIMEOUT_SECONDS = 8;
+    private const CONNECT_TIMEOUT_SECONDS = 5;
 
     protected string $text = self::GITATTRIBUTES_ERROR;
 
@@ -64,8 +66,8 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
             'HEAD',
             $repo.'/blob/'.$package->getDefaultBranch().'/.gitattributes',
             [
-                RequestOptions::TIMEOUT => 2,
-                RequestOptions::CONNECT_TIMEOUT => 1,
+                RequestOptions::TIMEOUT => self::TIMEOUT_SECONDS,
+                RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT_SECONDS,
                 RequestOptions::HTTP_ERRORS => false,
             ]
         );
