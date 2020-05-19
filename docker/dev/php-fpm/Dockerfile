@@ -13,6 +13,11 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get -y install git \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    
+RUN mkdir -p /home/dev/.composer \
+    && chown -R 1000:1000 /home/dev/
+
+ENV COMPOSER_CACHE_DIR='/home/dev/.composer'
 
 # Install prestissimo
 RUN composer global require hirak/prestissimo
