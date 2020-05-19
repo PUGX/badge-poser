@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Badge Poser, badges for PHP | Oops! An error occurred: {{ exception.statusCode }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>.head {min-height: 100vh;}</style>
+{% endblock %}
+
+{% block body %}
+
+    <section class="container-fluid head d-flex align-items-center">
+        <div class="container">
+            <h1>Badge Poser 🚀</h1>
+
+            <p>
+                Oops! An error occurred: {{ exception.message }}
+            </p>
+
+            <a href="{{ path('home') }}" class="btn big">return to the homepage</a>
+        </div>
+    </section>
+
+{% endblock %}
