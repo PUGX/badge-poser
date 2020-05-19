@@ -1,7 +1,387 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|null given\\.$#"
+			count: 1
+			path: src/Badge/Model/Badge.php
+
+		-
+			message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, string\\|false given\\.$#"
+			count: 1
+			path: src/Badge/Model/Image.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function trim expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Badge/Model/Image.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Model\\\\Package\\:\\:__construct\\(\\) has parameter \\$repoGitHubData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Model\\\\Package\\:\\:createFromApi\\(\\) has parameter \\$repoGitHubData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$license has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Model\\\\Package\\:\\:getBranchAliases\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function substr expects string, string\\|null given\\.$#"
+			count: 2
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Parameter \\#1 \\$str of function strtolower expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Model\\\\Package\\:\\:getMaintainers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Model\\\\Package\\:\\:normalizeLicense\\(\\) has parameter \\$licenseData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Badge/Model/Package.php
+
+		-
+			message: "#^Parameter \\#1 \\$number of method App\\\\Badge\\\\Service\\\\NormalizerInterface\\:\\:normalize\\(\\) expects float\\|int\\|string, string\\|null given\\.$#"
+			count: 1
+			path: src/Badge/Model/UseCase/CreateDownloadsBadge.php
+
+		-
+			message: "#^Parameter \\#1 \\$type of method App\\\\Badge\\\\Model\\\\Package\\:\\:getPackageDownloads\\(\\) expects string, string\\|null given\\.$#"
+			count: 1
+			path: src/Badge/Model/UseCase/CreateDownloadsBadge.php
+
+		-
+			message: "#^Method App\\\\Badge\\\\Service\\\\TextNormalizer\\:\\:normalizeNumber\\(\\) should return int but returns float\\|int\\.$#"
+			count: 1
+			path: src/Badge/Service/TextNormalizer.php
+
+		-
+			message: "#^Property App\\\\Contributors\\\\Service\\\\Repository\\:\\:\\$redis type has no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Contributors/Service/Repository.php
+
+		-
+			message: "#^Method App\\\\Contributors\\\\Service\\\\Repository\\:\\:__construct\\(\\) has parameter \\$redis with no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Contributors/Service/Repository.php
+
+		-
 			message: "#^Method App\\\\Contributors\\\\Service\\\\Repository\\:\\:getContributorsByCache\\(\\) never returns null so it can be removed from the return typehint\\.$#"
 			count: 1
 			path: src/Contributors/Service/Repository.php
+
+		-
+			message: "#^Method App\\\\Contributors\\\\Service\\\\Repository\\:\\:getContributorsByGithub\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Contributors/Service/Repository.php
+
+		-
+			message: "#^Method App\\\\Contributors\\\\Service\\\\RepositoryInterface\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Contributors/Service/RepositoryInterface.php
+
+		-
+			message: "#^Method App\\\\Kernel\\:\\:registerBundles\\(\\) return type has no value type specified in iterable type Iterator\\.$#"
+			count: 1
+			path: src/Kernel.php
+
+		-
+			message: "#^Property App\\\\Service\\\\CachedClient\\:\\:\\$cache has no typehint specified\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:setCache\\(\\) has parameter \\$cache with no typehint specified\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:getCache\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:getPrefixKey\\(\\) has parameter \\$argument with no typehint specified\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:search\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:all\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/CachedClient.php
+
+		-
+			message: "#^Property App\\\\Service\\\\SnippetGenerator\\:\\:\\$badges type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Property App\\\\Service\\\\SnippetGenerator\\:\\:\\$allInBadges type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:__construct\\(\\) has parameter \\$allInBadges with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:__construct\\(\\) has parameter \\$badges with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:generateAllSnippets\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:generateMarkdown\\(\\) has parameter \\$badge with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:generateImg\\(\\) has parameter \\$badge with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:compileRouteParametersForBadge\\(\\) has parameter \\$badge with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGenerator\\:\\:compileRouteParametersForBadge\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Cannot call method get\\(\\) on Symfony\\\\Component\\\\Routing\\\\RouteCollection\\|null\\.$#"
+			count: 1
+			path: src/Service/SnippetGenerator.php
+
+		-
+			message: "#^Method App\\\\Service\\\\SnippetGeneratorInterface\\:\\:generateAllSnippets\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Service/SnippetGeneratorInterface.php
+
+		-
+			message: "#^Property App\\\\Stats\\\\Persister\\\\NullPersister\\:\\:\\$incrementRepositoryAccessTypeCalled type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Stats/Persister/NullPersister.php
+
+		-
+			message: "#^Property App\\\\Stats\\\\Persister\\\\RedisPersister\\:\\:\\$redis type has no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Stats/Persister/RedisPersister.php
+
+		-
+			message: "#^Method App\\\\Stats\\\\Persister\\\\RedisPersister\\:\\:__construct\\(\\) has parameter \\$redis with no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Stats/Persister/RedisPersister.php
+
+		-
+			message: "#^Property App\\\\Stats\\\\Reader\\\\RedisReader\\:\\:\\$redis type has no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Stats/Reader/RedisReader.php
+
+		-
+			message: "#^Method App\\\\Stats\\\\Reader\\\\RedisReader\\:\\:__construct\\(\\) has parameter \\$redis with no value type specified in iterable type Predis\\\\Client\\.$#"
+			count: 1
+			path: src/Stats/Reader/RedisReader.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\ParseStabilityTest\\:\\:getVersionAndStability\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/ParseStabilityTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\ParseStabilityTest\\:\\:createVersion\\(\\) has parameter \\$branches with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/ParseStabilityTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\ParseStabilityTest\\:\\:createVersion\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/ParseStabilityTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateCircleCiBadgeTest\\:\\:createMockWithoutInvokingTheOriginalConstructor\\(\\) has parameter \\$methods with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateCircleCiBadgeTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$className of method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateCircleCiBadgeTest.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\)$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateCircleCiBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateCircleCiBadgeTest\\:\\:shouldCreateCircleCiBadgeProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateCircleCiBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateComposerLockBadgeTest\\:\\:createMockWithoutInvokingTheOriginalConstructor\\(\\) has no return typehint specified\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateComposerLockBadgeTest\\:\\:createMockWithoutInvokingTheOriginalConstructor\\(\\) has parameter \\$methods with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$className of method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\)$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateComposerLockBadgeTest\\:\\:testShouldCreateComposerLockBadge\\(\\) has parameter \\$expected with no typehint specified\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateComposerLockBadgeTest\\:\\:testShouldCreateComposerLockBadge\\(\\) has parameter \\$returnCode with no typehint specified\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Model\\\\UseCase\\\\CreateComposerLockBadgeTest\\:\\:shouldCreateComposerLockBadgeProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Service\\\\TextNormalizerTest\\:\\:getBadNumberToConvert\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Service/TextNormalizerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Badge\\\\Service\\\\TextNormalizerTest\\:\\:getGoodNumberToConvert\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Badge/Service/TextNormalizerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Contributors\\\\Command\\\\UpdateCommandTest\\:\\:getNumbers\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Contributors/Command/UpdateCommandTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Contributors\\\\Service\\\\RepositoryTest\\:\\:checkUrl\\(\\) has parameter \\$url with no typehint specified\\.$#"
+			count: 1
+			path: tests/Contributors/Service/RepositoryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Contributors/Service/RepositoryTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Contributors\\\\Service\\\\RepositoryTest\\:\\:getFakeResultPagerFetchAll\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Contributors/Service/RepositoryTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$message of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Controller/Badge/DependentsControllerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$message of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Controller/Badge/LicenseControllerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$message of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Controller/Badge/SuggestersControllerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$message of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertTrue\\(\\) expects string, string\\|false given\\.$#"
+			count: 3
+			path: tests/Controller/Badge/VersionControllerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$string of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertRegExp\\(\\) expects string, string\\|null given\\.$#"
+			count: 3
+			path: tests/Controller/Badge/VersionControllerTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Controller\\\\HomeControllerTest\\:\\:provider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Controller/HomeControllerTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Controller/PackagistControllerTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Controller/SnippetControllerTest.php
+
+		-
+			message: "#^Property App\\\\Tests\\\\EventListener\\\\StatsSubscriberTest\\:\\:\\$persister has no typehint specified\\.$#"
+			count: 1
+			path: tests/EventListener/StatsSubscriberTest.php
+
+		-
+			message: "#^Property App\\\\Tests\\\\EventListener\\\\StatsSubscriberTest\\:\\:\\$controllerEvent has no typehint specified\\.$#"
+			count: 1
+			path: tests/EventListener/StatsSubscriberTest.php
+
+		-
+			message: "#^Property App\\\\Tests\\\\EventListener\\\\StatsSubscriberTest\\:\\:\\$request has no typehint specified\\.$#"
+			count: 1
+			path: tests/EventListener/StatsSubscriberTest.php
+
+		-
+			message: "#^Property App\\\\Tests\\\\EventListener\\\\StatsSubscriberTest\\:\\:\\$listener has no typehint specified\\.$#"
+			count: 1
+			path: tests/EventListener/StatsSubscriberTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Service\\\\SnippetGeneratorStub\\:\\:generateAllSnippets\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/Service/SnippetGeneratorStub.php
 
