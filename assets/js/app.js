@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 import Awesomplete from "awesomplete";
 import {debounce} from "./debounce";
 import "./clipboard";
