@@ -130,6 +130,10 @@
       copy:
         src: ../php.ini
         dest: /etc/php.ini
+    - name: "Configure PHP-FPM"
+      copy:
+        src: ../www.conf
+        dest: /etc/php-fpm.d/www.conf
     - name: "Configure PHP opcache"
       copy:
         src: ../php.d/10-opcache.ini
