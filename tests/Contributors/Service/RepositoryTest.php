@@ -78,7 +78,7 @@ final class RepositoryTest extends TestCase
         $this->assertEquals(\count($fetchAllValueExpect), $count);
     }
 
-    private function checkUrl($url): void
+    private function checkUrl(string $url): void
     {
         $data = \file_get_contents($url);
         $this->assertNotFalse($data, 'Unable to open URL: '.$url);
