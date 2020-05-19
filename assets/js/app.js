@@ -16,8 +16,10 @@ if (window.globalVars.APP_DEBUG !== "1") {
 }
 
 function changePackage(packageName) {
+    const url = `/show/${packageName}`;
+    history.pushState(null, "", url);
     document.getElementById("package-name").innerText = packageName;
-    document.getElementById("permalink").setAttribute("href", `/show/${packageName}`);
+    document.getElementById("permalink").setAttribute("href", url);
 }
 
 const renderBadge = ({img}) => `
