@@ -81,8 +81,8 @@ final class RepositoryTest extends TestCase
     private function checkUrl(string $url): void
     {
         $data = \file_get_contents($url);
-        $this->assertNotFalse($data, 'Unable to open URL: '.$url);
-        $this->assertGreaterThan(0, \strlen($data));
+        $this->assertNotFalse((bool) $data, 'Unable to open URL: '.$url);
+        $this->assertGreaterThan(0, \strlen((string) $data));
     }
 
     private function getFakeResultPagerFetchAll(): array

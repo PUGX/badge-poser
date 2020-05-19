@@ -41,6 +41,7 @@ class Package
 
     /**
      * Create a new Package decorated with the Api Package.
+     *
      * @param array{default_branch: string} $repoGitHubData
      */
     public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
@@ -93,6 +94,7 @@ class Package
 
     /**
      * Get all the branch aliases.
+     *
      * @return array<string, string>|null
      */
     private function getBranchAliases(ApiPackage\Version $version): ?array

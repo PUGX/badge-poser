@@ -87,7 +87,7 @@ class Badge
             '-',
         ];
         $ret = \preg_replace($pattern, $replacement, $value);
-        if ($ret === null) {
+        if (null === $ret) {
             throw new \RuntimeException('Error while escaping');
         }
 
