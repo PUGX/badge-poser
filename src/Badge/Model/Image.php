@@ -57,12 +57,12 @@ class Image
     private function cleanName(): string
     {
         $clean = \iconv('UTF-8', 'ASCII//TRANSLIT', $this->name);
-        if ($clean === false) {
+        if (false === $clean) {
             throw new \RuntimeException('Error while parsing image name');
         }
-        
+
         $clean = \preg_replace('/[^a-zA-Z0-9_|+ -]/', '', $clean);
-        if ($clean === null) {
+        if (null === $clean) {
             throw new \RuntimeException('Error while parsing image name');
         }
 

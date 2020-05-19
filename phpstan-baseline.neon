@@ -251,16 +251,6 @@ parameters:
 			path: tests/Contributors/Command/UpdateCommandTest.php
 
 		-
-			message: "#^Method App\\\\Tests\\\\Contributors\\\\Service\\\\RepositoryTest\\:\\:checkUrl\\(\\) has parameter \\$url with no typehint specified\\.$#"
-			count: 1
-			path: tests/Contributors/Service/RepositoryTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
-			count: 1
-			path: tests/Contributors/Service/RepositoryTest.php
-
-		-
 			message: "#^Method App\\\\Tests\\\\Contributors\\\\Service\\\\RepositoryTest\\:\\:getFakeResultPagerFetchAll\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: tests/Contributors/Service/RepositoryTest.php
