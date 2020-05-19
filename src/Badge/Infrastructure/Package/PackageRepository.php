@@ -56,7 +56,12 @@ class PackageRepository implements PackageRepositoryInterface
             $repoGitHubData = $repoApi->show($username, $repoName);
         }
 
-        if ($apiPackage instanceof ApiPackage && !empty($repoGitHubData)) {
+        if (
+            $apiPackage instanceof ApiPackage 
+            && !empty($repoGitHubData) 
+            && array_key_exists('default_branch', $repoGitHubData)
+            && is_string($repoGitHubData['default_branch'])
+        ) {
             // create a new Package from the ApiPackage
             /** @var Package $class */
             $class = self::$packageClass;
