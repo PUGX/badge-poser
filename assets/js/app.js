@@ -1,4 +1,4 @@
-import Raven from "raven-js";
+import * as Sentry from "@sentry/browser";
 import Awesomplete from "awesomplete";
 import {debounce} from "./debounce";
 import "./clipboard";
@@ -12,9 +12,7 @@ if (!window.Promise) {
 }
 
 if (window.globalVars.APP_DEBUG !== "1") {
-    Raven
-        .config("https://1435e86eef3d46c5a39525e9dd7a0dab@sentry.io/295017")
-        .install();
+    Sentry.init({ dsn: "https://1435e86eef3d46c5a39525e9dd7a0dab@o133542.ingest.sentry.io/295017" });
 }
 
 function changePackage(packageName) {
