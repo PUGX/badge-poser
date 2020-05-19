@@ -1,12 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Badge Poser, badges for PHP | Oops! An error occurred: {{ exception.statusCode }}{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        .head {
-            min-height: 100vh;
-        }
-    </style
+    <style>.head {min-height: 100vh;}</style>
 {% endblock %}
 
 {% block body %}
