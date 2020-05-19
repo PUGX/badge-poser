@@ -12,6 +12,7 @@
 namespace App\Badge\Model;
 
 use Packagist\Api\Result\Package as ApiPackage;
+use Packagist\Api\Result\Package\Maintainer;
 
 /**
  * Class Package
@@ -28,6 +29,9 @@ class Package
     private ?string $latestUnstableVersionNormalized = null;
     private string $defaultBranch;
 
+    /**
+     * @param array{default_branch: string} $repoGitHubData
+     */
     private function __construct(ApiPackage $apiPackage, array $repoGitHubData)
     {
         $this->setOriginalObject($apiPackage);
@@ -37,6 +41,7 @@ class Package
 
     /**
      * Create a new Package decorated with the Api Package.
+     * @param array{default_branch: string} $repoGitHubData
      */
     public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
     {
@@ -77,7 +82,7 @@ class Package
             if (\version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
-                /** @var string|array $license */
+                /** @var string|string[] $license */
                 $license = $version->getLicense();
                 $this->setLicense($this->normalizeLicense($license));
             }
@@ -88,6 +93,7 @@ class Package
 
     /**
      * Get all the branch aliases.
+     * @return array<string, string>|null
      */
     private function getBranchAliases(ApiPackage\Version $version): ?array
     {
@@ -109,7 +115,7 @@ class Package
      */
     public static function parseStability(string $version): string
     {
-        $version = \preg_replace('{#.+$}i', '', $version);
+        $version = \preg_replace('{#.+$}i', '', $version) ?? '';
 
         if ('dev-' === \substr($version, 0, 4) || '-dev' === \substr($version, -4)) {
             return 'dev';
@@ -220,6 +226,9 @@ class Package
         return $this->getOriginalObject()->getFavers();
     }
 
+    /**
+     * @return Maintainer[]
+     */
     public function getMaintainers(): array
     {
         return $this->getOriginalObject()->getMaintainers();
@@ -269,7 +278,7 @@ class Package
     }
 
     /**
-     * @param string|array $licenseData
+     * @param string|string[] $licenseData
      */
     private function normalizeLicense($licenseData): string
     {

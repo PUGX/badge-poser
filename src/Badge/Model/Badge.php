@@ -87,6 +87,10 @@ class Badge
             '-',
         ];
         $ret = \preg_replace($pattern, $replacement, $value);
+        if ($ret === null) {
+            throw new \RuntimeException('Error while escaping');
+        }
+
         $ret = \str_replace('_', ' ', $ret);    // this fix the php pgrep_replace is not global :(
         $ret = \str_replace('°§*¼', '_', $ret); // this fix the php pgrep_replace is not global :(
 
