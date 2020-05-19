@@ -12,7 +12,7 @@ if (!window.Promise) {
 }
 
 if (window.globalVars.APP_DEBUG !== "1") {
-    Sentry.init({ dsn: 'https://1435e86eef3d46c5a39525e9dd7a0dab@o133542.ingest.sentry.io/295017' });
+    Sentry.init({ dsn: "https://1435e86eef3d46c5a39525e9dd7a0dab@o133542.ingest.sentry.io/295017" });
 }
 
 function changePackage(packageName) {
