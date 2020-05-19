@@ -11,12 +11,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Predis\Client as Redis;
 
-/**
- * Class RepositoryTest.
- */
 final class RepositoryTest extends TestCase
 {
-    private const API_CAN_VISIT = 'https://helloacm.com/api/can-visit/';
     /** @var ResultPager|MockObject */
     private $resultPager;
 
@@ -82,12 +78,11 @@ final class RepositoryTest extends TestCase
         $this->assertEquals(\count($fetchAllValueExpect), $count);
     }
 
-    private function checkUrl($url): void
+    private function checkUrl(string $url): void
     {
-        $data = \file_get_contents(self::API_CAN_VISIT.'?url='.$url);
-        $result = \json_decode($data, true);
-        $this->assertTrue($result['result']);
-        $this->assertEquals(200, $result['code']);
+        $data = \file_get_contents($url);
+        $this->assertNotFalse($data, 'Unable to open URL: '.$url);
+        $this->assertGreaterThan(0, \strlen($data));
     }
 
     private function getFakeResultPagerFetchAll(): array
