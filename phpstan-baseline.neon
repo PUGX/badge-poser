@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method App\\\\Contributors\\\\Service\\\\Repository\\:\\:getContributorsByCache\\(\\) never returns null so it can be removed from the return typehint\\.$#"
+			count: 1
+			path: src/Contributors/Service/Repository.php
+

@@ -9,6 +9,4 @@ parameters:
     autoload_files:
         - bin/.phpunit/phpunit-6.5-0/vendor/autoload.php
 includes:
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - phpstan-baseline.neon
