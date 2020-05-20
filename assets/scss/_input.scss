@@ -1,14 +1,13 @@
 .search-input {
   margin: 10px auto;
-  height: 2.4rem;
+  height: 2.5rem;
   border: 0;
   width: 30vw;
-  padding: 0 .4rem;
-  border-bottom: 2px solid #bbb;
-  box-shadow: 0 0 8px -4px #333;
+  padding: 0 0.4rem;
+  border-bottom: 2px solid #ccc;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border-radius: 2px;
-  transition: border-color .15s ease-in-out;
-
+  transition: border-color 0.15s ease-in-out;
 
   &:focus {
     border-bottom-color: $primary;
@@ -17,19 +16,19 @@
 
 @keyframes loader {
   0% {
-   -o-transform:rotate(0deg);
-   -webkit-transform:rotate(0deg);
-   transform:rotate(0deg)
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-   -o-transform:rotate(1turn);
-   -webkit-transform:rotate(1turn);
-   transform:rotate(1turn)
+    -o-transform: rotate(1turn);
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
   }
 }
 
-.awesomplete.loading::before{
-  content: '';
+.awesomplete.loading::before {
+  content: "";
   display: inline-block;
   position: absolute;
   top: 0;
@@ -39,7 +38,7 @@
   border-radius: 50%;
   border-style: solid;
   border-width: 2px;
-  animation: loader .7s linear infinite;
+  animation: loader 0.7s linear infinite;
   border-color: transparent transparent $primary $primary;
   margin: calc(2.4rem / 2) 0;
 }
