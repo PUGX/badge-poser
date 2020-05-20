@@ -46,46 +46,6 @@ parameters:
 			path: src/Kernel.php
 
 		-
-			message: "#^Property App\\\\Service\\\\CachedClient\\:\\:\\$cache has no typehint specified\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:setCache\\(\\) has parameter \\$cache with no typehint specified\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:getCache\\(\\) has no return typehint specified\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:getPrefixKey\\(\\) has parameter \\$argument with no typehint specified\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:search\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:all\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
-			message: "#^Method App\\\\Service\\\\CachedClient\\:\\:all\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Service/CachedClient.php
-
-		-
 			message: "#^Property App\\\\Service\\\\SnippetGenerator\\:\\:\\$badges type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Service/SnippetGenerator.php
