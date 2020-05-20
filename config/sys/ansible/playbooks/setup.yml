@@ -33,6 +33,11 @@
     # DEPENDENCIES
     # #############
 
+    - name: "Set ENV vars"
+      copy:
+        src: ../../.env.dist
+        dest: /etc/environment
+
     - name: "Enabling dependencies"
       shell: |
         curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
@@ -44,6 +49,13 @@
         wget -r --no-parent -A 'epel-release-*.rpm' http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/
         rpm -Uvh dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-*.rpm
         yum-config-manager --enable epel*
+
+    - name: "Filebeat"
+      shell: |
+        # Ref: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html
+        curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.7.0-x86_64.rpm
+        rpm -vi filebeat-7.7.0-x86_64.rpm
+      ignore_errors: yes
 
     - name: Ensure Certbot renew is set in crontab
       lineinfile:
@@ -77,6 +89,8 @@
           - php-pear
           - python2-certbot-nginx
           - redis
+          - supervisor
+          - syslog-ng
           - vim
           - wget
         state: present
@@ -96,6 +110,11 @@
         mv composer.phar /usr/local/bin/composer
         chmod +x /usr/local/bin/composer
 
+    - name: "Install syslog-ng"
+      shell: |
+        chkconfig syslog-ng on
+        systemctl start syslog-ng.service
+
     # TLS CERTIFICATE
     # ################
 
@@ -107,12 +126,36 @@
       shell: openssl dhparam -out /etc/nginx/dhparam.pem 2048
       when: not dhparam_pem.stat.exists
 
+    - name: "Check if file TLS cert exists"
+      stat:
+        path: /etc/letsencrypt/live/poser.pugx.org/fullchain.pem
+      register: cert_pem
     - name: "Install TLS cert"
       shell: |
-        mkdir -p /application/ssl
-        openssl req -x509 -nodes -newkey rsa:2048 -subj "/C=IT/emailAddress={{ email }}/ST=RM/O=PUGX/CN={{ domain }}/OU=IT/" -keyout /application/ssl/privkey.pem -out /application/ssl/fullchain.pem
+        mkdir -p /etc/letsencrypt/live/poser.pugx.org/
+        openssl req -x509 -nodes -newkey rsa:2048 -subj "/C=IT/emailAddress={{ email }}/ST=RM/O=PUGX/CN={{ domain }}/OU=IT/" -keyout /etc/letsencrypt/live/poser.pugx.org/privkey.pem -out /etc/letsencrypt/live/poser.pugx.org/fullchain.pem
         certbot --nginx --agree-tos --redirect --hsts --staple-ocsp --email {{ email }} --domain {{ domain }} --preferred-challenges=http
       ignore_errors: yes
+      when: not cert_pem.stat.exists
+
+    # LOGZ.IO
+    # ################
+
+    - name: "Download the Logz.io public certificate"
+      shell: sudo curl https://raw.githubusercontent.com/logzio/public-certificates/master/TrustExternalCARoot_and_USERTrustRSAAAACA.crt --create-dirs -o /etc/pki/tls/certs/COMODORSADomainValidationSecureServerCA.crt
+
+    - name: Create a directory if it does not exist
+      file:
+        path: /etc/filebeat
+        state: directory
+    - name: "Move the configuration file to the Filebeat folder"
+      copy:
+        src: ../../filebeat/filebeat.yml
+        dest: /etc/filebeat/filebeat.yml
+    - name: "Apply Env vars"
+      shell: cat /etc/filebeat/filebeat.yml | envsubst | tee /etc/filebeat/filebeat.yml
+      notify:
+      - restart filebeat
 
     # SERVICES
     # ################
@@ -121,32 +164,43 @@
 
     - name: "Configure Nginx"
       copy:
-        src: ../nginx.conf
+        src: ../../nginx/nginx.conf
         dest: /etc/nginx/conf.d/badge-poser.conf
       notify:
       - restart nginx
 
     - name: "Configure PHP"
       copy:
-        src: ../php.ini
+        src: ../../php/php.ini
         dest: /etc/php.ini
     - name: "Configure PHP-FPM"
       copy:
-        src: ../www.conf
+        src: ../../php/php-fpm.conf
+        dest: /etc/php-fpm.conf
+    - name: "Configure PHP-FPM"
+      copy:
+        src: ../../php/www.conf
         dest: /etc/php-fpm.d/www.conf
     - name: "Configure PHP opcache"
       copy:
-        src: ../php.d/10-opcache.ini
+        src: ../../php/10-opcache.ini
         dest: /etc/php.d/10-opcache.ini
       notify:
       - restart php
 
+    - name: "Configure Supervisor"
+      copy:
+        src: ../../supervisord/redis.ini
+        dest: /etc/supervisord.d/redis.ini
+      notify:
+      - restart supervisor
+
     - name: "Configure Redis"
       copy:
-        src: ../redis.conf
+        src: ../../redis/redis.conf
         dest: /etc/redis.conf
       notify:
-      - restart redis
+      - restart supervisor
 
   # HANDLERS
   # ############################################################################
@@ -156,6 +210,10 @@
       service:
         name: cron
         state: restarted
+    - name: restart filebeat
+      service:
+        name: filebeat
+        state: restarted
     - name: restart nginx
       service:
         name: nginx
@@ -164,7 +222,7 @@
       service:
         name: php-fpm
         state: restarted
-    - name: restart redis
+    - name: restart supervisor
       service:
-        name: redis
+        name: supervisor
         state: restarted
