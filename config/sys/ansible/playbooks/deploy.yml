@@ -66,6 +66,13 @@
 
         yarn build
 
+    # Run "composer dump-env prod" to compile .env files for production use (requires symfony/flex >=1.2).
+    # https://symfony.com/doc/current/best_practices.html#use-environment-variables-for-infrastructure-configuration
+    - name: "Dump env vars"
+      shell: |
+        cd {{ deploy_helper.new_release_path }}
+        composer dump-env prod
+
     - name: "Update contributors"
       shell: |
         cd {{ deploy_helper.new_release_path }}
