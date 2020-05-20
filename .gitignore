@@ -1,5 +1,7 @@
 ###> symfony/framework-bundle ###
-.env
+/.env
+/.env.local.php
+/.env.*.local
 /public/bundles/
 /var/
 /vendor/
@@ -22,5 +24,5 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 cghooks.lock
 
-config/sys/.env.dist
-config/sys/ansible/inventory
+/sys/.env.dist
+/sys/ansible/inventory

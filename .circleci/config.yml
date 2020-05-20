@@ -63,7 +63,7 @@ jobs:
 
       - run:
           name: checks that the YAML config files contain no syntax errors
-          command: ./bin/console lint:yaml config --parse-tags
+          command: ./bin/console lint:yaml config
 
       - run:
           name: checks that the Twig template files contain no syntax errors
