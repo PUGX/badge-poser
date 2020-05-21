@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Resources:
+
+  # ECS CLUSTER
+  ecsclusterbadgeposer:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: "badge-poser-prod"
+
+  # ECS SERVICE
+  ecsservicebadgeposer:
+    Type: 'AWS::ECS::Service'
+    Properties:
+      Cluster: !Ref 'ecsclusterbadgeposer'
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 15
+      LaunchType: FARGATE
+      LoadBalancers:
+        - ContainerName: badgeposer
+          ContainerPort: 80
+          TargetGroupArn: !Ref 'elbtargetgroupbadgeposer'
+      ServiceName: badgeposer
+      TaskDefinition: !Ref 'ecstaskbadgeposer'
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: !Ref 'Subnets'
+
+  # ECS TASK DEFINITION
+  ecstaskbadgeposer:
+    Type: 'AWS::ECS::TaskDefinition'
+    Properties:
+      #ExecutionRoleArn: # TODO
+      ContainerDefinitions:
+        - PortMappings:
+            - HostPort: 80
+              Protocol: tcp
+              ContainerPort: 80
+          Environment:
+          - Name: APP_ENV
+            Value: !Ref 'EnvAPP_ENV'
+          - Name: APP_SECRET
+            Value: !Ref 'EnvAPP_SECRET'
+          - Name: APP_XDEBUG
+            Value: !Ref 'EnvAPP_XDEBUG'
+          - Name: APP_XDEBUG_HOST
+            Value: !Ref 'EnvAPP_XDEBUG_HOST'
+          - Name: REDIS_URL
+            Value: !Ref 'EnvREDIS_URL'
+          - Name: GITHUB_AUTH_METHOD
+            Value: !Ref 'EnvGITHUB_AUTH_METHOD'
+          - Name: GITHUB_USERNAME
+            Value: !Ref 'EnvGITHUB_USERNAME'
+          - Name: GITHUB_SECRET
+            Value: !Ref 'EnvGITHUB_SECRET'
+          - Name: CIRCLE_CI_TOKEN
+            Value: !Ref 'EnvCIRCLE_CI_TOKEN'
+          - Name: SENTRY_DSN
+            Value: !Ref 'EnvSENTRY_DSN'
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':latest']]
+          Essential: true
+          Name: badgeposer
+      Memory: '2048'
+      Family: !Ref 'ServiceName'
+      RequiresCompatibilities:
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: '512'
