@@ -59,10 +59,12 @@ class StatsSubscriber implements EventSubscriberInterface
      */
     public function persistData(Request $request, $controller): bool
     {
-        if (null === ($repository = $request->get('repository', null)) || $this->isRoutedFromHome($request)) {
+        $referer = $request->headers->get('referer');
+        if (null === ($repository = $request->get('repository', null)) ||
+            $this->isRoutedFromHome($request) ||
+            $request->getSchemeAndHttpHost() === $referer) {
             return false;
         }
-        $referer = $request->headers->get('referer');
 
         $this->client->incrementTotalAccess();
         $this->client->incrementRepositoryAccess($repository);

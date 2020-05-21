@@ -43,6 +43,7 @@ final class StatsSubscriberTest extends WebTestCase
         $method = 'boomAction';
         $repository = 'pugx/badge-poser';
         $url = 'https://poser.pugx.org';
+        $actualPage = 'https://poser.pugx.org/badges';
         $this->request->expects($this->at(0))
             ->method('get')
             ->with('repository')
@@ -51,6 +52,9 @@ final class StatsSubscriberTest extends WebTestCase
             ->method('get')
             ->with('_route')
             ->willReturn('route_xyz');
+        $this->request->expects($this->once())
+            ->method('getSchemeAndHttpHost')
+            ->willReturn($actualPage);
 
         // adding referer
         $this->request->headers = $this->getMockBuilder(ParameterBag::class)
@@ -90,6 +94,69 @@ final class StatsSubscriberTest extends WebTestCase
 
         $this->persister
             ->expects($this->once())
+            ->method('addReferer')
+            ->with($url)
+            ->willReturnSelf();
+
+        $this->listener->onKernelController($this->controllerEvent);
+    }
+
+    public function testWhenIsARefreshShouldNotIncrement(): void
+    {
+        $controller = new StdClass();
+        $method = 'boomAction';
+        $repository = 'pugx/badge-poser';
+        $url = 'https://poser.pugx.org';
+        $actualPage = 'https://poser.pugx.org';
+        $this->request->expects($this->at(0))
+            ->method('get')
+            ->with('repository')
+            ->willReturn($repository);
+        $this->request->expects($this->at(1))
+            ->method('get')
+            ->with('_route')
+            ->willReturn('route_xyz');
+        $this->request->expects($this->once())
+            ->method('getSchemeAndHttpHost')
+            ->willReturn($actualPage);
+
+        // adding referer
+        $this->request->headers = $this->getMockBuilder(ParameterBag::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->request->headers->expects($this->once())
+            ->method('get')
+            ->with('referer')
+            ->willReturn($url);
+
+        $this->controllerEvent->expects($this->once())->method('getRequest')
+            ->willReturn($this->request);
+        $this->controllerEvent->expects($this->once())->method('getController')
+            ->willReturn([$controller, $method]);
+
+        $this->persister
+            ->expects($this->never())
+            ->method('incrementTotalAccess');
+
+        $this->persister
+            ->expects($this->never())
+            ->method('incrementRepositoryAccess')
+            ->with($repository)
+            ->willReturnSelf();
+
+        $this->persister
+            ->expects($this->never())
+            ->method('addRepositoryToLatestAccessed')
+            ->willReturnSelf();
+
+        $this->persister
+            ->expects($this->never())
+            ->method('incrementRepositoryAccessType')
+            ->with($repository, $method)
+            ->willReturnSelf();
+
+        $this->persister
+            ->expects($this->never())
             ->method('addReferer')
             ->with($url)
             ->willReturnSelf();
