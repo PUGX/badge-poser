@@ -22,7 +22,8 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-cghooks.lock
 
+###> sys ###
 /sys/.env.dist
 /sys/ansible/inventory
+###< sys ###

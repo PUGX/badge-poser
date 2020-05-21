@@ -2,9 +2,6 @@
     "badges/poser": {
         "version": "v1.3.0"
     },
-    "brainmaestro/composer-git-hooks": {
-        "version": "v2.8.2"
-    },
     "cache/adapter-common": {
         "version": "1.1.0"
     },
