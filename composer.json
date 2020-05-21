@@ -37,7 +37,6 @@
         "symfony/yaml": "*"
     },
     "require-dev": {
-        "brainmaestro/composer-git-hooks": "^2.8",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.25",
@@ -78,25 +77,31 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "cghooks add --ignore-lock"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "cghooks update"
+            "@auto-scripts"
+        ],
+        "test": [
+            "bin/phpunit"
+        ],
+        "test-coverage-no-colors": [
+            "vendor/bin/phpunit --colors=never --coverage-text"
+        ],
+        "test-coverage": [
+            "vendor/bin/phpunit --coverage-text"
+        ],
+        "php-cs-fixer": [
+            "vendor/bin/php-cs-fixer fix -v"
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyse"
         ]
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "extra": {
-        "hooks": {
-            "pre-commit": [
-                "./bin/phpunit",
-                "./vendor/bin/php-cs-fixer fix -v",
-                "./vendor/bin/phpstan analyse"
-            ]
-        },
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
