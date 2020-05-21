@@ -16,6 +16,9 @@ class HomeControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function provider(): array
     {
         return [

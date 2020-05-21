@@ -12,9 +12,11 @@ final class RedisReader implements ReaderInterface
     private const KEY_PREFIX = 'STAT';
     private const KEY_TOTAL = 'TOTAL';
 
+    /** @var Redis<string, Redis> */
     private Redis $redis;
     private string $keyTotal;
 
+    /** @param Redis<string, Redis> $redis */
     public function __construct(
         Redis $redis,
         string $keyTotal = self::KEY_TOTAL,

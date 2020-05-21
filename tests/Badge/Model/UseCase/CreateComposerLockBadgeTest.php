@@ -11,11 +11,14 @@
 
 namespace App\Tests\Badge\Model\UseCase;
 
+use App\Badge\Model\Package as AppPackage;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use GuzzleHttp\ClientInterface;
+use Packagist\Api\Result\Package;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
 /**
@@ -38,7 +41,10 @@ final class CreateComposerLockBadgeTest extends TestCase
         $this->useCase = new CreateComposerLockBadge($this->repository, $this->client);
     }
 
-    private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = [])
+    /**
+     * @param array<int, mixed> $methods
+     */
+    private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = []): MockObject
     {
         return $this->getMockBuilder($classname)
             ->disableOriginalConstructor()
@@ -49,19 +55,19 @@ final class CreateComposerLockBadgeTest extends TestCase
     /**
      * @dataProvider shouldCreateComposerLockBadgeProvider
      */
-    public function testShouldCreateComposerLockBadge($returnCode, $expected): void
+    public function testShouldCreateComposerLockBadge(int $returnCode, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
             '\App\Badge\Model\Package',
             ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject', 'getDefaultBranch']
         );
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\Packagist\Api\Result\Package',
+            Package::class,
             ['getRepository']
         );
         $repo->expects($this->once())
@@ -77,7 +83,7 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->willReturn('master');
 
         $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\Psr\Http\Message\ResponseInterface',
+            ResponseInterface::class,
             ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
         );
         $response->expects($this->once())
@@ -96,16 +102,16 @@ final class CreateComposerLockBadgeTest extends TestCase
     public function testShouldCreateDefaultBadgeOnError(): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\App\Badge\Model\Package',
+            AppPackage::class,
             ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
         );
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\Packagist\Api\Result\Package',
+            Package::class,
             ['getRepository']
         );
         $repo->expects($this->once())
@@ -124,6 +130,9 @@ final class CreateComposerLockBadgeTest extends TestCase
         $this->assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
+    /**
+     * @return array<int, array<int, int|string>>
+     */
     public function shouldCreateComposerLockBadgeProvider(): array
     {
         return [

@@ -35,7 +35,7 @@ final class TextNormalizer implements NormalizerInterface
      *
      * @throws InvalidArgumentException
      */
-    private function normalizeNumber($number): int
+    private function normalizeNumber($number): float
     {
         if (!\is_numeric($number)) {
             throw new InvalidArgumentException('Number expected');

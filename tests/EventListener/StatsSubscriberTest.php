@@ -15,13 +15,16 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
  */
 final class StatsSubscriberTest extends WebTestCase
 {
+    /** @var PersisterInterface&\PHPUnit\Framework\MockObject\MockObject */
     protected $persister;
 
+    /** @var \PHPUnit\Framework\MockObject\MockObject&ControllerEvent */
     protected $controllerEvent;
 
+    /** @var \PHPUnit\Framework\MockObject\MockObject&Request */
     protected $request;
 
-    protected $listener;
+    private StatsSubscriber $listener;
 
     protected function setUp(): void
     {
@@ -53,13 +56,15 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn('route_xyz');
 
         // adding referer
-        $this->request->headers = $this->getMockBuilder(ParameterBag::class)
+        /** @var \PHPUnit\Framework\MockObject\MockObject&\Symfony\Component\HttpFoundation\HeaderBag<mixed> $headers */
+        $headers = $this->getMockBuilder(ParameterBag::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->request->headers->expects($this->once())
+        $headers->expects($this->once())
             ->method('get')
             ->with('referer')
             ->willReturn($url);
+        $this->request->headers = $headers;
 
         $this->controllerEvent->expects($this->once())->method('getRequest')
             ->willReturn($this->request);

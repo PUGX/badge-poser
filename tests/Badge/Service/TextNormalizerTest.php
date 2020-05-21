@@ -37,6 +37,9 @@ final class TextNormalizerTest extends TestCase
         $this->assertEquals($output, $res);
     }
 
+    /**
+     * @return array<int, array<int, int|string>>
+     */
     public static function getBadNumberToConvert(): array
     {
         return [
@@ -54,6 +57,9 @@ final class TextNormalizerTest extends TestCase
         $this->assertEquals($output, $res);
     }
 
+    /**
+     * @return array<int, array<int, int|string>>
+     */
     public static function getGoodNumberToConvert(): array
     {
         return [

@@ -85,6 +85,9 @@ final class RepositoryTest extends TestCase
         $this->assertGreaterThan(0, \strlen((string) $data));
     }
 
+    /**
+     * @return array<int, array<string, int|string|bool>>
+     */
     private function getFakeResultPagerFetchAll(): array
     {
         return [

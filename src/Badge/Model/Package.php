@@ -52,9 +52,9 @@ class Package
     /**
      * Take the Type of the Downloads (total, monthly or daily).
      */
-    public function getPackageDownloads(string $type): ?string
+    public function getPackageDownloads(?string $type = 'total'): ?int
     {
-        $statsType = 'get'.\ucfirst($type);
+        $statsType = 'get'.\ucfirst($type ?? 'total');
 
         return $this->getDownloads()->{$statsType}();
     }

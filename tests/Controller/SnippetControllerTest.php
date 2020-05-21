@@ -15,7 +15,7 @@ class SnippetControllerTest extends WebTestCase
         $client->request('GET', '/snippet/all/?repository=pugx/badge-poser');
 
         $response = $client->getResponse();
-        $content = \json_decode($response->getContent(), true);
+        $content = \json_decode((string) $response->getContent(), true);
 
         $this->assertTrue($response->isSuccessful());
         $this->assertArrayHasKey('all', $content);
