@@ -10,6 +10,7 @@ final class NullPersister implements PersisterInterface
     public static bool $incrementTotalAccessCalled = false;
     public static ?string $incrementRepositoryAccessCalled = null;
     public static ?string $addRepositoryToLatestAccessedCalled = null;
+    /** @var array<int, string>|null */
     public static ?array $incrementRepositoryAccessTypeCalled = null;
     public static ?string $addReferrer = null;
 

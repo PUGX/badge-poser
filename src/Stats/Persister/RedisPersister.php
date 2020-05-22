@@ -15,12 +15,14 @@ final class RedisPersister implements PersisterInterface
     private const KEY_LIST_NAME = 'LIST';
     private const KEY_REFERER_SUFFIX = 'REFE';
 
+    /** @var Redis<string, Redis> */
     private Redis $redis;
     private string $keyTotal;
     private string $keyPrefix;
     private string $keyHash;
     private string $keyList;
 
+    /** @param Redis<string, Redis> $redis */
     public function __construct(
         Redis $redis,
         string $keyTotal = self::KEY_TOTAL,

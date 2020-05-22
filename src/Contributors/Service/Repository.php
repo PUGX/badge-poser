@@ -14,10 +14,12 @@ class Repository implements RepositoryInterface
 {
     private const REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';
 
+    /** @var Redis<string, Redis> */
     protected Redis $redis;
     protected Client $client;
     protected ResultPager $resultPager;
 
+    /** @param Redis<string, Redis> $redis */
     public function __construct(Redis $redis, Client $client, ResultPager $resultPager)
     {
         $this->redis = $redis;
@@ -25,9 +27,6 @@ class Repository implements RepositoryInterface
         $this->resultPager = $resultPager;
     }
 
-    /**
-     * @return Contributor[]
-     */
     public function all(): array
     {
         try {
@@ -56,19 +55,17 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @param Contributor[] $contributors
+     * @param array<Contributor> $contributors
      */
-    private function setContributorsInCache($contributors): void
+    private function setContributorsInCache(array $contributors): void
     {
         $this->redis->set(self::REDIS_KEY_CONTRIBUTORS, \serialize($contributors));
     }
 
     /**
-     * @param bool $setCache
-     *
-     * @return Contributor[]
+     * @return array<Contributor>
      */
-    private function getContributors($setCache = true): array
+    private function getContributors(bool $setCache = true): array
     {
         $contributors = [];
 
@@ -88,6 +85,9 @@ class Repository implements RepositoryInterface
         return $contributors;
     }
 
+    /**
+     * @return array<int, array<string>>
+     */
     private function getContributorsByGithub(string $username, string $repoName): array
     {
         $repoApi = $this->client->api('repo');

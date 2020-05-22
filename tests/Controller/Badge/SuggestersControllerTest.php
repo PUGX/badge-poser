@@ -23,7 +23,7 @@ class SuggestersControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/pugx/badge-poser/suggesters');
-        $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
     }
 
     public function testSuggestersActionSvgExplicit(): void

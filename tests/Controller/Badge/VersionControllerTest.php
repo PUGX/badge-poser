@@ -22,8 +22,8 @@ class VersionControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version');
-        $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
-        $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+        $this->assertRegExp('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLatestVStableAction(): void
@@ -31,9 +31,9 @@ class VersionControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/stable');
 
-        $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
-        $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertRegExp('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLatestUnstableAction(): void
@@ -41,9 +41,9 @@ class VersionControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/unstable');
 
-        $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
-        $this->assertRegExp('/s-maxage=3600/', $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertRegExp('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLatestStableActionSvgExplicit(): void

@@ -23,7 +23,7 @@ class LicenseControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/pugx/badge-poser/license');
-        $this->assertTrue($client->getResponse()->isSuccessful(), $client->getResponse()->getContent());
+        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
     }
 
     public function testLicenseActionSvgExplicit(): void

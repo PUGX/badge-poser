@@ -40,6 +40,9 @@ final class CreateCircleCiBadgeTest extends TestCase
         $this->useCase = new CreateCircleCiBadge($this->repository, $this->circleCiClient);
     }
 
+    /**
+     * @param array<int, mixed> $methods
+     */
     private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = []): MockObject
     {
         return $this->getMockBuilder($classname)
@@ -55,7 +58,7 @@ final class CreateCircleCiBadgeTest extends TestCase
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
@@ -84,6 +87,9 @@ final class CreateCircleCiBadgeTest extends TestCase
         $this->assertEquals($expected, $badge->getStatus());
     }
 
+    /**
+     * @return array<int, array<int, string>>
+     */
     public function shouldCreateCircleCiBadgeProvider(): array
     {
         return [
@@ -99,7 +105,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
         );
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
@@ -127,7 +133,7 @@ final class CreateCircleCiBadgeTest extends TestCase
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
@@ -163,7 +169,7 @@ final class CreateCircleCiBadgeTest extends TestCase
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 

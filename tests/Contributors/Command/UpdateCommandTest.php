@@ -28,6 +28,9 @@ final class UpdateCommandTest extends KernelTestCase
         $this->assertGreaterThanOrEqual(30, $count);
     }
 
+    /**
+     * @return array<int, array<int, string>>
+     */
     private function getNumbers(string $str): array
     {
         \preg_match_all('/\d+/', $str, $matches);

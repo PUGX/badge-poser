@@ -18,7 +18,7 @@ class PackagistControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $responseContent = \json_decode($client->getResponse()->getContent(), true);
+        $responseContent = \json_decode((string) $client->getResponse()->getContent(), true);
 
         foreach ($responseContent as $item) {
             $this->assertNotEmpty($item['id']);

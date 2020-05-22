@@ -14,14 +14,20 @@ class SnippetGenerator implements SnippetGeneratorInterface
 
     private RouterInterface $router;
 
+    /** @var array<int, array> */
     private array $badges;
 
+    /** @var array<int, string> */
     private array $allInBadges;
 
     private ?RouteCollection $routes;
 
     private string $packagistRoute;
 
+    /**
+     * @param array<int, string> $allInBadges
+     * @param array<int, array>  $badges
+     */
     public function __construct(
         RouterInterface $router,
         array $allInBadges,
@@ -64,6 +70,8 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
+     * @param array<string, string> $badge
+     *
      * @throws \Exception
      */
     private function generateMarkdown(array $badge, string $repository): string
@@ -77,6 +85,8 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
+     * @param array<string, string> $badge
+     *
      * @throws \Exception
      */
     private function generateImg(array $badge, string $repository): string
@@ -98,14 +108,18 @@ class SnippetGenerator implements SnippetGeneratorInterface
     }
 
     /**
+     * @param array<string, string> $badge
+     *
+     * @return array<int|string, string>
+     *
      * @throws \RuntimeException
      */
     private function compileRouteParametersForBadge(array $badge): array
     {
         $parameters = [];
-        $route = $this->routes->get($badge['route']);
+        $route = null === $this->routes ? null : $this->routes->get($badge['route']);
 
-        if (!$route) {
+        if (null === $route) {
             throw new \RuntimeException(\sprintf('The route "%s" was not found', $badge['route']));
         }
 

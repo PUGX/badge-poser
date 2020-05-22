@@ -19,6 +19,9 @@ class ParseStabilityTest extends TestCase
         $this->assertEquals(Package::parseStability($version), $stable);
     }
 
+    /**
+     * @return array<int, array<int, string>>
+     */
     public static function getVersionAndStability(): array
     {
         return [
@@ -42,6 +45,11 @@ class ParseStabilityTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<int, array> $branches
+     *
+     * @return array<int, Version>
+     */
     protected function createVersion(array $branches): array
     {
         $versions = [];
