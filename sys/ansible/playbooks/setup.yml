@@ -166,6 +166,12 @@
 
     # TODO: Configure autostart of php, nginx, redis
 
+    - name: Create a directory if it does not exist
+      file:
+        path: /data/nginx/cache
+        state: directory
+        user: nginx
+        group: nginx
     - name: "Configure Nginx"
       copy:
         src: ../../nginx/nginx.conf
