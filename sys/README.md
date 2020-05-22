@@ -28,3 +28,14 @@ ansible-playbook -i inventory ansible/playbooks/deploy.yml
 ```
 
 **NOTE:** Need a rollback? You need to do it manually :(
+
+```bash
+ROLLBACK_VER=20200521055734
+curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
+chmod +x cachetool.phar
+rm /application/current
+ln -s /application/releases/$ROLLBACK_VER current
+systemctl restart php-fpm.service
+php cachetool.phar opcache:reset --fcgi=/run/php-fpm/www.sock
+rm cachetool.phar
+```
