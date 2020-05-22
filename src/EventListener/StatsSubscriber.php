@@ -62,7 +62,7 @@ class StatsSubscriber implements EventSubscriberInterface
         $referer = $request->headers->get('referer');
         if (null === ($repository = $request->get('repository', null)) ||
             $this->isRoutedFromHome($request) ||
-            strpos($referer, $request->getSchemeAndHttpHost()) !== false) {
+            false !== \strpos($referer, $request->getSchemeAndHttpHost())) {
             return false;
         }
 
