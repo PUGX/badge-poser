@@ -71,7 +71,7 @@
     - name: "Dump env vars"
       shell: |
         cd {{ deploy_helper.new_release_path }}
-        composer dump-env prod
+        /usr/local/bin/composer dump-env prod
 
     - name: "Update contributors"
       shell: |
@@ -103,7 +103,7 @@
       shell: |
         curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
         chmod +x cachetool.phar
-        php cachetool.phar opcache:reset --fcgi
+        php cachetool.phar opcache:reset --fcgi=/run/php-fpm/www.sock
         rm cachetool.phar
 
   # HANDLERS
