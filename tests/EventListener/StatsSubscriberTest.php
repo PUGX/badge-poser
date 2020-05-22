@@ -6,7 +6,7 @@ use App\EventListener\StatsSubscriber;
 use App\Stats\Persister\PersisterInterface;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
@@ -61,7 +61,7 @@ final class StatsSubscriberTest extends WebTestCase
 
         // adding referer
         /** @var \PHPUnit\Framework\MockObject\MockObject&\Symfony\Component\HttpFoundation\HeaderBag<mixed> $headers */
-        $headers = $this->getMockBuilder(ParameterBag::class)
+        $headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
         $headers->expects($this->once())
@@ -126,7 +126,7 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn($actualPage);
 
         // adding referer
-        $this->request->headers = $this->getMockBuilder(ParameterBag::class)
+        $this->request->headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->request->headers->expects($this->once())
@@ -181,7 +181,7 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn($repository);
 
         // adding referer
-        $this->request->headers = $this->getMockBuilder(ParameterBag::class)
+        $this->request->headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->request->headers->expects($this->never())
@@ -240,7 +240,7 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn('home');
 
         // adding referer
-        $this->request->headers = $this->getMockBuilder(ParameterBag::class)
+        $this->request->headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->request->headers->expects($this->never())
