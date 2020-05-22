@@ -179,10 +179,9 @@ final class StatsSubscriberTest extends WebTestCase
         $this->request->headers = $this->getMockBuilder(ParameterBag::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->request->headers->expects($this->once())
+        $this->request->headers->expects($this->never())
             ->method('get')
-            ->with('referer')
-            ->willReturn($url);
+            ->with('referer');
 
         $this->controllerEvent->expects($this->once())->method('getRequest')
             ->willReturn($this->request);
@@ -239,10 +238,9 @@ final class StatsSubscriberTest extends WebTestCase
         $this->request->headers = $this->getMockBuilder(ParameterBag::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->request->headers->expects($this->once())
+        $this->request->headers->expects($this->never())
             ->method('get')
-            ->with('referer')
-            ->willReturn($url);
+            ->with('referer');
 
         $this->controllerEvent->expects($this->once())->method('getRequest')
             ->willReturn($this->request);
