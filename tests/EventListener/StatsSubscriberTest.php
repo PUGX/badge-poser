@@ -106,7 +106,7 @@ final class StatsSubscriberTest extends WebTestCase
         $controller = new StdClass();
         $method = 'boomAction';
         $repository = 'pugx/badge-poser';
-        $url = 'https://poser.pugx.org/show/phpunit/phpunit';
+        $url = 'https://poser.pugx.org/show/phpunit/phpunit/';
         $actualPage = 'https://poser.pugx.org/show/phpunit/phpunit';
         $this->request->expects($this->at(0))
             ->method('get')
@@ -170,7 +170,6 @@ final class StatsSubscriberTest extends WebTestCase
         $method = 'boomAction';
         $repository = null;
         $url = 'https://poser.pugx.org';
-        $actualPage = 'https://poser.pugx.org/another-page';
         $this->request->expects($this->at(0))
             ->method('get')
             ->with('repository')
@@ -226,7 +225,6 @@ final class StatsSubscriberTest extends WebTestCase
         $method = 'boomAction';
         $repository = 'repository';
         $url = 'https://poser.pugx.org';
-        $actualPage = 'https://poser.pugx.org/another-page';
         $this->request->expects($this->at(0))
             ->method('get')
             ->with('repository')
