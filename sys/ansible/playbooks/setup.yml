@@ -17,6 +17,10 @@
     sysctl_overwrite:
       vm.overcommit_memory: 1
       net.ipv4.ip_forward: 1
+      net.core.somaxconn: 65365
+      net.ipv4.tcp_tw_reuse: 1
+      net.ipv4.tcp_fin_timeout: 30
+
 
   # ROLES
   # ############################################################################
