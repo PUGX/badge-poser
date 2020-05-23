@@ -63,7 +63,7 @@
 
     - name: Ensure Certbot renew is set in crontab
       lineinfile:
-        path: /etc/crontab
+        path: /var/spool/cron/root
         line: "39 1,13 * * * root certbot renew --no-self-upgrade"
       notify:
       - restart cron
@@ -170,8 +170,18 @@
       file:
         path: /data/nginx/cache
         state: directory
-        user: nginx
+        recurse: yes
+        owner: nginx
         group: nginx
+    - name: Ensure nginx purger is set in crontab
+      lineinfile:
+        path: /var/spool/cron/root
+        line: "{{ item.time }} {{ item.command }}"
+      with_items:
+        - { time: "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" }
+        - { time: "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" }
+      notify:
+      - restart cron
     - name: "Configure Nginx"
       copy:
         src: ../../nginx/nginx.conf
