@@ -38,6 +38,9 @@ install_prod: ## install php and node dependencies for production environment
 build: ## build assets
 	- docker-compose run --rm node yarn dev
 
+build_watch: ## build assets and watch
+	- docker-compose run --rm node yarn watch
+
 build_prod: ## build assets for production environment
 	- docker-compose run --rm node yarn build
 
