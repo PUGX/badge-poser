@@ -1,0 +1,49 @@
+---
+- name: "Rollback badge-poser"
+  hosts: "web-1"
+  become: true
+
+  # TASKS
+  # ############################################################################
+
+  tasks:
+    # ROLLBACK
+    # ########
+
+    - name: "Retrieve last folder"
+      shell: ls -tr /application/releases/ | tail -n 2 | head -n 1
+      register: previous_release
+
+    - pause:
+        prompt: "Do you want to revert to the version {{ previous_release }}?"
+
+    - name: "Release"
+      deploy_helper:
+        path: /application
+        release: "{{ previous_release }}"
+        state: finalize
+        clean: no
+      notify:
+      - reload nginx
+      - reload php-fpm
+
+    - name: "Reset opcache"
+      shell: |
+        curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
+        chmod +x cachetool.phar
+        php cachetool.phar opcache:reset --fcgi=/run/php-fpm/www.sock
+        rm cachetool.phar
+
+  # HANDLERS
+  # ############################################################################
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
+    - name: reload php-fpm
+      service:
+        name: php-fpm
+        state: reloaded
+
