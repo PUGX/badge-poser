@@ -1,15 +1,17 @@
-# REQUIREMENTS
+# SYS CONFIGS
+
+## REQUIREMENTS
 
  - Ansible
  - AWS CloudFormation
 
-# TOOLS
+## TOOLS
 
  - [Logz.io](https://app-uk.logz.io/#/dashboard/kibana/discover) (Log Management)
  - [StatusCake](https://app.statuscake.com) (Monitoring)
  - [Sentry.io](https://sentry.io/organizations/pugx) (Application Errors)
 
-# SETUP
+## SETUP
 
 1. Create the AWS CloudFormation Stack using `cloudformation/stack.cf.yaml`.
 1. Once got the Public IP, change the `ansible/inventory` file.
@@ -21,10 +23,14 @@ ansible-galaxy install -r ansible/requirements.yml
 ansible-playbook -i inventory ansible/playbooks/setup.yml
 ```
 
-# DEPLOY
+## DEPLOY
 
 ```bash
 ansible-playbook -i inventory ansible/playbooks/deploy.yml
 ```
 
-**NOTE:** Need a rollback? You need to do it manually :(
+## ROLLBACK
+
+```bash
+ansible-playbook -i inventory ansible/playbooks/rollback.yml
+```

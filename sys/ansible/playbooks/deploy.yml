@@ -71,7 +71,7 @@
     - name: "Dump env vars"
       shell: |
         cd {{ deploy_helper.new_release_path }}
-        composer dump-env prod
+        /usr/local/bin/composer dump-env prod
 
     - name: "Update contributors"
       shell: |
@@ -83,6 +83,21 @@
         HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d ' ' -f1` &&
         setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var &&
         setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX {{ deploy_helper.new_release_path }}/var
+
+    - name: "Check cachetool.phar already exists"
+      stat: path="{{deploy_helper.shared_path}}/cachetool.phar"
+      register: stat_cachetool_result
+
+    - name: "Download cachetool.phar"
+      get_url:
+        url: "https://gordalina.github.io/cachetool/downloads/cachetool-5.0.0.phar"
+        dest: "{{deploy_helper.shared_path}}/cachetool.phar"
+        mode: '+x'
+      when: not stat_cachetool_result.stat.exists
+
+    - name: "Cachetool Opcache Reset"
+      shell: "php {{deploy_helper.shared_path}}/cachetool.phar opcache:reset --fcgi=/run/php-fpm/www.sock"
+      listen: "cachetool_opcache_reset"
 
     # RELEASE
     # ########
@@ -97,14 +112,8 @@
         state: finalize
         keep_releases: 3
       notify:
-      - reload nginx
-
-    - name: "Reset opcache"
-      shell: |
-        curl -sO https://gordalina.github.io/cachetool/downloads/cachetool.phar
-        chmod +x cachetool.phar
-        php cachetool.phar opcache:reset --fcgi
-        rm cachetool.phar
+        - "cachetool_opcache_reset"
+        - reload nginx
 
   # HANDLERS
   # ############################################################################

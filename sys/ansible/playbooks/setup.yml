@@ -17,6 +17,10 @@
     sysctl_overwrite:
       vm.overcommit_memory: 1
       net.ipv4.ip_forward: 1
+      net.core.somaxconn: 65365
+      net.ipv4.tcp_tw_reuse: 1
+      net.ipv4.tcp_fin_timeout: 30
+
 
   # ROLES
   # ############################################################################
@@ -59,7 +63,7 @@
 
     - name: Ensure Certbot renew is set in crontab
       lineinfile:
-        path: /etc/crontab
+        path: /var/spool/cron/root
         line: "39 1,13 * * * root certbot renew --no-self-upgrade"
       notify:
       - restart cron
@@ -162,6 +166,22 @@
 
     # TODO: Configure autostart of php, nginx, redis
 
+    - name: Create a directory if it does not exist
+      file:
+        path: /data/nginx/cache
+        state: directory
+        recurse: yes
+        owner: nginx
+        group: nginx
+    - name: Ensure nginx purger is set in crontab
+      lineinfile:
+        path: /var/spool/cron/root
+        line: "{{ item.time }} {{ item.command }}"
+      with_items:
+        - { time: "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" }
+        - { time: "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" }
+      notify:
+      - restart cron
     - name: "Configure Nginx"
       copy:
         src: ../../nginx/nginx.conf

@@ -1,0 +1,58 @@
+---
+- name: "Rollback badge-poser"
+  hosts: "web-1"
+  become: true
+
+  # TASKS
+  # ############################################################################
+
+  tasks:
+    # ROLLBACK
+    # ########
+
+    - name: "Retrieve last folder"
+      shell: ls -tr /application/releases/ | tail -n 2 | head -n 1
+      register: previous_release
+
+    - pause:
+        prompt: "Do you want to revert to the version {{ previous_release }}?"
+
+    - name: "Release"
+      deploy_helper:
+        path: /application
+        release: "{{ previous_release }}"
+        state: finalize
+        clean: no
+      notify:
+        - "cachetool_opcache_reset"
+        - "reload web services"
+
+    - name: "Check cachetool.phar already exists"
+      stat: path="{{deploy_helper.shared_path}}/cachetool.phar"
+      register: stat_cachetool_result
+
+    - name: "Download cachetool.phar"
+      get_url:
+        url: "https://gordalina.github.io/cachetool/downloads/cachetool-5.0.0.phar"
+        dest: "{{deploy_helper.shared_path}}/cachetool.phar"
+        mode: '+x'
+      when: not stat_cachetool_result.stat.exists
+
+    - name: "Cachetool Opcache Reset"
+      shell: "php {{deploy_helper.shared_path}}/cachetool.phar opcache:reset --fcgi=/run/php-fpm/www.sock"
+      listen: "cachetool_opcache_reset"
+
+  # HANDLERS
+  # ############################################################################
+
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
+      listen: "reload web services"
+    - name: reload php-fpm
+      service:
+        name: php-fpm
+        state: reloaded
+      listen: "reload web services"

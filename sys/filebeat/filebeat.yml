@@ -10,6 +10,8 @@
 # For more available modules and options, please see the filebeat.reference.yml sample
 # configuration file.
 
+max_procs: 2
+
 #=========================== Filebeat inputs =============================
 
 filebeat.inputs:
@@ -73,6 +75,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["cron"]
+  scan_frequency: 5m
 - type: log
   paths:
     - /var/log/letsencrypt/letsencrypt.log
@@ -84,6 +87,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["letsencrypt"]
+  scan_frequency: 15m
 - type: log
   paths:
     - /var/log/nginx/access.log
@@ -95,6 +99,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["nginx"]
+  scan_frequency: 5m
 - type: log
   paths:
     - /var/log/nginx/error.log
@@ -106,6 +111,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["nginx-error"]
+  scan_frequency: 5s
 - type: log
   paths:
     - /var/log/php-fpm/*.log
@@ -128,6 +134,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["redis"]
+  scan_frequency: 5s
 - type: log
   paths:
     - /var/log/supervisor/supervisord.log
@@ -138,6 +145,7 @@ filebeat.inputs:
   fields_under_root: true
   encoding: utf-8
   ignore_older: 3h
+  scan_frequency: 1m
 - type: log
   paths:
     - /var/log/messages
@@ -149,6 +157,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["syslog-ng"]
+  scan_frequency: 1m
 - type: log
   paths:
     - /var/log/secure
@@ -160,6 +169,7 @@ filebeat.inputs:
   encoding: utf-8
   ignore_older: 3h
   tags: ["secure"]
+  scan_frequency: 5m
 
 #For version 6.x and lower
 #filebeat.registry_file: /var/lib/filebeat/registry
