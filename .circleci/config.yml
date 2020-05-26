@@ -1,84 +1,155 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/php:7.4-fpm-node-browsers
-        environment:
-          - APP_ENV=test
-          - APP_SECRET=notReallyNeededHere
-          - REDIS_URL=redis://localhost
-          - SYMFONY_DEPRECATIONS_HELPER=max[self]=0
-          - SENTRY_DSN=
-      - image: redis
+version: 2.1
 
+executors:
+  badge_poser_executor: # declares a reusable executor
+    docker:
+      - image: pugx/badge-poser:3.0
+        environment:
+          APP_ENV: "test"
+          APP_SECRET: "notReallyNeededHere"
+          REDIS_URL: "redis://localhost"
+          SYMFONY_DEPRECATIONS_HELPER: "max[self]=0"
+          SENTRY_DSN: ""
+          GITHUB_AUTH_METHOD: "http_token"
+          GITHUB_USERNAME: $GITHUB_TOKEN
+          GITHUB_SECRET: ""
+          CIRCLE_CI_TOKEN: $CIRCLE_CI_TOKEN
+      - image: redis
     working_directory: ~/app
+
+jobs:
+  checkout_code:
+    executor: badge_poser_executor
     steps:
       - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/app
 
-      - run:
-          name: install system packages
-          command: sudo apt-get install -qqy libzip-dev libpng-dev libjpeg-dev libfreetype6-dev
-
-      - run:
-          name: configure php packages
-          command: sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
-
-      - run:
-          name: install php packages
-          command: sudo docker-php-ext-install zip iconv gd
-
-      - run:
-          name: install prestissimo
-          command: composer global require hirak/prestissimo
-
+  php_dependencies:
+    executor: badge_poser_executor
+    steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "composer.json" }}
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v1-php-dependencies-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - v1-php-dependencies-
       - run:
           name: install project dependencies
           command: composer install -n --no-progress --no-suggest
       - save_cache:
           paths:
-            - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
+            - ~/app/vendor
+          key: v1-php-dependencies-{{ checksum "composer.lock" }}
 
+  node_dependencies:
+    executor: badge_poser_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - v1-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Node Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: v1-yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/app/node_modules
 
+  precompile_assets:
+    executor: badge_poser_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - v1-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: build frontend
           command: yarn build
+      - save_cache:
+          name: Save Assets Cache
+          key: v1-assets-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/app/public/build
 
+  lint_checks:
+    executor: badge_poser_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v1-php-dependencies-{{ checksum "composer.lock" }}
       - run:
           name: checks that the YAML config files contain no syntax errors
           command: ./bin/console lint:yaml config
-
       - run:
           name: checks that the Twig template files contain no syntax errors
           command: ./bin/console lint:twig templates
+      - run:
+          name: run php-cs-fixer checks
+          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
 
+  phpunit_and_stan:
+    executor: badge_poser_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v1-php-dependencies-{{ checksum "composer.lock" }}
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - v1-yarn-packages-{{ checksum "yarn.lock" }}
+      - restore_cache:
+          name: Restore Assets Cache
+          keys:
+            - v1-assets-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: run phpunit tests
           command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
       - store_artifacts:
           path: coverage
-
-      - run:
-          name: run php-cs-fixer checks
-          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
-
       - run:
           name: run phpstan checks
           command: vendor/bin/phpstan analyse
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - checkout_code
+      - php_dependencies:
+          requires:
+            - checkout_code
+      - node_dependencies:
+          requires:
+            - checkout_code
+      - precompile_assets:
+          requires:
+            - php_dependencies
+            - node_dependencies
+      - lint_checks:
+          requires:
+            - php_dependencies
+      - phpunit_and_stan:
+          requires:
+            - precompile_assets
