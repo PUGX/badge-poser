@@ -11,7 +11,6 @@ help:
 init: ## initialize app
 	- make stop
 	- make start
-	- cp .env.dist .env
 	- make install
 	- make build
 
