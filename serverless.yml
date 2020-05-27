@@ -1,0 +1,50 @@
+service: bref-demo-symfony
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: provided
+  environment:
+    # Symfony environment variables
+    APP_ENV: dev
+    APP_SECRET:
+    APP_XDEBUG: 0
+    APP_XDEBUG_HOST: docker.for.mac.localhost
+    REDIS_URL: "redis://redis"
+    GITHUB_AUTH_METHOD: http_token
+    GITHUB_USERNAME:
+    GITHUB_SECRET:
+    CIRCLE_CI_TOKEN:
+    SENTRY_DSN:
+
+plugins:
+  - ./vendor/bref/bref
+  - ./vendor/bref/extra-php-extensions
+
+package:
+  exclude:
+    - .circleci/**
+    - .git/**
+    - .github/**
+    - docker/**
+    - node_modules/**
+    - php/**
+    - sys/**
+    - tests/**
+
+functions:
+  website:
+    handler: public/index.php
+    timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+    layers:
+      - ${bref:layer.php-74-fpm}
+      - ${bref:extra.xdebug-php-74}
+    events:
+      -   http: 'ANY /'
+      -   http: 'ANY /{proxy+}'
+  console:
+    handler: bin/console
+    timeout: 120 # in seconds
+    layers:
+      - ${bref:layer.php-74} # PHP
+      - ${bref:layer.console} # The "console" layer

@@ -1,32 +1,38 @@
 version: '3.7'
+
 services:
-
-  webserver:
-    image: nginx:alpine
-    container_name: badge-poser-webserver
-    working_dir: /application
-    depends_on:
-      - php-fpm
-    volumes:
-      - .:/application:cached
-      - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./var/log/nginx/:/var/log/nginx:cached
+  web:
+    container_name: badge-poser-bref
+    image: bref/fpm-dev-gateway
     ports:
-      - '8001:80'
+      - '8000:80'
+    volumes:
+      - .:/var/task
+    depends_on:
+      - php
+    environment:
+      HANDLER: public/index.php
+      DOCUMENT_ROOT: public
 
-  php-fpm:
+  php:
+    container_name: badge-poser-php
     build:
-      context: docker/dev/php-fpm
-      network: host
-    container_name: badge-poser-php-fpm
-    working_dir: /application
+     context: docker/dev/php-fpm
+     network: host
+    volumes:
+        - .:/var/task:ro
+        - ./var:/var/task/var
     depends_on:
       - redis
+    environment:
+      DOCKER_COMPOSE: 1
+
+  console:
+    container_name: badge-poser-console
+    image: bref/php-74
     volumes:
-      - .:/application:cached
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
-    ports:
-        - "9000"
+      - .:/var/task:ro
+    entrypoint: php
 
   node:
     container_name: badge-poser-node
@@ -37,7 +43,7 @@ services:
     working_dir: /application
 
   redis:
-    image: redis:alpine
     container_name: badge-poser-redis
+    image: redis:alpine
     ports:
       - "6379:6379"

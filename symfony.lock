@@ -1,6 +1,18 @@
 {
+    "async-aws/cloud-formation": {
+        "version": "0.4.1"
+    },
+    "async-aws/core": {
+        "version": "1.2.0"
+    },
+    "async-aws/lambda": {
+        "version": "0.4.1"
+    },
     "badges/poser": {
         "version": "v1.3.0"
+    },
+    "bref/bref": {
+        "version": "0.5.24"
     },
     "cache/adapter-common": {
         "version": "1.1.0"
@@ -56,6 +68,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "hollodotme/fast-cgi-client": {
+        "version": "v3.1.2"
+    },
     "http-interop/http-factory-guzzle": {
         "version": "1.0.0"
     },
@@ -74,8 +89,23 @@
     "knplabs/packagist-api": {
         "version": "v1.5.1"
     },
+    "mnapoli/silly": {
+        "version": "1.7.2"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
+    },
+    "nyholm/psr7": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "7c0a9352a57376f04f5444e74565102c3a23d0c7"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
     },
     "ocramius/package-versions": {
         "version": "1.8.0"
@@ -88,6 +118,9 @@
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
+    },
+    "php-di/invoker": {
+        "version": "2.0.0"
     },
     "php-http/cache-plugin": {
         "version": "v1.5.0"
@@ -140,6 +173,9 @@
     "psr/http-message": {
         "version": "1.0.1"
     },
+    "psr/http-server-handler": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
@@ -148,6 +184,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
+    },
+    "riverline/multipart-parser": {
+        "version": "2.0.8"
     },
     "sentry/sdk": {
         "version": "2.0.4"
@@ -217,6 +256,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.2.1"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.1.0"
     },
     "symfony/dom-crawler": {
         "version": "v4.2.1"
