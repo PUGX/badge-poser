@@ -43,6 +43,7 @@ class PackageRepository implements PackageRepositoryInterface
      */
     public function fetchByRepository(string $repository): Package
     {
+        /** @var ApiPackage $apiPackage */
         $apiPackage = $this->packagistClient->get($repository);
 
         \preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
