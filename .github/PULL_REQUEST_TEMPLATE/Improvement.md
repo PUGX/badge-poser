@@ -12,6 +12,7 @@ about: You have some improvement to make badge-poser better? 🎁
 | New Feature | yes
 | RFC         | yes/no
 | BC Break    | yes/no
+| Issue       | Fix #...
 
 #### Summary
 

@@ -16,6 +16,7 @@ Thank you for submitting new feature!
 | New Feature | yes
 | RFC         | yes/no
 | BC Break    | yes/no
+| Issue       | Fix #...
 
 #### Summary
 
