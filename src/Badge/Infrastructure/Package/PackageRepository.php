@@ -13,8 +13,7 @@ namespace App\Badge\Infrastructure\Package;
 
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
-use Github\Api\Repo;
-use Github\Client as GitHubClient;
+use App\Badge\Service\ClientStrategy;
 use Packagist\Api\Client as PackagistClient;
 use Packagist\Api\Result\Package as ApiPackage;
 use UnexpectedValueException;
@@ -27,13 +26,17 @@ class PackageRepository implements PackageRepositoryInterface
 {
     private static string $packageClass;
     private PackagistClient $packagistClient;
-    private GitHubClient $githubClient;
 
-    public function __construct(PackagistClient $packagistClient, GitHubClient $githubClient, string $packageClass = Package::class)
-    {
+    private ClientStrategy $clientStrategy;
+
+    public function __construct(
+        PackagistClient $packagistClient,
+        ClientStrategy $clientStrategy,
+        string $packageClass = Package::class
+    ) {
         self::$packageClass = $packageClass;
         $this->packagistClient = $packagistClient;
-        $this->githubClient = $githubClient;
+        $this->clientStrategy = $clientStrategy;
     }
 
     /**
@@ -48,26 +51,17 @@ class PackageRepository implements PackageRepositoryInterface
 
         \preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
 
-        if (isset($matches[4], $matches[5])) {
+        if ((isset($matches[4], $matches[5])) && ($apiPackage instanceof ApiPackage)) {
+            $source = $matches[3];
             $username = $matches[4];
             $repoName = $matches[5];
 
-            /** @var Repo $repoApi */
-            $repoApi = $this->githubClient->api('repo');
-            $repoGitHubData = $repoApi->show($username, $repoName);
-        }
+            $defaultBranch = $this->clientStrategy->getDefaultBranch($source, $username, $repoName);
 
-        if (
-            $apiPackage instanceof ApiPackage
-            && !empty($repoGitHubData)
-            && \array_key_exists('default_branch', $repoGitHubData)
-            && \is_string($repoGitHubData['default_branch'])
-        ) {
-            // create a new Package from the ApiPackage
             /** @var Package $class */
             $class = self::$packageClass;
 
-            return $class::createFromApi($apiPackage, $repoGitHubData);
+            return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
         }
 
         throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
