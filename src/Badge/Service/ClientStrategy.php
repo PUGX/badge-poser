@@ -33,28 +33,30 @@ class ClientStrategy
             throw new SourceClientNotFound('Source Client '.$source.' not found');
         }
 
-        if (self::GITHUB_SOURCE === $source) {
-            /** @var Repo $repoApi */
-            $repoApi = $this->githubClient->api('repo');
-            $repoGitHubData = $repoApi->show($username, $repositoryName);
-            if (!$this->isValidGithubRepository($repoGitHubData)) {
-                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
-            }
+        switch ($source) {
+            case self::GITHUB_SOURCE:
+                /** @var Repo $repoApi */
+                $repoApi = $this->githubClient->api('repo');
+                $repoGitHubData = $repoApi->show($username, $repositoryName);
+                if (!$this->isValidGithubRepository($repoGitHubData)) {
+                    throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
+                }
 
-            $defaultBranch = $repoGitHubData['default_branch'];
-        }
+                $defaultBranch = $repoGitHubData['default_branch'];
+                break;
 
-        if (self::BITBUCKET_SOURCE === $source) {
-            $repoBitbucketData = $this->bitbucketClient
-                ->repositories()
-                ->users($username)
-                ->show($repositoryName);
+            case self::BITBUCKET_SOURCE:
+                $repoBitbucketData = $this->bitbucketClient
+                    ->repositories()
+                    ->users($username)
+                    ->show($repositoryName);
 
-            if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
-                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
-            }
+                if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
+                    throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
+                }
 
-            $defaultBranch = $repoBitbucketData['mainbranch']['name'];
+                $defaultBranch = $repoBitbucketData['mainbranch']['name'];
+                break;
         }
 
         return $defaultBranch;
