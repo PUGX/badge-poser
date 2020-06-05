@@ -20,7 +20,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 use UnexpectedValueException;
 
 /**
@@ -46,18 +45,14 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
     private ClientStrategy $clientStrategy;
 
-    private LoggerInterface $logger;
-
     public function __construct(
         PackageRepositoryInterface $packageRepository,
         ClientInterface $client,
-        ClientStrategy $clientStrategy,
-        LoggerInterface $logger
+        ClientStrategy $clientStrategy
     ) {
         parent::__construct($packageRepository);
         $this->client = $client;
         $this->clientStrategy = $clientStrategy;
-        $this->logger = $logger;
     }
 
     /**
@@ -93,8 +88,6 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
         if (null !== $response) {
             $status = $response->getStatusCode();
         }
-
-        $this->logger->critical($repo);
 
         $this->text = self::GITATTRIBUTES_ERROR;
         $color = self::COLOR_ERROR;
