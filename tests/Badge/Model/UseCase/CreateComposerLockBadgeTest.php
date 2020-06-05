@@ -14,6 +14,7 @@ namespace App\Tests\Badge\Model\UseCase;
 use App\Badge\Model\Package as AppPackage;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
+use App\Badge\Service\ClientStrategy;
 use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Package;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -31,6 +32,8 @@ final class CreateComposerLockBadgeTest extends TestCase
     private $repository;
     /** @var ClientInterface|MockObject */
     private $client;
+    /** @var ClientStrategy|MockObject */
+    private $clientStrategy;
 
     protected function setUp(): void
     {
@@ -38,7 +41,10 @@ final class CreateComposerLockBadgeTest extends TestCase
         $this->client = $this->getMockBuilder(ClientInterface::class)
             ->setMethods(['request'])
             ->getMockForAbstractClass();
-        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client);
+        $this->clientStrategy = $this->getMockBuilder(ClientStrategy::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy);
     }
 
     /**
@@ -72,7 +78,7 @@ final class CreateComposerLockBadgeTest extends TestCase
         );
         $repo->expects($this->once())
             ->method('getRepository')
-            ->willReturn('RepoURI');
+            ->willReturn('https://github.com/user/repository');
 
         $package->expects($this->once())
             ->method('getOriginalObject')

@@ -7,6 +7,7 @@ namespace App\Tests\Badge\Service;
 use App\Badge\Exception\RepositoryDataNotValid;
 use App\Badge\Exception\SourceClientNotFound;
 use App\Badge\Service\ClientStrategy;
+use App\Badge\ValueObject\Repository;
 use Bitbucket\Api\Repositories;
 use Bitbucket\Api\Repositories\Users;
 use Bitbucket\Client as BitbucketClient;
@@ -55,9 +56,7 @@ class ClientStrategyTest extends TestCase
         $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
         $source = 'github.com';
         $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         ));
     }
 
@@ -80,9 +79,7 @@ class ClientStrategyTest extends TestCase
         $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
         $source = 'bitbucket.org';
         $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         ));
     }
 
@@ -94,9 +91,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Source Client notManagedClient not found');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -112,9 +107,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: []');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -132,9 +125,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"foo":"bar"}');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -152,9 +143,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"foo":["bar"]}');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -175,9 +164,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: []');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -198,9 +185,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"foo":"bar"}');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -221,9 +206,7 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"mainbranch":["bar"]}');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 
@@ -248,9 +231,41 @@ class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"mainbranch":{"name":["bar"]}}');
 
         $this->clientStrategy->getDefaultBranch(
-            $source,
-            $this->username,
-            $this->repositoryName
+            Repository::create($source, $this->username, $this->repositoryName)
+        );
+    }
+
+    public function testShouldGetGithubComposerLink(): void
+    {
+        $source = 'github.com';
+
+        $composerLockLinkNormalized = $this->clientStrategy->getComposerLockLinkNormalized(
+            Repository::create($source, $this->username, $this->repositoryName)
+        );
+
+        $this->assertEquals($composerLockLinkNormalized, 'blob');
+    }
+
+    public function testShouldGetBitbucketComposerLink(): void
+    {
+        $source = 'bitbucket.org';
+
+        $composerLockLinkNormalized = $this->clientStrategy->getComposerLockLinkNormalized(
+            Repository::create($source, $this->username, $this->repositoryName)
+        );
+
+        $this->assertEquals($composerLockLinkNormalized, 'src');
+    }
+
+    public function testShouldThrowExceptionIfSourceNotFoundForGetComposerLockLinkNormalized(): void
+    {
+        $source = 'notManagedClient';
+
+        $this->expectException(SourceClientNotFound::class);
+        $this->expectExceptionMessage('Source Client notManagedClient not found');
+
+        $this->clientStrategy->getComposerLockLinkNormalized(
+            Repository::create($source, $this->username, $this->repositoryName)
         );
     }
 }

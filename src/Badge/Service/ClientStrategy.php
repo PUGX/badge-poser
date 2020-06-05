@@ -6,6 +6,7 @@ namespace App\Badge\Service;
 
 use App\Badge\Exception\RepositoryDataNotValid;
 use App\Badge\Exception\SourceClientNotFound;
+use App\Badge\ValueObject\Repository;
 use Bitbucket\Client as BitbucketClient;
 use Github\Api\Repo;
 use Github\Client as GithubClient;
@@ -13,7 +14,9 @@ use Github\Client as GithubClient;
 class ClientStrategy
 {
     private const GITHUB_SOURCE = 'github.com';
+    private const GITHUB_REPOSITORY_PREFIX = 'blob';
     private const BITBUCKET_SOURCE = 'bitbucket.org';
+    private const BITBUCKET_REPOSITORY_PREFIX = 'src';
 
     private GithubClient $githubClient;
 
@@ -25,9 +28,12 @@ class ClientStrategy
         $this->bitbucketClient = $bitbucketClient;
     }
 
-    public function getDefaultBranch(string $source, string $username, string $repositoryName): string
+    public function getDefaultBranch(Repository $repository): string
     {
         $defaultBranch = '';
+        $source = $repository->getSource();
+        $username = $repository->getUsername();
+        $repositoryName = $repository->getName();
 
         if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
             throw new SourceClientNotFound('Source Client '.$source.' not found');
@@ -60,6 +66,27 @@ class ClientStrategy
         }
 
         return $defaultBranch;
+    }
+
+    public function getComposerLockLinkNormalized(Repository $repository): string
+    {
+        $composerLockLinkNormalized = '';
+        $source = $repository->getSource();
+
+        if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
+            throw new SourceClientNotFound('Source Client '.$source.' not found');
+        }
+
+        switch ($source) {
+            case self::GITHUB_SOURCE:
+                $composerLockLinkNormalized = self::GITHUB_REPOSITORY_PREFIX;
+                break;
+            case self::BITBUCKET_SOURCE:
+                $composerLockLinkNormalized = self::BITBUCKET_REPOSITORY_PREFIX;
+                break;
+        }
+
+        return $composerLockLinkNormalized;
     }
 
     /**

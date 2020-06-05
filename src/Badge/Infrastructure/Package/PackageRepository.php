@@ -14,6 +14,7 @@ namespace App\Badge\Infrastructure\Package;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\ClientStrategy;
+use App\Badge\ValueObject\Repository;
 use Packagist\Api\Client as PackagistClient;
 use Packagist\Api\Result\Package as ApiPackage;
 use UnexpectedValueException;
@@ -49,21 +50,17 @@ class PackageRepository implements PackageRepositoryInterface
         /** @var ApiPackage $apiPackage */
         $apiPackage = $this->packagistClient->get($repository);
 
-        \preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $apiPackage->getRepository(), $matches);
+        $repositoryInfo = Repository::createFromRepositoryUrl($apiPackage->getRepository());
 
-        if ((isset($matches[3], $matches[4], $matches[5])) && ($apiPackage instanceof ApiPackage)) {
-            $source = $matches[3];
-            $username = $matches[4];
-            $repoName = $matches[5];
-
-            $defaultBranch = $this->clientStrategy->getDefaultBranch($source, $username, $repoName);
-
-            /** @var Package $class */
-            $class = self::$packageClass;
-
-            return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
+        if (!$apiPackage instanceof ApiPackage) {
+            throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
         }
 
-        throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
+        $defaultBranch = $this->clientStrategy->getDefaultBranch($repositoryInfo);
+
+        /** @var Package $class */
+        $class = self::$packageClass;
+
+        return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
     }
 }
