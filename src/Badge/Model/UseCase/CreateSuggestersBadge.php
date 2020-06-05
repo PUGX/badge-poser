@@ -16,7 +16,6 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\NormalizerInterface;
 use App\Badge\Service\TextNormalizer;
-use Psr\Log\LoggerInterface;
 
 /**
  * Create the 'suggesters' image with the standard Font and standard Image.

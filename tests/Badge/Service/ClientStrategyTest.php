@@ -238,34 +238,40 @@ class ClientStrategyTest extends TestCase
     public function testShouldGetGithubComposerLink(): void
     {
         $source = 'github.com';
+        $repoUrl = 'https://github.com/user/repo';
 
-        $composerLockLinkNormalized = $this->clientStrategy->getComposerLockLinkNormalized(
-            Repository::create($source, $this->username, $this->repositoryName)
+        $composerLockLinkNormalized = $this->clientStrategy->getRepositoryPrefix(
+            Repository::create($source, $this->username, $this->repositoryName),
+            $repoUrl
         );
 
-        $this->assertEquals($composerLockLinkNormalized, 'blob');
+        $this->assertEquals($repoUrl.'/blob', $composerLockLinkNormalized);
     }
 
     public function testShouldGetBitbucketComposerLink(): void
     {
         $source = 'bitbucket.org';
+        $repoUrl = 'https://bitbucket.org/user/repo';
 
-        $composerLockLinkNormalized = $this->clientStrategy->getComposerLockLinkNormalized(
-            Repository::create($source, $this->username, $this->repositoryName)
+        $composerLockLinkNormalized = $this->clientStrategy->getRepositoryPrefix(
+            Repository::create($source, $this->username, $this->repositoryName),
+            $repoUrl
         );
 
-        $this->assertEquals($composerLockLinkNormalized, 'src');
+        $this->assertEquals('https://api.bitbucket.org/2.0/repositories/user/repo/src', $composerLockLinkNormalized);
     }
 
     public function testShouldThrowExceptionIfSourceNotFoundForGetComposerLockLinkNormalized(): void
     {
         $source = 'notManagedClient';
+        $repoUrl = 'https://notManaged.com/user/repo';
 
         $this->expectException(SourceClientNotFound::class);
         $this->expectExceptionMessage('Source Client notManagedClient not found');
 
-        $this->clientStrategy->getComposerLockLinkNormalized(
-            Repository::create($source, $this->username, $this->repositoryName)
+        $this->clientStrategy->getRepositoryPrefix(
+            Repository::create($source, $this->username, $this->repositoryName),
+            $repoUrl
         );
     }
 }

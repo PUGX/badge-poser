@@ -68,9 +68,9 @@ class ClientStrategy
         return $defaultBranch;
     }
 
-    public function getComposerLockLinkNormalized(Repository $repository): string
+    public function getRepositoryPrefix(Repository $repository, string $repoUrl): string
     {
-        $composerLockLinkNormalized = '';
+        $repositoryPrefixUrl = '';
         $source = $repository->getSource();
 
         if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
@@ -79,14 +79,21 @@ class ClientStrategy
 
         switch ($source) {
             case self::GITHUB_SOURCE:
-                $composerLockLinkNormalized = self::GITHUB_REPOSITORY_PREFIX;
+                $repositoryPrefixUrl = $repoUrl.'/'.self::GITHUB_REPOSITORY_PREFIX;
                 break;
             case self::BITBUCKET_SOURCE:
-                $composerLockLinkNormalized = self::BITBUCKET_REPOSITORY_PREFIX;
+                $repositoryPrefixUrl = \str_replace(
+                    'https://bitbucket.org',
+                    'https://api.bitbucket.org/2.0/repositories',
+                    $repoUrl
+                );
+
+                $repositoryPrefixUrl .= '/'.self::BITBUCKET_REPOSITORY_PREFIX;
+
                 break;
         }
 
-        return $composerLockLinkNormalized;
+        return $repositoryPrefixUrl;
     }
 
     /**
