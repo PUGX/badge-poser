@@ -13,6 +13,9 @@ executors:
           GITHUB_AUTH_METHOD: "http_token"
           GITHUB_USERNAME: $GITHUB_TOKEN
           GITHUB_SECRET: ""
+          BITBUCKET_AUTH_METHOD: "http_password"
+          BITBUCKET_TOKEN: $BITBUCKET_TOKEN
+          BITBUCKET_SECRET: $BITBUCKET_SECRET
           CIRCLE_CI_TOKEN: $CIRCLE_CI_TOKEN
       - image: redis
     working_directory: ~/app

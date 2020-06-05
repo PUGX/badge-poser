@@ -24,6 +24,9 @@ $ cp .env.dist .env
 
 Follow [this link](https://github.com/settings/tokens) for generate your GitHub "Personal access token" and put them
  in `.env` file as value of `GITHUB_USERNAME`.
+ 
+Follow [this link](https://bitbucket.org/account/settings/app-passwords/new) for generate your Bitbucket "App Password" and put them
+ in `.env` file as value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
 
 Follow [this link](https://circleci.com/account/api) for generate your CircleCI "Personal API Token" and put them
  in `.env` file as value of `CIRCLE_CI_TOKEN`.

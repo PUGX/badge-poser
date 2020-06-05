@@ -1,0 +1,9 @@
+services:
+  Bitbucket\Client:
+    class: Bitbucket\Client
+    calls:
+      - method: authenticate
+        arguments:
+          - '%env(BITBUCKET_AUTH_METHOD)%'
+          - '%env(BITBUCKET_TOKEN)%'
+          - '%env(BITBUCKET_SECRET)%'

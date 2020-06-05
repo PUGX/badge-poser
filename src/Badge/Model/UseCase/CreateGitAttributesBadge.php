@@ -14,6 +14,8 @@ namespace App\Badge\Model\UseCase;
 use App\Badge\Model\Badge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
+use App\Badge\Service\ClientStrategy;
+use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
@@ -41,10 +43,16 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
     protected ClientInterface $client;
 
-    public function __construct(PackageRepositoryInterface $packageRepository, ClientInterface $client)
-    {
+    private ClientStrategy $clientStrategy;
+
+    public function __construct(
+        PackageRepositoryInterface $packageRepository,
+        ClientInterface $client,
+        ClientStrategy $clientStrategy
+    ) {
         parent::__construct($packageRepository);
         $this->client = $client;
+        $this->clientStrategy = $clientStrategy;
     }
 
     /**
@@ -62,9 +70,13 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
             return $this->createDefaultBadge($format);
         }
 
+        $repositoryInfo = Repository::createFromRepositoryUrl($repo);
+
         $response = $this->client->request(
             'HEAD',
-            $repo.'/blob/'.$package->getDefaultBranch().'/.gitattributes',
+            $this->clientStrategy->getRepositoryPrefix($repositoryInfo, $repo).'/'.
+            $package->getDefaultBranch().
+            '/.gitattributes',
             [
                 RequestOptions::TIMEOUT => self::TIMEOUT_SECONDS,
                 RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT_SECONDS,
