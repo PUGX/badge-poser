@@ -1,4 +1,4 @@
-FROM bref/php-74-fpm-dev:latest
+FROM fabiocicerchia/bref-php-74-fpm-dev:latest
 
 USER root
 
