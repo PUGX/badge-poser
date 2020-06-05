@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Badge\Service;
 
-use App\Badge\Exception\DomainException;
+use App\Badge\Exception\RepositoryDataNotValid;
+use App\Badge\Exception\SourceClientNotFound;
 use App\Badge\Service\ClientStrategy;
 use Bitbucket\Api\Repositories;
 use Bitbucket\Api\Repositories\Users;
@@ -89,7 +90,7 @@ class ClientStrategyTest extends TestCase
     {
         $source = 'notManagedClient';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(SourceClientNotFound::class);
         $this->expectExceptionMessage('Source Client notManagedClient not found');
 
         $this->clientStrategy->getDefaultBranch(
@@ -107,7 +108,7 @@ class ClientStrategyTest extends TestCase
         $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
         $source = 'github.com';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: []');
 
         $this->clientStrategy->getDefaultBranch(
@@ -127,7 +128,7 @@ class ClientStrategyTest extends TestCase
         $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
         $source = 'github.com';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: {"foo":"bar"}');
 
         $this->clientStrategy->getDefaultBranch(
@@ -147,7 +148,7 @@ class ClientStrategyTest extends TestCase
         $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
         $source = 'github.com';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: {"foo":["bar"]}');
 
         $this->clientStrategy->getDefaultBranch(
@@ -170,7 +171,7 @@ class ClientStrategyTest extends TestCase
         $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
         $source = 'bitbucket.org';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: []');
 
         $this->clientStrategy->getDefaultBranch(
@@ -193,7 +194,7 @@ class ClientStrategyTest extends TestCase
         $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
         $source = 'bitbucket.org';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: {"foo":"bar"}');
 
         $this->clientStrategy->getDefaultBranch(
@@ -216,7 +217,7 @@ class ClientStrategyTest extends TestCase
         $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
         $source = 'bitbucket.org';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: {"mainbranch":["bar"]}');
 
         $this->clientStrategy->getDefaultBranch(
@@ -243,7 +244,7 @@ class ClientStrategyTest extends TestCase
         $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
         $source = 'bitbucket.org';
 
-        $this->expectException(DomainException::class);
+        $this->expectException(RepositoryDataNotValid::class);
         $this->expectExceptionMessage('Repository data not valid: {"mainbranch":{"name":["bar"]}}');
 
         $this->clientStrategy->getDefaultBranch(

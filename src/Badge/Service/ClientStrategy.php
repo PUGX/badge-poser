@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Badge\Service;
 
-use App\Badge\Exception\DomainException;
+use App\Badge\Exception\RepositoryDataNotValid;
+use App\Badge\Exception\SourceClientNotFound;
 use Bitbucket\Client as BitbucketClient;
 use Github\Api\Repo;
 use Github\Client as GithubClient;
@@ -29,7 +30,7 @@ class ClientStrategy
         $defaultBranch = '';
 
         if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
-            throw DomainException::sourceClientNotFound($source);
+            throw new SourceClientNotFound('Source Client '.$source.' not found');
         }
 
         if (self::GITHUB_SOURCE === $source) {
@@ -37,7 +38,7 @@ class ClientStrategy
             $repoApi = $this->githubClient->api('repo');
             $repoGitHubData = $repoApi->show($username, $repositoryName);
             if (!$this->isValidGithubRepository($repoGitHubData)) {
-                throw DomainException::repositoryDataNotValid((string) \json_encode($repoGitHubData));
+                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
             }
 
             $defaultBranch = $repoGitHubData['default_branch'];
@@ -50,7 +51,7 @@ class ClientStrategy
                 ->show($repositoryName);
 
             if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
-                throw DomainException::repositoryDataNotValid((string) \json_encode($repoBitbucketData));
+                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
             }
 
             $defaultBranch = $repoBitbucketData['mainbranch']['name'];
