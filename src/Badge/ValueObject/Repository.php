@@ -65,7 +65,7 @@ class Repository
         return false;
     }
 
-    public function isBitBucket(): bool
+    public function isBitbucket(): bool
     {
         if (self::BITBUCKET_SOURCE === $this->getSource()) {
             return true;
@@ -76,7 +76,7 @@ class Repository
 
     public function isSupported(): bool
     {
-        if ($this->isGitHub() || $this->isBitBucket()) {
+        if ($this->isGitHub() || $this->isBitbucket()) {
             return true;
         }
 

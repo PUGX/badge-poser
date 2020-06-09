@@ -57,21 +57,21 @@ class RepositoryTest extends TestCase
         $this->assertTrue($repository->isSupported());
     }
 
-    public function testItDetectBitBucketAsSourceProvider(): void
+    public function testItDetectBitbucketAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
 
-        $this->assertTrue($repository->isBitBucket());
+        $this->assertTrue($repository->isBitbucket());
     }
 
     public function testBitbucketShouldNotdetectedAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://fake-provider.com/username/repository');
 
-        $this->assertFalse($repository->isBitBucket());
+        $this->assertFalse($repository->isBitbucket());
     }
 
-    public function testItSupportBitBucketAsSourceProvider(): void
+    public function testItSupportBitbucketAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
 
