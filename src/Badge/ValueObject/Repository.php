@@ -8,6 +8,10 @@ use UnexpectedValueException;
 
 class Repository
 {
+    private const GITHUB_SOURCE = 'github.com';
+
+    private const BITBUCKET_SOURCE = 'bitbucket.org';
+
     private string $source;
 
     private string $username;
@@ -50,5 +54,32 @@ class Repository
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function isGitHub(): bool
+    {
+        if (self::GITHUB_SOURCE === $this->getSource()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isBitbucket(): bool
+    {
+        if (self::BITBUCKET_SOURCE === $this->getSource()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isSupported(): bool
+    {
+        if ($this->isGitHub() || $this->isBitbucket()) {
+            return true;
+        }
+
+        return false;
     }
 }

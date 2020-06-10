@@ -35,4 +35,64 @@ class RepositoryTest extends TestCase
         $this->assertEquals('username', $repository->getUsername());
         $this->assertEquals('repository', $repository->getName());
     }
+
+    public function testItDetectGitHubAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://github.com/username/repository');
+
+        $this->assertTrue($repository->isGitHub());
+    }
+
+    public function testGitHubShouldNotdetectedAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://fake-provider.com/username/repository');
+
+        $this->assertFalse($repository->isGitHub());
+    }
+
+    public function testItSupportGitHubAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://github.com/username/repository');
+
+        $this->assertTrue($repository->isSupported());
+    }
+
+    public function testItDetectBitbucketAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
+
+        $this->assertTrue($repository->isBitbucket());
+    }
+
+    public function testBitbucketShouldNotdetectedAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://fake-provider.com/username/repository');
+
+        $this->assertFalse($repository->isBitbucket());
+    }
+
+    public function testItSupportBitbucketAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
+
+        $this->assertTrue($repository->isSupported());
+    }
+
+    /** @dataProvider unsupportedRepositrySourceProvider */
+    public function testItDetectUnsupportedSourceProvider(string $sourceProviderUrl): void
+    {
+        $repository = Repository::createFromRepositoryUrl($sourceProviderUrl);
+
+        $this->assertFalse($repository->isSupported());
+    }
+
+    /**
+     * @return \Generator<array<string>>
+     */
+    public function unsupportedRepositrySourceProvider(): \Generator
+    {
+        yield ['https://www.gitlab.com/username/repository'];
+        yield ['https://www.my-self-hosted-git.com/acme/foo'];
+        yield ['https://www.fake-provider.com/foo/bar'];
+    }
 }

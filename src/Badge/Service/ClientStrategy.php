@@ -10,12 +10,11 @@ use App\Badge\ValueObject\Repository;
 use Bitbucket\Client as BitbucketClient;
 use Github\Api\Repo;
 use Github\Client as GithubClient;
+use Http\Client\Exception;
 
 class ClientStrategy
 {
-    private const GITHUB_SOURCE = 'github.com';
     private const GITHUB_REPOSITORY_PREFIX = 'blob';
-    private const BITBUCKET_SOURCE = 'bitbucket.org';
     private const BITBUCKET_REPOSITORY_PREFIX = 'src';
 
     private GithubClient $githubClient;
@@ -28,41 +27,43 @@ class ClientStrategy
         $this->bitbucketClient = $bitbucketClient;
     }
 
+    /**
+     * @throws SourceClientNotFound
+     * @throws Exception
+     */
     public function getDefaultBranch(Repository $repository): string
     {
         $defaultBranch = '';
-        $source = $repository->getSource();
+
         $username = $repository->getUsername();
         $repositoryName = $repository->getName();
 
-        if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
-            throw new SourceClientNotFound('Source Client '.$source.' not found');
+        if (!$repository->isSupported()) {
+            throw new SourceClientNotFound('Source Client '.$repository->getSource().' not found');
         }
 
-        switch ($source) {
-            case self::GITHUB_SOURCE:
-                /** @var Repo $repoApi */
-                $repoApi = $this->githubClient->api('repo');
-                $repoGitHubData = $repoApi->show($username, $repositoryName);
-                if (!$this->isValidGithubRepository($repoGitHubData)) {
-                    throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
-                }
+        if ($repository->isGitHub()) {
+            /** @var Repo $repoApi */
+            $repoApi = $this->githubClient->api('repo');
+            $repoGitHubData = $repoApi->show($username, $repositoryName);
+            if (!$this->isValidGithubRepository($repoGitHubData)) {
+                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
+            }
 
-                $defaultBranch = $repoGitHubData['default_branch'];
-                break;
+            $defaultBranch = (string) $repoGitHubData['default_branch'];
+        }
 
-            case self::BITBUCKET_SOURCE:
-                $repoBitbucketData = $this->bitbucketClient
-                    ->repositories()
-                    ->users($username)
-                    ->show($repositoryName);
+        if ($repository->isBitbucket()) {
+            $repoBitbucketData = $this->bitbucketClient
+                ->repositories()
+                ->users($username)
+                ->show($repositoryName);
 
-                if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
-                    throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
-                }
+            if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
+                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
+            }
 
-                $defaultBranch = $repoBitbucketData['mainbranch']['name'];
-                break;
+            $defaultBranch = (string) $repoBitbucketData['mainbranch']['name'];
         }
 
         return $defaultBranch;
@@ -71,26 +72,23 @@ class ClientStrategy
     public function getRepositoryPrefix(Repository $repository, string $repoUrl): string
     {
         $repositoryPrefixUrl = '';
-        $source = $repository->getSource();
 
-        if (self::GITHUB_SOURCE !== $source && self::BITBUCKET_SOURCE !== $source) {
-            throw new SourceClientNotFound('Source Client '.$source.' not found');
+        if (!$repository->isSupported()) {
+            throw new SourceClientNotFound('Source Client '.$repository->getSource().' not found');
         }
 
-        switch ($source) {
-            case self::GITHUB_SOURCE:
-                $repositoryPrefixUrl = $repoUrl.'/'.self::GITHUB_REPOSITORY_PREFIX;
-                break;
-            case self::BITBUCKET_SOURCE:
-                $repositoryPrefixUrl = \str_replace(
-                    'https://bitbucket.org',
-                    'https://api.bitbucket.org/2.0/repositories',
-                    $repoUrl
-                );
+        if ($repository->isGitHub()) {
+            $repositoryPrefixUrl = $repoUrl.'/'.self::GITHUB_REPOSITORY_PREFIX;
+        }
 
-                $repositoryPrefixUrl .= '/'.self::BITBUCKET_REPOSITORY_PREFIX;
+        if ($repository->isBitbucket()) {
+            $repositoryPrefixUrl = \str_replace(
+                'https://bitbucket.org',
+                'https://api.bitbucket.org/2.0/repositories',
+                $repoUrl
+            );
 
-                break;
+            $repositoryPrefixUrl .= '/'.self::BITBUCKET_REPOSITORY_PREFIX;
         }
 
         return $repositoryPrefixUrl;
