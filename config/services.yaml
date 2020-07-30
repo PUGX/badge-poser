@@ -89,7 +89,7 @@ services:
             $renders: [ '@PUGX\Poser\SvgPlasticRender', '@PUGX\Poser\SvgFlatRender', '@PUGX\Poser\SvgFlatSquareRender' ]
 
     PUGX\Poser\SvgPlasticRender:
-        class: PUGX\Poser\Render\SvgRender
+        class: PUGX\Poser\Render\SvgPlasticRender
 
     PUGX\Poser\SvgFlatRender:
         class: PUGX\Poser\Render\SvgFlatRender

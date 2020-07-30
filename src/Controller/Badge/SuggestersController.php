@@ -29,7 +29,7 @@ class SuggestersController extends AbstractController
         $repository,
         $format = 'svg'
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validFormats(), true)) {
+        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = $request->query->get('format');
         }
 

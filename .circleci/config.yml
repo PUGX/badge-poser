@@ -133,7 +133,7 @@ jobs:
           path: coverage
       - run:
           name: run phpstan checks
-          command: vendor/bin/phpstan analyse
+          command: vendor/bin/phpstan analyse --memory-limit=2G
 
 workflows:
   version: 2
