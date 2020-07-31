@@ -24,7 +24,7 @@ class HomeController extends AbstractController
     ): Response {
         $prefix = \sprintf('More than %s', \number_format($redisReader->totalAccess()));
         $text = 'badges served!!!';
-        $formats = \array_diff($poser->validFormats(), ['svg']);
+        $formats = \array_diff($poser->validStyles(), ['svg']);
 
         /** @var Contributor[] $contributors */
         $contributors = $contributorsRepository->all();

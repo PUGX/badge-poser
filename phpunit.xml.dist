@@ -39,9 +39,6 @@
         <!-- env name="TRUSTED_HOSTS" value="'^localhost|example\.com$'" -->
         <!-- ###- symfony/framework-bundle ### -->
 
-        <env name="BITBUCKET_AUTH_METHOD" value=""/>
-        <env name="BITBUCKET_TOKEN" value=""/>
-        <env name="BITBUCKET_SECRET" value=""/>
 
     </php>
 

@@ -4,32 +4,35 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb49d8357a25f19ccf95dc8910f22764",
+    "content-hash": "08b94b764a61a716fe3235daa74bb0c3",
     "packages": [
         {
             "name": "badges/poser",
-            "version": "v1.4.1",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/badges/poser.git",
-                "reference": "4281890cbd58e0ea29c6550c4a4aaa16a15b3ce0"
+                "reference": "ded7ae4b6d108275d97e130f37f28b280427e641"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/badges/poser/zipball/4281890cbd58e0ea29c6550c4a4aaa16a15b3ce0",
-                "reference": "4281890cbd58e0ea29c6550c4a4aaa16a15b3ce0",
+                "url": "https://api.github.com/repos/badges/poser/zipball/ded7ae4b6d108275d97e130f37f28b280427e641",
+                "reference": "ded7ae4b6d108275d97e130f37f28b280427e641",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
-                "php": ">=5.3",
-                "symfony/console": "~2.0|~3.0|~4.0"
+                "ext-simplexml": "*",
+                "php": ">=7.4",
+                "symfony/console": "^4.0|^5.0"
             },
             "require-dev": {
-                "behat/behat": "^3.4",
-                "coduo/phpspec-data-provider-extension": "^1.0",
-                "friendsofphp/php-cs-fixer": "@stable",
-                "phpspec/phpspec": "^2.5"
+                "behat/behat": "^3.7",
+                "friends-of-phpspec/phpspec-code-coverage": "^4.3",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "moave/phpspec-data-provider-extension": "dev-master",
+                "phpspec/phpspec": "^6.1",
+                "vimeo/psalm": "^3.12"
             },
             "bin": [
                 "bin/poser"
@@ -37,7 +40,7 @@
             "type": "lib",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -71,7 +74,21 @@
                 "packagist",
                 "pin"
             ],
-            "time": "2020-06-11T16:17:31+00:00"
+            "funding": [
+                {
+                    "url": "https://paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ETT4JRJARLTSC",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/AlessandroMinoccheri",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/JellyBellyDev",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-07-29T15:54:20+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -190,7 +207,7 @@
                 {
                     "name": "Tobias Nyholm",
                     "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/nyholm"
+                    "homepage": "https://github.com/Nyholm"
                 }
             ],
             "description": "Common classes for PSR-6 adapters",
@@ -251,7 +268,7 @@
                 {
                     "name": "Tobias Nyholm",
                     "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/nyholm"
+                    "homepage": "https://github.com/Nyholm"
                 }
             ],
             "description": "A helper trait and interface to your PSR-6 cache to support hierarchical keys.",
@@ -320,7 +337,7 @@
                 {
                     "name": "Tobias Nyholm",
                     "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/nyholm"
+                    "homepage": "https://github.com/Nyholm"
                 }
             ],
             "description": "A PSR-6 cache implementation using Redis (Predis). This implementation supports tags",
@@ -371,7 +388,7 @@
                 {
                     "name": "Tobias Nyholm",
                     "email": "tobias.nyholm@gmail.com",
-                    "homepage": "https://github.com/nyholm"
+                    "homepage": "https://github.com/Nyholm"
                 },
                 {
                     "name": "Nicolas Grekas",
