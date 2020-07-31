@@ -1,73 +1,344 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Metadata:
-  License: Apache-2.0
-Description: 'AWS CloudFormation Sample Template EC2InstanceWithSecurityGroupSample:
-  Create an Amazon EC2 instance running the Amazon Linux AMI. The AMI is chosen based
-  on the region in which the stack is run. This example creates an EC2 security group
-  for the instance to give you SSH access. **WARNING** This template creates an Amazon
-  EC2 instance. You will be billed for the AWS resources used if you create a stack
-  from this template.'
+AWSTemplateFormatVersion: 2010-09-09
+
 Parameters:
-  KeyName:
-    Description: Name of an existing EC2 KeyPair to enable SSH access to the instance
-    Type: AWS::EC2::KeyPair::KeyName
-    ConstraintDescription: must be the name of an existing EC2 KeyPair.
-  InstanceType:
-    Description: WebServer EC2 instance type
+  ServiceName:
     Type: String
-    Default: t2.micro
-    AllowedValues: [a1.medium, a1.large, a1.xlarge, a1.2xlarge, a1.4xlarge, a1.metal, m4.large, m4.xlarge, m4.2xlarge, m4.4xlarge, m4.10xlarge, m4.16xlarge, m5.large, m5.xlarge, m5.2xlarge, m5.4xlarge, m5.8xlarge, m5.12xlarge, m5.16xlarge, m5.24xlarge, m5.metal, m5a.large, m5a.xlarge, m5a.2xlarge, m5a.4xlarge, m5a.8xlarge, m5a.12xlarge, m5a.16xlarge, m5a.24xlarge, m5ad.large, m5ad.xlarge, m5ad.2xlarge, m5ad.4xlarge, m5ad.8xlarge, m5ad.12xlarge, m5ad.16xlarge, m5ad.24xlarge, m5d.large, m5d.xlarge, m5d.2xlarge, m5d.4xlarge, m5d.8xlarge, m5d.12xlarge, m5d.16xlarge, m5d.24xlarge, m5d.metal, m5dn.large, m5dn.xlarge, m5dn.2xlarge, m5dn.4xlarge, m5dn.8xlarge, m5dn.12xlarge, m5dn.16xlarge, m5dn.24xlarge, m5n.large, m5n.xlarge, m5n.2xlarge, m5n.4xlarge, m5n.8xlarge, m5n.12xlarge, m5n.16xlarge, m5n.24xlarge, m6g.medium, m6g.large, m6g.xlarge, m6g.2xlarge, m6g.4xlarge, m6g.8xlarge, m6g.12xlarge, m6g.16xlarge, m6g.metal, t2.nano, t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge, t3.nano, t3.micro, t3.small, t3.medium, t3.large, t3.xlarge, t3.2xlarge, t3a.nano, t3a.micro, t3a.small, t3a.medium, t3a.large, t3a.xlarge, t3a.2xlarge,
-      c4.large, c4.xlarge, c4.2xlarge, c4.4xlarge, c4.8xlarge, c5.large, c5.xlarge, c5.2xlarge, c5.4xlarge, c5.9xlarge, c5.12xlarge, c5.18xlarge, c5.24xlarge, c5.metal, c5d.large, c5d.xlarge, c5d.2xlarge, c5d.4xlarge, c5d.9xlarge, c5d.12xlarge, c5d.18xlarge, c5d.24xlarge, c5d.metal, c5n.large, c5n.xlarge, c5n.2xlarge, c5n.4xlarge, c5n.9xlarge, c5n.18xlarge, c5n.metal,
-      r4.large, r4.xlarge, r4.2xlarge, r4.4xlarge, r4.8xlarge, r4.16xlarge, r5.large, r5.xlarge, r5.2xlarge, r5.4xlarge, r5.8xlarge, r5.12xlarge, r5.16xlarge, r5.24xlarge, r5.metal, r5a.large, r5a.xlarge, r5a.2xlarge, r5a.4xlarge, r5a.8xlarge, r5a.12xlarge, r5a.16xlarge, r5a.24xlarge, r5ad.large, r5ad.xlarge, r5ad.2xlarge, r5ad.4xlarge, r5ad.12xlarge, r5ad.24xlarge, r5d.large, r5d.xlarge, r5d.2xlarge, r5d.4xlarge, r5d.8xlarge, r5d.12xlarge, r5d.16xlarge, r5d.24xlarge, r5d.metal, r5dn.large, r5dn.xlarge, r5dn.2xlarge, r5dn.4xlarge, r5dn.8xlarge, r5dn.12xlarge, r5dn.16xlarge, r5dn.24xlarge, r5n.large, r5n.xlarge, r5n.2xlarge, r5n.4xlarge, r5n.8xlarge, r5n.12xlarge, r5n.16xlarge, r5n.24xlarge, u-6tb1.metal, u-9tb1.metal, u-12tb1.metal, u-18tb1.metal, u-24tb1.metal, x1.16xlarge, x1.32xlarge, x1e.xlarge, x1e.2xlarge, x1e.4xlarge, x1e.8xlarge, x1e.16xlarge, x1e.32xlarge, z1d.large, z1d.xlarge, z1d.2xlarge, z1d.3xlarge, z1d.6xlarge, z1d.12xlarge, z1d.metal,
-      d2.xlarge, d2.2xlarge, d2.4xlarge, d2.8xlarge, h1.2xlarge, h1.4xlarge, h1.8xlarge, h1.16xlarge, i3.large, i3.xlarge, i3.2xlarge, i3.4xlarge, i3.8xlarge, i3.16xlarge, i3.metal, i3en.large, i3en.xlarge, i3en.2xlarge, i3en.3xlarge, i3en.6xlarge, i3en.12xlarge, i3en.24xlarge, i3en.metal,
-      f1.2xlarge, f1.4xlarge, f1.16xlarge, g3s.xlarge, g3.4xlarge, g3.8xlarge, g3.16xlarge, g4dn.xlarge, g4dn.2xlarge, g4dn.4xlarge, g4dn.8xlarge, g4dn.12xlarge, g4dn.16xlarge, p2.xlarge, p2.8xlarge, p2.16xlarge, p3.2xlarge, p3.8xlarge, p3.16xlarge, p3dn.24xlarge, inf1.xlarge, inf1.2xlarge, inf1.6xlarge, inf1.24xlarge]
-    ConstraintDescription: must be a valid EC2 instance type.
-  SSHLocation:
-    Description: The IP address range that can be used to SSH to the EC2 instances
+    Default: 'badge-poser'
+    Description: >
+      Optional - The name of the service being created. It identifies all the resources related to it.
+  ServicePort:
     Type: String
-    MinLength: 9
-    MaxLength: 18
-    Default: 0.0.0.0/0
-    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
-    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
-  LatestAmiId:
-    Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+    Default: '80'
+    Description: >
+      Optional - The listening port of the service.
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: >
+      Mandatory - Specifies the ID of an existing VPC in which to launch your container instances.
+    AllowedPattern: '^(?:vpc-[0-9a-f]{8}|)$'
+    ConstraintDescription: >
+      VPC Id must begin with 'vpc-' or leave blank to have a new VPC created
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: >
+      Mandatory - Specifies the ID of Subnets belongin to the correct VPC.
+  ELBCertificateArn:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ARN of the Certificate.
+  ExecRoleArn:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ARN of the Execution Role for ECS.
+
+  EnvAPPENV:
+    Type: String
+    Default: "prod"
+    Description: Optional - Environment variable for APP_ENV
+  EnvAPPSECRET:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for APP_SECRET
+  EnvAPPXDEBUG:
+    Type: String
+    Default: "0"
+    Description: Optional - Environment variable for APP_XDEBUG
+  EnvAPPXDEBUGHOST:
+    Type: String
+    Default: ""
+    Description: Optional - Environment variable for APP_XDEBUG_HOST
+  EnvREDISURL:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for REDIS_URL
+  EnvGITHUBAUTHMETHOD:
+    Type: String
+    Default: "http_token"
+    Description: Optional - Environment variable for GITHUB_AUTH_METHOD
+  EnvGITHUBUSERNAME:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for GITHUB_USERNAME
+  EnvGITHUBSECRET:
+    Type: String
+    Default: ""
+    Description: Optional - Environment variable for GITHUB_SECRET
+  EnvCIRCLECITOKEN:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for CIRCLE_CI_TOKEN
+  EnvSENTRYDSN:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for SENTRY_DSN
+  EnvBITBUCKETAUTHMETHOD:
+    Type: String
+    Default: "http_password"
+    Description: Optional - Environment variable for BITBUCKET_AUTH_METHOD
+  EnvBITBUCKETSECRET:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for BITBUCKET_SECRET
+  EnvBITBUCKETTOKEN:
+    Type: String
+    Default: ""
+    Description: Mandatory - Environment variable for BITBUCKET_TOKEN
+  EnvTRUSTEDPROXIES:
+    Type: String
+    Default: "127.0.0.1,REMOTE_ADDR"
+    Description: Optional - Environment variable for TRUSTED_PROXIES
+
 Resources:
-  EC2Instance:
-    Type: AWS::EC2::Instance
-    Properties:
-      InstanceType: !Ref 'InstanceType'
-      SecurityGroups: [!Ref 'InstanceSecurityGroup']
-      KeyName: !Ref 'KeyName'
-      ImageId: !Ref 'LatestAmiId'
-  InstanceSecurityGroup:
+
+  # SECURITY GROUP
+  sgelb:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Enable access to SSH, HTTP and HTTPS
+      GroupDescription: badge-poser-elb
+      GroupName: badge-poser-elb
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+          FromPort: 0
+          ToPort: 65535
       SecurityGroupIngress:
-      - IpProtocol: tcp
-        FromPort: 22
-        ToPort: 22
-        CidrIp: !Ref 'SSHLocation'
-      - IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
-        CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp
-        FromPort: 443
-        ToPort: 443
-        CidrIp: 0.0.0.0/0
-Outputs:
-  InstanceId:
-    Description: InstanceId of the newly created EC2 instance
-    Value: !Ref 'EC2Instance'
-  AZ:
-    Description: Availability Zone of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, AvailabilityZone]
-  PublicDNS:
-    Description: Public DNSName of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, PublicDnsName]
-  PublicIP:
-    Description: Public IP address of the newly created EC2 instance
-    Value: !GetAtt [EC2Instance, PublicIp]
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+      VpcId: !Ref 'VpcId'
+  sgecs:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: badge-poser-ecs
+      GroupName: badge-poser-ecs
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+          FromPort: 0
+          ToPort: 65535
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+      VpcId: !Ref 'VpcId'
+  sgredis:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: badge-poser-redis
+      GroupName: badge-poser-redis
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: -1
+          FromPort: 0
+          ToPort: 65535
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 6379
+          ToPort: 6379
+      VpcId: !Ref 'VpcId'
+
+  # CLOUDWATCH LOGS
+  cloudwatchloggroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Join [ '-', [ !Ref 'ServiceName', 'logs']]
+
+  # ELB
+  elb:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    DependsOn:
+    - sgelb
+    Properties:
+        Name: !Join [ '', [ !Ref 'ServiceName', '-elb']]
+        Subnets: !Ref 'Subnets'
+        SecurityGroups:
+        - !Ref 'sgelb'
+
+  # ELB LISTENER
+  elblistener80:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    DependsOn:
+    - elb
+    Properties:
+      DefaultActions:
+        - Type: fixed-response
+          FixedResponseConfig:
+            ContentType: "text/plain"
+            MessageBody: "aws is a teapot"
+            StatusCode: "418"
+      LoadBalancerArn: !Ref 'elb'
+      Port: 80
+      Protocol: HTTP
+
+  elblistener443:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    DependsOn:
+    - elb
+    Properties:
+      DefaultActions:
+        - Type: fixed-response
+          FixedResponseConfig:
+            ContentType: "text/plain"
+            MessageBody: "https teapot"
+            StatusCode: "418"
+      LoadBalancerArn: !Ref 'elb'
+      Port: 443
+      Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-2016-08
+      Certificates:
+        - CertificateArn: !Ref 'ELBCertificateArn'
+
+  # ECS CLUSTER
+  ecscluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'EnvAPPENV' ]]
+
+  # ECS SERVICE
+  ecsservice:
+    Type: 'AWS::ECS::Service'
+    DependsOn:
+    - ecscluster
+    - ecstask
+    - elb
+    - elbtargetgroup
+    Properties:
+      Cluster: !Ref 'ecscluster'
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 15
+      LaunchType: FARGATE
+      LoadBalancers:
+        - ContainerName: !Ref 'ServiceName'
+          ContainerPort: 80
+          TargetGroupArn: !Ref 'elbtargetgroup'
+      ServiceName: !Ref 'ServiceName'
+      TaskDefinition: !Ref 'ecstask'
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: !Ref 'Subnets'
+          SecurityGroups:
+          - !Ref 'sgecs'
+
+  # ECS TASK DEFINITION
+  ecstask:
+    Type: 'AWS::ECS::TaskDefinition'
+    DependsOn:
+    - cloudwatchloggroup
+    Properties:
+      ExecutionRoleArn: !Ref 'ExecRoleArn'
+      ContainerDefinitions:
+        - PortMappings:
+            - HostPort: 80
+              Protocol: tcp
+              ContainerPort: 80
+          Environment:
+          - Name: APP_ENV
+            Value: !Ref 'EnvAPPENV'
+          - Name: APP_SECRET
+            Value: !Ref 'EnvAPPSECRET'
+          - Name: APP_XDEBUG
+            Value: !Ref 'EnvAPPXDEBUG'
+          - Name: APP_XDEBUG_HOST
+            Value: !Ref 'EnvAPPXDEBUGHOST'
+          - Name: REDIS_URL
+            Value: !Ref 'EnvREDISURL'
+          - Name: GITHUB_AUTH_METHOD
+            Value: !Ref 'EnvGITHUBAUTHMETHOD'
+          - Name: GITHUB_USERNAME
+            Value: !Ref 'EnvGITHUBUSERNAME'
+          - Name: GITHUB_SECRET
+            Value: !Ref 'EnvGITHUBSECRET'
+          - Name: CIRCLE_CI_TOKEN
+            Value: !Ref 'EnvCIRCLECITOKEN'
+          - Name: SENTRY_DSN
+            Value: !Ref 'EnvSENTRYDSN'
+          - Name: BITBUCKET_AUTH_METHOD
+            Value: !Ref 'EnvBITBUCKETAUTHMETHOD'
+          - Name: BITBUCKET_SECRET
+            Value: !Ref 'EnvBITBUCKETSECRET'
+          - Name: BITBUCKET_TOKEN
+            Value: !Ref 'EnvBITBUCKETTOKEN'
+          - Name: TRUSTED_PROXIES
+            Value: !Ref 'EnvTRUSTEDPROXIES'
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':latest']]
+          Essential: true
+          Name: !Ref 'ServiceName'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: !Ref 'ServiceName'
+      Memory: '2048'
+      Family: !Ref 'ServiceName'
+      RequiresCompatibilities:
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: '512'
+
+  # ELB TARGET GROUP
+  elbtargetgroup:
+    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    DependsOn:
+    - elb
+    Properties:
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: /
+      HealthCheckPort: 80
+      HealthCheckProtocol: 'HTTP'
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 5
+      Matcher:
+        HttpCode: 200
+      Name: badegposer
+      Port: 80
+      Protocol: 'HTTP'
+      TargetType: ip
+      UnhealthyThresholdCount: 2
+      VpcId: !Ref 'VpcId'
+
+  # ELB LISTENER RULE
+  elblistenerrule80:
+    Type: 'AWS::ElasticLoadBalancingV2::ListenerRule'
+    Properties:
+      Actions:
+      - Type: redirect
+        RedirectConfig:
+          Host: "#{host}"
+          Path: "/#{path}"
+          Port: "443"
+          Protocol: HTTPS
+          Query: "#{query}"
+          StatusCode: HTTP_301
+      Conditions:
+      - Field: path-pattern
+        Values: [/*]
+      ListenerArn: !Ref 'elblistener80'
+      Priority: 1
+  elblistenerrule443:
+    Type: 'AWS::ElasticLoadBalancingV2::ListenerRule'
+    DependsOn:
+    - elblistener443
+    - elbtargetgroup
+    Properties:
+      Actions:
+      - Type: forward
+        TargetGroupArn: !Ref 'elbtargetgroup'
+      Conditions:
+      - Field: path-pattern
+        Values: [/*]
+      ListenerArn: !Ref 'elblistener443'
+      Priority: 1

@@ -1,5 +1,7 @@
 # SYS CONFIGS
 
+![AWS Stack](cloudformation/stack.png)
+
 ## REQUIREMENTS
 
  - Ansible
@@ -7,30 +9,26 @@
 
 ## TOOLS
 
- - [Logz.io](https://app-uk.logz.io/#/dashboard/kibana/discover) (Log Management)
  - [StatusCake](https://app.statuscake.com) (Monitoring)
  - [Sentry.io](https://sentry.io/organizations/pugx) (Application Errors)
 
 ## SETUP
 
 1. Create the AWS CloudFormation Stack using `cloudformation/stack.cf.yaml`.
-1. Once got the Public IP, change the `ansible/inventory` file.
-1. Configure the environment variables in `.env.dist`
-1. Then, provision the instance with:
 
-```bash
-ansible-galaxy install -r ansible/requirements.yml
-ansible-playbook -i inventory ansible/playbooks/setup.yml
+## BUILD BASE IMAGE
+
+```
+aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com
+docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:base -f sys/docker/Dockerfile.base .
+docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:base
 ```
 
 ## DEPLOY
 
-```bash
-ansible-playbook -i inventory ansible/playbooks/deploy.yml
+```
+docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:latest -f sys/docker/Dockerfile .
+docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:latest
 ```
 
-## ROLLBACK
-
-```bash
-ansible-playbook -i inventory ansible/playbooks/rollback.yml
-```
+Then, update the task definition and switch version in the service.
