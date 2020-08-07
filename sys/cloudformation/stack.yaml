@@ -281,7 +281,7 @@ Resources:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Ref 'ServiceName'
-      Memory: '2048'
+      Memory: '512'
       Family: !Ref 'ServiceName'
       RequiresCompatibilities:
         - FARGATE
