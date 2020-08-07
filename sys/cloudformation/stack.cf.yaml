@@ -85,7 +85,7 @@ Parameters:
     Description: Mandatory - Environment variable for BITBUCKET_TOKEN
   EnvTRUSTEDPROXIES:
     Type: String
-    Default: "127.0.0.1,REMOTE_ADDR"
+    Default: "REMOTE_ADDR"
     Description: Optional - Environment variable for TRUSTED_PROXIES
 
 Resources:
@@ -342,3 +342,24 @@ Resources:
         Values: [/*]
       ListenerArn: !Ref 'elblistener443'
       Priority: 1
+
+  # SCHEDULED TASK
+  eventrulecontributorsupdate:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      Name: !Ref 'ServiceName'
+      ScheduleExpression: rate(24 hours)
+      State: ENABLED
+      Targets:
+        - Id: !Ref 'ServiceName'
+          Arn: !GetAtt ecscluster.Arn
+          RoleArn: !Ref 'ExecRoleArn'
+          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"", !Ref 'ServiceName', "\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
+          EcsParameters:
+            TaskDefinitionArn: !Ref 'ecstask'
+            LaunchType: FARGATE
+            NetworkConfiguration:
+              AwsVpcConfiguration:
+                SecurityGroups:
+                  - !Ref 'sgecs'
+                Subnets: !Ref 'Subnets'

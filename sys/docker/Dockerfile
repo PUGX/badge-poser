@@ -20,6 +20,3 @@ RUN composer install --no-dev --no-plugins --no-scripts --optimize-autoloader --
     && yarn add @symfony/webpack-encore --production \
     && yarn add sass-loader@^8.0.0 node-sass --dev \
     && npm run build
-
-# ECS SCHEDULED TASK
-#    && ./bin/console app:contributors:update \
