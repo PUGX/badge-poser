@@ -2,13 +2,9 @@ FROM badge-poser:base
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends nginx \
-    && mkdir -p /data/nginx/cache \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" >> /var/spool/cron/crontabs/root \
-    && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
 
 COPY ./docker/dev/php-fpm/php-ini-overrides.ini /etc/php/7.4/fpm/conf.d/99-overrides.ini
 COPY . /application
