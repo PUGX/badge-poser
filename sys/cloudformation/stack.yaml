@@ -288,6 +288,19 @@ Resources:
       NetworkMode: awsvpc
       Cpu: '512'
 
+  # AUTO SCALING
+  asscalabletarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    DependsOn:
+    - ecsservice
+    Properties:
+      MaxCapacity: 1
+      MinCapacity: 1
+      ResourceId: !Join [ '/', [ 'service', !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'EnvAPPENV' ]], !Ref 'ServiceName' ]]
+      RoleARN: !Ref 'ExecRoleArn'
+      ScalableDimension: 'ecs:service:DesiredCount'
+      ServiceNamespace: 'ecs'
+
   # ELB TARGET GROUP
   elbtargetgroup:
     Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
