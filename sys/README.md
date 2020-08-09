@@ -27,8 +27,9 @@ docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:base
 ## DEPLOY
 
 ```
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:latest -f sys/docker/Dockerfile .
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:latest
+VER=$(date +%s)
+docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER -f sys/docker/Dockerfile .
+docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER
 ```
 
 Then, update the task definition and switch version in the service.
