@@ -30,6 +30,14 @@ Parameters:
     Type: String
     Description: >
       Mandatory - Specifies the ARN of the Execution Role for ECS.
+  EcrImageTagPhp:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ECR Image Tag for PHP-FPM container.
+  EcrImageTagNginx:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ECR Image Tag for nginx container.
 
   EnvAPPENV:
     Type: String
@@ -240,9 +248,9 @@ Resources:
       ExecutionRoleArn: !Ref 'ExecRoleArn'
       ContainerDefinitions:
         - PortMappings:
-            - HostPort: 80
+            - HostPort: 9000
               Protocol: tcp
-              ContainerPort: 80
+              ContainerPort: 9000
           Environment:
           - Name: APP_ENV
             Value: !Ref 'EnvAPPENV'
@@ -272,15 +280,28 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':latest']]
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':php-', !Ref 'EcrImageTagPhp' ]]
           Essential: true
-          Name: !Ref 'ServiceName'
+          Name: phpfpm
           LogConfiguration:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Ref 'ServiceName'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'php' ]]
+        - PortMappings:
+            - HostPort: 80
+              Protocol: tcp
+              ContainerPort: 80
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':nginx-', !Ref 'EcrImageTagNginx' ]]
+          Essential: true
+          Name: nginx
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'nginx' ]]
       Memory: '1024'
       Family: !Ref 'ServiceName'
       RequiresCompatibilities:

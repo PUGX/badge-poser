@@ -1,36 +1,38 @@
-version: '3.7'
-services:
+version: '3.8'
 
-  webserver:
-    image: nginx:alpine
-    container_name: badge-poser-webserver
+services:
+  nginx:
+    build:
+      dockerfile: sys/docker/nginx/Dockerfile
+      context: .
+      network: host
+    container_name: badge-poser-nginx
     working_dir: /application
     depends_on:
-      - php-fpm
+      - phpfpm
     volumes:
       - .:/application:cached
-      - ./docker/dev/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./var/log/nginx/:/var/log/nginx:cached
     ports:
-      - '8001:80'
+      - 8001:80
 
-  php-fpm:
+  phpfpm:
     build:
-      context: docker/dev/php-fpm
+      dockerfile: sys/docker/php/Dockerfile
+      context: .
       network: host
-    container_name: badge-poser-php-fpm
+    container_name: badge-poser-phpfpm
     working_dir: /application
     depends_on:
       - redis
     volumes:
       - .:/application:cached
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
+      - ./sys/php/php-ini-overrides.ini-dev:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
     ports:
-        - "9000"
+      - 9000
 
   node:
     container_name: badge-poser-node
-    image: node:12-alpine
+    image: node:14-alpine
     user: "node"
     volumes:
       - .:/application:cached
@@ -40,4 +42,4 @@ services:
     image: redis:alpine
     container_name: badge-poser-redis
     ports:
-      - "6379:6379"
+      - 6379:6379

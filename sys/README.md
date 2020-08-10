@@ -16,20 +16,19 @@
 
 1. Create the AWS CloudFormation Stack using `cloudformation/stack.cf.yaml`.
 
-## BUILD BASE IMAGE
+## BUILD IMAGES
 
 ```
 aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:base -f sys/docker/Dockerfile.base .
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:base
+
+VER=$(date +%s);
+docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER -f sys/docker/nginx/Dockerfile .
+docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/php/Dockerfile .
+
+docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER
+docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:php-$VER
 ```
 
 ## DEPLOY
 
-```
-VER=$(date +%s)
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER -f sys/docker/Dockerfile .
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER
-```
-
-Then, update the task definition and switch version in the service.
+Update the task definition and switch version in the service.

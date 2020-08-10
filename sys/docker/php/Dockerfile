@@ -1,0 +1,59 @@
+FROM node:14-alpine AS jsbuilder
+
+WORKDIR /application
+
+COPY . /application
+
+RUN apk add --no-cache --virtual frontenddeps \
+       python3 \
+       yarn \
+    && npm install -g --unsafe-perm node-sass \
+    && yarn config set ignore-engines true \
+    && yarn install --production \
+    && yarn add @symfony/webpack-encore --production \
+    && yarn add sass-loader@^8.0.0 node-sass --dev \
+    && npm run build
+
+FROM php:7.4-fpm-alpine
+
+RUN apk add --no-cache --virtual .builddeps \
+        autoconf \
+        g++ \
+        gcc \
+        git \
+        make \
+        unzip \
+        wget \
+    && apk add --no-cache \
+        freetype-dev \
+        icu-dev \
+        jpeg-dev \
+        libpng-dev \
+        libzip-dev \
+        oniguruma-dev \
+        yaml-dev \
+        zlib-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        bcmath \
+        gd \
+        intl \
+        mbstring \
+        opcache \
+        zip \
+    && pecl install msgpack yaml redis \
+    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
+COPY sys/php/php.ini /usr/local/etc/php/php.ini
+COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+
+WORKDIR /application
+
+COPY . /application
+COPY --from=jsbuilder /application/public/build /application/public/build
+
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
+    && php composer.phar install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+    && rm composer.phar \
+    && apk del .builddeps \
+    && php-fpm -t
