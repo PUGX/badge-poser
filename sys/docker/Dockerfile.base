@@ -54,6 +54,13 @@ RUN apt-get -y remove \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends nginx \
+    && addgroup --system --gid 1000 nginx \
+    && adduser --system --disabled-login --ingroup nginx --no-create-home --home /nonexistent --gecos "nginx user" --shell /bin/false --uid 1000 nginx \
+    && mkdir -p /data/nginx/cache /run/php-fpm \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY docker/dev/php-fpm/php-ini-overrides.ini /etc/php/7.4/fpm/conf.d/99-overrides.ini
 COPY sys/docker/start.sh ./
 COPY sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf

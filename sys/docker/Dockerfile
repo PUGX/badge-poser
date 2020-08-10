@@ -1,9 +1,5 @@
 FROM badge-poser:base
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends nginx \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY . /application
 
 RUN composer install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
