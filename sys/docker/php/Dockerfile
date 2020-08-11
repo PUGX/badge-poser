@@ -52,6 +52,10 @@ WORKDIR /application
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
+# REF: https://github.com/api-platform/api-platform/issues/1532
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
+
 RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
     && php composer.phar install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
     && rm composer.phar \

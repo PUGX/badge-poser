@@ -16,6 +16,6 @@
   {"ParameterKey":"Subnets","ParameterValue":""},
   {"ParameterKey":"VpcId","ParameterValue":""},
   {"ParameterKey":"ExecRoleArn","ParameterValue":""},
-  {"ParameterKey":"EcrImageTagPhp","ParameterValue":"1597134729"},
-  {"ParameterKey":"EcrImageTagNginx","ParameterValue":"1597134729"}
+  {"ParameterKey":"EcrImageTagPhp","ParameterValue":"1597184038"},
+  {"ParameterKey":"EcrImageTagNginx","ParameterValue":"1597179667"}
 ]

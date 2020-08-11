@@ -28,7 +28,7 @@ services:
       - .:/application:cached
       - ./sys/php/php-ini-overrides.ini-dev:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
     ports:
-      - 9000
+      - 9000:9000
 
   node:
     container_name: badge-poser-node

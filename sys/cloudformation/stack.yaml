@@ -119,6 +119,9 @@ Resources:
           FromPort: 443
           ToPort: 443
       VpcId: !Ref 'VpcId'
+      Tags:
+        - Key: env
+          Value: badge-poser
   sgecs:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -139,6 +142,9 @@ Resources:
           FromPort: 443
           ToPort: 443
       VpcId: !Ref 'VpcId'
+      Tags:
+        - Key: env
+          Value: badge-poser
   sgredis:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -155,6 +161,9 @@ Resources:
           FromPort: 6379
           ToPort: 6379
       VpcId: !Ref 'VpcId'
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # CLOUDWATCH LOGS
   cloudwatchloggroup:
@@ -168,10 +177,13 @@ Resources:
     DependsOn:
     - sgelb
     Properties:
-        Name: !Join [ '', [ !Ref 'ServiceName', '-elb']]
-        Subnets: !Ref 'Subnets'
-        SecurityGroups:
-        - !Ref 'sgelb'
+      Name: !Join [ '', [ !Ref 'ServiceName', '-elb']]
+      Subnets: !Ref 'Subnets'
+      SecurityGroups:
+      - !Ref 'sgelb'
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # ELB LISTENER
   elblistener80:
@@ -212,6 +224,9 @@ Resources:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'EnvAPPENV' ]]
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # ECS SERVICE
   ecsservice:
@@ -227,7 +242,7 @@ Resources:
       HealthCheckGracePeriodSeconds: 15
       LaunchType: FARGATE
       LoadBalancers:
-        - ContainerName: !Ref 'ServiceName'
+        - ContainerName: nginx
           ContainerPort: 80
           TargetGroupArn: !Ref 'elbtargetgroup'
       ServiceName: !Ref 'ServiceName'
@@ -238,6 +253,9 @@ Resources:
           Subnets: !Ref 'Subnets'
           SecurityGroups:
           - !Ref 'sgecs'
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # ECS TASK DEFINITION
   ecstask:
@@ -280,9 +298,14 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':php-', !Ref 'EcrImageTagPhp' ]]
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm-', !Ref 'EcrImageTagPhp' ]]
           Essential: true
           Name: phpfpm
+          DependsOn:
+            - Condition: START
+              ContainerName: phpfpm
+          Links:
+            - phpfpm
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -308,6 +331,9 @@ Resources:
         - FARGATE
       NetworkMode: awsvpc
       Cpu: '512'
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # AUTO SCALING
   asscalabletarget:
@@ -343,6 +369,9 @@ Resources:
       TargetType: ip
       UnhealthyThresholdCount: 2
       VpcId: !Ref 'VpcId'
+      Tags:
+        - Key: env
+          Value: badge-poser
 
   # ELB LISTENER RULE
   elblistenerrule80:
@@ -381,14 +410,14 @@ Resources:
   eventrulecontributorsupdate:
     Type: 'AWS::Events::Rule'
     Properties:
-      Name: !Ref 'ServiceName'
+      Name: app-contributors-update
       ScheduleExpression: rate(24 hours)
       State: ENABLED
       Targets:
-        - Id: !Ref 'ServiceName'
+        - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
           RoleArn: !Ref 'ExecRoleArn'
-          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"", !Ref 'ServiceName', "\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
+          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
           EcsParameters:
             TaskDefinitionArn: !Ref 'ecstask'
             LaunchType: FARGATE
