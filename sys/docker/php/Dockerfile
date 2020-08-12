@@ -45,6 +45,8 @@ RUN apk add --no-cache --virtual .builddeps \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
+COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /application
@@ -57,7 +59,12 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/co
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
-    && php composer.phar install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
-    && rm composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && /usr/local/bin/composer global require hirak/prestissimo \
+    && /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
     && apk del .builddeps \
-    && php-fpm -t
+    && php-fpm -t \
+    && php-fpm -tt
+
+COPY sys/docker/php/start.sh /application/start.sh
+CMD ["/application/start.sh"]

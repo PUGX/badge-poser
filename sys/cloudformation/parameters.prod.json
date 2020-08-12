@@ -1,4 +1,5 @@
 [
+  {"ParameterKey":"Environment","ParameterValue":"prod"},
   {"ParameterKey":"ELBCertificateArn","ParameterValue":""},
   {"ParameterKey":"EnvAPPENV","ParameterValue":"prod"},
   {"ParameterKey":"EnvAPPSECRET","ParameterValue":""},
@@ -16,6 +17,6 @@
   {"ParameterKey":"Subnets","ParameterValue":""},
   {"ParameterKey":"VpcId","ParameterValue":""},
   {"ParameterKey":"ExecRoleArn","ParameterValue":""},
-  {"ParameterKey":"EcrImageTagPhp","ParameterValue":"1597184038"},
-  {"ParameterKey":"EcrImageTagNginx","ParameterValue":"1597179667"}
+  {"ParameterKey":"EcrImageTagPhp","ParameterValue":"1597231751"},
+  {"ParameterKey":"EcrImageTagNginx","ParameterValue":"1597231751"}
 ]

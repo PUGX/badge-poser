@@ -22,6 +22,10 @@ Parameters:
     Type: List<AWS::EC2::Subnet::Id>
     Description: >
       Mandatory - Specifies the ID of Subnets belongin to the correct VPC.
+  Environment:
+    Type: String
+    Description: >
+      Mandatory - The Environment
   ELBCertificateArn:
     Type: String
     Description: >
@@ -223,7 +227,7 @@ Resources:
   ecscluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'EnvAPPENV' ]]
+      ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'Environment' ]]
       Tags:
         - Key: env
           Value: badge-poser
@@ -242,7 +246,7 @@ Resources:
       HealthCheckGracePeriodSeconds: 15
       LaunchType: FARGATE
       LoadBalancers:
-        - ContainerName: nginx
+        - ContainerName: !Ref 'ServiceName' # nginx
           ContainerPort: 80
           TargetGroupArn: !Ref 'elbtargetgroup'
       ServiceName: !Ref 'ServiceName'
@@ -318,7 +322,7 @@ Resources:
               ContainerPort: 80
           Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':nginx-', !Ref 'EcrImageTagNginx' ]]
           Essential: true
-          Name: nginx
+          Name: !Ref 'ServiceName' # nginx
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -343,7 +347,7 @@ Resources:
     Properties:
       MaxCapacity: 1
       MinCapacity: 1
-      ResourceId: !Join [ '/', [ 'service', !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'EnvAPPENV' ]], !Ref 'ServiceName' ]]
+      ResourceId: !Join [ '/', [ 'service', !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'Environment' ]], !Ref 'ServiceName' ]]
       RoleARN: !Ref 'ExecRoleArn'
       ScalableDimension: 'ecs:service:DesiredCount'
       ServiceNamespace: 'ecs'
@@ -359,7 +363,7 @@ Resources:
       HealthCheckPath: /
       HealthCheckPort: 80
       HealthCheckProtocol: 'HTTP'
-      HealthCheckTimeoutSeconds: 10
+      HealthCheckTimeoutSeconds: 30
       HealthyThresholdCount: 5
       Matcher:
         HttpCode: 200
@@ -401,8 +405,12 @@ Resources:
       - Type: forward
         TargetGroupArn: !Ref 'elbtargetgroup'
       Conditions:
-      - Field: path-pattern
-        Values: [/*]
+        - Field: host-header
+          HostHeaderConfig:
+            Values:
+              - poser.pugx.org
+        - Field: path-pattern
+          Values: [/*]
       ListenerArn: !Ref 'elblistener443'
       Priority: 1
 

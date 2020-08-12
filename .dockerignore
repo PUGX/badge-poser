@@ -1,6 +1,8 @@
-/.env
-/var/cache/
-/var/log/
-/vendor/
-/node_modules/
-/public/build/
+/root/.composer/cache
+/application/.env
+/application/*.md
+/application/.git
+/application/node_modules/
+/application/tests/
+/application/var/cache/
+/application/var/log/
