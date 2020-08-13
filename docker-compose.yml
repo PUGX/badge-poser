@@ -2,11 +2,8 @@ version: '3.8'
 
 services:
   nginx:
-    build:
-      dockerfile: sys/docker/nginx/Dockerfile
-      context: .
-      network: host
     container_name: badge-poser-nginx
+    image: nginx:alpine
     working_dir: /application
     depends_on:
       - phpfpm
@@ -17,7 +14,7 @@ services:
 
   phpfpm:
     build:
-      dockerfile: sys/docker/php/Dockerfile
+      context: docker/dev/php-fpm
       context: .
       network: host
     container_name: badge-poser-phpfpm
@@ -26,13 +23,13 @@ services:
       - redis
     volumes:
       - .:/application:cached
-      - ./sys/php/php-ini-overrides.ini-dev:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
+      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
     ports:
-      - 9000:9000
+      - 9000
 
   node:
     container_name: badge-poser-node
-    image: node:14-alpine
+    image: node:12-alpine
     user: "node"
     volumes:
       - .:/application:cached

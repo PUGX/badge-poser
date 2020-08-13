@@ -1,8 +1,7 @@
-/root/.composer/cache
-/application/.env
-/application/*.md
-/application/.git
-/application/node_modules/
-/application/tests/
-/application/var/cache/
-/application/var/log/
+.env
+*.md
+.git
+node_modules/
+tests/
+var/cache/
+var/log/

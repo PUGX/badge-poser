@@ -34,10 +34,14 @@ Parameters:
     Type: String
     Description: >
       Mandatory - Specifies the ARN of the Execution Role for ECS.
-  EcrImageTag:
+  EcrImageTagPhp:
     Type: String
     Description: >
       Mandatory - Specifies the ECR Image Tag for PHP-FPM container.
+  EcrImageTagNginx:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ECR Image Tag for nginx container.
 
   EnvAPPENV:
     Type: String
@@ -242,7 +246,7 @@ Resources:
       HealthCheckGracePeriodSeconds: 15
       LaunchType: FARGATE
       LoadBalancers:
-        - ContainerName: !Ref 'ServiceName'
+        - ContainerName: !Ref 'ServiceName' # nginx
           ContainerPort: 80
           TargetGroupArn: !Ref 'elbtargetgroup'
       ServiceName: !Ref 'ServiceName'
@@ -266,9 +270,9 @@ Resources:
       ExecutionRoleArn: !Ref 'ExecRoleArn'
       ContainerDefinitions:
         - PortMappings:
-            - HostPort: 80
+            - HostPort: 9000
               Protocol: tcp
-              ContainerPort: 80
+              ContainerPort: 9000
           Environment:
           - Name: APP_ENV
             Value: !Ref 'EnvAPPENV'
@@ -298,15 +302,33 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':', !Ref 'EcrImageTag' ]]
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm-', !Ref 'EcrImageTagPhp' ]]
           Essential: true
-          Name: !Ref 'ServiceName'
+          Name: phpfpm
+          DependsOn:
+            - Condition: START
+              ContainerName: phpfpm
+          Links:
+            - phpfpm
           LogConfiguration:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Ref 'ServiceName'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'php' ]]
+        - PortMappings:
+            - HostPort: 80
+              Protocol: tcp
+              ContainerPort: 80
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':nginx-', !Ref 'EcrImageTagNginx' ]]
+          Essential: true
+          Name: !Ref 'ServiceName' # nginx
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'nginx' ]]
       Memory: '1024'
       Family: !Ref 'ServiceName'
       RequiresCompatibilities:
@@ -341,7 +363,7 @@ Resources:
       HealthCheckPath: /
       HealthCheckPort: 80
       HealthCheckProtocol: 'HTTP'
-      HealthCheckTimeoutSeconds: 10
+      HealthCheckTimeoutSeconds: 30
       HealthyThresholdCount: 5
       Matcher:
         HttpCode: 200
@@ -400,10 +422,10 @@ Resources:
       ScheduleExpression: rate(24 hours)
       State: ENABLED
       Targets:
-        - Id: !Ref 'ServiceName'
+        - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
           RoleArn: !Ref 'ExecRoleArn'
-          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"", !Ref 'ServiceName', "\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
+          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
           EcsParameters:
             TaskDefinitionArn: !Ref 'ecstask'
             LaunchType: FARGATE

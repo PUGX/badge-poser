@@ -18,7 +18,7 @@ FROM nginx:1.19-alpine
 
 WORKDIR /application
 
-COPY sys/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY sys/docker/alpine-nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 

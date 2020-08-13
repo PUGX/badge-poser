@@ -44,10 +44,10 @@ RUN apk add --no-cache --virtual .builddeps \
     && pecl install msgpack yaml redis \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-COPY sys/php/php.ini /usr/local/etc/php/php.ini
-COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY sys/docker/alpine-phpfpm/php.ini /usr/local/etc/php/php.ini
+COPY sys/docker/alpine-phpfpm/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+COPY sys/docker/alpine-phpfpm/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY sys/docker/alpine-phpfpm/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /application
 
@@ -66,5 +66,5 @@ RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93
     && php-fpm -t \
     && php-fpm -tt
 
-COPY sys/docker/php/start.sh /application/start.sh
+COPY sys/docker/alpine-phpfpm/start.sh /application/start.sh
 CMD ["/application/start.sh"]
