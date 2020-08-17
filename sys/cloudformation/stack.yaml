@@ -224,6 +224,9 @@ Resources:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'Environment' ]]
+      CapacityProviders:
+        - FARGATE
+        - FARGATE_SPOT
       Tags:
         - Key: env
           Value: badge-poser
