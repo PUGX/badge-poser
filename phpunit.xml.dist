@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<!-- https://phpunit.readthedocs.io/en/9.3/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.0/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.3/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
@@ -38,8 +38,6 @@
         <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
         <!-- env name="TRUSTED_HOSTS" value="'^localhost|example\.com$'" -->
         <!-- ###- symfony/framework-bundle ### -->
-
-
     </php>
 
     <testsuites>
@@ -48,11 +46,11 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
+    <coverage>
+        <include>
             <directory>./src/</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
