@@ -17,10 +17,9 @@ RUN apt-get update \
         libyaml-dev \
         libzip-dev \
         make \
-        wget \
         zlib1g-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install -j"$(nproc)" \
         bcmath \
         gd \
         intl \
@@ -31,7 +30,7 @@ RUN apt-get update \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
+RUN curl -sL https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer | php -- --quiet \
     && mv composer.phar /usr/local/bin/composer
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \

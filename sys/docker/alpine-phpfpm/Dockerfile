@@ -34,7 +34,7 @@ RUN apk add --no-cache --virtual .builddeps \
         yaml-dev \
         zlib-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
+    && docker-php-ext-install -j"$(nproc)" \
         bcmath \
         gd \
         intl \
