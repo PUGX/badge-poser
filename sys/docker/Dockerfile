@@ -30,8 +30,7 @@ RUN apt-get update \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer | php -- --quiet \
-    && mv composer.phar /usr/local/bin/composer
+COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get -y --no-install-recommends install nodejs \
