@@ -6,7 +6,7 @@ parameters:
     symfony:
         container_xml_path: 'var/cache/test/srcApp_KernelTestDebugContainer.xml'
         constant_hassers: false
-    autoload_files:
+    bootstrapFiles:
         - bin/.phpunit/phpunit-6.5-0/vendor/autoload.php
 includes:
     - phpstan-baseline.neon
