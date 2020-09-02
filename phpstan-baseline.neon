@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method App\\\\Contributors\\\\Service\\\\Repository\\:\\:getContributorsByCache\\(\\) never returns null so it can be removed from the return typehint\\.$#"
-			count: 1
-			path: src/Contributors/Service/Repository.php
-
-		-
 			message: "#^Parameter \\#1 \\$className of method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\) expects class\\-string\\<mixed\\>, string given\\.$#"
 			count: 1
 			path: tests/Badge/Model/UseCase/CreateCircleCiBadgeTest.php
