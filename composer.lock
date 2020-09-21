@@ -985,16 +985,16 @@
         },
         {
             "name": "knplabs/packagist-api",
-            "version": "v1.6.0",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "415e39a61ff584a00af6cec39870d2e1f4cf2f18"
+                "reference": "6194b1a62f16e053bfe7e82c2ad1506235f0325d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/415e39a61ff584a00af6cec39870d2e1f4cf2f18",
-                "reference": "415e39a61ff584a00af6cec39870d2e1f4cf2f18",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/6194b1a62f16e053bfe7e82c2ad1506235f0325d",
+                "reference": "6194b1a62f16e053bfe7e82c2ad1506235f0325d",
                 "shasum": ""
             },
             "require": {
@@ -1034,7 +1034,7 @@
                 "composer",
                 "packagist"
             ],
-            "time": "2020-05-27T16:48:47+00:00"
+            "time": "2020-09-08T15:49:40+00:00"
         },
         {
             "name": "paragonie/random_compat",
