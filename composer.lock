@@ -5632,16 +5632,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.41",
+            "version": "0.12.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "75140de614eeaf67c4ccdce94d970aba8fb7c528"
+                "reference": "9419738e20f0c49757be05d22969c1c44c1dff3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/75140de614eeaf67c4ccdce94d970aba8fb7c528",
-                "reference": "75140de614eeaf67c4ccdce94d970aba8fb7c528",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9419738e20f0c49757be05d22969c1c44c1dff3b",
+                "reference": "9419738e20f0c49757be05d22969c1c44c1dff3b",
                 "shasum": ""
             },
             "require": {
@@ -5684,7 +5684,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-02T10:59:46+00:00"
+            "time": "2020-09-28T09:48:55+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
