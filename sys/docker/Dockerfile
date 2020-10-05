@@ -63,7 +63,10 @@ COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" >> /var/spool/cron/crontabs/root \
     && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
 
-COPY ./docker/dev/php-fpm/php-ini-overrides.ini /etc/php/7.4/fpm/conf.d/99-overrides.ini
+COPY docker/dev/php-fpm/php-ini-overrides.ini /etc/php/7.4/fpm/conf.d/99-overrides.ini
+COPY sys/docker/php.ini /usr/local/etc/php/php.ini
+COPY sys/docker/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY sys/docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY . /application
 
 RUN composer install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
