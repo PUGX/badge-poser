@@ -21,26 +21,47 @@
 ### Stable
 
 ```
-aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com
+ACCOUNT="XXXXXXXXXXXX";
+aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com
 
 VER=$(date +%s);
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER -f sys/docker/Dockerfile .
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER
+docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER -f sys/docker/Dockerfile .
+docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER
 ```
 
 ### Unstable
 
 ```
-aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com
+ACCOUNT="XXXXXXXXXXXX";
+aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com
 
 VER=$(date +%s);
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER -f sys/docker/alpine-nginx/Dockerfile .
-docker build -t XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/alpine-phpfpm/Dockerfile .
+docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER -f sys/docker/alpine-nginx/Dockerfile .
+docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/alpine-phpfpm/Dockerfile .
 
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER
-docker push XXXXXXXXXXXX.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER
+docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER
+docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER
 ```
 
 ## DEPLOY
 
 Update the task definition and switch version in the service.
+
+## TESTING
+
+### Stable
+
+```
+docker run --rm -it --name poser-redis -p 6379:6379 redis:latest
+docker run --rm -it --name poser-all -p8081:80 --env-file=.env --link poser-redis:redis $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:$VER
+npm install artillery
+./node_modules/.bin/artillery run sys/docker/artillery.yml
+```
+
+### Unstable
+
+```
+docker-compose -f sys/docker/docker-compose.test.yml up
+npm install artillery
+./node_modules/.bin/artillery run sys/docker/artillery.yml
+```

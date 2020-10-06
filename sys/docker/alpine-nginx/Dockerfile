@@ -18,8 +18,10 @@ FROM nginx:1.19-alpine
 
 WORKDIR /application
 
+COPY sys/docker/alpine-nginx/nginx.conf /etc/nginx/nginx.conf
 COPY sys/docker/alpine-nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
-RUN mkdir -p /data/nginx/cache
+RUN mkdir -p /data/nginx/cache \
+    && chmod -R 777 /data

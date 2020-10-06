@@ -69,7 +69,7 @@ COPY sys/docker/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY sys/docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY . /application
 
-RUN composer install --no-dev --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+RUN composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
     && yarn config set ignore-engines true \
     && yarn install --production \
     && composer require encore \

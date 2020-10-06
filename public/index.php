@@ -21,11 +21,6 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false
     Request::setTrustedHosts([$trustedHosts]);
 }
 
-// phpcs:disable
-// PHP Code Sniffer: Direct use of $_SERVER Superglobal detected.
-$_SERVER['HTTP_X_FORWARDED_PROTO'] = !empty($_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO']) ? $_SERVER['HTTP_CLOUDFRONT_FORWARDED_PROTO'] : $_SERVER['HTTP_X_FORWARDED_PROTO'];
-// phpcs:enable
-
 $kernel   = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $request  = Request::createFromGlobals();
 $response = $kernel->handle($request);
