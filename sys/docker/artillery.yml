@@ -1,0 +1,47 @@
+config:
+  target: "http://127.0.0.1:8081"
+  tls:
+    rejectUnauthorized: false
+  http:
+    timeout: 20
+  environments:
+    local:
+      target: "http://127.0.0.1:8081"
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: Warm up
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 20
+      name: Ramp up load
+    - duration: 300
+      arrivalRate: 50
+      name: Sustained load
+  variables:
+    packages:
+      - ["asm89/stack-cors", "aws/aws-sdk-php", "brick/math", "clue/stream-filter", "composer/ca-bundle", "composer/package-versions-deprecated", "composer/semver", "composer/xdebug-handler", "dnoegel/php-xdg-base-dir", "doctrine/annotations", "doctrine/cache", "doctrine/collections", "doctrine/common", "doctrine/dbal", "doctrine/event-manager", "doctrine/inflector", "doctrine/instantiator", "doctrine/lexer", "doctrine/orm", "doctrine/persistence", "doctrine/reflection", "dragonmantank/cron-expression", "egulias/email-validator", "fideloper/proxy", "filp/whoops", "firebase/php-jwt", "fzaninotto/faker", "google/auth", "guzzlehttp/guzzle", "guzzlehttp/promises", "guzzlehttp/psr7", "hamcrest/hamcrest-php", "justinrainbow/json-schema", "laminas/laminas-zendframework-bridge", "laravel/framework", "laravel/tinker", "lcobucci/jwt", "league/commonmark", "league/flysystem", "league/mime-type-detection", "mockery/mockery", "monolog/monolog", "mtdowling/jmespath.php", "myclabs/deep-copy", "nesbot/carbon", "nikic/php-parser", "nunomaduro/collision", "opis/closure", "paragonie/random_compat", "phar-io/manifest", "phar-io/version", "php-http/discovery", "php-http/httplug", "php-http/message", "php-http/message-factory", "php-http/promise", "phpdocumentor/reflection-common", "phpdocumentor/reflection-docblock", "phpdocumentor/type-resolver", "phpoption/phpoption", "phpseclib/phpseclib", "phpspec/prophecy", "phpunit/php-code-coverage", "phpunit/php-file-iterator", "phpunit/php-text-template", "phpunit/php-timer", "phpunit/php-token-stream", "phpunit/phpunit", "predis/predis", "psr/cache", "psr/container", "psr/event-dispatcher", "psr/http-client", "psr/http-factory", "psr/http-message", "psr/log", "psr/simple-cache", "psy/psysh", "ralouphie/getallheaders", "ramsey/collection", "ramsey/uuid", "react/promise", "sebastian/code-unit-reverse-lookup", "sebastian/comparator", "sebastian/diff", "sebastian/environment", "sebastian/exporter", "sebastian/global-state", "sebastian/object-enumerator", "sebastian/object-reflector", "sebastian/recursion-context", "sebastian/resource-operations", "sebastian/type", "sebastian/version", "seld/jsonlint", "squizlabs/php_codesniffer", "swiftmailer/swiftmailer", "symfony/browser-kit", "symfony/cache", "symfony/cache-contracts", "symfony/config", "symfony/console", "symfony/css-selector", "symfony/debug", "symfony/dependency-injection", "symfony/deprecation-contracts", "symfony/dom-crawler", "symfony/error-handler", "symfony/event-dispatcher", "symfony/event-dispatcher-contracts", "symfony/filesystem", "symfony/finder", "symfony/http-client-contracts", "symfony/http-foundation", "symfony/http-kernel", "symfony/mime", "symfony/monolog-bundle", "symfony/options-resolver", "symfony/polyfill-ctype", "symfony/polyfill-iconv", "symfony/polyfill-intl-grapheme", "symfony/polyfill-intl-icu", "symfony/polyfill-intl-idn", "symfony/polyfill-intl-normalizer", "symfony/polyfill-mbstring", "symfony/polyfill-php56", "symfony/polyfill-php70", "symfony/polyfill-php72", "symfony/polyfill-php73", "symfony/polyfill-php80", "symfony/polyfill-util", "symfony/process", "symfony/property-access", "symfony/routing", "symfony/serializer", "symfony/service-contracts", "symfony/stopwatch", "symfony/string", "symfony/translation", "symfony/translation-contracts", "symfony/validator", "symfony/var-dumper", "symfony/var-exporter", "symfony/yaml", "theseer/tokenizer", "tijsverkoyen/css-to-inline-styles", "twig/twig", "vlucas/phpdotenv", "voku/portable-ascii", "webmozart/assert"]
+
+scenarios:
+  - flow:
+    - loop:
+      - get:
+          url: "/{{ $loopElement }}/v/stable"
+          gzip: true
+          headers:
+           Host: "poser.local"
+      over: packages
+    - loop:
+      - get:
+          url: "/{{ $loopElement }}/license"
+          gzip: true
+          headers:
+           Host: "poser.local"
+      over: packages
+    - loop:
+      - get:
+          url: "/{{ $loopElement }}/download"
+          gzip: true
+          headers:
+           Host: "poser.local"
+      over: packages

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: 478389220392.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-1601978165
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+    depends_on:
+      - phpfpm
+    ports:
+      - 8081:80
+
+  phpfpm:
+    image: 478389220392.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-1601978165
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+    env_file:
+      - ../../.env
+    depends_on:
+      - redis
+    ports:
+      - 9000
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379

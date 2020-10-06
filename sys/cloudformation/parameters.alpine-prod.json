@@ -1,0 +1,22 @@
+[
+  {"ParameterKey":"Environment","ParameterValue":"prod"},
+  {"ParameterKey":"ELBCertificateArn","ParameterValue":""},
+  {"ParameterKey":"EnvAPPENV","ParameterValue":"prod"},
+  {"ParameterKey":"EnvAPPSECRET","ParameterValue":""},
+  {"ParameterKey":"EnvAPPXDEBUG","ParameterValue":"0"},
+  {"ParameterKey":"EnvBITBUCKETAUTHMETHOD","ParameterValue":"http_password"},
+  {"ParameterKey":"EnvBITBUCKETSECRET","ParameterValue":""},
+  {"ParameterKey":"EnvBITBUCKETTOKEN","ParameterValue":""},
+  {"ParameterKey":"EnvCIRCLECITOKEN","ParameterValue":""},
+  {"ParameterKey":"EnvGITHUBAUTHMETHOD","ParameterValue":"http_token"},
+  {"ParameterKey":"EnvGITHUBUSERNAME","ParameterValue":""},
+  {"ParameterKey":"EnvREDISURL","ParameterValue":""},
+  {"ParameterKey":"EnvSENTRYDSN","ParameterValue":""},
+  {"ParameterKey":"ServiceName","ParameterValue":"badge-poser"},
+  {"ParameterKey":"ServicePort","ParameterValue":"80"},
+  {"ParameterKey":"Subnets","ParameterValue":""},
+  {"ParameterKey":"VpcId","ParameterValue":""},
+  {"ParameterKey":"ExecRoleArn","ParameterValue":""},
+  {"ParameterKey":"EcrImageTagPhp","ParameterValue":"1597231751"},
+  {"ParameterKey":"EcrImageTagNginx","ParameterValue":"1597231751"}
+]

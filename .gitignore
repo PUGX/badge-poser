@@ -25,5 +25,4 @@ yarn-error.log
 
 ###> sys ###
 /sys/.env.dist
-/sys/ansible/inventory
 ###< sys ###
