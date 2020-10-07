@@ -57,11 +57,3 @@ docker run --rm -it --name poser-all -p8081:80 --env-file=.env --link poser-redi
 npm install artillery
 ./node_modules/.bin/artillery run sys/docker/artillery.yml
 ```
-
-### Unstable
-
-```
-docker-compose -f sys/docker/docker-compose.test.yml up
-npm install artillery
-./node_modules/.bin/artillery run sys/docker/artillery.yml
-```

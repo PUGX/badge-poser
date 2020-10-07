@@ -17,6 +17,7 @@ RUN apt-get update \
         libyaml-dev \
         libzip-dev \
         make \
+        unzip \
         zlib1g-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
@@ -30,8 +31,6 @@ RUN apt-get update \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
-
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get -y --no-install-recommends install nodejs \
     && curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
@@ -42,42 +41,44 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && npm rebuild node-sass \
     && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -y remove \
-        git \
-        gcc \
-        g++ \
-        make \
-    && apt-get -y clean \
-    && apt-get -y autoremove \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY sys/docker/start.sh ./
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends nginx \
     && mkdir -p /data/nginx/cache \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
 RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" >> /var/spool/cron/crontabs/root \
     && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
 
-COPY docker/dev/php-fpm/php-ini-overrides.ini /etc/php/7.4/fpm/conf.d/99-overrides.ini
-COPY sys/docker/php.ini /usr/local/etc/php/php.ini
-COPY sys/docker/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY sys/docker/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./sys/php/php-ini-overrides.ini /usr/local/etc/php/conf.d/99-overrides.ini
+COPY ./sys/php/php.ini /usr/local/etc/php/php.ini
+COPY ./sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY ./sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY . /application
 
-RUN composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
+
+RUN rm -rf vendor node_modules \
+    && composer install --optimize-autoloader --no-interaction \
     && yarn config set ignore-engines true \
-    && yarn install --production \
+    && yarn install \
     && composer require encore \
-    && yarn add @symfony/webpack-encore --production \
-    && yarn add sass-loader@^8.0.0 node-sass --dev \
-    && npm run build
+    && yarn add @symfony/webpack-encore \
+    && yarn add sass-loader@^8.0.0 node-sass \
+    && npm run build \
+    && /application/bin/console cache:warmup -e prod
 
 RUN rm -rf /root/.composer /root/.npm /usr/local/share/.cache/yarn \
-    && apt-get -y remove nodejs yarn
+    && apt-get -y remove \
+        g++ \
+        gcc \
+        git \
+        make \
+        nodejs \
+        unzip \
+        yarn \
+    && apt-get -y clean \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/*
 
-CMD ["./start.sh"]
+CMD ["/application/sys/docker/start.sh"]

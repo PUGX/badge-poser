@@ -1,38 +1,64 @@
 version: '3.8'
 
 services:
-  nginx:
-    container_name: badge-poser-nginx
-    image: nginx:alpine
+  app:
+    container_name: badge-poser-app
+    build:
+      dockerfile: sys/docker/Dockerfile
+      context: .
+      network: host
     working_dir: /application
-    depends_on:
-      - phpfpm
     volumes:
       - .:/application:cached
     ports:
       - 8001:80
-
-  phpfpm:
-    build:
-      context: docker/dev/php-fpm
-      network: host
-    container_name: badge-poser-phpfpm
-    working_dir: /application
     depends_on:
       - redis
-    volumes:
-      - .:/application:cached
-      - ./docker/dev/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
-    ports:
-      - 9000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
 
-  node:
-    container_name: badge-poser-node
-    image: node:12-alpine
-    user: "node"
-    volumes:
-      - .:/application:cached
-    working_dir: /application
+#  nginx:
+#    container_name: badge-poser-nginx
+#    build:
+#      dockerfile: sys/docker/alpine-nginx/Dockerfile
+#      context: .
+#      network: host
+#    working_dir: /application
+#    depends_on:
+#      - phpfpm
+#    volumes:
+#      - .:/application:cached
+#    ports:
+#      - 8001:80
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.25'
+#          memory: 128M
+#
+#  phpfpm:
+#    container_name: badge-poser-phpfpm
+#    build:
+#      dockerfile: sys/docker/alpine-phpfpm/Dockerfile
+#      context: .
+#      network: host
+#    working_dir: /application
+#    depends_on:
+#      - redis
+#    volumes:
+#      - .:/application:cached
+#    ports:
+#      - 9000
+#    env_file:
+#      - ./.env
+#    deploy:
+#      resources:
+#        limits:
+#          cpus: '0.5'
+#          memory: 1024M
 
   redis:
     image: redis:alpine
