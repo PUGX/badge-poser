@@ -31,6 +31,10 @@
 
         <env name="CIRCLE_CI_TOKEN" value=""/>
 
+        <env name="BITBUCKET_AUTH_METHOD" value=""/>
+        <env name="BITBUCKET_TOKEN" value=""/>
+        <env name="BITBUCKET_SECRET" value=""/>
+
         <!-- ###+ symfony/framework-bundle ### -->
         <env name="APP_ENV" value="test"/>
         <env name="APP_SECRET" value="6d878195836abc1bd87b92206d7db9d8"/>

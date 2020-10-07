@@ -28,11 +28,11 @@ stop: ## stop docker containers
 	- docker-compose down
 
 install: ## install php and node dependencies
-	- docker-compose exec php-fpm composer install
+	- docker-compose exec phpfpm composer install
 	- docker-compose run --rm node yarn install
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose exec php-fpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --no-suggest --optimize-autoloader
+	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --no-suggest --optimize-autoloader
 	- docker-compose run --rm node yarn install --production
 
 build: ## build assets
@@ -48,13 +48,13 @@ purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
 
 phpunit: ## run suite of tests
-	- docker-compose exec php-fpm ./bin/phpunit
+	- docker-compose exec phpfpm ./bin/phpunit
 
 php_cs_fixer: ## run php-cs-fixer
-	- docker-compose exec php-fpm ./vendor/bin/php-cs-fixer fix -v
+	- docker-compose exec phpfpm ./vendor/bin/php-cs-fixer fix -v
 
 phpstan: ## run phpstan
-	- docker-compose exec php-fpm ./vendor/bin/phpstan analyse
+	- docker-compose exec phpfpm ./vendor/bin/phpstan analyse
 
 analyse: ## run php-cs-fixer and phpstan
 	- make php_cs_fixer

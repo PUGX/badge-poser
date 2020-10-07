@@ -3,10 +3,12 @@ parameters:
     paths:
         - src/
         - tests/
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     symfony:
-        container_xml_path: 'var/cache/test/srcApp_KernelTestDebugContainer.xml'
+        container_xml_path: var/cache/test/srcApp_KernelTestDebugContainer.xml
         constant_hassers: false
-    autoload_files:
-        - bin/.phpunit/phpunit-6.5-0/vendor/autoload.php
+    bootstrapFiles:
+        - bin/.phpunit/phpunit/vendor/autoload.php
 includes:
     - phpstan-baseline.neon

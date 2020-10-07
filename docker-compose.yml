@@ -15,7 +15,6 @@ services:
   phpfpm:
     build:
       context: docker/dev/php-fpm
-      context: .
       network: host
     container_name: badge-poser-phpfpm
     working_dir: /application

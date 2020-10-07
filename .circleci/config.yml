@@ -39,7 +39,7 @@ jobs:
       - restore_cache:
           name: Restore PHP Dependencies Cache
           keys:
-            - v1-php-dependencies-{{ checksum "composer.lock" }}
+            - v2-php-dependencies-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-php-dependencies-
       - run:
@@ -48,7 +48,8 @@ jobs:
       - save_cache:
           paths:
             - ~/app/vendor
-          key: v1-php-dependencies-{{ checksum "composer.lock" }}
+            - ~/app/var
+          key: v2-php-dependencies-{{ checksum "composer.lock" }}
 
   node_dependencies:
     executor: badge_poser_executor
@@ -97,7 +98,7 @@ jobs:
       - restore_cache:
           name: Restore PHP Dependencies Cache
           keys:
-            - v1-php-dependencies-{{ checksum "composer.lock" }}
+            - v2-php-dependencies-{{ checksum "composer.lock" }}
       - run:
           name: checks that the YAML config files contain no syntax errors
           command: ./bin/console lint:yaml config
@@ -108,7 +109,7 @@ jobs:
           name: run php-cs-fixer checks
           command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
 
-  phpunit_and_stan:
+  php_unit_and_stan:
     executor: badge_poser_executor
     steps:
       - restore_cache:
@@ -117,7 +118,7 @@ jobs:
       - restore_cache:
           name: Restore PHP Dependencies Cache
           keys:
-            - v1-php-dependencies-{{ checksum "composer.lock" }}
+            - v2-php-dependencies-{{ checksum "composer.lock" }}
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -153,6 +154,6 @@ workflows:
       - lint_checks:
           requires:
             - php_dependencies
-      - phpunit_and_stan:
+      - php_unit_and_stan:
           requires:
             - precompile_assets
