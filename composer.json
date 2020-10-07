@@ -29,25 +29,25 @@
         "predis/predis": "^1.1",
         "sentry/sentry-symfony": "^3.5",
         "snc/redis-bundle": "^3.2",
-        "symfony/asset": "*",
-        "symfony/console": "*",
+        "symfony/asset": "^4.4",
+        "symfony/console": "^4.4",
         "symfony/flex": "^1.9",
-        "symfony/framework-bundle": "*",
-        "symfony/http-client": "*",
+        "symfony/framework-bundle": "^4.4",
+        "symfony/http-client": "^4.4",
         "symfony/webpack-encore-bundle": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "^4.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "jangregor/phpstan-prophecy": "^0.8.0",
         "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^0.12.25",
-        "phpstan/phpstan-phpunit": "^0.12.8",
-        "phpstan/phpstan-symfony": "^0.12.6",
-        "symfony/browser-kit": "*",
-        "symfony/debug-pack": "*",
-        "symfony/dotenv": "*",
-        "symfony/phpunit-bridge": "*"
+        "phpstan/phpstan": "^0.12.48",
+        "phpstan/phpstan-phpunit": "^0.12.16",
+        "phpstan/phpstan-symfony": "^0.12.8",
+        "symfony/browser-kit": "^4.4",
+        "symfony/debug-pack": "^1.0",
+        "symfony/dotenv": "^4.4",
+        "symfony/phpunit-bridge": "^4.4"
     },
     "config": {
         "preferred-install": {
