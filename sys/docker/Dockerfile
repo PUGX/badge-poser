@@ -50,7 +50,7 @@ RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 sec
     && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
 
 COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./sys/php/php-ini-overrides.ini /usr/local/etc/php/conf.d/99-overrides.ini
+COPY ./sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY ./sys/php/php.ini /usr/local/etc/php/php.ini
 COPY ./sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY ./sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
