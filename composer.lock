@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "badges/poser",
-            "version": "v2.0.1",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/badges/poser.git",
-                "reference": "ded7ae4b6d108275d97e130f37f28b280427e641"
+                "reference": "df0704bfba05a81fbc783c85298f7d84b90a7590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/badges/poser/zipball/ded7ae4b6d108275d97e130f37f28b280427e641",
-                "reference": "ded7ae4b6d108275d97e130f37f28b280427e641",
+                "url": "https://api.github.com/repos/badges/poser/zipball/df0704bfba05a81fbc783c85298f7d84b90a7590",
+                "reference": "df0704bfba05a81fbc783c85298f7d84b90a7590",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-29T15:54:20+00:00"
+            "time": "2020-10-09T08:19:30+00:00"
         },
         {
             "name": "bitbucket/client",
