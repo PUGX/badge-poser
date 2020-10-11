@@ -23,6 +23,11 @@ final class RedisPersister implements PersisterInterface
     private string $keyList;
 
     /** @param Redis<string, Redis> $redis */
+    /*
+     * @todo done in this way, custom args are never used if we want to customize only one of those
+     * (passing null is not feaseable, passing en empty string would result in empty string)
+     * Maybe is better to use ?string as typehint?
+     */
     public function __construct(
         Redis $redis,
         string $keyTotal = self::KEY_TOTAL,
@@ -76,6 +81,7 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
+    // @todo $maxListLength seems to be useless, remove in next major version?
     public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
     {
         $this->redis->zadd($this->keyList, [$repository => \time()]);
@@ -100,8 +106,6 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * Create the yearly key with prefix eg. 'total_2003'.
-     *
-     * @param \DateTime $datetime
      */
     private function createYearlyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -110,8 +114,6 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * Create the monthly key with prefix eg. 'total_2003_11'.
-     *
-     * @param \DateTime $datetime
      */
     private function createMonthlyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -120,8 +122,6 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * Create the daily key with prefix eg. 'total_2003_11_29'.
-     *
-     * @param \DateTime $datetime
      */
     private function createDailyKey(string $prefix, \DateTime $datetime = null): string
     {
@@ -130,11 +130,14 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * format a date.
-     *
-     * @param \DateTime $datetime
      */
     private function formatDate(\DateTime $datetime = null, string $format = 'Y_m_d'): string
     {
+        /*
+         * @todo this condition seems to be always true. There's any reason I'm missing to have $datetime as argument?.
+         * Furthermore, is better to have a provider (dependency) for time control, instead of \DateTime and \time directly
+         * there (tests can be, somehow, affected and fail due to those circumstances)
+         */
         if (null === $datetime) {
             $datetime = new \DateTime('now');
         }
