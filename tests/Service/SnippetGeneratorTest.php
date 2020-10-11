@@ -4,6 +4,7 @@ namespace App\Tests\Service;
 
 use App\Service\SnippetGenerator;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -11,6 +12,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class SnippetGeneratorTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGenerateAllSnippets(): void
     {
         /** @var RouterInterface $router */

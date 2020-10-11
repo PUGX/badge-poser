@@ -57,8 +57,8 @@ class CircleCiClientTest extends TestCase
         $this->assertEquals($responseBuilds->getStatusCode(), 200);
         $content = $responseBuilds->getContent();
         $this->assertNotEmpty($content);
-        $this->assertInternalType('string', $content);
+        $this->assertIsString($content);
         $contentToArray = \json_decode($content, true);
-        $this->assertInternalType('array', $contentToArray);
+        $this->assertIsArray($contentToArray);
     }
 }
