@@ -41,6 +41,6 @@ class LicenseControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('/pugx/badge-poser/license', $crawler->getUri());
+        $this->assertStringContainsString('/pugx/badge-poser/license', $crawler->getUri());
     }
 }

@@ -68,6 +68,6 @@ class DownloadsControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertContains('/pugx/badge-poser/downloads', $crawler->getUri());
+        $this->assertStringContainsString('/pugx/badge-poser/downloads', $crawler->getUri());
     }
 }
