@@ -49,7 +49,8 @@ RUN apt-get update \
 RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" >> /var/spool/cron/crontabs/root \
     && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
 
-COPY ./sys/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./sys/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./sys/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY ./sys/php/php.ini /usr/local/etc/php/php.ini
 COPY ./sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
