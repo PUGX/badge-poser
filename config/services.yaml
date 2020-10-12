@@ -65,6 +65,8 @@ services:
 
     App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
 
+    App\DateProvider\DateTimeProviderInterface: '@App\DateProvider\CurrentDateTimeProvider'
+
     App\Stats\Reader\RedisReader:
         arguments:
           - '@Predis\Client'

@@ -20,7 +20,7 @@ interface PersisterInterface
     /**
      * Add the repository to the list of the latest accessed.
      */
-    public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 10): self;
+    public function addRepositoryToLatestAccessed(string $repository): self;
 
     /**
      * Increment by one the repository accesses type.

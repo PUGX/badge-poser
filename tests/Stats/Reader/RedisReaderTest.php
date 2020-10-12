@@ -39,7 +39,7 @@ class RedisReaderTest extends TestCase
                 'STAT', 'TOTAL', null, 0,
             ],
             [
-                'STAT', 'TOTAL', 'aString', 0, // @todo is this the expected behaviour?
+                'STAT', 'TOTAL', 'aString', 0,
             ],
         ];
     }
