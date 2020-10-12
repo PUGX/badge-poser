@@ -9,6 +9,7 @@ or its latest stable version.
 [![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Downloads](https://poser.pugx.org/pugx/badge-poser/d/total.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![composer.lock available](https://poser.pugx.org/pugx/badge-poser/composerlock)](https://packagist.org/packages/pugx/badge-poser)
+[![codecov](https://codecov.io/gh/PUGX/badge-poser/branch/master/graph/badge.svg)](https://codecov.io/gh/PUGX/badge-poser)
 
 ## How to create your own Badge
 

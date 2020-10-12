@@ -129,7 +129,11 @@ jobs:
             - v1-assets-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: run phpunit tests
-          command: bin/phpunit -d memory_limit=-1 --coverage-html coverage
+          command: bin/phpunit -d memory_limit=-1 --coverage-clover clover.xml
+      - run:
+          name: upload coverage to codecov
+          when: on_success
+          command: bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
           path: coverage
       - run:
