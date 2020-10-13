@@ -2,6 +2,7 @@
 
 namespace App\Stats\Persister;
 
+use App\DateProvider\DateTimeProviderInterface;
 use Predis\Client as Redis;
 
 /**
@@ -17,24 +18,19 @@ final class RedisPersister implements PersisterInterface
 
     /** @var Redis<string, Redis> */
     private Redis $redis;
+    private DateTimeProviderInterface $dateTimeProvider;
     private string $keyTotal;
-    private string $keyPrefix;
     private string $keyHash;
     private string $keyList;
 
     /** @param Redis<string, Redis> $redis */
-    public function __construct(
-        Redis $redis,
-        string $keyTotal = self::KEY_TOTAL,
-        string $keyPrefix = self::KEY_PREFIX,
-        string $keyHash = self::KEY_HASH_NAME,
-        string $keyList = self::KEY_LIST_NAME
-    ) {
+    public function __construct(Redis $redis, DateTimeProviderInterface $dateTimeProvider)
+    {
         $this->redis = $redis;
-        $this->keyPrefix = $keyPrefix;
-        $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
-        $this->keyHash = $this->concatenateKeys($keyPrefix, $keyHash);
-        $this->keyList = $this->concatenateKeys($keyPrefix, $keyList);
+        $this->dateTimeProvider = $dateTimeProvider;
+        $this->keyTotal = $this->concatenateKeys(self::KEY_PREFIX, self::KEY_TOTAL);
+        $this->keyHash = $this->concatenateKeys(self::KEY_PREFIX, self::KEY_HASH_NAME);
+        $this->keyList = $this->concatenateKeys(self::KEY_PREFIX, self::KEY_LIST_NAME);
     }
 
     public function incrementTotalAccess(): PersisterInterface
@@ -76,16 +72,19 @@ final class RedisPersister implements PersisterInterface
         return $this;
     }
 
-    public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
+    public function addRepositoryToLatestAccessed(string $repository): PersisterInterface
     {
-        $this->redis->zadd($this->keyList, [$repository => \time()]);
+        $this->redis->zadd($this->keyList, [$repository => $this->dateTimeProvider->getTime()]);
 
         return $this;
     }
 
     public function addReferer(string $url): PersisterInterface
     {
-        $this->redis->zadd($this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX), [$url => \time()]);
+        $this->redis->zadd(
+            $this->concatenateKeys($this->keyList, self::KEY_REFERER_SUFFIX),
+            [$url => $this->dateTimeProvider->getTime()]
+        );
 
         return $this;
     }
@@ -100,45 +99,25 @@ final class RedisPersister implements PersisterInterface
 
     /**
      * Create the yearly key with prefix eg. 'total_2003'.
-     *
-     * @param \DateTime $datetime
      */
-    private function createYearlyKey(string $prefix, \DateTime $datetime = null): string
+    private function createYearlyKey(string $prefix): string
     {
-        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y'));
+        return \sprintf('%s_%s', $prefix, $this->dateTimeProvider->getDateTime()->format('Y'));
     }
 
     /**
      * Create the monthly key with prefix eg. 'total_2003_11'.
-     *
-     * @param \DateTime $datetime
      */
-    private function createMonthlyKey(string $prefix, \DateTime $datetime = null): string
+    private function createMonthlyKey(string $prefix): string
     {
-        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m'));
+        return \sprintf('%s_%s', $prefix, $this->dateTimeProvider->getDateTime()->format('Y_m'));
     }
 
     /**
      * Create the daily key with prefix eg. 'total_2003_11_29'.
-     *
-     * @param \DateTime $datetime
      */
-    private function createDailyKey(string $prefix, \DateTime $datetime = null): string
+    private function createDailyKey(string $prefix): string
     {
-        return \sprintf('%s_%s', $prefix, $this->formatDate($datetime, 'Y_m_d'));
-    }
-
-    /**
-     * format a date.
-     *
-     * @param \DateTime $datetime
-     */
-    private function formatDate(\DateTime $datetime = null, string $format = 'Y_m_d'): string
-    {
-        if (null === $datetime) {
-            $datetime = new \DateTime('now');
-        }
-
-        return $datetime->format($format);
+        return \sprintf('%s_%s', $prefix, $this->dateTimeProvider->getDateTime()->format('Y_m_d'));
     }
 }

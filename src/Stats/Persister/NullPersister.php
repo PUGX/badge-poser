@@ -46,9 +46,8 @@ final class NullPersister implements PersisterInterface
 
     /**
      * Add the repository to the list of the latest accessed.
-     *S.
      */
-    public function addRepositoryToLatestAccessed(string $repository, int $maxListLength = 50): PersisterInterface
+    public function addRepositoryToLatestAccessed(string $repository): PersisterInterface
     {
         static::$addRepositoryToLatestAccessedCalled = $repository;
 
