@@ -40,7 +40,6 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "jangregor/phpstan-prophecy": "^0.8.0",
-        "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.48",
         "phpstan/phpstan-phpunit": "^0.12.16",
