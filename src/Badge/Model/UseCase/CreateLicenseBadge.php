@@ -33,12 +33,7 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
-    /**
-     * @param string|null $context
-     *
-     * @return mixed|string
-     */
-    protected function prepareText(Package $package, $context = null)
+    protected function prepareText(Package $package, ?string $context): string
     {
         $license = $package->getLicense();
         if (empty($license)) {

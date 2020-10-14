@@ -47,14 +47,12 @@ class PackageRepository implements PackageRepositoryInterface
      */
     public function fetchByRepository(string $repository): Package
     {
-        /** @var ApiPackage $apiPackage */
         $apiPackage = $this->packagistClient->get($repository);
-
-        $repositoryInfo = Repository::createFromRepositoryUrl($apiPackage->getRepository());
-
         if (!$apiPackage instanceof ApiPackage) {
             throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
         }
+
+        $repositoryInfo = Repository::createFromRepositoryUrl($apiPackage->getRepository());
 
         $defaultBranch = $this->clientStrategy->getDefaultBranch($repositoryInfo);
 

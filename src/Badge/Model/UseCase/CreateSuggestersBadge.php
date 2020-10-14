@@ -40,7 +40,7 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
     }
 
-    protected function prepareText(Package $package, ?string $context = null): ?string
+    protected function prepareText(Package $package, ?string $context): string
     {
         $suggesters = $package->getSuggesters();
         if (0 === $suggesters) {

@@ -2,6 +2,9 @@
 
 namespace App\DateProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class CurrentDateTimeProvider implements DateTimeProviderInterface
 {
     public function getDateTime(): \DateTimeInterface

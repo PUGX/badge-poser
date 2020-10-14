@@ -20,7 +20,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
     /** @var array<int, string> */
     private array $allInBadges;
 
-    private ?RouteCollection $routes;
+    private RouteCollection $routes;
 
     private string $packagistRoute;
 
@@ -46,16 +46,19 @@ class SnippetGenerator implements SnippetGeneratorInterface
      */
     public function generateAllSnippets(string $repository): array
     {
+        $repoLink = $this->generateRepositoryLink($repository);
+
         $snippets = [];
         $snippets['all']['markdown'] = '';
 
         foreach ($this->badges as $badge) {
-            $markdown = $this->generateMarkdown($badge, $repository);
+            $img = $this->generateImg($badge, $repository);
+            $markdown = $this->generateMarkdown($badge, $img, $repoLink);
             $snippets['badges'][] = [
                 'name' => $badge['name'],
                 'label' => $badge['label'],
                 'markdown' => $markdown,
-                'img' => $this->generateImg($badge, $repository),
+                'img' => $img,
                 'featured' => \in_array($badge['name'], $this->allInBadges, true),
             ];
 
@@ -74,13 +77,13 @@ class SnippetGenerator implements SnippetGeneratorInterface
      *
      * @throws \Exception
      */
-    private function generateMarkdown(array $badge, string $repository): string
+    private function generateMarkdown(array $badge, string $img, string $repoLink): string
     {
         return \sprintf(
             '[![%s](%s)](%s)',
             $badge['label'],
-            $this->generateImg($badge, $repository),
-            $this->generateRepositoryLink($repository)
+            $img,
+            $repoLink
         );
     }
 
@@ -116,15 +119,14 @@ class SnippetGenerator implements SnippetGeneratorInterface
      */
     private function compileRouteParametersForBadge(array $badge): array
     {
-        $parameters = [];
-        $route = null === $this->routes ? null : $this->routes->get($badge['route']);
-
+        $route = $this->routes->get($badge['route']);
         if (null === $route) {
             throw new \RuntimeException(\sprintf('The route "%s" was not found', $badge['route']));
         }
 
         $routeParameters = \array_keys(\array_merge($route->getDefaults(), $route->getRequirements()));
 
+        $parameters = [];
         foreach ($routeParameters as $routeParameter) {
             if (\array_key_exists($routeParameter, $badge)) {
                 $parameters[$routeParameter] = $badge[$routeParameter];
