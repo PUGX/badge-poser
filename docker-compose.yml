@@ -20,46 +20,6 @@ services:
           cpus: '0.5'
           memory: 1024M
 
-#  nginx:
-#    container_name: badge-poser-nginx
-#    build:
-#      dockerfile: sys/docker/alpine-nginx/Dockerfile
-#      context: .
-#      network: host
-#    working_dir: /application
-#    depends_on:
-#      - phpfpm
-#    volumes:
-#      - .:/application:cached
-#    ports:
-#      - 8001:80
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.25'
-#          memory: 128M
-#
-#  phpfpm:
-#    container_name: badge-poser-phpfpm
-#    build:
-#      dockerfile: sys/docker/alpine-phpfpm/Dockerfile
-#      context: .
-#      network: host
-#    working_dir: /application
-#    depends_on:
-#      - redis
-#    volumes:
-#      - .:/application:cached
-#    ports:
-#      - 9000
-#    env_file:
-#      - ./.env
-#    deploy:
-#      resources:
-#        limits:
-#          cpus: '0.5'
-#          memory: 1024M
-
   redis:
     image: redis:alpine
     container_name: badge-poser-redis

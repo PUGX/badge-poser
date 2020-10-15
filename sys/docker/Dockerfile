@@ -46,8 +46,8 @@ RUN apt-get update \
     && mkdir -p /data/nginx/cache \
     && rm -rf /var/lib/apt/lists/*
 
-RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm" >> /var/spool/cron/crontabs/root \
-    && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' | xargs rm )" >> /var/spool/cron/crontabs/root
+RUN echo "* * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 seconds ago' -print0 | xargs -0 rm -f" >> /var/spool/cron/crontabs/root \
+    && echo "* * * * *", command: "( sleep 30 ; find /data/nginx/cache/ -type f -newermt '30 seconds ago' -print0 | xargs -0 rm -f )" >> /var/spool/cron/crontabs/root
 
 COPY ./sys/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./sys/nginx/default.conf /etc/nginx/conf.d/default.conf
