@@ -26,3 +26,9 @@ yarn-error.log
 ###> sys ###
 /sys/.env.dist
 ###< sys ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+clover.xml
+###< phpunit/phpunit ###

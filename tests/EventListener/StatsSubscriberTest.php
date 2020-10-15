@@ -47,14 +47,10 @@ final class StatsSubscriberTest extends WebTestCase
         $repository = 'pugx/badge-poser';
         $url = 'https://poser.pugx.org';
         $actualPage = 'https://poser.pugx.org/badges';
-        $this->request->expects($this->at(0))
+        $this->request->expects($this->exactly(2))
             ->method('get')
-            ->with('repository')
-            ->willReturn($repository);
-        $this->request->expects($this->at(1))
-            ->method('get')
-            ->with('_route')
-            ->willReturn('route_xyz');
+            ->withConsecutive(['repository'], ['_route'])
+            ->willReturnOnConsecutiveCalls($repository, 'route_xyz');
         $this->request->expects($this->once())
             ->method('getSchemeAndHttpHost')
             ->willReturn($actualPage);
@@ -113,14 +109,10 @@ final class StatsSubscriberTest extends WebTestCase
         $repository = 'pugx/badge-poser';
         $url = 'https://poser.pugx.org/show/phpunit/phpunit/';
         $actualPage = 'https://poser.pugx.org/show/phpunit/phpunit';
-        $this->request->expects($this->at(0))
+        $this->request->expects($this->exactly(2))
             ->method('get')
-            ->with('repository')
-            ->willReturn($repository);
-        $this->request->expects($this->at(1))
-            ->method('get')
-            ->with('_route')
-            ->willReturn('route_xyz');
+            ->withConsecutive(['repository'], ['_route'])
+            ->willReturnOnConsecutiveCalls($repository, 'route_xyz');
         $this->request->expects($this->once())
             ->method('getSchemeAndHttpHost')
             ->willReturn($actualPage);
@@ -175,7 +167,7 @@ final class StatsSubscriberTest extends WebTestCase
         $method = 'boomAction';
         $repository = null;
         $url = 'https://poser.pugx.org';
-        $this->request->expects($this->at(0))
+        $this->request->expects($this->once())
             ->method('get')
             ->with('repository')
             ->willReturn($repository);
@@ -229,15 +221,10 @@ final class StatsSubscriberTest extends WebTestCase
         $method = 'boomAction';
         $repository = 'repository';
         $url = 'https://poser.pugx.org';
-        $this->request->expects($this->at(0))
+        $this->request->expects($this->exactly(2))
             ->method('get')
-            ->with('repository')
-            ->willReturn($repository);
-
-        $this->request->expects($this->at(1))
-            ->method('get')
-            ->with('_route')
-            ->willReturn('home');
+            ->withConsecutive(['repository'], ['_route'])
+            ->willReturnOnConsecutiveCalls($repository, 'home');
 
         // adding referer
         $this->request->headers = $this->getMockBuilder(HeaderBag::class)

@@ -28,8 +28,10 @@ final class TextNormalizerTest extends TestCase
 
     /**
      * @dataProvider getBadNumberToConvert
+     *
+     * @phpstan-param int|string $input
      */
-    public function testNumberToTextConversion(string $input, string $output): void
+    public function testNumberToTextConversion($input, string $output): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -50,8 +52,10 @@ final class TextNormalizerTest extends TestCase
 
     /**
      * @dataProvider getGoodNumberToConvert
+     *
+     * @phpstan-param int|string $input
      */
-    public function testGoodNumberToTextConversion(string $input, string $output): void
+    public function testGoodNumberToTextConversion($input, string $output): void
     {
         $res = $this->normalizer->normalize($input);
         $this->assertEquals($output, $res);

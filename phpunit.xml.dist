@@ -31,7 +31,7 @@
 
         <env name="CIRCLE_CI_TOKEN" value=""/>
 
-        <env name="BITBUCKET_AUTH_METHOD" value=""/>
+        <env name="BITBUCKET_AUTH_METHOD" value="http_password"/>
         <env name="BITBUCKET_TOKEN" value=""/>
         <env name="BITBUCKET_SECRET" value=""/>
 
@@ -52,7 +52,7 @@
 
     <coverage>
         <include>
-            <directory>./src/</directory>
+            <directory suffix=".php">./src/</directory>
         </include>
     </coverage>
 

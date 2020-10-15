@@ -13,16 +13,18 @@ use Bitbucket\Api\Repositories\Users;
 use Bitbucket\Client as BitbucketClient;
 use Github\Api\Repo;
 use Github\Client as GithubClient;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ClientStrategyTest extends TestCase
 {
     /**
-     * @var \Prophecy\Prophecy\ObjectProphecy|GithubClient
+     * @var GithubClient|MockObject
      */
     private $githubClient;
+
     /**
-     * @var \Prophecy\Prophecy\ObjectProphecy|BitbucketClient
+     * @var BitbucketClient|MockObject
      */
     private $bitbucketClient;
 
@@ -35,9 +37,13 @@ class ClientStrategyTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->githubClient = $this->prophesize()->willExtend(GithubClient::class);
-        $this->bitbucketClient = $this->prophesize()->willExtend(BitbucketClient::class);
-        $this->clientStrategy = new ClientStrategy($this->githubClient->reveal(), $this->bitbucketClient->reveal());
+        $this->githubClient = $this->getMockBuilder(GithubClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->bitbucketClient = $this->getMockBuilder(BitbucketClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->clientStrategy = new ClientStrategy($this->githubClient, $this->bitbucketClient);
         $this->username = 'username';
         $this->repositoryName = 'repositoryName';
     }
@@ -46,14 +52,20 @@ class ClientStrategyTest extends TestCase
     {
         $defaultBranch = 'masterGithub';
 
-        $apiInterface = $this->prophesize(Repo::class);
-        $apiInterface->show($this->username, $this->repositoryName)->willReturn(
-            [
+        $apiInterface = $this->getMockBuilder(Repo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $apiInterface->expects($this->once())
+            ->method('show')
+            ->with($this->username, $this->repositoryName)
+            ->willReturn([
                 'default_branch' => $defaultBranch,
-            ]
-        )->shouldBeCalledTimes(1);
+            ]);
 
-        $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
+        $this->githubClient->expects($this->once())
+            ->method('api')
+            ->with('repo')
+            ->willReturn($apiInterface);
         $source = 'github.com';
         $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
             Repository::create($source, $this->username, $this->repositoryName)
@@ -64,19 +76,29 @@ class ClientStrategyTest extends TestCase
     {
         $defaultBranch = 'masterBitbucket';
 
-        $users = $this->prophesize(Users::class);
-        $users->show($this->repositoryName)->willReturn(
-            [
+        $users = $this->getMockBuilder(Users::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $users->expects($this->once())
+            ->method('show')
+            ->with($this->repositoryName)
+            ->willReturn([
                 'mainbranch' => [
                     'name' => $defaultBranch,
                 ],
-            ]
-        )->shouldBeCalledTimes(1);
+            ]);
 
-        $repositories = $this->prophesize(Repositories::class);
-        $repositories->users($this->username)->willReturn($users)->shouldBeCalledTimes(1);
+        $repositories = $this->getMockBuilder(Repositories::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repositories->expects($this->once())
+            ->method('users')
+            ->with($this->username)
+            ->willReturn($users);
 
-        $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
+        $this->bitbucketClient->expects($this->once())
+            ->method('repositories')
+            ->willReturn($repositories);
         $source = 'bitbucket.org';
         $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
             Repository::create($source, $this->username, $this->repositoryName)
@@ -97,10 +119,17 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfEmptyGithubData(): void
     {
-        $apiInterface = $this->prophesize(Repo::class);
-        $apiInterface->show($this->username, $this->repositoryName)->willReturn([])->shouldBeCalledTimes(1);
+        $apiInterface = $this->getMockBuilder(Repo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $apiInterface->expects($this->once())
+            ->method('show')
+            ->with($this->username, $this->repositoryName)->willReturn([]);
 
-        $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
+        $this->githubClient->expects($this->once())
+            ->method('api')
+            ->with('repo')
+            ->willReturn($apiInterface);
         $source = 'github.com';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -113,12 +142,20 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfNotExistDefaultBranchKeyIntoGithubRepository(): void
     {
-        $apiInterface = $this->prophesize(Repo::class);
-        $apiInterface->show($this->username, $this->repositoryName)->willReturn([
-            'foo' => 'bar',
-        ])->shouldBeCalledTimes(1);
+        $apiInterface = $this->getMockBuilder(Repo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $apiInterface->expects($this->once())
+            ->method('show')
+            ->with($this->username, $this->repositoryName)
+            ->willReturn([
+                'foo' => 'bar',
+            ]);
 
-        $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
+        $this->githubClient->expects($this->once())
+            ->method('api')
+            ->with('repo')
+            ->willReturn($apiInterface);
         $source = 'github.com';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -131,12 +168,20 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfDefaultBranchKeyIsNotStringIntoGithubRepository(): void
     {
-        $apiInterface = $this->prophesize(Repo::class);
-        $apiInterface->show($this->username, $this->repositoryName)->willReturn([
-            'foo' => ['bar'],
-        ])->shouldBeCalledTimes(1);
+        $apiInterface = $this->getMockBuilder(Repo::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $apiInterface->expects($this->once())
+            ->method('show')
+            ->with($this->username, $this->repositoryName)
+            ->willReturn([
+                'foo' => ['bar'],
+            ]);
 
-        $this->githubClient->api('repo')->willReturn($apiInterface)->shouldBeCalledTimes(1);
+        $this->githubClient->expects($this->once())
+            ->method('api')
+            ->with('repo')
+            ->willReturn($apiInterface);
         $source = 'github.com';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -149,15 +194,25 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfEmptyBitbucketData(): void
     {
-        $users = $this->prophesize(Users::class);
-        $users->show($this->repositoryName)->willReturn(
-            []
-        )->shouldBeCalledTimes(1);
+        $users = $this->getMockBuilder(Users::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $users->expects($this->once())
+            ->method('show')
+            ->with($this->repositoryName)
+            ->willReturn([]);
 
-        $repositories = $this->prophesize(Repositories::class);
-        $repositories->users($this->username)->willReturn($users)->shouldBeCalledTimes(1);
+        $repositories = $this->getMockBuilder(Repositories::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repositories->expects($this->once())
+            ->method('users')
+            ->with($this->username)
+            ->willReturn($users);
 
-        $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
+        $this->bitbucketClient->expects($this->once())
+            ->method('repositories')
+            ->willReturn($repositories);
         $source = 'bitbucket.org';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -170,15 +225,26 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNoKeyMainBranchBitbucketData(): void
     {
-        $users = $this->prophesize(Users::class);
-        $users->show($this->repositoryName)->willReturn(
-            ['foo' => 'bar']
-        )->shouldBeCalledTimes(1);
+        $users = $this->getMockBuilder(Users::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $users->method('show')
+            ->with($this->repositoryName)
+            ->willReturn([
+                'foo' => 'bar',
+            ]);
 
-        $repositories = $this->prophesize(Repositories::class);
-        $repositories->users($this->username)->willReturn($users)->shouldBeCalledTimes(1);
+        $repositories = $this->getMockBuilder(Repositories::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repositories->expects($this->once())
+            ->method('users')
+            ->with($this->username)
+            ->willReturn($users);
 
-        $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
+        $this->bitbucketClient->expects($this->once())
+            ->method('repositories')
+            ->willReturn($repositories);
         $source = 'bitbucket.org';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -191,15 +257,27 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNoKeyNameBitbucketData(): void
     {
-        $users = $this->prophesize(Users::class);
-        $users->show($this->repositoryName)->willReturn(
-            ['mainbranch' => ['bar']]
-        )->shouldBeCalledTimes(1);
+        $users = $this->getMockBuilder(Users::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $users->expects($this->once())
+            ->method('show')
+            ->with($this->repositoryName)
+            ->willReturn([
+                'mainbranch' => ['bar'],
+            ]);
 
-        $repositories = $this->prophesize(Repositories::class);
-        $repositories->users($this->username)->willReturn($users)->shouldBeCalledTimes(1);
+        $repositories = $this->getMockBuilder(Repositories::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repositories->expects($this->once())
+            ->method('users')
+            ->with($this->username)
+            ->willReturn($users);
 
-        $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
+        $this->bitbucketClient->expects($this->once())
+            ->method('repositories')
+            ->willReturn($repositories);
         $source = 'bitbucket.org';
 
         $this->expectException(RepositoryDataNotValid::class);
@@ -212,19 +290,29 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNNameIsNotStringBitbucketData(): void
     {
-        $users = $this->prophesize(Users::class);
-        $users->show($this->repositoryName)->willReturn(
-            [
+        $users = $this->getMockBuilder(Users::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $users->expects($this->once())
+            ->method('show')
+            ->with($this->repositoryName)
+            ->willReturn([
                 'mainbranch' => [
                     'name' => ['bar'],
                 ],
-            ]
-        )->shouldBeCalledTimes(1);
+            ]);
 
-        $repositories = $this->prophesize(Repositories::class);
-        $repositories->users($this->username)->willReturn($users)->shouldBeCalledTimes(1);
+        $repositories = $this->getMockBuilder(Repositories::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $repositories->expects($this->once())
+            ->method('users')
+            ->with($this->username)
+            ->willReturn($users);
 
-        $this->bitbucketClient->repositories()->willReturn($repositories)->shouldBeCalledTimes(1);
+        $this->bitbucketClient->expects($this->once())
+            ->method('repositories')
+            ->willReturn($repositories);
         $source = 'bitbucket.org';
 
         $this->expectException(RepositoryDataNotValid::class);

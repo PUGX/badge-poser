@@ -13,6 +13,7 @@ namespace App\Badge\Model;
 
 use Packagist\Api\Result\Package as ApiPackage;
 use Packagist\Api\Result\Package\Maintainer;
+use Packagist\Api\Result\Package\Version;
 
 /**
  * Class Package
@@ -59,12 +60,19 @@ class Package
         return $this->getDownloads()->{$statsType}();
     }
 
+    private function comparator(Version $version1, Version $version2): bool
+    {
+        return $version1->getTime() > $version2->getTime();
+    }
+
     /**
      * Set the latest Stable and the latest Unstable version from a Package.
      */
     private function calculateLatestVersions(): self
     {
         $versions = $this->getVersions();
+
+        \usort($versions, [$this, 'comparator']);
 
         foreach ($versions as $name => $version) {
             $currentVersionName = $version->getVersion();
@@ -85,6 +93,7 @@ class Package
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|string[] $license */
                 $license = $version->getLicense();
+
                 $this->setLicense($this->normalizeLicense($license));
             }
         }
@@ -97,7 +106,7 @@ class Package
      *
      * @return array<string, string>|null
      */
-    private function getBranchAliases(ApiPackage\Version $version): ?array
+    private function getBranchAliases(Version $version): ?array
     {
         $extra = $version->getExtra();
         if (null !== $extra && isset($extra['branch-alias']) && \is_array($extra['branch-alias'])) {
@@ -252,7 +261,7 @@ class Package
     }
 
     /**
-     * @return ApiPackage\Version[]
+     * @return Version[]
      */
     public function getVersions(): array
     {
