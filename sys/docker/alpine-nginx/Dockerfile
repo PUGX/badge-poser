@@ -1,4 +1,4 @@
-FROM node:14-alpine AS jsbuilder
+FROM node:14.14.0-alpine3.12 AS jsbuilder
 
 WORKDIR /application
 
@@ -14,12 +14,12 @@ RUN apk add --no-cache --virtual frontenddeps \
     && yarn add sass-loader@^8.0.0 node-sass --dev \
     && npm run build
 
-FROM nginx:1.19-alpine
+FROM nginx:1.19.3-alpine
 
 WORKDIR /application
 
-COPY sys/docker/alpine-nginx/nginx.conf /etc/nginx/nginx.conf
-COPY sys/docker/alpine-nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY sys/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY sys/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
