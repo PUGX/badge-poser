@@ -50,6 +50,8 @@ class DownloadsController extends AbstractController
         $badge = $createDownloadsBadge->createDownloadsBadge($repository, $type, $format);
         $image = $imageFactory->createFromBadge($badge);
 
-        return ResponseFactory::createFromImage($image, 200);
+        $maxage = 60 * 60;
+        $smaxage = 60 * 60;
+        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
     }
 }

@@ -63,8 +63,6 @@ services:
             - '%pugx_badge_badges%'
     App\Service\SnippetGeneratorInterface: '@App\Service\SnippetGenerator'
 
-    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\RedisPersister'
-
     App\DateProvider\DateTimeProviderInterface: '@App\DateProvider\CurrentDateTimeProvider'
 
     App\Stats\Reader\RedisReader:

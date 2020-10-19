@@ -46,6 +46,8 @@ class CircleCiController extends AbstractController
         $badge = $circleCiBadge->createCircleCiBadge($repository, $branch, $format);
         $image = $imageFactory->createFromBadge($badge);
 
-        return ResponseFactory::createFromImage($image, 200);
+        $maxage = 60 * 60;
+        $smaxage = 60 * 60;
+        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
     }
 }
