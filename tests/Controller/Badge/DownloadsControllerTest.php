@@ -23,6 +23,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/downloads');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsTotalAction(): void
@@ -30,6 +33,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/total');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsDailyAction(): void
@@ -37,6 +43,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/daily');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsMonthlyAction(): void
@@ -44,6 +53,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/monthly');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsActionSvgExplicit(): void
@@ -51,6 +63,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/downloads.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsTotalActionSvgExplicit(): void
@@ -58,6 +73,9 @@ class DownloadsControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/d/total.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testDownloadsActionPngRedirectSvg(): void
@@ -69,5 +87,8 @@ class DownloadsControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertStringContainsString('/pugx/badge-poser/downloads', $crawler->getUri());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

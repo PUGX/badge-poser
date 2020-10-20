@@ -23,6 +23,9 @@ class GitAttributesBadgeControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=86400/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testGitAttributesSvgExplicit(): void
@@ -30,5 +33,8 @@ class GitAttributesBadgeControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=86400/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

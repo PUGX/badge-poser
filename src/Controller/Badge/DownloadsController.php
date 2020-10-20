@@ -52,6 +52,7 @@ class DownloadsController extends AbstractController
 
         $maxage = 60 * 60;
         $smaxage = 60 * 60;
+
         return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
     }
 }

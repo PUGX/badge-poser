@@ -52,8 +52,9 @@ class VersionController extends AbstractController
         $badge = $createVersionBadge->{$function}($repository, $format);
         $image = $imageFactory->createFromBadge($badge);
 
-        $maxage = 6 * 60 * 60;
+        $maxage = 60 * 60;
         $smaxage = 6 * 60 * 60;
+
         return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
     }
 }

@@ -46,8 +46,9 @@ class GitAttributesController extends AbstractController
         $badge = $createGitAttributesBadge->createGitAttributesBadge($repository, $format);
         $image = $imageFactory->createFromBadge($badge);
 
-        $maxage = 24 * 60 * 60;
+        $maxage = 60 * 60;
         $smaxage = 24 * 60 * 60;
+
         return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
     }
 }
