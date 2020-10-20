@@ -50,4 +50,6 @@ services:
     ports:
       - 6379:6379
     sysctls:
+      # WARNING: The TCP backlog setting of 511 cannot be enforced because
+      # /proc/sys/net/core/somaxconn is set to the lower value of 128.
       net.core.somaxconn: 511
