@@ -72,8 +72,5 @@ abstract class BaseCreatePackagistImage
         return $this->createBadge($subject, $text, $color, $format);
     }
 
-    /**
-     * @return mixed
-     */
-    abstract protected function prepareText(Package $package, ?string $context = null);
+    abstract protected function prepareText(Package $package, ?string $context): string;
 }

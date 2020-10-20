@@ -162,11 +162,6 @@ class Package
         return $this->latestStableVersion;
     }
 
-    public function hasStableVersion(): bool
-    {
-        return null !== $this->latestStableVersion;
-    }
-
     public function getLatestUnstableVersion(): ?string
     {
         return $this->latestUnstableVersion;
@@ -180,11 +175,6 @@ class Package
     public function getLatestUnstableVersionNormalized(): ?string
     {
         return $this->latestUnstableVersionNormalized;
-    }
-
-    public function hasUnstableVersion(): bool
-    {
-        return null !== $this->latestUnstableVersion;
     }
 
     public function getOriginalObject(): ApiPackage

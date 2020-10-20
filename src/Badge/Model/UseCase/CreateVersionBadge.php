@@ -43,19 +43,16 @@ class CreateVersionBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT_UNSTABLE, self::COLOR_UNSTABLE, $format, 'unstable');
     }
 
-    /**
-     * @param string|null $context
-     *
-     * @return mixed|string
-     */
-    protected function prepareText(Package $package, $context = null)
+    protected function prepareText(Package $package, ?string $context): string
     {
         if ('stable' === $context) {
-            return $package->hasStableVersion() ? $package->getLatestStableVersion() : self::TEXT_NO_STABLE_RELEASE;
+            $latestStblVersion = $package->getLatestStableVersion();
+
+            return $latestStblVersion ? $latestStblVersion : self::TEXT_NO_STABLE_RELEASE;
         }
 
-        if ($package->hasUnstableVersion()) {
-            return $package->getLatestUnstableVersion();
+        if (null !== $latestUnstableVersion = $package->getLatestUnstableVersion()) {
+            return $latestUnstableVersion;
         }
 
         return self::TEXT_NO_STABLE_RELEASE;

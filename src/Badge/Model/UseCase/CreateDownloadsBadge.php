@@ -44,11 +44,9 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @return mixed|string
-     *
      * @throws \InvalidArgumentException
      */
-    protected function prepareText(Package $package, ?string $context = null)
+    protected function prepareText(Package $package, ?string $context): string
     {
         $text = $this->normalizer->normalize($package->getPackageDownloads($context));
         $when = '';

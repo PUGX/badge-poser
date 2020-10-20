@@ -24,7 +24,6 @@ use UnexpectedValueException;
 class CreateErrorBadge
 {
     private const COLOR = 'e05d44';
-    private const SUBJECT = 'error';    // TODO this private constant is unused
     private const ERROR_TEXT_GENERIC = 'generic';
     private const ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     private const ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
@@ -42,7 +41,6 @@ class CreateErrorBadge
      */
     protected function createBadge(Throwable $throwable, string $format): Badge
     {
-        $subject = 'error';
         $status = self::ERROR_TEXT_GENERIC;
         if ($throwable instanceof BadResponseException) {
             $status = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;

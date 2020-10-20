@@ -110,10 +110,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
         );
     }
 
-    /**
-     * @param string|null $context
-     */
-    protected function prepareText(Package $package, $context = null): string
+    protected function prepareText(Package $package, ?string $context): string
     {
         return $this->text;
     }

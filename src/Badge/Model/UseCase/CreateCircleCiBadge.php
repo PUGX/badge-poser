@@ -83,7 +83,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
         return $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format);
     }
 
-    protected function prepareText(Package $package, ?string $context = null): string
+    protected function prepareText(Package $package, ?string $context): string
     {
         return $this->text;
     }

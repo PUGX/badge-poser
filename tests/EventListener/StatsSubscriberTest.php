@@ -4,8 +4,9 @@ namespace App\Tests\EventListener;
 
 use App\EventListener\StatsSubscriber;
 use App\Stats\Persister\PersisterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use stdClass;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -13,15 +14,15 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 /**
  * Class StatsSubscriberTest.
  */
-final class StatsSubscriberTest extends WebTestCase
+final class StatsSubscriberTest extends TestCase
 {
-    /** @var PersisterInterface&\PHPUnit\Framework\MockObject\MockObject */
+    /** @var PersisterInterface&MockObject */
     protected $persister;
 
-    /** @var \PHPUnit\Framework\MockObject\MockObject&ControllerEvent */
+    /** @var MockObject&ControllerEvent */
     protected $controllerEvent;
 
-    /** @var \PHPUnit\Framework\MockObject\MockObject&Request */
+    /** @var MockObject&Request */
     protected $request;
 
     private StatsSubscriber $listener;
@@ -29,13 +30,16 @@ final class StatsSubscriberTest extends WebTestCase
     protected function setUp(): void
     {
         $this->persister = $this->getMockBuilder(PersisterInterface::class)
-            ->disableOriginalConstructor()->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->controllerEvent = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->request = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->listener = new StatsSubscriber($this->persister);
     }
@@ -56,7 +60,6 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn($actualPage);
 
         // adding referer
-        /** @var \PHPUnit\Framework\MockObject\MockObject&\Symfony\Component\HttpFoundation\HeaderBag<mixed> $headers */
         $headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -66,9 +69,11 @@ final class StatsSubscriberTest extends WebTestCase
             ->willReturn($url);
         $this->request->headers = $headers;
 
-        $this->controllerEvent->expects($this->once())->method('getRequest')
+        $this->controllerEvent->expects($this->once())
+            ->method('getRequest')
             ->willReturn($this->request);
-        $this->controllerEvent->expects($this->once())->method('getController')
+        $this->controllerEvent->expects($this->once())
+            ->method('getController')
             ->willReturn([$controller, $method]);
 
         $this->persister
@@ -126,9 +131,11 @@ final class StatsSubscriberTest extends WebTestCase
             ->with('referer')
             ->willReturn($url);
 
-        $this->controllerEvent->expects($this->once())->method('getRequest')
+        $this->controllerEvent->expects($this->once())
+            ->method('getRequest')
             ->willReturn($this->request);
-        $this->controllerEvent->expects($this->once())->method('getController')
+        $this->controllerEvent->expects($this->once())
+            ->method('getController')
             ->willReturn([$controller, $method]);
 
         $this->persister
@@ -180,9 +187,11 @@ final class StatsSubscriberTest extends WebTestCase
             ->method('get')
             ->with('referer');
 
-        $this->controllerEvent->expects($this->once())->method('getRequest')
+        $this->controllerEvent->expects($this->once())
+            ->method('getRequest')
             ->willReturn($this->request);
-        $this->controllerEvent->expects($this->once())->method('getController')
+        $this->controllerEvent->expects($this->once())
+            ->method('getController')
             ->willReturn([$controller, $method]);
 
         $this->persister
@@ -234,9 +243,11 @@ final class StatsSubscriberTest extends WebTestCase
             ->method('get')
             ->with('referer');
 
-        $this->controllerEvent->expects($this->once())->method('getRequest')
+        $this->controllerEvent->expects($this->once())
+            ->method('getRequest')
             ->willReturn($this->request);
-        $this->controllerEvent->expects($this->once())->method('getController')
+        $this->controllerEvent->expects($this->once())
+            ->method('getController')
             ->willReturn([$controller, $method]);
 
         $this->persister
