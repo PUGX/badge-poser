@@ -1,4 +1,4 @@
-FROM node:14-alpine AS jsbuilder
+FROM node:14.14.0-alpine3.12 AS jsbuilder
 
 WORKDIR /application
 
@@ -14,18 +14,18 @@ RUN apk add --no-cache --virtual frontenddeps \
     && yarn add sass-loader@^8.0.0 node-sass --dev \
     && npm run build
 
-FROM php:7.4-fpm-alpine
+FROM php:7.4.11-fpm-alpine3.12
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
         g++ \
         gcc \
-        git \
         make \
         unzip \
         wget \
     && apk add --no-cache \
         freetype-dev \
+        git \
         icu-dev \
         jpeg-dev \
         libpng-dev \
@@ -44,10 +44,10 @@ RUN apk add --no-cache --virtual .builddeps \
     && pecl install msgpack yaml redis \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-COPY sys/docker/alpine-phpfpm/php.ini /usr/local/etc/php/php.ini
-COPY sys/docker/alpine-phpfpm/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-COPY sys/docker/alpine-phpfpm/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY sys/docker/alpine-phpfpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY sys/php/php.ini /usr/local/etc/php/php.ini
+COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /application
 
@@ -66,5 +66,4 @@ RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93
     && php-fpm -t \
     && php-fpm -tt
 
-COPY sys/docker/alpine-phpfpm/start.sh /application/start.sh
-CMD ["/application/start.sh"]
+CMD ["/application/sys/docker/alpine-phpfpm/start.sh"]
