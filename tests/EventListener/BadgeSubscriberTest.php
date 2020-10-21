@@ -3,6 +3,7 @@
 namespace App\Tests\EventListener;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Image;
 use App\Badge\Model\UseCase\CreateErrorBadge;
 use App\Badge\Service\ImageFactory;
@@ -66,15 +67,21 @@ class BadgeSubscriberTest extends TestCase
         $this->event->method('getThrowable')
             ->willReturn($exception);
 
-        $this->errorBadge = $this->getMockBuilder(Badge::class)
+        $this->errorBadge = $this->getMockBuilder(CacheableBadge::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $cacheableErrorBadge = $this->getMockBuilder(CacheableBadge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cacheableErrorBadge->method('getBadge')
+            ->willReturn($this->errorBadge);
 
         $this->useCase = $this->getMockBuilder(CreateErrorBadge::class)
             ->getMock();
         $this->useCase->method('createErrorBadge')
             ->with($exception, 'svg')
-            ->willReturn($this->errorBadge);
+            ->willReturn($cacheableErrorBadge);
 
         $this->img = $this->getMockBuilder(Image::class)
             ->disableOriginalConstructor()

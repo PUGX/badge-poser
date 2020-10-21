@@ -29,7 +29,7 @@ class HomeController extends AbstractController
         /** @var Contributor[] $contributors */
         $contributors = $contributorsRepository->all();
 
-        return $this->render(
+        $response = $this->render(
             'home/index.html.twig',
             [
                 'repository' => $repository,
@@ -39,5 +39,10 @@ class HomeController extends AbstractController
                 'contributors' => $contributors,
             ]
         );
+
+        $response->setMaxAge(6 * 60 * 60);
+        $response->setSharedMaxAge(6 * 60 * 60);
+
+        return $response;
     }
 }

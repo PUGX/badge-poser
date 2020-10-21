@@ -12,6 +12,7 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use InvalidArgumentException;
@@ -32,16 +33,24 @@ abstract class BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', ?string $context = null): Badge
+    protected function createBadgeFromRepository(string $repository, string $subject, string $color, string $format = 'svg', ?string $context = null): CacheableBadge
     {
         try {
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
         } catch (\Exception $e) {
-            return $this->createDefaultBadge($format);
+            return new CacheableBadge(
+                $this->createDefaultBadge($format),
+                CacheableBadge::TTL_ONE_HOUR,
+                CacheableBadge::TTL_ONE_HOUR
+            );
         }
 
-        return $this->createBadge($subject, $text, $color, $format);
+        return new CacheableBadge(
+            $this->createBadge($subject, $text, $color, $format),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_ONE_HOUR
+        );
     }
 
     /**
@@ -63,13 +72,17 @@ abstract class BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    protected function createDefaultBadge(string $format): Badge
+    protected function createDefaultBadge(string $format): CacheableBadge
     {
         $subject = ' - ';
         $text = ' - ';
         $color = '7A7A7A';
 
-        return $this->createBadge($subject, $text, $color, $format);
+        return new CacheableBadge(
+            $this->createBadge($subject, $text, $color, $format),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_ONE_HOUR
+        );
     }
 
     abstract protected function prepareText(Package $package, ?string $context): string;

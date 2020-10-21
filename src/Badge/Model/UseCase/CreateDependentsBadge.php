@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\NormalizerInterface;
@@ -41,9 +41,26 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    public function createDependentsBadge(string $repository, string $format = 'svg'): Badge
+    public function createDependentsBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
+        $badge = $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
+
+        $maxage = CacheableBadge::TTL_ONE_HOUR;
+        $smaxage = CacheableBadge::TTL_SIX_HOURS;
+
+        $subject = $badge->getSubject();
+        $order = \substr($subject, -1);
+        if ('k' === $order) {
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
+        } elseif ('M' === $order) {
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
+        } elseif ('G' === $order) {
+            $smaxage = CacheableBadge::TTL_ONE_DAY;
+        } elseif ('T' === $order) {
+            $smaxage = CacheableBadge::TTL_ONE_DAY;
+        }
+
+        return new CacheableBadge($badge, $maxage, $smaxage);
     }
 
     protected function prepareText(Package $package, ?string $context): string

@@ -47,7 +47,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createStableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge('stable', 'v2.0', '28a3df'), $badge);
     }
@@ -65,7 +65,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createStableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge('stable', 'No Release', '28a3df'), $badge);
     }
@@ -76,7 +76,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->throwException(new \RuntimeException()));
 
-        $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createStableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge(' - ', ' - ', '7A7A7A'), $badge);
     }
@@ -95,7 +95,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge('unstable', 'v2.0', 'e68718'), $badge);
     }
@@ -113,7 +113,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge('unstable', 'No Release', 'e68718'), $badge);
     }
@@ -124,7 +124,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->will($this->throwException(new \RuntimeException()));
 
-        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser')->getBadge();
 
         $this->assertEquals(new Badge(' - ', ' - ', '7A7A7A'), $badge);
     }

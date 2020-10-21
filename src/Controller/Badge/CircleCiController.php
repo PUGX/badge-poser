@@ -11,10 +11,8 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Badge\Service\ImageFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class CircleCiController
  * CircleCi action for badges.
  */
-class CircleCiController extends AbstractController
+class CircleCiController extends AbstractBadgeController
 {
     /**
      * CircleCi action.
@@ -43,12 +41,9 @@ class CircleCiController extends AbstractController
             $format = 'plastic';
         }
 
-        $badge = $circleCiBadge->createCircleCiBadge($repository, $branch, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        $maxage = 60 * 60;
-        $smaxage = 60 * 60;
-
-        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
+        return $this->serveBadge(
+            $imageFactory,
+            $circleCiBadge->createCircleCiBadge($repository, $branch, $format)
+        );
     }
 }

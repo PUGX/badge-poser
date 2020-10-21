@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use InvalidArgumentException;
 
@@ -30,17 +30,25 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createStableBadge(string $repository, string $format = 'svg'): Badge
+    public function createStableBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT_STABLE, self::COLOR_STABLE, $format, 'stable');
+        return new CacheableBadge(
+            $this->createBadgeFromRepository($repository, self::SUBJECT_STABLE, self::COLOR_STABLE, $format, 'stable'),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_SIX_HOURS
+        );
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    public function createUnstableBadge(string $repository, string $format = 'svg'): Badge
+    public function createUnstableBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT_UNSTABLE, self::COLOR_UNSTABLE, $format, 'unstable');
+        return new CacheableBadge(
+            $this->createBadgeFromRepository($repository, self::SUBJECT_UNSTABLE, self::COLOR_UNSTABLE, $format, 'unstable'),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_SIX_HOURS
+        );
     }
 
     protected function prepareText(Package $package, ?string $context): string

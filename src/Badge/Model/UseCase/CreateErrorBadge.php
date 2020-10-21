@@ -12,6 +12,7 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use GuzzleHttp\Exception\BadResponseException;
 use InvalidArgumentException;
 use Throwable;
@@ -31,9 +32,13 @@ class CreateErrorBadge
     /**
      * @throws InvalidArgumentException
      */
-    public function createErrorBadge(Throwable $throwable, string $format): Badge
+    public function createErrorBadge(Throwable $throwable, string $format): CacheableBadge
     {
-        return $this->createBadge($throwable, $format);
+        return new CacheableBadge(
+            $this->createBadge($throwable, $format),
+            CacheableBadge::TTL_NO_CACHE,
+            CacheableBadge::TTL_NO_CACHE
+        );
     }
 
     /**

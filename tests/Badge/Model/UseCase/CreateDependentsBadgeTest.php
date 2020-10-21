@@ -48,7 +48,7 @@ final class CreateDependentsBadgeTest extends TestCase
             ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createDependentsBadge($repository);
+        $badge = $this->useCase->createDependentsBadge($repository)->getBadge();
         $this->assertEquals(CreateDependentsBadge::SUBJECT, $badge->getSubject());
         $this->assertEquals('#'.CreateDependentsBadge::COLOR, $badge->getHexColor());
         $this->assertEquals('1', $badge->getStatus());
@@ -61,7 +61,7 @@ final class CreateDependentsBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createDependentsBadge($repository);
+        $badge = $this->useCase->createDependentsBadge($repository)->getBadge();
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

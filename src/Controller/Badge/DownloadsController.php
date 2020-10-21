@@ -11,11 +11,9 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DownloadsController
  * Download action for badges.
  */
-class DownloadsController extends AbstractController
+class DownloadsController extends AbstractBadgeController
 {
     /**
      * Downloads action.
@@ -47,12 +45,9 @@ class DownloadsController extends AbstractController
             $format = $request->query->get('format');
         }
 
-        $badge = $createDownloadsBadge->createDownloadsBadge($repository, $type, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        $maxage = 60 * 60;
-        $smaxage = 60 * 60;
-
-        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
+        return $this->serveBadge(
+            $imageFactory,
+            $createDownloadsBadge->createDownloadsBadge($repository, $type, $format)
+        );
     }
 }

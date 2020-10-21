@@ -11,17 +11,15 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateGitAttributesBadge;
 use App\Badge\Service\ImageFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class GitAttributesController.
  */
-class GitAttributesController extends AbstractController
+class GitAttributesController extends AbstractBadgeController
 {
     /**
      * .gitAttributes action.
@@ -43,12 +41,9 @@ class GitAttributesController extends AbstractController
             $format = 'plastic';
         }
 
-        $badge = $createGitAttributesBadge->createGitAttributesBadge($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        $maxage = 60 * 60;
-        $smaxage = 24 * 60 * 60;
-
-        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
+        return $this->serveBadge(
+            $imageFactory,
+            $createGitAttributesBadge->createGitAttributesBadge($repository, $format)
+        );
     }
 }

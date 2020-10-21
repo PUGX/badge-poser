@@ -16,7 +16,7 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($error, $format);
+        $badge = $createErrorBadge->createErrorBadge($error, $format)->getBadge();
 
         $this->assertEquals(new Badge((string) $error, 'generic', 'e05d44', $format), $badge);
     }
@@ -30,7 +30,7 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($badResponseEx, $format);
+        $badge = $createErrorBadge->createErrorBadge($badResponseEx, $format)->getBadge();
 
         $this->assertEquals(new Badge((string) $badResponseEx, 'not found?', 'e05d44', $format), $badge);
     }
@@ -42,7 +42,7 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($unexpectedValueEx, $format);
+        $badge = $createErrorBadge->createErrorBadge($unexpectedValueEx, $format)->getBadge();
 
         $this->assertEquals(new Badge((string) $unexpectedValueEx, 'connection', 'e05d44', $format), $badge);
     }

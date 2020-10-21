@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use InvalidArgumentException;
 
@@ -28,9 +28,13 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createLicenseBadge(string $repository, string $format = 'svg'): Badge
+    public function createLicenseBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
+        return new CacheableBadge(
+            $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_ONE_WEEK
+        );
     }
 
     protected function prepareText(Package $package, ?string $context): string

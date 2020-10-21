@@ -11,11 +11,9 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateLicenseBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class LicenseController
  * License action for badges.
  */
-class LicenseController extends AbstractController
+class LicenseController extends AbstractBadgeController
 {
     /**
      * License action.
@@ -45,12 +43,9 @@ class LicenseController extends AbstractController
             $format = $request->query->get('format');
         }
 
-        $badge = $createLicenseBadge->createLicenseBadge($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        $maxage = 60 * 60;
-        $smaxage = 24 * 60 * 60;
-
-        return ResponseFactory::createFromImage($image, 200, $maxage, $smaxage);
+        return $this->serveBadge(
+            $imageFactory,
+            $createLicenseBadge->createLicenseBadge($repository, $format)
+        );
     }
 }

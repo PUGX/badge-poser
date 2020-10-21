@@ -49,7 +49,7 @@ final class CreateDownloadsBadgeTest extends TestCase
 
         $repository = 'PUGX/badge-poser';
 
-        $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
+        $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg')->getBadge();
 
         $this->assertEquals('102 today', $badge->getStatus());
     }
@@ -61,7 +61,7 @@ final class CreateDownloadsBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
+        $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg')->getBadge();
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

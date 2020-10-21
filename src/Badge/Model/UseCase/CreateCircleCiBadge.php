@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Service\CircleCiClientInterface;
@@ -46,7 +46,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
-    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg'): Badge
+    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg'): CacheableBadge
     {
         try {
             //check if the repo exist
@@ -80,7 +80,11 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
             $this->text = self::TEXT_FAILING;
         }
 
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format);
+        return new CacheableBadge(
+            $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format),
+            CacheableBadge::TTL_ONE_HOUR,
+            CacheableBadge::TTL_ONE_HOUR
+        );
     }
 
     protected function prepareText(Package $package, ?string $context): string
