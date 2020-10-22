@@ -48,7 +48,7 @@ final class CreateSuggestersBadgeTest extends TestCase
             ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createSuggestersBadge($repository)->getBadge();
+        $badge = $this->useCase->createSuggestersBadge($repository);
         $this->assertEquals(CreateSuggestersBadge::SUBJECT, $badge->getSubject());
         $this->assertEquals('#'.CreateSuggestersBadge::COLOR, $badge->getHexColor());
         $this->assertEquals('3', $badge->getStatus());
@@ -61,7 +61,7 @@ final class CreateSuggestersBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createSuggestersBadge($repository)->getBadge();
+        $badge = $this->useCase->createSuggestersBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

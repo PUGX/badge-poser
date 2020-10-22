@@ -2,7 +2,7 @@
 
 namespace App\Badge\Service;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\BadgeInterface;
 use App\Badge\Model\Image;
 use PUGX\Poser\Poser;
 
@@ -18,7 +18,7 @@ class ImageFactory
         $this->generator = $generator;
     }
 
-    public function createFromBadge(Badge $badge): Image
+    public function createFromBadge(BadgeInterface $badge): Image
     {
         $content = $this->generator->generate(
             $badge->getSubject(),

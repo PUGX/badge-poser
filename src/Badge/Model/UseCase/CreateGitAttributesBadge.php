@@ -39,6 +39,9 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     private const TIMEOUT_SECONDS = 8;
     private const CONNECT_TIMEOUT_SECONDS = 5;
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_WEEK;
+
     protected string $text = self::GITATTRIBUTES_ERROR;
 
     protected ClientInterface $client;
@@ -102,10 +105,14 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
             $subject = self::SUBJECT;
         }
 
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, $subject, $color, $format),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_ONE_WEEK
+        return $this->createBadgeFromRepository(
+            $repository,
+            $subject,
+            $color,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 

@@ -71,17 +71,11 @@ class BadgeSubscriberTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $cacheableErrorBadge = $this->getMockBuilder(CacheableBadge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $cacheableErrorBadge->method('getBadge')
-            ->willReturn($this->errorBadge);
-
         $this->useCase = $this->getMockBuilder(CreateErrorBadge::class)
             ->getMock();
         $this->useCase->method('createErrorBadge')
             ->with($exception, 'svg')
-            ->willReturn($cacheableErrorBadge);
+            ->willReturn($this->errorBadge);
 
         $this->img = $this->getMockBuilder(Image::class)
             ->disableOriginalConstructor()

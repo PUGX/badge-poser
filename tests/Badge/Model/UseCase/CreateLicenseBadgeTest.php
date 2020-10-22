@@ -48,7 +48,7 @@ final class CreateLicenseBadgeTest extends TestCase
             ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createLicenseBadge($repository)->getBadge();
+        $badge = $this->useCase->createLicenseBadge($repository);
         $this->assertEquals('MIT', $badge->getStatus());
     }
 
@@ -59,7 +59,7 @@ final class CreateLicenseBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createLicenseBadge($repository)->getBadge();
+        $badge = $this->useCase->createLicenseBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

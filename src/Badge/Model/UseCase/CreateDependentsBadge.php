@@ -25,6 +25,9 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
     public const COLOR = '007ec6';
     public const SUBJECT = 'dependents';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     /**
      * @var NormalizerInterface
      */
@@ -43,10 +46,18 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
 
     public function createDependentsBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        $badge = $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
+        $maxage = self::TTL_DEFAULT_MAXAGE;
+        $smaxage = self::TTL_DEFAULT_SMAXAGE;
 
-        $maxage = CacheableBadge::TTL_ONE_HOUR;
-        $smaxage = CacheableBadge::TTL_SIX_HOURS;
+        $badge = $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            self::COLOR,
+            $format,
+            null,
+            $maxage,
+            $smaxage
+        );
 
         $subject = $badge->getSubject();
         $order = \substr($subject, -1);
@@ -60,7 +71,10 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
             $smaxage = CacheableBadge::TTL_ONE_DAY;
         }
 
-        return new CacheableBadge($badge, $maxage, $smaxage);
+        $badge->setMaxAge($maxage);
+        $badge->setSMaxAge($smaxage);
+
+        return $badge;
     }
 
     protected function prepareText(Package $package, ?string $context): string

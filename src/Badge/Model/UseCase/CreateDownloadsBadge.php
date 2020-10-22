@@ -27,6 +27,9 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     private const COLOR = '007ec6';
     private const SUBJECT = 'downloads';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     private NormalizerInterface $normalizer;
 
     public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
@@ -40,10 +43,18 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
      */
     public function createDownloadsBadge(string $repository, string $type, string $format): CacheableBadge
     {
-        $badge = $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format, $type);
+        $maxage = self::TTL_DEFAULT_MAXAGE;
+        $smaxage = self::TTL_DEFAULT_SMAXAGE;
 
-        $maxage = CacheableBadge::TTL_ONE_HOUR;
-        $smaxage = CacheableBadge::TTL_ONE_HOUR;
+        $badge = $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            self::COLOR,
+            $format,
+            $type,
+            $maxage,
+            $smaxage
+        );
 
         $subject = $badge->getSubject();
         $order = \substr($subject, -1);
@@ -57,7 +68,10 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
             $smaxage = CacheableBadge::TTL_ONE_DAY;
         }
 
-        return new CacheableBadge($badge, $maxage, $smaxage);
+        $badge->setMaxAge($maxage);
+        $badge->setSMaxAge($smaxage);
+
+        return $badge;
     }
 
     /**

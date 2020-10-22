@@ -27,15 +27,22 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     private const SUBJECT_UNSTABLE = 'unstable';
     private const TEXT_NO_STABLE_RELEASE = 'No Release';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_SIX_HOURS;
+
     /**
      * @throws InvalidArgumentException
      */
     public function createStableBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, self::SUBJECT_STABLE, self::COLOR_STABLE, $format, 'stable'),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_SIX_HOURS
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT_STABLE,
+            self::COLOR_STABLE,
+            $format,
+            'stable',
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 
@@ -44,10 +51,14 @@ class CreateVersionBadge extends BaseCreatePackagistImage
      */
     public function createUnstableBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, self::SUBJECT_UNSTABLE, self::COLOR_UNSTABLE, $format, 'unstable'),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_SIX_HOURS
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT_UNSTABLE,
+            self::COLOR_UNSTABLE,
+            $format,
+            'unstable',
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 

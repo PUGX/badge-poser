@@ -18,14 +18,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class AbstractBadgeController
+ * Class AbstractBadgeController.
  */
 class AbstractBadgeController extends AbstractController
 {
     public function serveBadge(ImageFactory $imageFactory, CacheableBadge $cacheableBadge): Response
     {
         return ResponseFactory::createFromImage(
-            $imageFactory->createFromBadge($cacheableBadge->getBadge()),
+            $imageFactory->createFromBadge($cacheableBadge),
             Response::HTTP_OK,
             $cacheableBadge->getMaxage(),
             $cacheableBadge->getSMaxAge()

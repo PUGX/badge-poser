@@ -101,7 +101,7 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createComposerLockBadge($repository)->getBadge();
+        $badge = $this->useCase->createComposerLockBadge($repository);
         $this->assertEquals($expected, $badge->getStatus());
     }
 
@@ -129,7 +129,7 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createComposerLockBadge($repository)->getBadge();
+        $badge = $this->useCase->createComposerLockBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

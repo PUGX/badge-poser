@@ -83,7 +83,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createCircleCiBadge($repository)->getBadge();
+        $badge = $this->useCase->createCircleCiBadge($repository);
         $this->assertEquals($expected, $badge->getStatus());
     }
 
@@ -122,7 +122,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createCircleCiBadge($repository)->getBadge();
+        $badge = $this->useCase->createCircleCiBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());
@@ -158,7 +158,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createCircleCiBadge($repository)->getBadge();
+        $badge = $this->useCase->createCircleCiBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());
@@ -194,7 +194,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
-        $badge = $this->useCase->createCircleCiBadge($repository)->getBadge();
+        $badge = $this->useCase->createCircleCiBadge($repository);
 
         $this->assertEquals(' - ', $badge->getSubject());
         $this->assertEquals(' - ', $badge->getStatus());

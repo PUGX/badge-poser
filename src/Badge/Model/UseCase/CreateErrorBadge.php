@@ -12,6 +12,7 @@
 namespace App\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\BadgeInterface;
 use App\Badge\Model\CacheableBadge;
 use GuzzleHttp\Exception\BadResponseException;
 use InvalidArgumentException;
@@ -29,6 +30,9 @@ class CreateErrorBadge
     private const ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
     private const ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_NO_CACHE;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_NO_CACHE;
+
     /**
      * @throws InvalidArgumentException
      */
@@ -36,15 +40,15 @@ class CreateErrorBadge
     {
         return new CacheableBadge(
             $this->createBadge($throwable, $format),
-            CacheableBadge::TTL_NO_CACHE,
-            CacheableBadge::TTL_NO_CACHE
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    protected function createBadge(Throwable $throwable, string $format): Badge
+    protected function createBadge(Throwable $throwable, string $format): BadgeInterface
     {
         $status = self::ERROR_TEXT_GENERIC;
         if ($throwable instanceof BadResponseException) {

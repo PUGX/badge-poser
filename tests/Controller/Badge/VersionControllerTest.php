@@ -22,7 +22,9 @@ class VersionControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version');
+
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
         $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         $this->assertMatchesRegularExpression('/s-maxage=21600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }

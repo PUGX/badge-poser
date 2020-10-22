@@ -25,15 +25,22 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     private const SUBJECT = 'license';
     private const TEXT_NO_LICENSE = 'no';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_WEEK;
+
     /**
      * @throws InvalidArgumentException
      */
     public function createLicenseBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_ONE_WEEK
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            self::COLOR,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 

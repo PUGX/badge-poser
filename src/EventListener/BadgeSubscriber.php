@@ -42,8 +42,8 @@ class BadgeSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $badge = $this->useCase->createErrorBadge($event->getThrowable(), 'svg');
-        $image = $this->imageFactory->createFromBadge($badge);
+        $cacheableBadge = $this->useCase->createErrorBadge($event->getThrowable(), 'svg');
+        $image = $this->imageFactory->createFromBadge($cacheableBadge);
 
         $response = ResponseFactory::createFromImage($image, Response::HTTP_INTERNAL_SERVER_ERROR);
         $event->setResponse($response);

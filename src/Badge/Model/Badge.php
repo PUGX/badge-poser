@@ -14,7 +14,7 @@ namespace App\Badge\Model;
 /**
  * Class Badge.
  */
-class Badge
+class Badge implements BadgeInterface
 {
     private const DEFAULT_FORMAT = 'svg';
     private string $subject;

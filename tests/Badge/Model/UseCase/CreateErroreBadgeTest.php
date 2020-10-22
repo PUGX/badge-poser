@@ -3,6 +3,7 @@
 namespace App\Tests\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\UseCase\CreateErrorBadge;
 use GuzzleHttp\Exception\BadResponseException;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +17,10 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($error, $format)->getBadge();
+        $badge = $createErrorBadge->createErrorBadge($error, $format);
+        $expectedBadge = new CacheableBadge(new Badge((string) $error, 'generic', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals(new Badge((string) $error, 'generic', 'e05d44', $format), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testCreateABadClientResponseErrorBadge(): void
@@ -30,9 +32,10 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($badResponseEx, $format)->getBadge();
+        $badge = $createErrorBadge->createErrorBadge($badResponseEx, $format);
+        $expectedBadge = new CacheableBadge(new Badge((string) $badResponseEx, 'not found?', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals(new Badge((string) $badResponseEx, 'not found?', 'e05d44', $format), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testCreateAClientExceptionErrorBadge(): void
@@ -42,8 +45,9 @@ class CreateErroreBadgeTest extends TestCase
 
         $createErrorBadge = new CreateErrorBadge();
 
-        $badge = $createErrorBadge->createErrorBadge($unexpectedValueEx, $format)->getBadge();
+        $badge = $createErrorBadge->createErrorBadge($unexpectedValueEx, $format);
+        $expectedBadge = new CacheableBadge(new Badge((string) $unexpectedValueEx, 'connection', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals(new Badge((string) $unexpectedValueEx, 'connection', 'e05d44', $format), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 }

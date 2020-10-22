@@ -32,6 +32,9 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     private const TEXT_FAILING = 'failing';
     private const SUBJECT = 'build';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     protected string $text = self::SUBJECT;
 
     protected CircleCiClientInterface $circleCiClient;
@@ -80,10 +83,14 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
             $this->text = self::TEXT_FAILING;
         }
 
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_ONE_HOUR
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            $color,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 

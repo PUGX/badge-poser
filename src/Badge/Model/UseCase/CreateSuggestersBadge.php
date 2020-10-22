@@ -25,6 +25,9 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
     public const COLOR = '007ec6';
     public const SUBJECT = 'suggesters';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_DAY;
+
     private NormalizerInterface $normalizer;
 
     public function __construct(
@@ -37,10 +40,14 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
 
     public function createSuggestersBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return new CacheableBadge(
-            $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format),
-            CacheableBadge::TTL_ONE_HOUR,
-            CacheableBadge::TTL_ONE_DAY
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            self::COLOR,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 
