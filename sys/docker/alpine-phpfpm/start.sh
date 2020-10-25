@@ -1,6 +1,8 @@
 #!/bin/sh
 
 cd /application
-/usr/local/bin/composer dump-env prod
+
+# Only for production
+#/usr/local/bin/composer dump-env prod
 
 php-fpm

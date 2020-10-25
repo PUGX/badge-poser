@@ -35,10 +35,13 @@ Follow [this link](https://circleci.com/account/api) for generate your CircleCI 
 
 ### First Install App
 ```bash
-$ make init
+$ make start
 ```
-
-now you can see the app on [http://localhost:8001](http://localhost:8001)
+Add in `/etc/hosts`
+```console
+127.0.0.1 poser.local
+```
+and now you can see the app on [http://poser.local:8001](http://poser.local:8001)
 
 ### Go away
 ```bash

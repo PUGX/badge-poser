@@ -58,10 +58,9 @@ COPY --from=jsbuilder /application/public/build /application/public/build
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93902cd7576b67264ad91c8a2700e2/web/installer -O - -q | php -- --quiet \
-    && mv composer.phar /usr/local/bin/composer \
-    && /usr/local/bin/composer global require hirak/prestissimo \
-    && /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
+RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
