@@ -33,7 +33,7 @@ Follow [this link](https://circleci.com/account/api) for generate your CircleCI 
 
 ## Manage App with docker-compose
 
-### First Install App
+### Start App
 ```bash
 $ make start
 ```
@@ -46,11 +46,6 @@ and now you can see the app on [http://poser.local:8001](http://poser.local:8001
 ### Go away
 ```bash
 $ make down
-```
-
-### Return to work on App
-```bash
-$ make run
 ```
 
 ### Build assets and remaining in watch
