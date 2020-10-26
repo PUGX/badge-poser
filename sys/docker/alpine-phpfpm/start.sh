@@ -3,6 +3,6 @@
 cd /application
 
 # Only for production
-#/usr/local/bin/composer dump-env prod
+if [[ $APP_ENV == "prod" ]]; then /usr/local/bin/composer dump-env prod; fi
 
 php-fpm
