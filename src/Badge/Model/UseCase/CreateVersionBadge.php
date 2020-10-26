@@ -46,9 +46,9 @@ class CreateVersionBadge extends BaseCreatePackagistImage
     protected function prepareText(Package $package, ?string $context): string
     {
         if ('stable' === $context) {
-            $latestStblVersion = $package->getLatestStableVersion();
+            $latestStableVersion = $package->getLatestStableVersion();
 
-            return $latestStblVersion ? $latestStblVersion : self::TEXT_NO_STABLE_RELEASE;
+            return $latestStableVersion ?: self::TEXT_NO_STABLE_RELEASE;
         }
 
         if (null !== $latestUnstableVersion = $package->getLatestUnstableVersion()) {
