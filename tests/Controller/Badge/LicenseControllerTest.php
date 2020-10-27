@@ -26,7 +26,7 @@ class LicenseControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
         $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=604800/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLicenseActionSvgExplicit(): void
@@ -36,7 +36,7 @@ class LicenseControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=604800/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLicenseActionPngRedirectSvg(): void
@@ -50,6 +50,6 @@ class LicenseControllerTest extends WebTestCase
         $this->assertStringContainsString('/pugx/badge-poser/license', $crawler->getUri());
 
         $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=604800/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

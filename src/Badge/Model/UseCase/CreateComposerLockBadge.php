@@ -39,7 +39,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     private const CONNECT_TIMEOUT_SECONDS = 5;
 
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_DAY;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     protected string $text = self::LOCK_ERROR;
 

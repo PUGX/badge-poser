@@ -26,7 +26,7 @@ class CreateLicenseBadge extends BaseCreatePackagistImage
     private const TEXT_NO_LICENSE = 'no';
 
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_WEEK;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     /**
      * @throws InvalidArgumentException

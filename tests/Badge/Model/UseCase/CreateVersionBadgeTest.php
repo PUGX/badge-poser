@@ -49,7 +49,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
-        $expectedBadge = new CacheableBadge(new Badge('stable', 'v2.0', '28a3df'), 3600, 21600);
+        $expectedBadge = new CacheableBadge(new Badge('stable', 'v2.0', '28a3df'), 3600, 3600);
 
         $this->assertEquals($expectedBadge, $badge);
     }
@@ -68,7 +68,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
-        $expectedBadge = new CacheableBadge(new Badge('stable', 'No Release', '28a3df'), 3600, 21600);
+        $expectedBadge = new CacheableBadge(new Badge('stable', 'No Release', '28a3df'), 3600, 3600);
 
         $this->assertEquals($expectedBadge, $badge);
     }
@@ -100,7 +100,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
-        $expectedBadge = new CacheableBadge(new Badge('unstable', 'v2.0', 'e68718'), 3600, 21600);
+        $expectedBadge = new CacheableBadge(new Badge('unstable', 'v2.0', 'e68718'), 3600, 3600);
 
         $this->assertEquals($expectedBadge, $badge);
     }
@@ -119,7 +119,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
-        $expectedBadge = new CacheableBadge(new Badge('unstable', 'No Release', 'e68718'), 3600, 21600);
+        $expectedBadge = new CacheableBadge(new Badge('unstable', 'No Release', 'e68718'), 3600, 3600);
 
         $this->assertEquals($expectedBadge, $badge);
     }

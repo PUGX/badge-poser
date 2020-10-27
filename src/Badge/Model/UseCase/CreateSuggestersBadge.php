@@ -26,7 +26,7 @@ class CreateSuggestersBadge extends BaseCreatePackagistImage
     public const SUBJECT = 'suggesters';
 
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_DAY;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     private NormalizerInterface $normalizer;
 

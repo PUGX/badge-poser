@@ -59,13 +59,17 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
         $subject = $badge->getSubject();
         $order = \substr($subject, -1);
         if ('k' === $order) {
+            $maxage = CacheableBadge::TTL_ONE_HOUR;
             $smaxage = CacheableBadge::TTL_ONE_HOUR;
         } elseif ('M' === $order) {
+            $maxage = CacheableBadge::TTL_SIX_HOURS;
             $smaxage = CacheableBadge::TTL_SIX_HOURS;
         } elseif ('G' === $order) {
-            $smaxage = CacheableBadge::TTL_TWELVE_HOURS;
+            $maxage = CacheableBadge::TTL_SIX_HOURS;
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
         } elseif ('T' === $order) {
-            $smaxage = CacheableBadge::TTL_ONE_DAY;
+            $maxage = CacheableBadge::TTL_SIX_HOURS;
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
         }
 
         $badge->setMaxAge($maxage);
