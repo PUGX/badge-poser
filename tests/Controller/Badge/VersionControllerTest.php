@@ -22,7 +22,10 @@ class VersionControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version');
+
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
@@ -33,6 +36,7 @@ class VersionControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
@@ -43,6 +47,7 @@ class VersionControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
@@ -51,6 +56,9 @@ class VersionControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/version.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLatestUnstableActionSvgExplicit(): void
@@ -58,6 +66,9 @@ class VersionControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/v/unstable.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLatestStableActionPngRedirectSvg(): void
@@ -69,5 +80,8 @@ class VersionControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertStringContainsString('/pugx/badge-poser/version', $crawler->getUri());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

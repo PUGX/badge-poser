@@ -2,18 +2,16 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateDependentsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DependentsController.
  */
-class DependentsController extends AbstractController
+class DependentsController extends AbstractBadgeController
 {
     /**
      * Dependents action.
@@ -33,9 +31,9 @@ class DependentsController extends AbstractController
             $format = $request->query->get('format');
         }
 
-        $badge = $createDependentsBadge->createDependentsBadge($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        return ResponseFactory::createFromImage($image, 200);
+        return $this->serveBadge(
+            $imageFactory,
+            $createDependentsBadge->createDependentsBadge($repository, $format)
+        );
     }
 }

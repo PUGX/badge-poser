@@ -12,6 +12,7 @@
 namespace App\Tests\Badge\Model\UseCase;
 
 use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateVersionBadge;
@@ -48,8 +49,9 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge('stable', 'v2.0', '28a3df'), 3600, 3600);
 
-        $this->assertEquals(new Badge('stable', 'v2.0', '28a3df'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateNoStableReleaseBadgeWhenNoStableVersionAvailable(): void
@@ -66,8 +68,9 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge('stable', 'No Release', '28a3df'), 3600, 3600);
 
-        $this->assertEquals(new Badge('stable', 'No Release', '28a3df'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateDefaultBadgeOnErrorWhenCreatingLicenseBadge(): void
@@ -77,8 +80,9 @@ final class CreateVersionBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);
 
-        $this->assertEquals(new Badge(' - ', ' - ', '7A7A7A'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateUnstableBadge(): void
@@ -96,8 +100,9 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge('unstable', 'v2.0', 'e68718'), 3600, 3600);
 
-        $this->assertEquals(new Badge('unstable', 'v2.0', 'e68718'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateNoUnstableReleaseBadgeWhenNoUnstableVersionAvailable(): void
@@ -114,8 +119,9 @@ final class CreateVersionBadgeTest extends TestCase
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge('unstable', 'No Release', 'e68718'), 3600, 3600);
 
-        $this->assertEquals(new Badge('unstable', 'No Release', 'e68718'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateDefaultBadgeOnErrorWhenCreatingUnstableReleaseBadge(): void
@@ -125,7 +131,8 @@ final class CreateVersionBadgeTest extends TestCase
             ->will($this->throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
+        $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);
 
-        $this->assertEquals(new Badge(' - ', ' - ', '7A7A7A'), $badge);
+        $this->assertEquals($expectedBadge, $badge);
     }
 }

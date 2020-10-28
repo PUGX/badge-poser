@@ -2,18 +2,16 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateSuggestersBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class SuggestersController.
  */
-class SuggestersController extends AbstractController
+class SuggestersController extends AbstractBadgeController
 {
     /**
      * Suggesters action.
@@ -33,9 +31,9 @@ class SuggestersController extends AbstractController
             $format = $request->query->get('format');
         }
 
-        $badge = $createSuggestersBadge->createSuggestersBadge($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        return ResponseFactory::createFromImage($image, 200);
+        return $this->serveBadge(
+            $imageFactory,
+            $createSuggestersBadge->createSuggestersBadge($repository, $format)
+        );
     }
 }

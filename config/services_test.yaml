@@ -9,7 +9,6 @@ services:
     # test.App\Service\MyService: '@App\Service\MyService'
 
     App\Service\SnippetGeneratorInterface: '@App\Tests\Service\SnippetGeneratorStub'
-    App\Stats\Persister\PersisterInterface: '@App\Stats\Persister\NullPersister'
 
     App\Tests\Service\SnippetGeneratorStub:
         class: App\Tests\Service\SnippetGeneratorStub

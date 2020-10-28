@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\ClientStrategy;
@@ -38,6 +38,9 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     private const TIMEOUT_SECONDS = 8;
     private const CONNECT_TIMEOUT_SECONDS = 5;
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     protected string $text = self::LOCK_ERROR;
 
     protected ClientInterface $client;
@@ -59,7 +62,7 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createComposerLockBadge(string $repository, string $format = 'svg'): Badge
+    public function createComposerLockBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
         try {
             /** @var Package $package */
@@ -100,7 +103,15 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
             $subject = self::SUBJECT;
         }
 
-        return $this->createBadgeFromRepository($repository, $subject, $color, $format);
+        return $this->createBadgeFromRepository(
+            $repository,
+            $subject,
+            $color,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
+        );
     }
 
     protected function prepareText(Package $package, ?string $context): string

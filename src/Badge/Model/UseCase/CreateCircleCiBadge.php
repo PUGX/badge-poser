@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Service\CircleCiClientInterface;
@@ -32,6 +32,9 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
     private const TEXT_FAILING = 'failing';
     private const SUBJECT = 'build';
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     protected string $text = self::SUBJECT;
 
     protected CircleCiClientInterface $circleCiClient;
@@ -46,7 +49,7 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
-    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg'): Badge
+    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg'): CacheableBadge
     {
         try {
             //check if the repo exist
@@ -80,7 +83,15 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
             $this->text = self::TEXT_FAILING;
         }
 
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, $color, $format);
+        return $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            $color,
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
+        );
     }
 
     protected function prepareText(Package $package, ?string $context): string

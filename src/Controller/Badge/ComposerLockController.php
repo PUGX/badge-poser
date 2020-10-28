@@ -11,10 +11,8 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ImageFactory;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use UnexpectedValueException;
@@ -23,7 +21,7 @@ use UnexpectedValueException;
  * Class ComposerLockController
  * Composer-lock action for badges.
  */
-class ComposerLockController extends AbstractController
+class ComposerLockController extends AbstractBadgeController
 {
     /**
      * ComposerLock action.
@@ -46,9 +44,9 @@ class ComposerLockController extends AbstractController
             $format = 'plastic';
         }
 
-        $badge = $composerLockBadge->createComposerLockBadge($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        return ResponseFactory::createFromImage($image, 200);
+        return $this->serveBadge(
+            $imageFactory,
+            $composerLockBadge->createComposerLockBadge($repository, $format)
+        );
     }
 }

@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\ClientStrategy;
@@ -39,6 +39,9 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     private const TIMEOUT_SECONDS = 8;
     private const CONNECT_TIMEOUT_SECONDS = 5;
 
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+
     protected string $text = self::GITATTRIBUTES_ERROR;
 
     protected ClientInterface $client;
@@ -60,7 +63,7 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
      * @throws UnexpectedValueException
      * @throws GuzzleException
      */
-    public function createGitAttributesBadge(string $repository, string $format = 'svg'): Badge
+    public function createGitAttributesBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
         try {
             /** @var Package $package */
@@ -106,7 +109,10 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
             $repository,
             $subject,
             $color,
-            $format
+            $format,
+            null,
+            self::TTL_DEFAULT_MAXAGE,
+            self::TTL_DEFAULT_SMAXAGE
         );
     }
 

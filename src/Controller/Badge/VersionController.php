@@ -11,11 +11,9 @@
 
 namespace App\Controller\Badge;
 
-use App\Badge\Infrastructure\ResponseFactory;
 use App\Badge\Model\UseCase\CreateVersionBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class VersionController
  * Version action for badges.
  */
-class VersionController extends AbstractController
+class VersionController extends AbstractBadgeController
 {
     /**
      * Version action.
@@ -49,9 +47,9 @@ class VersionController extends AbstractController
 
         $function = 'create'.\ucfirst($latest).'Badge';
 
-        $badge = $createVersionBadge->{$function}($repository, $format);
-        $image = $imageFactory->createFromBadge($badge);
-
-        return ResponseFactory::createFromImage($image, 200);
+        return $this->serveBadge(
+            $imageFactory,
+            $createVersionBadge->{$function}($repository, $format)
+        );
     }
 }

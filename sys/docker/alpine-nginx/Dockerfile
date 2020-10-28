@@ -14,12 +14,13 @@ RUN apk add --no-cache --virtual frontenddeps \
     && yarn add sass-loader@^8.0.0 node-sass --dev \
     && npm run build
 
-FROM nginx:1.19.3-alpine
+FROM fabiocicerchia/nginx-lua:1.19.3-alpine3.12.0
 
 WORKDIR /application
 
 COPY sys/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY sys/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY sys/nginx/lua /etc/nginx/conf.d/lua
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 

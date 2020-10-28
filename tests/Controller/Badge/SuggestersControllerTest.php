@@ -24,6 +24,9 @@ class SuggestersControllerTest extends WebTestCase
 
         $client->request('GET', '/pugx/badge-poser/suggesters');
         $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testSuggestersActionSvgExplicit(): void
@@ -31,5 +34,8 @@ class SuggestersControllerTest extends WebTestCase
         $client = static::createClient();
         $client->request('GET', '/pugx/badge-poser/suggesters.svg');
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

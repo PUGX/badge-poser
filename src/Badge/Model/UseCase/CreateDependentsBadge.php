@@ -11,7 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\NormalizerInterface;
@@ -24,6 +24,9 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
 {
     public const COLOR = '007ec6';
     public const SUBJECT = 'dependents';
+
+    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     /**
      * @var NormalizerInterface
@@ -41,9 +44,37 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    public function createDependentsBadge(string $repository, string $format = 'svg'): Badge
+    public function createDependentsBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
-        return $this->createBadgeFromRepository($repository, self::SUBJECT, self::COLOR, $format);
+        $maxage = self::TTL_DEFAULT_MAXAGE;
+        $smaxage = self::TTL_DEFAULT_SMAXAGE;
+
+        $badge = $this->createBadgeFromRepository(
+            $repository,
+            self::SUBJECT,
+            self::COLOR,
+            $format,
+            null,
+            $maxage,
+            $smaxage
+        );
+
+        $subject = $badge->getSubject();
+        $order = \substr($subject, -1);
+        if ('k' === $order) {
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
+        } elseif ('M' === $order) {
+            $smaxage = CacheableBadge::TTL_SIX_HOURS;
+        } elseif ('G' === $order) {
+            $smaxage = CacheableBadge::TTL_ONE_DAY;
+        } elseif ('T' === $order) {
+            $smaxage = CacheableBadge::TTL_ONE_DAY;
+        }
+
+        $badge->setMaxAge($maxage);
+        $badge->setSMaxAge($smaxage);
+
+        return $badge;
     }
 
     protected function prepareText(Package $package, ?string $context): string

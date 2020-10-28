@@ -2,7 +2,7 @@
 
 namespace App\Tests\EventListener;
 
-use App\Badge\Model\Badge;
+use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Image;
 use App\Badge\Model\UseCase\CreateErrorBadge;
 use App\Badge\Service\ImageFactory;
@@ -27,7 +27,7 @@ class BadgeSubscriberTest extends TestCase
     private $event;
 
     /**
-     * @var Badge&MockObject
+     * @var CacheableBadge&MockObject
      */
     private $errorBadge;
 
@@ -66,7 +66,7 @@ class BadgeSubscriberTest extends TestCase
         $this->event->method('getThrowable')
             ->willReturn($exception);
 
-        $this->errorBadge = $this->getMockBuilder(Badge::class)
+        $this->errorBadge = $this->getMockBuilder(CacheableBadge::class)
             ->disableOriginalConstructor()
             ->getMock();
 
