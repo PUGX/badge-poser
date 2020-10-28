@@ -2,7 +2,6 @@
 
 namespace App\Tests\EventListener;
 
-use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Image;
 use App\Badge\Model\UseCase\CreateErrorBadge;
@@ -28,7 +27,7 @@ class BadgeSubscriberTest extends TestCase
     private $event;
 
     /**
-     * @var Badge&MockObject
+     * @var CacheableBadge&MockObject
      */
     private $errorBadge;
 

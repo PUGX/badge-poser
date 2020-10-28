@@ -22,23 +22,23 @@ class CircleCiControllerTest extends WebTestCase
     {
         $this->markTestSkipped('Temporarly skipped due to a problem with the access key');
 
-        $client = static::createClient();
-        $client->request('GET', '/pugx/badge-poser/circleci');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        // $client = static::createClient();
+        // $client->request('GET', '/pugx/badge-poser/circleci');
+        // $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testCircleCiForBranch(): void
     {
         $this->markTestSkipped('Temporarly skipped due to a problem with the access key');
 
-        $client = static::createClient();
-        $client->request('GET', '/pugx/badge-poser/circleci/release/v3.0.0');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        // $client = static::createClient();
+        // $client->request('GET', '/pugx/badge-poser/circleci/release/v3.0.0');
+        // $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

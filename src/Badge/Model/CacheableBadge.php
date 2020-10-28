@@ -23,11 +23,11 @@ class CacheableBadge implements BadgeInterface
     const TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
     const TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
 
-    private $badge;
-    private $maxage;
-    private $smaxage;
+    private BadgeInterface $badge;
+    private int $maxage;
+    private int $smaxage;
 
-    public function __construct(Badge $badge, int $maxage, int $smaxage)
+    public function __construct(BadgeInterface $badge, int $maxage, int $smaxage)
     {
         $this->badge = $badge;
         $this->maxage = $maxage;
