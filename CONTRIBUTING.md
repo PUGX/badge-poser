@@ -35,7 +35,7 @@ Follow [this link](https://circleci.com/account/api) for generate your CircleCI 
 
 ### Start App
 ```bash
-$ make start
+$ make run
 ```
 Add in `/etc/hosts`
 ```console

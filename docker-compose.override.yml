@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - phpfpm
+    volumes:
+      - .:/application:cached
+      - ./sys/nginx/dev/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./var/log/nginx/:/var/log/nginx:cached
+    ports:
+      - '8001:80'
+
+
+  phpfpm:
+    build:
+      context: .
+      dockerfile: sys/docker/alpine-phpfpm/dev/Dockerfile
+    volumes:
+      - .:/application:cached
+      - ./sys/php/dev/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini:ro
+
+
+  node:
+    container_name: badge-poser-node
+    image: node:12-alpine
+    user: "node"
+    volumes:
+      - .:/application:cached
+    working_dir: /application
+
+
+  redis:

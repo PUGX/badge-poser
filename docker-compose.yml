@@ -40,7 +40,7 @@ services:
       - 9000:9000
     volumes:
       - .:/application:cached
-      - ./sys/php/php.ini-dev:/usr/local/etc/php/php.ini:ro
+      - ./sys/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./sys/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
     working_dir: /application
 
