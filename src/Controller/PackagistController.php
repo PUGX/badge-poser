@@ -32,7 +32,7 @@ class PackagistController extends AbstractController
 
         /** @var PackagistResult $package */
         foreach ($packagistResponse as $num => $package) {
-            if ($num > $max) {
+            if ($num >= $max) {
                 break;
             }
             $responseContent[] = ['id' => $package->getName(), 'description' => $package->getDescription()];
