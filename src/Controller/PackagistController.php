@@ -26,11 +26,15 @@ class PackagistController extends AbstractController
     {
         $responseContent = [];
         $packageName = $request->query->get('name');
+        $max = $request->query->getInt('max', 10);
 
         $packagistResponse = $packagistClient->search($packageName);
 
         /** @var PackagistResult $package */
-        foreach ($packagistResponse as $package) {
+        foreach ($packagistResponse as $num => $package) {
+            if ($num >= $max) {
+                break;
+            }
             $responseContent[] = ['id' => $package->getName(), 'description' => $package->getDescription()];
         }
 

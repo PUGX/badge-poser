@@ -27,4 +27,16 @@ class PackagistControllerTest extends WebTestCase
 
         $this->assertEquals($expectedData, $responseContent);
     }
+
+    public function testLimitedSearch(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/search_packagist?name=symfony');
+
+        self::assertTrue($client->getResponse()->isSuccessful());
+
+        $responseContent = \json_decode((string) $client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+        self::assertCount(10, $responseContent);
+    }
 }
