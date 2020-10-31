@@ -7,15 +7,19 @@ namespace App\Contributors\Model;
  */
 class Contributor
 {
+    private const DEFAULT_IMG_SIZE = 160;
+
     private string $username;
     private string $profileUrl;
     private string $profileImg;
+    private int $size;
 
-    private function __construct(string $username, string $profileUrl, string $profileImg)
+    private function __construct(string $username, string $profileUrl, string $profileImg, int $size = self::DEFAULT_IMG_SIZE)
     {
         $this->username = $username;
         $this->profileUrl = $profileUrl;
         $this->profileImg = $profileImg;
+        $this->size = $size;
     }
 
     public static function create(string $username, string $profileUrl, string $profileImg): self
@@ -35,7 +39,7 @@ class Contributor
 
     public function getProfileImg(): string
     {
-        return $this->profileImg;
+        return $this->profileImg.'?s='.$this->size;
     }
 
     public function __toString()

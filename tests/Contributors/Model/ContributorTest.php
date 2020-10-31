@@ -17,7 +17,7 @@ class ContributorTest extends TestCase
         $this->assertInstanceOf(Contributor::class, $contributor);
         $this->assertEquals('JellyBellyDev', $contributor->getUsername());
         $this->assertEquals('http://profileUrl', $contributor->getProfileUrl());
-        $this->assertEquals('http://profileImg', $contributor->getProfileImg());
+        $this->assertEquals('http://profileImg?s=160', $contributor->getProfileImg());
     }
 
     public function testToString(): void

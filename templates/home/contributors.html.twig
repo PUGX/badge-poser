@@ -6,7 +6,7 @@
             {% for contributor in contributors %}
             <a href="{{ contributor.profileUrl }}" target="_blank" rel="noopener noreferrer" class="col-4 col-md-2">
                 <div class="card bg-dark text-white">
-                    <img class="card-img" src="{{ contributor.profileImg }}" alt="{{ contributor.username}} ">
+                    <img class="card-img" src="{{ contributor.profileImg }}" alt="{{ contributor.username}}" loading="lazy">
                     <div class="card-overlay">
                         <span>{{ contributor.username }}</span>
                     </div>
