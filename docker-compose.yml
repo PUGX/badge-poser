@@ -14,10 +14,8 @@ services:
         limits:
           cpus: '0.25'
           memory: 128M
-    environment:
-      - REDIS_HOST=redis
-      - PHPFPM_HOST=phpfpm
-      - RESOLVER_IP=127.0.0.11
+    env_file:
+      - ./.env
     ports:
       - 8001:80
     volumes:
