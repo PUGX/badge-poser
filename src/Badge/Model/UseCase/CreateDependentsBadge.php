@@ -59,7 +59,7 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
             $smaxage
         );
 
-        $status = trim($badge->getStatus());
+        $status = \trim($badge->getStatus());
         $order = \substr($status, -1);
         if ('k' === $order) {
             $smaxage = CacheableBadge::TTL_SIX_HOURS;

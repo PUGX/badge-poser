@@ -84,7 +84,7 @@ server {
 
         # local = phpfpm
         # aws = 127.0.0.1
-        fastcgi_pass ${FASTCGI_PASS_HOST}:9000;
+        fastcgi_pass ${PHPFPM_HOST}:9000;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
