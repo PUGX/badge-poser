@@ -6,13 +6,6 @@ log_format custom '$remote_addr - $remote_user [$time_local] '
                   '"$http_referer" "$http_user_agent" "$gzip_ratio" '
                   'CACHE[$request_method-$scheme://$host$request_uri]:$skip_cache:$upstream_cache_status';
 
-map $host $upstream {
-    default       "127.0.0.1";
-
-    "localhost"   "phpfpm";
-    "poser.local" "phpfpm";
-}
-
 init_by_lua_file '/etc/nginx/conf.d/lua/init.lua';
 
 server {
@@ -26,12 +19,14 @@ server {
     if ($query_string != "") { set $skip_cache 1; }
 
     fastcgi_cache cached_badges;
-    fastcgi_cache_bypass $skip_cache;
-    fastcgi_cache_background_update on;
     fastcgi_cache_key "$request_method-$scheme://$host$request_uri";
-    fastcgi_cache_use_stale updating error timeout invalid_header http_500 http_503;
-    fastcgi_cache_valid 200 30s;
+    fastcgi_cache_bypass $skip_cache;
     fastcgi_no_cache $skip_cache;
+    fastcgi_cache_min_uses 1; # generates cache for each obj
+    fastcgi_cache_revalidate on;
+    fastcgi_cache_background_update on; # serve a STALE while refreshing content, next req will be HIT
+    fastcgi_cache_use_stale updating error timeout invalid_header http_500 http_503; # when "updating" serves a STALE resp
+    fastcgi_cache_valid 200 3600s;
     add_header X-FastCGI-Cache $upstream_cache_status;
 
     gzip on;
@@ -43,6 +38,11 @@ server {
         expires 365d;
     }
 
+    # local = 127.0.0.11
+    # aws = 169.254.169.253
+    resolver ${RESOLVER_IP} ipv6=off;
+    resolver_timeout 2s;
+
     access_log /proc/self/fd/1 custom;
     error_log /proc/self/fd/2;
 
@@ -53,11 +53,23 @@ server {
     add_header X-Frame-Options SAMEORIGIN;
     add_header X-XSS-Protection "1; mode=block";
 
-    resolver 127.0.0.11 ipv6=off;
-    resolver_timeout 2s;
-
     location / {
         try_files $uri /index.php$is_args$args;
+    }
+
+    location /total {
+        default_type 'text/plain';
+
+        content_by_lua_block {
+            local redis = require "resty.redis"
+            local red = redis:new()
+            local ok, err = red:connect(redis_host, 6379)
+            if ok then
+                local res, err = red:get("STAT.TOTAL")
+                ngx.say(res)
+            end
+            ngx.say(".")
+        }
     }
 
     location ~ ^/stats {
@@ -70,7 +82,9 @@ server {
     location ~ ^/index\.php(/|$) {
         internal;
 
-        fastcgi_pass $upstream:9000;
+        # local = phpfpm
+        # aws = 127.0.0.1
+        fastcgi_pass ${PHPFPM_HOST}:9000;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
