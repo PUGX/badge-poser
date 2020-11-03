@@ -7,11 +7,11 @@ COPY . /application
 RUN apk add --no-cache --virtual frontenddeps \
        python3 \
        yarn \
-    && npm install -g --unsafe-perm node-sass \
+    && npm install -g --unsafe-perm node-sass@4.14.1 \
     && yarn config set ignore-engines true \
     && yarn install --production \
     && yarn add @symfony/webpack-encore --production \
-    && yarn add sass-loader@^8.0.0 node-sass --dev \
+    && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
     && npm run build
 
 FROM fabiocicerchia/nginx-lua:1.19.3-alpine3.12.1

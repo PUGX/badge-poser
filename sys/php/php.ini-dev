@@ -4,8 +4,11 @@ session.auto_start = Off
 short_open_tag = Off
 memory_limit = 512M
 
-# http://symfony.com/doc/current/performance.html
-opcache.memory_consumption=256
+opcache.memory_consumption = 256
 opcache.max_accelerated_files = 20000
+opcache.revalidate_freq = 0
+opcache.revalidate_path = 1
+opcache.validate_timestamps = 1
+
 realpath_cache_size = 4096K
 realpath_cache_ttl = 600
