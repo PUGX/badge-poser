@@ -41,7 +41,15 @@ services:
       - 9000:9000
     volumes:
       - .:/application:cached
-      - ./sys/php/php.ini-dev:/usr/local/etc/php/php.ini:ro
+      - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/docker-php-zz-overrides.ini:ro
+    working_dir: /application
+
+  node:
+    container_name: badge-poser-node
+    image: node:14.14.0-alpine3.12
+    user: "node"
+    volumes:
+      - .:/application:cached
     working_dir: /application
 
   redis:

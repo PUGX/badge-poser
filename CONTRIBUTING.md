@@ -33,15 +33,20 @@ Follow [this link](https://circleci.com/account/api) for generate your CircleCI 
 
 ## Manage App with docker-compose
 
-### Start App
+### For the first initialize of the app
 ```bash
-$ make start
+$ make init
 ```
 Add in `/etc/hosts`
 ```console
 127.0.0.1 poser.local
 ```
 and now you can see the app on [http://poser.local:8001](http://poser.local:8001)
+
+### Otherwise, for the others days
+```bash
+$ make run
+```
 
 ### Go away
 ```bash

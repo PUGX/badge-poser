@@ -8,12 +8,9 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 help:
 	@awk 'BEGIN {FS = ":.*##"; printf "Use: make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-init: ## initialize app
-	- make stop
-	- make start
+init: ## initialize app (For the first initialize of the app)
 	- cp .env.dist .env
-	- make install
-	- make build
+	- make run
 
 run: ## run app
 	- make stop
@@ -22,10 +19,13 @@ run: ## run app
 	- make build
 
 start: ## start docker containers
-	- docker-compose up --build -d
+	- docker-compose up -d
 
 stop: ## stop docker containers
 	- docker-compose down
+
+dc_build: ## rebuild docker compose containers
+	- docker-compose up --build -d
 
 install: ## install php and node dependencies
 	- docker-compose exec phpfpm composer install
