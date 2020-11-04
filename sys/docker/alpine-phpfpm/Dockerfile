@@ -14,7 +14,7 @@ RUN apk add --no-cache --virtual frontenddeps \
     && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
     && npm run build
 
-FROM php:7.4.11-fpm-alpine3.12
+FROM php:8.0.0RC3-fpm-alpine3.12
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
@@ -41,7 +41,10 @@ RUN apk add --no-cache --virtual .builddeps \
         mbstring \
         opcache \
         zip \
-    && pecl install msgpack yaml redis \
+    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar && mv pickle.phar /usr/local/bin/pickle \
+    && chmod +x /usr/local/bin/pickle \
+    && pickle install yaml@2.1.0 redis --defaults --no-interaction \
+#    && pickle install msgpack \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
