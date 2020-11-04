@@ -15,3 +15,5 @@ local m = ngx.re.match(ngx.var.request_uri, regex)
 if not m then return end
 
 local res = ngx.location.capture("/stats")
+
+local res_darkcanary = ngx.location.capture("/dark-canary" .. ngx.var.request_uri)

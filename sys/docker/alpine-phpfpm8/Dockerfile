@@ -5,16 +5,16 @@ WORKDIR /application
 COPY . /application
 
 RUN apk add --no-cache --virtual frontenddeps \
-       python3 \
-       yarn \
-    && npm install -g --unsafe-perm node-sass@4.14.1 \
-    && yarn config set ignore-engines true \
-    && yarn install --production \
-    && yarn add @symfony/webpack-encore --production \
-    && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
-    && npm run build
+      python3 \
+      yarn \
+   && npm install -g --unsafe-perm node-sass@4.14.1 \
+   && yarn config set ignore-engines true \
+   && yarn install --production \
+   && yarn add @symfony/webpack-encore --production \
+   && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
+   && npm run build
 
-FROM php:7.4.11-fpm-alpine3.12
+FROM php:8.0.0RC3-fpm-alpine3.12
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
@@ -41,13 +41,17 @@ RUN apk add --no-cache --virtual .builddeps \
         mbstring \
         opcache \
         zip \
-    && pecl install msgpack yaml redis \
+    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar && mv pickle.phar /usr/local/bin/pickle \
+    && chmod +x /usr/local/bin/pickle \
+    && pickle install yaml@2.1.0 --defaults --no-interaction \
+    && pickle install redis --defaults --no-interaction \
+#    && pickle install msgpack \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
 COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY sys/php/www8.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /application
 
