@@ -86,9 +86,6 @@
     "ocramius/package-versions": {
         "version": "1.8.0"
     },
-    "paragonie/random_compat": {
-        "version": "v9.99.99"
-    },
     "php": {
         "version": "7.4"
     },
