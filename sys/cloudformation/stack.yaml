@@ -34,10 +34,14 @@ Parameters:
     Type: String
     Description: >
       Mandatory - Specifies the ARN of the Execution Role for ECS.
-  EcrImageTag:
+  EcrImageTagPhp:
     Type: String
     Description: >
       Mandatory - Specifies the ECR Image Tag for PHP-FPM container.
+  EcrImageTagNginx:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ECR Image Tag for nginx container.
 
   EnvAPPENV:
     Type: String
@@ -91,10 +95,26 @@ Parameters:
     Type: String
     Default: ""
     Description: Mandatory - Environment variable for BITBUCKET_TOKEN
+  EnvREDISHOST:
+    Type: String
+    Default: "REMOTE_ADDR"
+    Description: Mandatory - Environment variable for REDIS_HOST
   EnvTRUSTEDPROXIES:
     Type: String
     Default: "REMOTE_ADDR"
     Description: Optional - Environment variable for TRUSTED_PROXIES
+  EnvFASTCGIPASSHOST:
+    Type: String
+    Default: "127.0.0.1"
+    Description: Optional - Environment variable for FASTCGI_PASS_HOST
+  EnvPHPFPMCANARYHOST:
+    Type: String
+    Default: "127.0.0.1"
+    Description: Optional - Environment variable for PHPFPM_CANARY_HOST
+  EnvRESOLVERIP:
+    Type: String
+    Default: "169.254.169.253"
+    Description: Optional - Environment variable for RESOLVER_IP
 
 Resources:
 
@@ -245,7 +265,7 @@ Resources:
       HealthCheckGracePeriodSeconds: 15
       LaunchType: FARGATE
       LoadBalancers:
-        - ContainerName: !Ref 'ServiceName'
+        - ContainerName: 'nginx'
           ContainerPort: 80
           TargetGroupArn: !Ref 'elbtargetgroup'
       ServiceName: !Ref 'ServiceName'
@@ -268,10 +288,11 @@ Resources:
     Properties:
       ExecutionRoleArn: !Ref 'ExecRoleArn'
       ContainerDefinitions:
+        # container phpfpm
         - PortMappings:
-            - HostPort: 80
+            - HostPort: 9000
               Protocol: tcp
-              ContainerPort: 80
+              ContainerPort: 9000
           Environment:
           - Name: APP_ENV
             Value: !Ref 'EnvAPPENV'
@@ -301,21 +322,94 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':', !Ref 'EcrImageTag' ]]
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm-', !Ref 'EcrImageTagPhp' ]]
           Essential: true
-          Name: !Ref 'ServiceName'
+          Name: phpfpm
           LogConfiguration:
             LogDriver: awslogs
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Ref 'ServiceName'
-      Memory: '1024'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'phpfpm' ]]
+
+        # container phpfpm-darkcanary
+        - PortMappings:
+            - HostPort: 9000
+              Protocol: tcp
+              ContainerPort: 9000
+          Environment:
+          - Name: APP_ENV
+            Value: !Ref 'EnvAPPENV'
+          - Name: APP_SECRET
+            Value: !Ref 'EnvAPPSECRET'
+          - Name: APP_XDEBUG
+            Value: !Ref 'EnvAPPXDEBUG'
+          - Name: APP_XDEBUG_HOST
+            Value: !Ref 'EnvAPPXDEBUGHOST'
+          - Name: REDIS_URL
+            Value: !Ref 'EnvREDISURL'
+          - Name: GITHUB_AUTH_METHOD
+            Value: !Ref 'EnvGITHUBAUTHMETHOD'
+          - Name: GITHUB_USERNAME
+            Value: !Ref 'EnvGITHUBUSERNAME'
+          - Name: GITHUB_SECRET
+            Value: !Ref 'EnvGITHUBSECRET'
+          - Name: CIRCLE_CI_TOKEN
+            Value: !Ref 'EnvCIRCLECITOKEN'
+          - Name: SENTRY_DSN
+            Value: !Ref 'EnvSENTRYDSN'
+          - Name: BITBUCKET_AUTH_METHOD
+            Value: !Ref 'EnvBITBUCKETAUTHMETHOD'
+          - Name: BITBUCKET_SECRET
+            Value: !Ref 'EnvBITBUCKETSECRET'
+          - Name: BITBUCKET_TOKEN
+            Value: !Ref 'EnvBITBUCKETTOKEN'
+          - Name: TRUSTED_PROXIES
+            Value: !Ref 'EnvTRUSTEDPROXIES'
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm8-', !Ref 'EcrImageTagPhp' ]]
+          Essential: true
+          Name: phpfpm-darkcanary
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'phpfpm-darkcanary' ]]
+
+        # container nginx
+        - PortMappings:
+            - HostPort: 80
+              Protocol: tcp
+              ContainerPort: 80
+          Environment:
+          - Name: FASTCGI_PASS_HOST
+            Value: !Ref 'EnvFASTCGIPASSHOST'
+          - Name: PHPFPM_CANARY_HOST
+            Value: !Ref 'EnvPHPFPMCANARYHOST'
+          - Name: REDIS_HOST
+            Value: !Ref 'EnvREDISHOST'
+          - Name: RESOLVER_IP
+            Value: !Ref 'EnvRESOLVERIP'
+          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':nginx-', !Ref 'EcrImageTagNginx' ]]
+          Essential: true
+          Name: 'nginx'
+          DependsOn:
+            - Condition: START
+              ContainerName: phpfpm
+            - Condition: START
+              ContainerName: phpfpm-darkcanary
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'nginx' ]]
+      Memory: '2048'
       Family: !Ref 'ServiceName'
       RequiresCompatibilities:
         - FARGATE
       NetworkMode: awsvpc
-      Cpu: '512'
+      Cpu: '1024'
       Tags:
         - Key: env
           Value: badge-poser
@@ -344,7 +438,7 @@ Resources:
       HealthCheckPath: /
       HealthCheckPort: 80
       HealthCheckProtocol: 'HTTP'
-      HealthCheckTimeoutSeconds: 10
+      HealthCheckTimeoutSeconds: 20
       HealthyThresholdCount: 5
       Matcher:
         HttpCode: 200
@@ -352,7 +446,7 @@ Resources:
       Port: 80
       Protocol: 'HTTP'
       TargetType: ip
-      UnhealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
       VpcId: !Ref 'VpcId'
       Tags:
         - Key: env
@@ -387,13 +481,12 @@ Resources:
         TargetGroupArn: !Ref 'elbtargetgroup'
       Conditions:
         - Field: host-header
-          HostHeaderConfig:
-            Values:
-              - poser.pugx.org
+          Values:
+            - poser.pugx.org
         - Field: path-pattern
           Values: [/*]
       ListenerArn: !Ref 'elblistener443'
-      Priority: 1
+      Priority: 3
 
   # SCHEDULED TASK
   eventrulecontributorsupdate:
@@ -401,12 +494,12 @@ Resources:
     Properties:
       Name: app-contributors-update
       ScheduleExpression: rate(24 hours)
-      State: ENABLED
+      State: DISABLED
       Targets:
-        - Id: !Ref 'ServiceName'
+        - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
           RoleArn: !Ref 'ExecRoleArn'
-          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"", !Ref 'ServiceName', "\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
+          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
           EcsParameters:
             TaskDefinitionArn: !Ref 'ecstask'
             LaunchType: FARGATE

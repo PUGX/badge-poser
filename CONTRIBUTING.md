@@ -33,6 +33,44 @@ Follow [this link](https://circleci.com/account/api) for generate your CircleCI 
 
 ## Manage App with docker-compose
 
+### Show the help
+
+```bash
+$ make help
+Use: make <target>
+
+GENERIC
+  init                  initialize app (For the first initialize of the app)
+  run                   run app
+  start                 start docker containers
+  stop                  stop docker containers
+  dc_build              rebuild docker compose containers
+  purge                 cleaning
+  status                docker containers status
+
+DEV
+  install               install php and node dependencies
+  build                 build assets
+  build_watch           build assets and watch
+  phpunit               run suite of tests
+  php_cs_fixer          run php-cs-fixer
+  phpstan               run phpstan
+  analyse               run php-cs-fixer and phpstan
+
+PROD
+  install_prod          install php and node dependencies for production environment
+  build_prod            build assets for production environment
+
+DARK-CANARY
+  install_canary        install php and node dependencies (dark-canary)
+  build_canary          build assets (dark-canary)
+  build_watch_canary    build assets and watch (dark-canary)
+  phpunit_canary        run suite of tests (dark-canary)
+  php_cs_fixer_canary   run php-cs-fixer (dark-canary)
+  phpstan_canary        run phpstan (dark-canary)
+  analyse_canary        run php-cs-fixer and phpstan (dark-canary)
+```
+
 ### For the first initialize of the app
 ```bash
 $ make init

@@ -4,8 +4,6 @@ use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
-$_SERVER['REQUEST_URI'] = str_replace('/dark-canary', '', $_SERVER['REQUEST_URI']);
-
 require dirname(__DIR__) . '/config/bootstrap.php';
 
 if ($_SERVER['APP_DEBUG']) {

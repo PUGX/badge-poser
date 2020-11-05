@@ -16,4 +16,10 @@ if not m then return end
 
 local res = ngx.location.capture("/stats")
 
-local res_darkcanary = ngx.location.capture("/dark-canary" .. ngx.var.request_uri)
+-- DARK CANARY
+local dark_canary_threshold = os.getenv("DARK_CANARY_THRESHOLD")
+
+local odds = math.random(1, 100)
+if odds <= dark_canary_threshold then
+    local res_darkcanary = ngx.location.capture("/dark-canary" .. ngx.var.request_uri)
+end

@@ -44,14 +44,15 @@ RUN apk add --no-cache --virtual .builddeps \
     && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar && mv pickle.phar /usr/local/bin/pickle \
     && chmod +x /usr/local/bin/pickle \
     && pickle install yaml@2.1.0 --defaults --no-interaction \
-    && pickle install redis --defaults --no-interaction \
-#    && pickle install msgpack \
+    && pickle install redis@5.3.2 --defaults --no-interaction \
+    # && pickle install msgpack@2.1.1 --defaults --no-interaction \
     && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
-COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+COPY sys/php/docker-php-ext-opcache8.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY sys/php/www8.conf /usr/local/etc/php-fpm.d/www.conf
+COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY sys/php/zz-docker8.conf /usr/local/etc/php-fpm.d/zz-docker8.conf
 
 WORKDIR /application
 
@@ -64,7 +65,10 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
 
-RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+RUN mv composer8.json composer.json \
+    && mv composer8.lock composer.lock \
+    && mv symfony8.lock symfony.lock \
+    && /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest --ignore-platform-reqs \
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
