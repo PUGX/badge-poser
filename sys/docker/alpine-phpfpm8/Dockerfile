@@ -41,12 +41,12 @@ RUN apk add --no-cache --virtual .builddeps \
         mbstring \
         opcache \
         zip \
-    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar && mv pickle.phar /usr/local/bin/pickle \
+    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar -O /usr/local/bin/pickle \
     && chmod +x /usr/local/bin/pickle \
     && pickle install yaml@2.1.0 --defaults --no-interaction \
     && pickle install redis@5.3.2 --defaults --no-interaction \
     # && pickle install msgpack@2.1.1 --defaults --no-interaction \
-    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+    && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
 COPY sys/php/docker-php-ext-opcache8.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini

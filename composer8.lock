@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c03ca712534e731cfae3b9607c34be26",
+    "content-hash": "efbdf400da2be0b57398bc00b9e71fa6",
     "packages": [
         {
             "name": "badges/poser",

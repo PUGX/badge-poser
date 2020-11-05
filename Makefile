@@ -118,6 +118,14 @@ deploy_prod: ## deploy to prod
 		-f sys/docker/alpine-nginx/Dockerfile .
 	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$(VER)
 
+	cat sys/cloudformation/parameters.prod.json \
+		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
+		| tee sys/cloudformation/parameters.prod.json
+
+	cat sys/cloudformation/parameters.prod.secrets.json \
+		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
+		| tee sys/cloudformation/parameters.prod.secrets.json
+
 	# create change-set on aws
 	aws cloudformation create-change-set \
 		--stack=poser-ecs \

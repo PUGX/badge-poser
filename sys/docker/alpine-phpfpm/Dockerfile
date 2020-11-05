@@ -42,7 +42,7 @@ RUN apk add --no-cache --virtual .builddeps \
         opcache \
         zip \
     && pecl install msgpack yaml redis \
-    && cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+    && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
 COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini

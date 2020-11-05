@@ -38,6 +38,10 @@ Parameters:
     Type: String
     Description: >
       Mandatory - Specifies the ECR Image Tag for PHP-FPM container.
+  EcrImageTagPhpCanary:
+    Type: String
+    Description: >
+      Mandatory - Specifies the ECR Image Tag for PHP-FPM dark-canary container.
   EcrImageTagNginx:
     Type: String
     Description: >
@@ -189,7 +193,9 @@ Resources:
   cloudwatchloggroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Join [ '-', [ !Ref 'ServiceName', 'logs']]
+      LogGroupName:
+        Fn::Sub:
+          - "${ServiceName}-logs"
 
   # ELB
   elb:
@@ -197,7 +203,9 @@ Resources:
     DependsOn:
     - sgelb
     Properties:
-      Name: !Join [ '', [ !Ref 'ServiceName', '-elb']]
+      Name:
+        Fn::Sub:
+          - "${ServiceName}-elb"
       Subnets: !Ref 'Subnets'
       SecurityGroups:
       - !Ref 'sgelb'
@@ -243,7 +251,9 @@ Resources:
   ecscluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'Environment' ]]
+      ClusterName:
+        Fn::Sub:
+          - "${ServiceName}-cluster-${Environment}"
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
@@ -322,7 +332,9 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm-', !Ref 'EcrImageTagPhp' ]]
+          Image:
+            Fn::Sub:
+              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}"
           Essential: true
           Name: phpfpm
           LogConfiguration:
@@ -330,7 +342,9 @@ Resources:
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'phpfpm' ]]
+              awslogs-stream-prefix:
+                Fn::Sub:
+                  - "${ServiceName}-phpfpm"
 
         # container phpfpm-darkcanary
         - PortMappings:
@@ -366,7 +380,9 @@ Resources:
             Value: !Ref 'EnvBITBUCKETTOKEN'
           - Name: TRUSTED_PROXIES
             Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':phpfpm8-', !Ref 'EcrImageTagPhp' ]]
+          Image:
+            Fn::Sub:
+              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}"
           Essential: true
           Name: phpfpm-darkcanary
           LogConfiguration:
@@ -374,7 +390,9 @@ Resources:
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'phpfpm-darkcanary' ]]
+              awslogs-stream-prefix:
+                Fn::Sub:
+                  - "${ServiceName}-phpfpm-darkcanary"
 
         # container nginx
         - PortMappings:
@@ -390,7 +408,9 @@ Resources:
             Value: !Ref 'EnvREDISHOST'
           - Name: RESOLVER_IP
             Value: !Ref 'EnvRESOLVERIP'
-          Image: !Join [ '', [ !Ref 'AWS::AccountId', '.dkr.ecr.', !Ref 'AWS::Region', '.amazonaws.com/', !Ref 'ServiceName', ':nginx-', !Ref 'EcrImageTagNginx' ]]
+          Image:
+            Fn::Sub:
+              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}"
           Essential: true
           Name: 'nginx'
           DependsOn:
@@ -403,7 +423,9 @@ Resources:
             Options:
               awslogs-group: !Ref 'cloudwatchloggroup'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Join [ '-', [ !Ref 'ServiceName', 'nginx' ]]
+              awslogs-stream-prefix:
+                Fn::Sub:
+                  - "${ServiceName}-nginx"
       Memory: '2048'
       Family: !Ref 'ServiceName'
       RequiresCompatibilities:
@@ -422,7 +444,9 @@ Resources:
     Properties:
       MaxCapacity: 1
       MinCapacity: 1
-      ResourceId: !Join [ '/', [ 'service', !Join [ '-', [ !Ref 'ServiceName', 'cluster', !Ref 'Environment' ]], !Ref 'ServiceName' ]]
+      ResourceId:
+        Fn::Sub:
+          - "service/${ServiceName}-cluster-${Environment}/${ServiceName}"
       RoleARN: !Ref 'ExecRoleArn'
       ScalableDimension: 'ecs:service:DesiredCount'
       ServiceNamespace: 'ecs'
@@ -499,7 +523,7 @@ Resources:
         - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
           RoleArn: !Ref 'ExecRoleArn'
-          Input: !Join [ '', [ "{\"containerOverrides\":", "[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",", "\"app:contributors:update\"]}]}" ]]
+          Input: "{\"containerOverrides\":[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",\"app:contributors:update\"]}]}"
           EcsParameters:
             TaskDefinitionArn: !Ref 'ecstask'
             LaunchType: FARGATE

@@ -32,7 +32,7 @@
         "snc/redis-bundle": "^3.2",
         "symfony/asset": "^5.2",
         "symfony/console": "^5.2",
-        "symfony/flex": "^1.9",
+        "symfony/flex": "^1.10",
         "symfony/framework-bundle": "^5.2",
         "symfony/http-client": "^5.2",
         "symfony/webpack-encore-bundle": "^1.8",
@@ -118,3 +118,4 @@
         }
     ]
 }
+
