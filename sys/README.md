@@ -26,10 +26,12 @@ aws ecr get-login-password --profile badge-poser | docker login --password-stdin
 
 VER=$(date +%s);
 docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER -f sys/docker/alpine-nginx/Dockerfile .
+docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/alpine-phpfpm8/Dockerfile .
 docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/alpine-phpfpm/Dockerfile .
 
 docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER
 docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER
+docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$VER
 ```
 
 ## DEPLOY

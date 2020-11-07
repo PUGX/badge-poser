@@ -65,6 +65,26 @@ server {
     add_header X-Frame-Options SAMEORIGIN;
     add_header X-XSS-Protection "1; mode=block";
 
+    location ~ ^/dark-canary {
+        set_by_lua_block $request_url {
+            return string.gsub(ngx.var.request_uri, "/dark%-canary", "")
+        }
+        set_by_lua_block $document_url {
+            return string.gsub(ngx.var.document_uri, "/dark%-canary", "")
+        }
+
+        fastcgi_pass phpfpm-darkcanary:9001;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        include fastcgi_params;
+        fastcgi_param REQUEST_URI $request_url;
+        fastcgi_param DOCUMENT_URI $document_url;
+        fastcgi_param SCRIPT_NAME /index.php;
+        fastcgi_param SCRIPT_FILENAME /application/public/index.php;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+
     location / {
         try_files $uri /index.php$is_args$args;
     }

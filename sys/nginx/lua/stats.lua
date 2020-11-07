@@ -5,3 +5,4 @@ if ok then
     ok, err = red:incr("STAT.TOTAL")
     ngx.say(err)
 end
+
