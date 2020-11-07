@@ -29,6 +29,7 @@ server {
 
     if ($request_method = POST) { set $skip_cache 1; }
     if ($query_string != "") { set $skip_cache 1; }
+    if ($request_uri ~ "/dark-canary/") { set $skip_cache 1; }
 
     fastcgi_cache cached_badges;
     fastcgi_cache_key "$request_method-$scheme://$host$request_uri";
