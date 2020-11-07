@@ -30,6 +30,7 @@ Metadata:
           - EnvREDISURL
       - Label: {default: 'Optional ENV variables'}
         Parameters:
+          - EnvAPPDEBUG
           - EnvAPPENV
           - EnvAPPXDEBUG
           - EnvAPPXDEBUGHOST
@@ -99,6 +100,10 @@ Parameters:
     ConstraintDescription: >
       VPC Id must begin with 'vpc-' or leave blank to have a new VPC created
 
+  EnvAPPDEBUG:
+    Type: String
+    Default: '0'
+    Description: Environment variable for APP_DEBUG
   EnvAPPENV:
     Type: String
     Default: 'prod'
@@ -369,6 +374,8 @@ Resources:
           Environment:
             - Name: APP_ENV
               Value: !Ref EnvAPPENV
+            - Name: APP_DEBUG
+              Value: !Ref EnvAPPDEBUG
             - Name: APP_SECRET
               Value: !Ref EnvAPPSECRET
             - Name: APP_XDEBUG
@@ -413,6 +420,8 @@ Resources:
           Environment:
             - Name: APP_ENV
               Value: !Ref EnvAPPENVCanary
+            - Name: APP_DEBUG
+              Value: !Ref EnvAPPDEBUG
             - Name: APP_SECRET
               Value: !Ref EnvAPPSECRET
             - Name: APP_XDEBUG
