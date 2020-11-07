@@ -67,6 +67,8 @@ server {
     add_header X-XSS-Protection "1; mode=block";
 
     location ~ ^/dark-canary {
+        internal;
+
         set_by_lua_block $request_url {
             return string.gsub(ngx.var.request_uri, "/dark%-canary", "")
         }
