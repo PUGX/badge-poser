@@ -37,11 +37,13 @@ Metadata:
           - EnvBITBUCKETSECRET
           - EnvBITBUCKETTOKEN
           - EnvCIRCLECITOKEN
-          - EnvFASTCGIPASSHOST
+          - EnvDARKCANARYTHRESHOLD
           - EnvGITHUBAUTHMETHOD
           - EnvGITHUBSECRET
           - EnvGITHUBUSERNAME
           - EnvPHPFPMCANARYHOST
+          - EnvPHPFPMCANARYHOST
+          - EnvPHPFPMHOST
           - EnvREDISHOST
           - EnvRESOLVERIP
           - EnvSENTRYDSN
@@ -88,7 +90,7 @@ Parameters:
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
     Description: >
-      Mandatory - Specifies the ID of Subnets belongin to the correct VPC.
+      Specifies the ID of Subnets belongin to the correct VPC.
   VpcId:
     Type: AWS::EC2::VPC::Id
     Description: >
@@ -101,6 +103,10 @@ Parameters:
     Type: String
     Default: 'prod'
     Description: Environment variable for APP_ENV
+  EnvAPPENVCanary:
+    Type: String
+    Default: 'canary'
+    Description: Environment variable for APP_ENV (dark-canary)
   EnvAPPSECRET:
     Type: String
     Default: ''
@@ -129,10 +135,10 @@ Parameters:
     Type: String
     Default: ''
     Description: Environment variable for CIRCLE_CI_TOKEN
-  EnvFASTCGIPASSHOST:
+  EnvDARKCANARYTHRESHOLD:
     Type: String
-    Default: '127.0.0.1'
-    Description: Environment variable for FASTCGI_PASS_HOST
+    Default: 10
+    Description: Specifies the volume of traffic to go to the dark canary.
   EnvGITHUBAUTHMETHOD:
     Type: String
     Default: 'http_token'
@@ -156,6 +162,14 @@ Parameters:
   EnvREDISURL:
     Type: String
     Description: Environment variable for REDIS_URL
+  EnvPHPFPMHOST:
+    Type: String
+    Default: '127.0.0.1'
+    Description: Environment variable for PHPFPM_HOST
+  EnvPHPFPMCANARYHOST:
+    Type: String
+    Default: '127.0.0.1'
+    Description: Environment variable for PHPFPM_CANARY_HOST
   EnvRESOLVERIP:
     Type: String
     Default: '169.254.169.253'
@@ -342,10 +356,11 @@ Resources:
   # ECS TASK DEFINITION
   ecstask:
     Type: AWS::ECS::TaskDefinition
+    DeletionPolicy: Retain
     Properties:
       ExecutionRoleArn: !Ref ExecRoleArn
       ContainerDefinitions:
-      
+        # container phpfpm
         - Name: 'phpfpm'
           PortMappings:
             - HostPort: 9000
@@ -380,7 +395,7 @@ Resources:
               Value: !Ref EnvBITBUCKETTOKEN
             - Name: TRUSTED_PROXIES
               Value: !Ref EnvTRUSTEDPROXIES
-          Image: !Sub "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}"
+          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}'
           Essential: true
           LogConfiguration:
             LogDriver: awslogs
@@ -389,14 +404,15 @@ Resources:
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm'
 
-        - Name: 'phpfpm-darkcanary'
+        # container phpfpm-darkcanary
+        - Name: phpfpm-darkcanary
           PortMappings:
-            - HostPort: 9000
+            - HostPort: 9001
               Protocol: tcp
-              ContainerPort: 9000
+              ContainerPort: 9001
           Environment:
             - Name: APP_ENV
-              Value: !Ref EnvAPPENV
+              Value: !Ref EnvAPPENVCanary
             - Name: APP_SECRET
               Value: !Ref EnvAPPSECRET
             - Name: APP_XDEBUG
@@ -424,7 +440,7 @@ Resources:
             - Name: TRUSTED_PROXIES
               Value: !Ref EnvTRUSTEDPROXIES
           Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}'
-          Essential: true
+          Essential: false
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -432,20 +448,23 @@ Resources:
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm-darkcanary'
 
+        # container nginx
         - Name: 'nginx'
           PortMappings:
             - HostPort: 80
               Protocol: tcp
               ContainerPort: 80
           Environment:
-            - Name: FASTCGI_PASS_HOST
-              Value: !Ref EnvFASTCGIPASSHOST
+            - Name: PHPFPM_HOST
+              Value: !Ref EnvPHPFPMHOST
             - Name: PHPFPM_CANARY_HOST
               Value: !Ref EnvPHPFPMCANARYHOST
             - Name: REDIS_HOST
               Value: !Ref EnvREDISHOST
             - Name: RESOLVER_IP
               Value: !Ref EnvRESOLVERIP
+            - Name: DARK_CANARY_THRESHOLD
+              Value: !Ref EnvDARKCANARYTHRESHOLD
           Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}'
           Essential: true
           DependsOn:

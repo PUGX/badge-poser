@@ -97,38 +97,34 @@ analyse_canary: ## run php-cs-fixer and phpstan (dark-canary)
 ##@ DEPLOY
 
 ACCOUNT=$(shell aws sts get-caller-identity --profile=poser | jq -r '.Account')
-VER=$(shell date +%s)
 
 deploy_prod: ## deploy to prod
-	# docker_image_phpfpm
+	aws ecr get-login-password --profile poser | docker login --password-stdin -u AWS $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com; \
+	VER=$(shell date +%s); \
 	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$(VER) \
-		-f sys/docker/alpine-phpfpm/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$(VER)
-
-	# docker_image_phpfpm_darkcanary
+		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER \
+		-f sys/docker/alpine-phpfpm/Dockerfile .; \
+	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER; \
 	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$(VER) \
-		-f sys/docker/alpine-phpfpm8/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$(VER)
-
-	# docker_image_nginx
+		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER \
+		-f sys/docker/alpine-phpfpm8/Dockerfile .; \
+	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER; \
 	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$(VER) \
-		-f sys/docker/alpine-nginx/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$(VER)
-
+		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER \
+		-f sys/docker/alpine-nginx/Dockerfile .; \
+	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER; \
 	cat sys/cloudformation/parameters.prod.json \
-		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
-		| tee sys/cloudformation/parameters.prod.json
-
+		| jq '.[18].ParameterValue="$$VER" | .[19].ParameterValue="$$VER"' \
+		| tee sys/cloudformation/parameters.prod.json.new; \
+        mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
+        mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
 	cat sys/cloudformation/parameters.prod.secrets.json \
-		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
-		| tee sys/cloudformation/parameters.prod.secrets.json
-
-	# create change-set on aws
-	aws cloudformation create-change-set \
+		| jq '.[18].ParameterValue="$$VER" | .[19].ParameterValue="$$VER"' \
+		| tee sys/cloudformation/parameters.prod.secrets.json.new; \
+        mv sys/cloudformation/parameters.prod.secrets.json sys/cloudformation/parameters.prod.secrets.json.bak; \
+        mv sys/cloudformation/parameters.prod.secrets.json.new sys/cloudformation/parameters.secrets.prod.json; \
+	aws --profile=poser cloudformation create-change-set \
 		--stack=poser-ecs \
-		--change-set-name=poser-ecs-$(VER) \
-		--template-body=file://$$PWD/sys/cloudformation/stack.yml \
+		--change-set-name=poser-ecs-$$VER \
+		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
 		--parameters=file://$$PWD/sys/cloudformation/parameters.prod.secrets.json

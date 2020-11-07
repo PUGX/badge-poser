@@ -1,13 +1,14 @@
 [
   {"ParameterKey": "ELBCertificateArn", "ParameterValue": ""},
-  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1603920252"},
-  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1603916520"},
-  {"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "1603916520"},
+  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1604782447"},
+  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1604782447"},
+  {"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "1604782447"},
   {"ParameterKey": "Environment", "ParameterValue": "prod"},
   {"ParameterKey": "ExecRoleArn", "ParameterValue": ""},
   {"ParameterKey": "Subnets", "ParameterValue": ""},
   {"ParameterKey": "VpcId", "ParameterValue": ""},
 
   {"ParameterKey": "EnvAPPENV", "ParameterValue": "prod"},
+  {"ParameterKey": "EnvAPPENVCanary", "ParameterValue": "canary"},
   {"ParameterKey": "EnvREDISURL", "ParameterValue": ""}
 ]

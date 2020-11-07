@@ -63,7 +63,7 @@ COPY --from=jsbuilder /application/public/build /application/public/build
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
-COPY --from=composer:1 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN mv composer8.json composer.json \
     && mv composer8.lock composer.lock \
