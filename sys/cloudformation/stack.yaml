@@ -1,136 +1,201 @@
-AWSTemplateFormatVersion: 2010-09-09
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  Badge Poser infrastructure stack
+
+
+################################################################################
+#                                  Metadata                                    #
+################################################################################
+Metadata:
+
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label: {default: 'Required stack parameters'}
+        Parameters:
+          - ELBCertificateArn
+          - EcrImageTagNginx
+          - EcrImageTagPhp
+          - EcrImageTagPhpCanary
+          - Environment
+          - ExecRoleArn
+          - Subnets
+          - VpcId
+      - Label: {default: 'Optional stack parameters'}
+        Parameters:
+          - ServiceName
+      - Label: {default: 'Required ENV variables'}
+        Parameters:
+          - EnvAPPSECRET
+          - EnvREDISURL
+      - Label: {default: 'Optional ENV variables'}
+        Parameters:
+          - EnvAPPENV
+          - EnvAPPXDEBUG
+          - EnvAPPXDEBUGHOST
+          - EnvBITBUCKETAUTHMETHOD
+          - EnvBITBUCKETSECRET
+          - EnvBITBUCKETTOKEN
+          - EnvCIRCLECITOKEN
+          - EnvFASTCGIPASSHOST
+          - EnvGITHUBAUTHMETHOD
+          - EnvGITHUBSECRET
+          - EnvGITHUBUSERNAME
+          - EnvPHPFPMCANARYHOST
+          - EnvREDISHOST
+          - EnvRESOLVERIP
+          - EnvSENTRYDSN
+          - EnvTRUSTEDPROXIES
+
+
+################################################################################
+#                               Parameters                                     #
+################################################################################
 
 Parameters:
+
+  EcrImageTagNginx:
+    Type: String
+    Description: >
+      Specifies the ECR Image Tag for nginx container.
+  EcrImageTagPhp:
+    Type: String
+    Description: >
+      Specifies the ECR Image Tag for PHP-FPM container.
+  EcrImageTagPhpCanary:
+    Type: String
+    Description: >
+      Specifies the ECR Image Tag for PHP-FPM dark-canary container.
+  ELBCertificateArn:
+    Type: String
+    Description: >
+      Specifies the ARN of the Certificate.
+  Environment:
+    Type: String
+    AllowedValues:
+      - prod
+    Description: >
+      The Environment
+  ExecRoleArn:
+    Type: String
+    Description: >
+      Specifies the ARN of the Execution Role for ECS.
   ServiceName:
     Type: String
     Default: 'badge-poser'
     Description: >
-      Optional - The name of the service being created. It identifies all the resources related to it.
-  ServicePort:
-    Type: String
-    Default: '80'
-    Description: >
-      Optional - The listening port of the service.
-  VpcId:
-    Type: AWS::EC2::VPC::Id
-    Description: >
-      Mandatory - Specifies the ID of an existing VPC in which to launch your container instances.
-    AllowedPattern: '^(?:vpc-[0-9a-f]{8}|)$'
-    ConstraintDescription: >
-      VPC Id must begin with 'vpc-' or leave blank to have a new VPC created
+      The name of the service being created. It identifies all the resources related to it.
   Subnets:
     Type: List<AWS::EC2::Subnet::Id>
     Description: >
       Mandatory - Specifies the ID of Subnets belongin to the correct VPC.
-  Environment:
-    Type: String
+  VpcId:
+    Type: AWS::EC2::VPC::Id
     Description: >
-      Mandatory - The Environment
-  ELBCertificateArn:
-    Type: String
-    Description: >
-      Mandatory - Specifies the ARN of the Certificate.
-  ExecRoleArn:
-    Type: String
-    Description: >
-      Mandatory - Specifies the ARN of the Execution Role for ECS.
-  EcrImageTagPhp:
-    Type: String
-    Description: >
-      Mandatory - Specifies the ECR Image Tag for PHP-FPM container.
-  EcrImageTagPhpCanary:
-    Type: String
-    Description: >
-      Mandatory - Specifies the ECR Image Tag for PHP-FPM dark-canary container.
-  EcrImageTagNginx:
-    Type: String
-    Description: >
-      Mandatory - Specifies the ECR Image Tag for nginx container.
+      Specifies the ID of an existing VPC in which to launch your container instances.
+    AllowedPattern: '^(?:vpc-[0-9a-f]{8}|)$'
+    ConstraintDescription: >
+      VPC Id must begin with 'vpc-' or leave blank to have a new VPC created
 
   EnvAPPENV:
     Type: String
-    Default: "prod"
-    Description: Optional - Environment variable for APP_ENV
+    Default: 'prod'
+    Description: Environment variable for APP_ENV
   EnvAPPSECRET:
     Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for APP_SECRET
+    Default: ''
+    Description: Environment variable for APP_SECRET
   EnvAPPXDEBUG:
     Type: String
-    Default: "0"
-    Description: Optional - Environment variable for APP_XDEBUG
+    Default: '0'
+    Description: Environment variable for APP_XDEBUG
   EnvAPPXDEBUGHOST:
     Type: String
-    Default: ""
-    Description: Optional - Environment variable for APP_XDEBUG_HOST
-  EnvREDISURL:
-    Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for REDIS_URL
-  EnvGITHUBAUTHMETHOD:
-    Type: String
-    Default: "http_token"
-    Description: Optional - Environment variable for GITHUB_AUTH_METHOD
-  EnvGITHUBUSERNAME:
-    Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for GITHUB_USERNAME
-  EnvGITHUBSECRET:
-    Type: String
-    Default: ""
-    Description: Optional - Environment variable for GITHUB_SECRET
-  EnvCIRCLECITOKEN:
-    Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for CIRCLE_CI_TOKEN
-  EnvSENTRYDSN:
-    Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for SENTRY_DSN
+    Default: ''
+    Description: Environment variable for APP_XDEBUG_HOST
   EnvBITBUCKETAUTHMETHOD:
     Type: String
-    Default: "http_password"
-    Description: Optional - Environment variable for BITBUCKET_AUTH_METHOD
+    Default: 'http_password'
+    Description: Environment variable for BITBUCKET_AUTH_METHOD
   EnvBITBUCKETSECRET:
     Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for BITBUCKET_SECRET
+    Default: ''
+    Description: Environment variable for BITBUCKET_SECRET
   EnvBITBUCKETTOKEN:
     Type: String
-    Default: ""
-    Description: Mandatory - Environment variable for BITBUCKET_TOKEN
-  EnvREDISHOST:
+    Default: ''
+    Description: Environment variable for BITBUCKET_TOKEN
+  EnvCIRCLECITOKEN:
     Type: String
-    Default: "REMOTE_ADDR"
-    Description: Mandatory - Environment variable for REDIS_HOST
-  EnvTRUSTEDPROXIES:
-    Type: String
-    Default: "REMOTE_ADDR"
-    Description: Optional - Environment variable for TRUSTED_PROXIES
+    Default: ''
+    Description: Environment variable for CIRCLE_CI_TOKEN
   EnvFASTCGIPASSHOST:
     Type: String
-    Default: "127.0.0.1"
-    Description: Optional - Environment variable for FASTCGI_PASS_HOST
+    Default: '127.0.0.1'
+    Description: Environment variable for FASTCGI_PASS_HOST
+  EnvGITHUBAUTHMETHOD:
+    Type: String
+    Default: 'http_token'
+    Description: Environment variable for GITHUB_AUTH_METHOD
+  EnvGITHUBSECRET:
+    Type: String
+    Default: ''
+    Description: Environment variable for GITHUB_SECRET
+  EnvGITHUBUSERNAME:
+    Type: String
+    Default: ''
+    Description: Environment variable for GITHUB_USERNAME
   EnvPHPFPMCANARYHOST:
     Type: String
-    Default: "127.0.0.1"
-    Description: Optional - Environment variable for PHPFPM_CANARY_HOST
+    Default: '127.0.0.1'
+    Description: Environment variable for PHPFPM_CANARY_HOST
+  EnvREDISHOST:
+    Type: String
+    Default: 'REMOTE_ADDR'
+    Description: Environment variable for REDIS_HOST
+  EnvREDISURL:
+    Type: String
+    Description: Environment variable for REDIS_URL
   EnvRESOLVERIP:
     Type: String
-    Default: "169.254.169.253"
-    Description: Optional - Environment variable for RESOLVER_IP
+    Default: '169.254.169.253'
+    Description: Environment variable for RESOLVER_IP
+  EnvSENTRYDSN:
+    Type: String
+    Default: ''
+    Description: Environment variable for SENTRY_DSN
+  EnvTRUSTEDPROXIES:
+    Type: String
+    Default: 'REMOTE_ADDR'
+    Description: Environment variable for TRUSTED_PROXIES
 
+
+################################################################################
+#                                 Conditions                                   #
+################################################################################
+Conditions: {}
+
+
+################################################################################
+#                                 Mappings                                     #
+################################################################################
+Mappings: {}
+
+
+################################################################################
+#                                 Resources                                    #
+################################################################################
 Resources:
 
   # SECURITY GROUP
   sgelb:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: badge-poser-elb
-      GroupName: badge-poser-elb
+      GroupDescription: !Sub '${ServiceName}-elb'
+      GroupName: !Sub '${ServiceName}-elb'
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
-          IpProtocol: -1
+          IpProtocol: '-1'
           FromPort: 0
           ToPort: 65535
       SecurityGroupIngress:
@@ -142,18 +207,18 @@ Resources:
           IpProtocol: tcp
           FromPort: 443
           ToPort: 443
-      VpcId: !Ref 'VpcId'
+      VpcId: !Ref VpcId
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
   sgecs:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: badge-poser-ecs
-      GroupName: badge-poser-ecs
+      GroupDescription: !Sub '${ServiceName}-ecs'
+      GroupName: !Sub '${ServiceName}-ecs'
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
-          IpProtocol: -1
+          IpProtocol: '-1'
           FromPort: 0
           ToPort: 65535
       SecurityGroupIngress:
@@ -165,18 +230,18 @@ Resources:
           IpProtocol: tcp
           FromPort: 443
           ToPort: 443
-      VpcId: !Ref 'VpcId'
+      VpcId: !Ref VpcId
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
   sgredis:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: badge-poser-redis
-      GroupName: badge-poser-redis
+      GroupDescription: !Sub '${ServiceName}-redis'
+      GroupName: !Sub '${ServiceName}-redis'
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
-          IpProtocol: -1
+          IpProtocol: '-1'
           FromPort: 0
           ToPort: 65535
       SecurityGroupIngress:
@@ -184,351 +249,324 @@ Resources:
           IpProtocol: tcp
           FromPort: 6379
           ToPort: 6379
-      VpcId: !Ref 'VpcId'
+      VpcId: !Ref VpcId
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # CLOUDWATCH LOGS
   cloudwatchloggroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName:
-        Fn::Sub:
-          - "${ServiceName}-logs"
+      LogGroupName: !Sub '${ServiceName}-logs'
+      RetentionInDays: 30
 
   # ELB
   elb:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-    DependsOn:
-    - sgelb
     Properties:
-      Name:
-        Fn::Sub:
-          - "${ServiceName}-elb"
-      Subnets: !Ref 'Subnets'
+      Name: !Sub '${ServiceName}-elb'
+      Subnets: !Ref Subnets
       SecurityGroups:
-      - !Ref 'sgelb'
+        - !Ref sgelb
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # ELB LISTENER
   elblistener80:
     Type: AWS::ElasticLoadBalancingV2::Listener
-    DependsOn:
-    - elb
     Properties:
       DefaultActions:
         - Type: fixed-response
           FixedResponseConfig:
-            ContentType: "text/plain"
-            MessageBody: "aws is a teapot"
-            StatusCode: "418"
-      LoadBalancerArn: !Ref 'elb'
+            ContentType: 'text/plain'
+            MessageBody: 'AWS is a teapot'
+            StatusCode: '418'
+      LoadBalancerArn: !Ref elb
       Port: 80
       Protocol: HTTP
 
   elblistener443:
     Type: AWS::ElasticLoadBalancingV2::Listener
-    DependsOn:
-    - elb
     Properties:
       DefaultActions:
         - Type: fixed-response
           FixedResponseConfig:
-            ContentType: "text/plain"
-            MessageBody: "https teapot"
-            StatusCode: "418"
-      LoadBalancerArn: !Ref 'elb'
+            ContentType: 'text/plain'
+            MessageBody: 'https teapot'
+            StatusCode: '418'
+      LoadBalancerArn: !Ref elb
       Port: 443
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-2016-08
       Certificates:
-        - CertificateArn: !Ref 'ELBCertificateArn'
+        - CertificateArn: !Ref ELBCertificateArn
 
   # ECS CLUSTER
   ecscluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName:
-        Fn::Sub:
-          - "${ServiceName}-cluster-${Environment}"
+      ClusterName: !Sub '${ServiceName}-cluster-${Environment}'
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # ECS SERVICE
   ecsservice:
-    Type: 'AWS::ECS::Service'
-    DependsOn:
-    - ecscluster
-    - ecstask
-    - elb
-    - elbtargetgroup
+    Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref 'ecscluster'
+      Cluster: !Ref ecscluster
       DesiredCount: 1
       HealthCheckGracePeriodSeconds: 15
       LaunchType: FARGATE
       LoadBalancers:
         - ContainerName: 'nginx'
           ContainerPort: 80
-          TargetGroupArn: !Ref 'elbtargetgroup'
-      ServiceName: !Ref 'ServiceName'
-      TaskDefinition: !Ref 'ecstask'
+          TargetGroupArn: !Ref elbtargetgroup
+      ServiceName: !Ref ServiceName
+      TaskDefinition: !Ref ecstask
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
-          Subnets: !Ref 'Subnets'
+          Subnets: !Ref Subnets
           SecurityGroups:
-          - !Ref 'sgecs'
+            - !Ref sgecs
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # ECS TASK DEFINITION
   ecstask:
-    Type: 'AWS::ECS::TaskDefinition'
-    DependsOn:
-    - cloudwatchloggroup
+    Type: AWS::ECS::TaskDefinition
     Properties:
-      ExecutionRoleArn: !Ref 'ExecRoleArn'
+      ExecutionRoleArn: !Ref ExecRoleArn
       ContainerDefinitions:
-        # container phpfpm
-        - PortMappings:
+      
+        - Name: 'phpfpm'
+          PortMappings:
             - HostPort: 9000
               Protocol: tcp
               ContainerPort: 9000
           Environment:
-          - Name: APP_ENV
-            Value: !Ref 'EnvAPPENV'
-          - Name: APP_SECRET
-            Value: !Ref 'EnvAPPSECRET'
-          - Name: APP_XDEBUG
-            Value: !Ref 'EnvAPPXDEBUG'
-          - Name: APP_XDEBUG_HOST
-            Value: !Ref 'EnvAPPXDEBUGHOST'
-          - Name: REDIS_URL
-            Value: !Ref 'EnvREDISURL'
-          - Name: GITHUB_AUTH_METHOD
-            Value: !Ref 'EnvGITHUBAUTHMETHOD'
-          - Name: GITHUB_USERNAME
-            Value: !Ref 'EnvGITHUBUSERNAME'
-          - Name: GITHUB_SECRET
-            Value: !Ref 'EnvGITHUBSECRET'
-          - Name: CIRCLE_CI_TOKEN
-            Value: !Ref 'EnvCIRCLECITOKEN'
-          - Name: SENTRY_DSN
-            Value: !Ref 'EnvSENTRYDSN'
-          - Name: BITBUCKET_AUTH_METHOD
-            Value: !Ref 'EnvBITBUCKETAUTHMETHOD'
-          - Name: BITBUCKET_SECRET
-            Value: !Ref 'EnvBITBUCKETSECRET'
-          - Name: BITBUCKET_TOKEN
-            Value: !Ref 'EnvBITBUCKETTOKEN'
-          - Name: TRUSTED_PROXIES
-            Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image:
-            Fn::Sub:
-              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}"
+            - Name: APP_ENV
+              Value: !Ref EnvAPPENV
+            - Name: APP_SECRET
+              Value: !Ref EnvAPPSECRET
+            - Name: APP_XDEBUG
+              Value: !Ref EnvAPPXDEBUG
+            - Name: APP_XDEBUG_HOST
+              Value: !Ref EnvAPPXDEBUGHOST
+            - Name: REDIS_URL
+              Value: !Ref EnvREDISURL
+            - Name: GITHUB_AUTH_METHOD
+              Value: !Ref EnvGITHUBAUTHMETHOD
+            - Name: GITHUB_USERNAME
+              Value: !Ref EnvGITHUBUSERNAME
+            - Name: GITHUB_SECRET
+              Value: !Ref EnvGITHUBSECRET
+            - Name: CIRCLE_CI_TOKEN
+              Value: !Ref EnvCIRCLECITOKEN
+            - Name: SENTRY_DSN
+              Value: !Ref EnvSENTRYDSN
+            - Name: BITBUCKET_AUTH_METHOD
+              Value: !Ref EnvBITBUCKETAUTHMETHOD
+            - Name: BITBUCKET_SECRET
+              Value: !Ref EnvBITBUCKETSECRET
+            - Name: BITBUCKET_TOKEN
+              Value: !Ref EnvBITBUCKETTOKEN
+            - Name: TRUSTED_PROXIES
+              Value: !Ref EnvTRUSTEDPROXIES
+          Image: !Sub "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}"
           Essential: true
-          Name: phpfpm
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-group: !Ref cloudwatchloggroup
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix:
-                Fn::Sub:
-                  - "${ServiceName}-phpfpm"
+              awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm'
 
-        # container phpfpm-darkcanary
-        - PortMappings:
+        - Name: 'phpfpm-darkcanary'
+          PortMappings:
             - HostPort: 9000
               Protocol: tcp
               ContainerPort: 9000
           Environment:
-          - Name: APP_ENV
-            Value: !Ref 'EnvAPPENV'
-          - Name: APP_SECRET
-            Value: !Ref 'EnvAPPSECRET'
-          - Name: APP_XDEBUG
-            Value: !Ref 'EnvAPPXDEBUG'
-          - Name: APP_XDEBUG_HOST
-            Value: !Ref 'EnvAPPXDEBUGHOST'
-          - Name: REDIS_URL
-            Value: !Ref 'EnvREDISURL'
-          - Name: GITHUB_AUTH_METHOD
-            Value: !Ref 'EnvGITHUBAUTHMETHOD'
-          - Name: GITHUB_USERNAME
-            Value: !Ref 'EnvGITHUBUSERNAME'
-          - Name: GITHUB_SECRET
-            Value: !Ref 'EnvGITHUBSECRET'
-          - Name: CIRCLE_CI_TOKEN
-            Value: !Ref 'EnvCIRCLECITOKEN'
-          - Name: SENTRY_DSN
-            Value: !Ref 'EnvSENTRYDSN'
-          - Name: BITBUCKET_AUTH_METHOD
-            Value: !Ref 'EnvBITBUCKETAUTHMETHOD'
-          - Name: BITBUCKET_SECRET
-            Value: !Ref 'EnvBITBUCKETSECRET'
-          - Name: BITBUCKET_TOKEN
-            Value: !Ref 'EnvBITBUCKETTOKEN'
-          - Name: TRUSTED_PROXIES
-            Value: !Ref 'EnvTRUSTEDPROXIES'
-          Image:
-            Fn::Sub:
-              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}"
+            - Name: APP_ENV
+              Value: !Ref EnvAPPENV
+            - Name: APP_SECRET
+              Value: !Ref EnvAPPSECRET
+            - Name: APP_XDEBUG
+              Value: !Ref EnvAPPXDEBUG
+            - Name: APP_XDEBUG_HOST
+              Value: !Ref EnvAPPXDEBUGHOST
+            - Name: REDIS_URL
+              Value: !Ref EnvREDISURL
+            - Name: GITHUB_AUTH_METHOD
+              Value: !Ref EnvGITHUBAUTHMETHOD
+            - Name: GITHUB_USERNAME
+              Value: !Ref EnvGITHUBUSERNAME
+            - Name: GITHUB_SECRET
+              Value: !Ref EnvGITHUBSECRET
+            - Name: CIRCLE_CI_TOKEN
+              Value: !Ref EnvCIRCLECITOKEN
+            - Name: SENTRY_DSN
+              Value: !Ref EnvSENTRYDSN
+            - Name: BITBUCKET_AUTH_METHOD
+              Value: !Ref EnvBITBUCKETAUTHMETHOD
+            - Name: BITBUCKET_SECRET
+              Value: !Ref EnvBITBUCKETSECRET
+            - Name: BITBUCKET_TOKEN
+              Value: !Ref EnvBITBUCKETTOKEN
+            - Name: TRUSTED_PROXIES
+              Value: !Ref EnvTRUSTEDPROXIES
+          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}'
           Essential: true
-          Name: phpfpm-darkcanary
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-group: !Ref cloudwatchloggroup
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix:
-                Fn::Sub:
-                  - "${ServiceName}-phpfpm-darkcanary"
+              awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm-darkcanary'
 
-        # container nginx
-        - PortMappings:
+        - Name: 'nginx'
+          PortMappings:
             - HostPort: 80
               Protocol: tcp
               ContainerPort: 80
           Environment:
-          - Name: FASTCGI_PASS_HOST
-            Value: !Ref 'EnvFASTCGIPASSHOST'
-          - Name: PHPFPM_CANARY_HOST
-            Value: !Ref 'EnvPHPFPMCANARYHOST'
-          - Name: REDIS_HOST
-            Value: !Ref 'EnvREDISHOST'
-          - Name: RESOLVER_IP
-            Value: !Ref 'EnvRESOLVERIP'
-          Image:
-            Fn::Sub:
-              - "${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}"
+            - Name: FASTCGI_PASS_HOST
+              Value: !Ref EnvFASTCGIPASSHOST
+            - Name: PHPFPM_CANARY_HOST
+              Value: !Ref EnvPHPFPMCANARYHOST
+            - Name: REDIS_HOST
+              Value: !Ref EnvREDISHOST
+            - Name: RESOLVER_IP
+              Value: !Ref EnvRESOLVERIP
+          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}'
           Essential: true
-          Name: 'nginx'
           DependsOn:
             - Condition: START
               ContainerName: phpfpm
             - Condition: START
-              ContainerName: phpfpm-darkcanary
+              ContainerName: 'phpfpm-darkcanary'
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group: !Ref 'cloudwatchloggroup'
+              awslogs-group: !Ref cloudwatchloggroup
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix:
-                Fn::Sub:
-                  - "${ServiceName}-nginx"
+              awslogs-stream-prefix: !Sub '${ServiceName}-nginx'
       Memory: '2048'
-      Family: !Ref 'ServiceName'
+      Family: !Ref ServiceName
       RequiresCompatibilities:
         - FARGATE
       NetworkMode: awsvpc
       Cpu: '1024'
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # AUTO SCALING
   asscalabletarget:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     DependsOn:
-    - ecsservice
+      - ecsservice
     Properties:
       MaxCapacity: 1
       MinCapacity: 1
-      ResourceId:
-        Fn::Sub:
-          - "service/${ServiceName}-cluster-${Environment}/${ServiceName}"
-      RoleARN: !Ref 'ExecRoleArn'
+      ResourceId: !Sub 'service/${ServiceName}-cluster-${Environment}/${ServiceName}'
+      RoleARN: !Ref ExecRoleArn
       ScalableDimension: 'ecs:service:DesiredCount'
       ServiceNamespace: 'ecs'
 
   # ELB TARGET GROUP
   elbtargetgroup:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn:
-    - elb
+      - elb
     Properties:
       HealthCheckEnabled: true
       HealthCheckIntervalSeconds: 30
       HealthCheckPath: /
-      HealthCheckPort: 80
+      HealthCheckPort: '80'
       HealthCheckProtocol: 'HTTP'
       HealthCheckTimeoutSeconds: 20
       HealthyThresholdCount: 5
       Matcher:
-        HttpCode: 200
+        HttpCode: '200'
       Name: badegposer
       Port: 80
       Protocol: 'HTTP'
       TargetType: ip
       UnhealthyThresholdCount: 3
-      VpcId: !Ref 'VpcId'
+      VpcId: !Ref VpcId
       Tags:
         - Key: env
-          Value: badge-poser
+          Value: !Ref ServiceName
 
   # ELB LISTENER RULE
   elblistenerrule80:
-    Type: 'AWS::ElasticLoadBalancingV2::ListenerRule'
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
-      - Type: redirect
-        RedirectConfig:
-          Host: "#{host}"
-          Path: "/#{path}"
-          Port: "443"
-          Protocol: HTTPS
-          Query: "#{query}"
-          StatusCode: HTTP_301
+        - Type: redirect
+          RedirectConfig:
+            Host: '#{host}'
+            Path: '/#{path}'
+            Port: '443'
+            Protocol: HTTPS
+            Query: '#{query}'
+            StatusCode: HTTP_301
       Conditions:
-      - Field: path-pattern
-        Values: [/*]
-      ListenerArn: !Ref 'elblistener80'
+        - Field: path-pattern
+          Values: ['/*']
+      ListenerArn: !Ref elblistener80
       Priority: 1
   elblistenerrule443:
-    Type: 'AWS::ElasticLoadBalancingV2::ListenerRule'
-    DependsOn:
-    - elblistener443
-    - elbtargetgroup
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
       - Type: forward
-        TargetGroupArn: !Ref 'elbtargetgroup'
+        TargetGroupArn: !Ref elbtargetgroup
       Conditions:
         - Field: host-header
           Values:
             - poser.pugx.org
         - Field: path-pattern
-          Values: [/*]
-      ListenerArn: !Ref 'elblistener443'
+          Values: ['/*']
+      ListenerArn: !Ref elblistener443
       Priority: 3
 
-  # SCHEDULED TASK
+  # SCHEDULED TASK
   eventrulecontributorsupdate:
-    Type: 'AWS::Events::Rule'
+    Type: AWS::Events::Rule
     Properties:
-      Name: app-contributors-update
-      ScheduleExpression: rate(24 hours)
+      Name: 'app-contributors-update'
+      ScheduleExpression: 'rate(24 hours)'
       State: DISABLED
       Targets:
         - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
-          RoleArn: !Ref 'ExecRoleArn'
-          Input: "{\"containerOverrides\":[{\"name\":\"phpfpm\",\"command\":[\"./bin/console\",\"app:contributors:update\"]}]}"
+          RoleArn: !Ref ExecRoleArn
+          Input: '{"containerOverrides":[{"name":"phpfpm","command":["./bin/console","app:contributors:update"]}]}'
           EcsParameters:
-            TaskDefinitionArn: !Ref 'ecstask'
+            TaskDefinitionArn: !Ref ecstask
             LaunchType: FARGATE
             NetworkConfiguration:
               AwsVpcConfiguration:
                 SecurityGroups:
-                  - !Ref 'sgecs'
-                Subnets: !Ref 'Subnets'
+                  - !Ref sgecs
+                Subnets: !Ref Subnets
+
+
+################################################################################
+#                                   Outputs                                    #
+################################################################################
+Outputs:
+
+  StackName:
+    Description: 'Stack name'
+    Value: !Ref 'AWS::StackName'
