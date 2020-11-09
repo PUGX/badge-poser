@@ -224,7 +224,7 @@ section.badges {
   font-style: italic;
 }
 
-.awesomplete > ul{
+.awesomplete > ul {
   background-color: white;
   > li:hover{
     background-color: lighten($primary, 40%);
@@ -264,7 +264,8 @@ section.badges {
     }
   }
 
-  section.search, section.results {
+  section.search,
+  section.results {
     padding-bottom: 0;
     padding-top: 3px;
   }
