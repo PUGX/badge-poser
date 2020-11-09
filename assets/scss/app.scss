@@ -1,7 +1,7 @@
-@import '~awesomplete/awesomplete.css';
-@import 'variables';
+@import "~awesomplete/awesomplete.css";
+@import "variables";
 @import "bootstrap";
-@import 'buttons';
+@import "buttons";
 @import "input";
 
 body {
@@ -101,7 +101,7 @@ section.results {
   bottom: 0;
   z-index: 9999;
   background-color: rgba(255,255,255,.7);
-  
+
   &::before{
     content: '';
     display: inline-block;
@@ -224,12 +224,59 @@ section.badges {
   font-style: italic;
 }
 
-.awesomplete > ul{
+.awesomplete > ul {
   background-color: white;
   > li:hover{
     background-color: lighten($primary, 40%);
   }
   > li[aria-selected="true"] {
     background-color: $primary;
+  }
+}
+
+.fork-me {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+
+@include media-breakpoint-down(sm) {
+  h1 {
+    font-size: 2.4em;
+  }
+
+  h2 {
+    margin-top: 5px;
+    text-shadow: 1px 1px #000;
+  }
+
+  h3 {
+    margin-top: 2px;
+    font-size: 1.9em;
+  }
+
+  section.head {
+    padding: 0;
+
+    .badges {
+      margin-bottom: 0;
+    }
+  }
+
+  section.search,
+  section.results {
+    padding-bottom: 0;
+    padding-top: 3px;
+  }
+
+  a.big {
+    display: inline-block;
+    margin: 2px auto;
+  }
+
+  .fork-me {
+    max-width: 75px;
+    top: -5px;
   }
 }

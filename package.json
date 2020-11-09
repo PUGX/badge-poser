@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "stylelint": "stylelint ./assets/scss/*.scss"
   },
   "dependencies": {
     "@sentry/browser": "^5.15.5",
@@ -22,6 +23,8 @@
     "node-sass": "^4.13.0",
     "regenerator-runtime": "^0.13.2",
     "sass-loader": "^7.0.1",
+    "stylelint": "^13.7.2",
+    "stylelint-scss": "^3.18.0",
     "webpack-notifier": "^1.7.0"
   }
 }
