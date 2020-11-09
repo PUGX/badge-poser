@@ -27,7 +27,8 @@ stop: ## stop docker containers
 	- docker-compose down
 
 dc_build: ## rebuild docker compose containers
-	- docker-compose up --build -d
+	- make .docker_img_deps
+	- docker-compose up --build
 
 purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
@@ -63,7 +64,7 @@ analyse: ## run php-cs-fixer and phpstan
 ##@ PROD
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --no-suggest --optimize-autoloader
+	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 	- docker-compose run --rm node yarn install --production
 
 build_prod: ## build assets for production environment
@@ -96,13 +97,17 @@ analyse_canary: ## run php-cs-fixer and phpstan (dark-canary)
 
 ##@ DEPLOY
 
+.docker_img_deps:
+	docker build -t jsbuilder -f sys/docker/common/Dockerfile.assets .
+	docker build -t awsbuilder -f sys/docker/common/Dockerfile.aws-ecs-ci .
+
 AWS_PROFILE ?= poser
 AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) | jq -r '.Account')
 
-deploy_prod: ## deploy to prod
+deploy_prod: .docker_img_deps ## deploy to prod
 	aws ecr get-login-password --profile $$AWS_PROFILE | docker login --password-stdin -u AWS $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com; \
 	VER=$(shell date +%s); \
-	docker build \
+    docker build \
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER \
 		-f sys/docker/alpine-phpfpm/Dockerfile .; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER; \

@@ -1,8 +1,8 @@
 [
   {"ParameterKey": "ELBCertificateArn", "ParameterValue": ""},
-  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1604782447"},
-  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1604782447"},
-  {"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "1604782447"},
+  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1604930777"},
+  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1604930777"},
+  {"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "1604930777"},
   {"ParameterKey": "Environment", "ParameterValue": "prod"},
   {"ParameterKey": "ExecRoleArn", "ParameterValue": ""},
   {"ParameterKey": "Subnets", "ParameterValue": ""},
@@ -10,5 +10,12 @@
 
   {"ParameterKey": "EnvAPPENV", "ParameterValue": "prod"},
   {"ParameterKey": "EnvAPPENVCanary", "ParameterValue": "canary"},
-  {"ParameterKey": "EnvREDISURL", "ParameterValue": ""}
+  {"ParameterKey": "EnvREDISURL", "ParameterValue": ""},
+  {"ParameterKey": "EnvAPPSECRET", "ParameterValue": ""},
+  {"ParameterKey": "EnvBITBUCKETSECRET", "ParameterValue": ""},
+  {"ParameterKey": "EnvBITBUCKETTOKEN", "ParameterValue": ""},
+  {"ParameterKey": "EnvCIRCLECITOKEN", "ParameterValue": ""},
+  {"ParameterKey": "EnvGITHUBUSERNAME", "ParameterValue": ""},
+  {"ParameterKey": "EnvSENTRYDSN", "ParameterValue": ""},
+  {"ParameterKey": "EnvDARKCANARYTHRESHOLD", "ParameterValue": "25"}
 ]

@@ -1,8 +1,19 @@
 #!/bin/sh
 
-cd /application
+IS_DEV=$(ping -c 1 -t 5 169.254.169.253 > /dev/null; echo $?)
 
 # Only for production
-if [[ $APP_ENV == "prod" ]]; then /usr/local/bin/composer dump-env prod; fi
+if [ "$IS_DEV" == "0" ]; then
+    /opt/aws/amazon-cloudwatch-agent/bin/start-amazon-cloudwatch-agent
+    cd /application
+    /usr/local/bin/composer dump-env $APP_ENV
+fi
 
-php-fpm
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"

@@ -1,20 +1,6 @@
-FROM node:14.14.0-alpine3.12 AS jsbuilder
-
-WORKDIR /application
-
-COPY . /application
-
-RUN apk add --no-cache --virtual frontenddeps \
-      python3 \
-      yarn \
-   && npm install -g --unsafe-perm node-sass@4.14.1 \
-   && yarn config set ignore-engines true \
-   && yarn install --production \
-   && yarn add @symfony/webpack-encore --production \
-   && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
-   && npm run build
-
 FROM php:8.0.0RC3-fpm-alpine3.12
+
+ENV RUN_IN_CONTAINER="True"
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
@@ -53,6 +39,9 @@ COPY sys/php/docker-php-ext-opcache8.ini /usr/local/etc/php/conf.d/docker-php-ex
 COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY sys/php/zz-docker8.conf /usr/local/etc/php-fpm.d/zz-docker8.conf
+COPY --from=awsbuilder /tmp /tmp
+COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 WORKDIR /application
 
@@ -68,9 +57,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 RUN mv composer8.json composer.json \
     && mv composer8.lock composer.lock \
     && mv symfony8.lock symfony.lock \
-    && /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest --ignore-platform-reqs \
+    && /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --ignore-platform-reqs \
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
 
-CMD ["/application/sys/docker/alpine-phpfpm/start.sh"]
+ENTRYPOINT ["/application/sys/docker/alpine-phpfpm8/start.sh"]
+
+CMD ["php-fpm"]

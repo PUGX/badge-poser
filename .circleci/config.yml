@@ -44,7 +44,7 @@ jobs:
             - v1-php-dependencies-
       - run:
           name: install project dependencies
-          command: composer install -n --no-progress --no-suggest
+          command: composer install -n --no-progress
       - save_cache:
           paths:
             - ~/app/vendor

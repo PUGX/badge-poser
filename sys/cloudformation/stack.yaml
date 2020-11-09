@@ -44,7 +44,6 @@ Metadata:
           - EnvGITHUBSECRET
           - EnvGITHUBUSERNAME
           - EnvPHPFPMCANARYHOST
-          - EnvPHPFPMCANARYHOST
           - EnvPHPFPMHOST
           - EnvREDISHOST
           - EnvRESOLVERIP
