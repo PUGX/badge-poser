@@ -99,6 +99,10 @@ jobs:
           name: Restore PHP Dependencies Cache
           keys:
             - v2-php-dependencies-{{ checksum "composer.lock" }}
+      - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+                - v1-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: checks that the YAML config files contain no syntax errors
           command: ./bin/console lint:yaml config
@@ -108,6 +112,10 @@ jobs:
       - run:
           name: run php-cs-fixer checks
           command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
+      - run:
+          name: run stylelint checks
+          command: yarn stylelint
+
 
   php_unit_and_stan:
     executor: badge_poser_executor
