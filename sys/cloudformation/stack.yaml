@@ -32,6 +32,7 @@ Metadata:
         Parameters:
           - EnvAPPDEBUG
           - EnvAPPENV
+          - EnvAPPENVCanary
           - EnvAPPXDEBUG
           - EnvAPPXDEBUGHOST
           - EnvBITBUCKETAUTHMETHOD
@@ -103,6 +104,7 @@ Parameters:
   EnvAPPDEBUG:
     Type: String
     Default: '0'
+    AllowedValues: ['0', '1']
     Description: Environment variable for APP_DEBUG
   EnvAPPENV:
     Type: String
@@ -119,6 +121,7 @@ Parameters:
   EnvAPPXDEBUG:
     Type: String
     Default: '0'
+    AllowedValues: ['0', '1']
     Description: Environment variable for APP_XDEBUG
   EnvAPPXDEBUGHOST:
     Type: String
@@ -141,8 +144,10 @@ Parameters:
     Default: ''
     Description: Environment variable for CIRCLE_CI_TOKEN
   EnvDARKCANARYTHRESHOLD:
-    Type: String
+    Type: Number
     Default: 10
+    MinValue: 0
+    MaxValue: 100
     Description: Specifies the volume of traffic to go to the dark canary.
   EnvGITHUBAUTHMETHOD:
     Type: String
@@ -330,6 +335,9 @@ Resources:
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
+      ClusterSettings:
+        - Name: containerInsights
+          Value: enabled
       Tags:
         - Key: env
           Value: !Ref ServiceName
@@ -362,10 +370,10 @@ Resources:
   ecstask:
     Type: AWS::ECS::TaskDefinition
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       ExecutionRoleArn: !Ref ExecRoleArn
       ContainerDefinitions:
-        # container phpfpm
         - Name: 'phpfpm'
           PortMappings:
             - HostPort: 9000
@@ -402,7 +410,7 @@ Resources:
               Value: !Ref EnvBITBUCKETTOKEN
             - Name: TRUSTED_PROXIES
               Value: !Ref EnvTRUSTEDPROXIES
-          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}'
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}'
           Essential: true
           LogConfiguration:
             LogDriver: awslogs
@@ -411,7 +419,6 @@ Resources:
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm'
 
-        # container phpfpm-darkcanary
         - Name: phpfpm-darkcanary
           PortMappings:
             - HostPort: 9001
@@ -448,7 +455,7 @@ Resources:
               Value: !Ref EnvBITBUCKETTOKEN
             - Name: TRUSTED_PROXIES
               Value: !Ref EnvTRUSTEDPROXIES
-          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}'
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}'
           Essential: false
           LogConfiguration:
             LogDriver: awslogs
@@ -457,7 +464,6 @@ Resources:
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm-darkcanary'
 
-        # container nginx
         - Name: 'nginx'
           PortMappings:
             - HostPort: 80
@@ -474,7 +480,7 @@ Resources:
               Value: !Ref EnvRESOLVERIP
             - Name: DARK_CANARY_THRESHOLD
               Value: !Ref EnvDARKCANARYTHRESHOLD
-          Image: !Sub '${AWS::AccountId}-cluster-${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}'
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}'
           Essential: true
           DependsOn:
             - Condition: START
