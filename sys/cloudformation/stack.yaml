@@ -166,7 +166,7 @@ Parameters:
     Description: Environment variable for PHPFPM_CANARY_HOST
   EnvREDISHOST:
     Type: String
-    Default: 'REMOTE_ADDR'
+    Default: ''
     Description: Environment variable for REDIS_HOST
   EnvREDISURL:
     Type: String

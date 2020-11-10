@@ -120,16 +120,16 @@ deploy_prod: .docker_img_deps ## deploy to prod
 		-f sys/docker/alpine-nginx/Dockerfile .; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER; \
 	cat sys/cloudformation/parameters.prod.json \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagPhp").ParameterValue="$$VER"' \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagPhpCanary").ParameterValue="$$VER"' \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagNginx").ParameterValue="$$VER"' \
+		| sed 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/'
+		| sed 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/'
+		| sed 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.prod.json.new; \
         mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
         mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
 	cat sys/cloudformation/parameters.prod.secrets.json \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagPhp").ParameterValue="$$VER"' \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagPhpCanary").ParameterValue="$$VER"' \
-		| jq '.[]  | select(.ParameterKey == "EcrImageTagNginx").ParameterValue="$$VER"' \
+		| sed 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/'
+		| sed 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/'
+		| sed 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.prod.secrets.json.new; \
         mv sys/cloudformation/parameters.prod.secrets.json sys/cloudformation/parameters.prod.secrets.json.bak; \
         mv sys/cloudformation/parameters.prod.secrets.json.new sys/cloudformation/parameters.secrets.prod.json; \
