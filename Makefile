@@ -103,8 +103,12 @@ analyse_canary: ## run php-cs-fixer and phpstan (dark-canary)
 
 AWS_PROFILE ?= poser
 AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) | jq -r '.Account')
+PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | head -n 1 | cut -d "/" -f3)
 
 deploy_prod: .docker_img_deps ## deploy to prod
+	git fetch --all --tags > /dev/null; \
+	git log --pretty=format:"- %B" ${START_LOG}..HEAD | tr '\r' '\n' | grep -Ev '^$$' > CHANGELOG; \
+	sed -i 's/^*/-/' CHANGELOG; sed -i 's/^[ \t]*//' CHANGELOG; sed -i 's/^-[ \t]*//' CHANGELOG; sed -i 's/^-[ \t]*//' CHANGELOG; sed -i 's/^/ - /' CHANGELOG; \
 	aws ecr get-login-password --profile $$AWS_PROFILE | docker login --password-stdin -u AWS $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com; \
 	VER=$(shell date +%s); \
     docker build \
@@ -136,5 +140,6 @@ deploy_prod: .docker_img_deps ## deploy to prod
 	aws --profile=$$AWS_PROFILE cloudformation create-change-set \
 		--stack=poser-ecs \
 		--change-set-name=poser-ecs-$$VER \
+		--description="$(shell cat CHANGELOG)" \
 		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
 		--parameters=file://$$PWD/sys/cloudformation/parameters.secrets.prod.json
