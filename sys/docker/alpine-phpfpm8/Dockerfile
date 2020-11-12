@@ -1,4 +1,4 @@
-FROM php:8.0.0RC3-fpm-alpine3.12
+FROM php:8.0.0RC4-fpm-alpine3.12
 
 ENV RUN_IN_CONTAINER="True"
 
