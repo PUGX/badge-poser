@@ -112,7 +112,7 @@ Parameters:
   EnvAPPENVCanary:
     Type: String
     Default: 'canary'
-    Description: Environment variable for APP_ENV (dark-canary)
+    Description: Environment variable for APP_ENV (used to identify as production dark canary instance)
   EnvAPPSECRET:
     Type: String
     Default: ''
