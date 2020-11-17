@@ -39,7 +39,7 @@ class Contributor
 
     public function getProfileImg(): string
     {
-        return $this->profileImg;
+        return $this->profileImg.'?s='.$this->size;
     }
 
     public function __toString()
