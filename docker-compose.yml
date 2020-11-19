@@ -16,6 +16,8 @@ services:
           memory: 128M
     env_file:
       - ./.env
+    environment:
+      - ENABLE_CW=0
     ports:
       - 8001:80
     volumes:
@@ -37,6 +39,8 @@ services:
           memory: 1024M
     env_file:
       - ./.env
+    environment:
+      - ENABLE_CW=0
     ports:
       - 9000:9000
     volumes:
@@ -61,6 +65,7 @@ services:
       - ./.env
     environment:
       - APP_ENV=canary
+      - ENABLE_CW=0
     ports:
       - 9001:9001
     working_dir: /application

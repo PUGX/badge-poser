@@ -1,10 +1,6 @@
 #!/bin/sh
-# vim:sw=4:ts=4:et
 
-IS_DEV=$(ping -c 1 -t 5 169.254.169.253 > /dev/null; echo $?)
-
-# Only for production
-if [ "$IS_DEV" == "0" ]; then
+if [ "$ENABLE_CW" = "1" ]; then
     /opt/aws/amazon-cloudwatch-agent/bin/start-amazon-cloudwatch-agent
 fi
 
