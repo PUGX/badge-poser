@@ -4,7 +4,7 @@ fastcgi_cache_path /data/nginx/cache keys_zone=cached_badges:10m levels=1:2 max_
 log_format custom '$remote_addr - $remote_user [$time_local] '
                   '"$request" $status $body_bytes_sent '
                   '"$http_referer" "$http_user_agent" "$gzip_ratio" '
-                  'CACHE[$request_method-$scheme://$host$request_uri]:$skip_cache:$upstream_cache_status';
+                  'CACHE[$request_method@@$host@@$request_uri]:$skip_cache:$upstream_cache_status';
 
 init_by_lua_file '/etc/nginx/conf.d/lua/init.lua';
 
@@ -27,12 +27,12 @@ server {
 
     root /application/public;
 
-    if ($request_method = POST) { set $skip_cache 1; }
-    if ($query_string != "") { set $skip_cache 1; }
+    if ($request_uri ~ "/dark-canary/") { set $skip_cache 1; }
 
     fastcgi_cache cached_badges;
-    fastcgi_cache_key "$request_method-$scheme://$host$request_uri";
-    fastcgi_cache_bypass $skip_cache;
+    fastcgi_cache_methods GET HEAD;
+    fastcgi_cache_key "$request_method@@$host@@$request_uri";
+    fastcgi_cache_bypass $is_args $skip_cache;
     fastcgi_no_cache $skip_cache;
     fastcgi_cache_min_uses 1; # generates cache for each obj
     fastcgi_cache_revalidate on;
@@ -66,6 +66,8 @@ server {
     add_header X-XSS-Protection "1; mode=block";
 
     location ~ ^/dark-canary {
+        internal;
+
         set_by_lua_block $request_url {
             return string.gsub(ngx.var.request_uri, "/dark%-canary", "")
         }
@@ -73,7 +75,7 @@ server {
             return string.gsub(ngx.var.document_uri, "/dark%-canary", "")
         }
 
-        fastcgi_pass phpfpm-darkcanary:9001;
+        fastcgi_pass ${PHPFPM_CANARY_HOST}:9001;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;

@@ -27,7 +27,8 @@ stop: ## stop docker containers
 	- docker-compose down
 
 dc_build: ## rebuild docker compose containers
-	- docker-compose up --build -d
+	- make .docker_img_deps
+	- docker-compose up --build
 
 purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
@@ -63,7 +64,7 @@ analyse: ## run php-cs-fixer and phpstan
 ##@ PROD
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --no-suggest --optimize-autoloader
+	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
 	- docker-compose run --rm node yarn install --production
 
 build_prod: ## build assets for production environment
@@ -96,39 +97,49 @@ analyse_canary: ## run php-cs-fixer and phpstan (dark-canary)
 
 ##@ DEPLOY
 
-ACCOUNT=$(shell aws sts get-caller-identity --profile=poser | jq -r '.Account')
-VER=$(shell date +%s)
+.docker_img_deps:
+	docker build -t jsbuilder -f sys/docker/common/Dockerfile.assets .
+	docker build -t awsbuilder -f sys/docker/common/Dockerfile.aws-ecs-ci .
 
-deploy_prod: ## deploy to prod
-	# docker_image_phpfpm
+AWS_PROFILE ?= poser
+AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) | jq -r '.Account')
+PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | head -n 1 | cut -d "/" -f3)
+
+deploy_prod: .docker_img_deps ## deploy to prod
+	git fetch --all --tags > /dev/null; \
+	git log --pretty=format:"- %B" ${START_LOG}..HEAD | tr '\r' '\n' | grep -Ev '^$$' > CHANGELOG; \
+	sed -i 's/^*/-/' CHANGELOG; sed -i 's/^[ \t]*//' CHANGELOG; sed -i 's/^-[ \t]*//' CHANGELOG; sed -i 's/^-[ \t]*//' CHANGELOG; sed -i 's/^/ - /' CHANGELOG; \
+	aws ecr get-login-password --profile $$AWS_PROFILE | docker login --password-stdin -u AWS $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com; \
+	VER=$(shell date +%s); \
+    docker build \
+		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER \
+		-f sys/docker/alpine-phpfpm/Dockerfile .; \
+	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER; \
 	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$(VER) \
-		-f sys/docker/alpine-phpfpm/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$(VER)
-
-	# docker_image_phpfpm_darkcanary
+		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER \
+		-f sys/docker/alpine-phpfpm8/Dockerfile .; \
+	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER; \
 	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$(VER) \
-		-f sys/docker/alpine-phpfpm8/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$(VER)
-
-	# docker_image_nginx
-	docker build \
-		-t $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$(VER) \
-		-f sys/docker/alpine-nginx/Dockerfile .
-	docker push $(ACCOUNT).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$(VER)
-
+		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER \
+		-f sys/docker/alpine-nginx/Dockerfile .; \
+	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER; \
 	cat sys/cloudformation/parameters.prod.json \
-		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
-		| tee sys/cloudformation/parameters.prod.json
-
+		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		| tee sys/cloudformation/parameters.prod.json.new; \
+        mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
+        mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
 	cat sys/cloudformation/parameters.prod.secrets.json \
-		| jq '.[18].ParameterValue="$(VER)" | .[19].ParameterValue="$(VER)"' \
-		| tee sys/cloudformation/parameters.prod.secrets.json
-
-	# create change-set on aws
-	aws cloudformation create-change-set \
+		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		| tee sys/cloudformation/parameters.prod.secrets.json.new; \
+        mv sys/cloudformation/parameters.prod.secrets.json sys/cloudformation/parameters.prod.secrets.json.bak; \
+        mv sys/cloudformation/parameters.prod.secrets.json.new sys/cloudformation/parameters.secrets.prod.json; \
+	aws --profile=$$AWS_PROFILE cloudformation create-change-set \
 		--stack=poser-ecs \
-		--change-set-name=poser-ecs-$(VER) \
-		--template-body=file://$$PWD/sys/cloudformation/stack.yml \
-		--parameters=file://$$PWD/sys/cloudformation/parameters.prod.secrets.json
+		--change-set-name=poser-ecs-$$VER \
+		--description="$(shell cat CHANGELOG)" \
+		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
+		--parameters=file://$$PWD/sys/cloudformation/parameters.secrets.prod.json

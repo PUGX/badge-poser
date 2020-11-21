@@ -1,20 +1,6 @@
-FROM node:14.14.0-alpine3.12 AS jsbuilder
-
-WORKDIR /application
-
-COPY . /application
-
-RUN apk add --no-cache --virtual frontenddeps \
-       python3 \
-       yarn \
-    && npm install -g --unsafe-perm node-sass@4.14.1 \
-    && yarn config set ignore-engines true \
-    && yarn install --production \
-    && yarn add @symfony/webpack-encore --production \
-    && yarn add sass-loader@^8.0.0 node-sass@4.14.1 --dev \
-    && npm run build
-
 FROM php:7.4.11-fpm-alpine3.12
+
+ENV RUN_IN_CONTAINER="True"
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
@@ -48,6 +34,9 @@ COPY sys/php/php.ini /usr/local/etc/php/php.ini
 COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY --from=awsbuilder /tmp /tmp
+COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 WORKDIR /application
 
@@ -60,9 +49,11 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --no-suggest \
+RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress \
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
 
-CMD ["/application/sys/docker/alpine-phpfpm/start.sh"]
+ENTRYPOINT ["/application/sys/docker/alpine-phpfpm/start.sh"]
+
+CMD ["php-fpm"]

@@ -44,7 +44,7 @@ jobs:
             - v1-php-dependencies-
       - run:
           name: install project dependencies
-          command: composer install -n --no-progress --no-suggest
+          command: composer install -n --no-progress
       - save_cache:
           paths:
             - ~/app/vendor
@@ -148,6 +148,24 @@ jobs:
           name: run phpstan checks
           command: vendor/bin/phpstan analyse --memory-limit=2G
 
+  deploy_changeset:
+    executor: badge_poser_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v2-php-dependencies-{{ checksum "composer.lock" }}
+      - restore_cache:
+            name: Restore Yarn Package Cache
+            keys:
+                - v1-yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: builds images, pushes to image registry, creates cfn stack changeset
+          command: make deploy_prod
+
 workflows:
   version: 2
   build-and-test:
@@ -169,3 +187,17 @@ workflows:
       - php_unit_and_stan:
           requires:
             - precompile_assets
+
+  deploy-changeset:
+    jobs:
+      - checkout_code
+      - deploy_changeset:
+          context:
+            - deploy
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - checkout_code

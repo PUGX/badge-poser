@@ -1,8 +1,19 @@
 #!/bin/sh
 
-cd /application
+if [ "$ENABLE_CW" = "1" ]; then
+    /opt/aws/amazon-cloudwatch-agent/bin/start-amazon-cloudwatch-agent
+fi
 
-# Only for production
-if [[ $APP_ENV == "prod" ]]; then /usr/local/bin/composer dump-env prod; fi
+if [ "$APP_ENV" = "prod" ]; then
+    cd /application
+    /usr/local/bin/composer dump-env $APP_ENV
+fi
 
-php-fpm
+set -e
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"
