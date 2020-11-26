@@ -56,7 +56,7 @@ class ClientStrategy
         if ($repository->isBitbucket()) {
             $repoBitbucketData = $this->bitbucketClient
                 ->repositories()
-                ->users($username)
+                ->workspaces($username)
                 ->show($repositoryName);
 
             if (!$this->isValidBitbucketRepository($repoBitbucketData)) {

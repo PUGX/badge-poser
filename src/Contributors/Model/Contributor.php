@@ -22,9 +22,9 @@ class Contributor
         $this->size = $size;
     }
 
-    public static function create(string $username, string $profileUrl, string $profileImg): self
+    public static function create(string $username, string $profileUrl, string $profileImg, int $size = self::DEFAULT_IMG_SIZE): self
     {
-        return new self($username, $profileUrl, $profileImg);
+        return new self($username, $profileUrl, $profileImg, $size);
     }
 
     public function getUsername(): string
@@ -37,9 +37,16 @@ class Contributor
         return $this->profileUrl;
     }
 
+    private function getUrlSeparator(string $url): string {
+        return strpos($url, '?')
+               ? '&'
+               : '?';
+    }
+
     public function getProfileImg(): string
     {
-        return $this->profileImg.'?s='.$this->size;
+        $sep = $this->getUrlSeparator($this->profileImg);
+        return $this->profileImg.$sep.'s='.$this->size;
     }
 
     public function __toString()

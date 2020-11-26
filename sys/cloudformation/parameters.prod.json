@@ -18,5 +18,5 @@
   {"ParameterKey": "EnvCIRCLECITOKEN", "ParameterValue": ""},
   {"ParameterKey": "EnvGITHUBUSERNAME", "ParameterValue": ""},
   {"ParameterKey": "EnvSENTRYDSN", "ParameterValue": ""},
-  {"ParameterKey": "EnvDARKCANARYTHRESHOLD", "ParameterValue": "25"}
+  {"ParameterKey": "EnvDARKCANARYTHRESHOLD", "ParameterValue": "0"}
 ]

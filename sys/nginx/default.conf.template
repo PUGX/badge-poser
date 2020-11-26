@@ -75,7 +75,8 @@ server {
             return string.gsub(ngx.var.document_uri, "/dark%-canary", "")
         }
 
-        fastcgi_pass ${PHPFPM_CANARY_HOST}:9001;
+        # fastcgi_pass ${PHPFPM_CANARY_HOST}:9001;
+        fastcgi_pass ${PHPFPM_CANARY_HOST}:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;

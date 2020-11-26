@@ -3,7 +3,7 @@ version: 2.1
 executors:
   badge_poser_executor: # declares a reusable executor
     docker:
-      - image: pugx/badge-poser:3.0
+      - image: pugx/badge-poser:4.0
         environment:
           APP_ENV: "test"
           APP_SECRET: "notReallyNeededHere"
@@ -44,7 +44,7 @@ jobs:
             - v1-php-dependencies-
       - run:
           name: install project dependencies
-          command: composer install -n --no-progress
+          command: composer install -n --no-progress --ignore-platform-reqs
       - save_cache:
           paths:
             - ~/app/vendor
