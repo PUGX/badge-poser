@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/browser";
 import Awesomplete from "awesomplete";
 import {debounce} from "./debounce";
 import "./clipboard";
-import {makeElement, removeChildren} from "./elements-utils";
+import {makeCopyAllBadgesButtonElement, makeElement, removeChildren} from "./elements-utils";
 import Promise from "promise-polyfill";
 import "whatwg-fetch";
 import "../scss/app.scss";
@@ -51,6 +51,15 @@ function renderBadges(badges) {
     badges.badges.forEach((badge) => {
         badgesContainer.appendChild(makeElement(renderBadgeContainer(badge)));
     });
+
+    let copyAllBadges = document.querySelector(".copy");
+    let badgesAsMarkdown = '';
+
+    removeChildren(copyAllBadges);
+    badges.badges.filter((badge) => badge.featured).forEach((badge) => {
+        badgesAsMarkdown += badge.markdown;
+    });
+    copyAllBadges.appendChild(makeCopyAllBadgesButtonElement(badgesAsMarkdown));
 }
 
 const searchInput = document.getElementById("search-package");
