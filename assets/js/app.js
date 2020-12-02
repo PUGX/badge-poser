@@ -53,7 +53,7 @@ function renderBadges(badges) {
     });
 
     let copyAllBadges = document.querySelector(".copy");
-    let badgesAsMarkdown = '';
+    let badgesAsMarkdown = "";
 
     removeChildren(copyAllBadges);
     badges.badges.filter((badge) => badge.featured).forEach((badge) => {
