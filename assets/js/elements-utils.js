@@ -10,3 +10,4 @@ export function removeChildren(node){
         node.removeChild( node.firstChild );
     }
 }
+

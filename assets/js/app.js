@@ -38,6 +38,11 @@ const renderBadgeContainer = ({label, img, name, markdown}) =>
         <button data-clipboard-target=".badge-input[data-badge='${name}']">Copy</button>
     </div>`;
 
+const renderCopyAllBadgesButton = ({markdown}) =>
+    `<button class="big" id="all-badges" data-clipboard-text="${markdown}">
+        Copy All Badges
+    </button>`;
+
 function renderBadges(badges) {
     let featuredBadges = document.querySelector(".featured-badges");
 
@@ -51,6 +56,10 @@ function renderBadges(badges) {
     badges.badges.forEach((badge) => {
         badgesContainer.appendChild(makeElement(renderBadgeContainer(badge)));
     });
+
+    let copyAllBadges = document.querySelector(".copy");
+    removeChildren(copyAllBadges);
+    copyAllBadges.appendChild(makeElement(renderCopyAllBadgesButton(badges.all)));
 }
 
 const searchInput = document.getElementById("search-package");
