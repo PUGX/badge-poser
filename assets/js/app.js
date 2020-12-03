@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/browser";
 import Awesomplete from "awesomplete";
 import {debounce} from "./debounce";
 import "./clipboard";
-import {makeCopyAllBadgesButtonElement, makeElement, removeChildren} from "./elements-utils";
+import {makeElement, removeChildren} from "./elements-utils";
 import Promise from "promise-polyfill";
 import "whatwg-fetch";
 import "../scss/app.scss";
@@ -38,6 +38,11 @@ const renderBadgeContainer = ({label, img, name, markdown}) =>
         <button data-clipboard-target=".badge-input[data-badge='${name}']">Copy</button>
     </div>`;
 
+const renderCopyAllBadgesButton = ({markdown}) =>
+    `<button class="big" id="all-badges" data-clipboard-text="${markdown}">
+        Copy All Badges
+    </button>`;
+
 function renderBadges(badges) {
     let featuredBadges = document.querySelector(".featured-badges");
 
@@ -53,13 +58,8 @@ function renderBadges(badges) {
     });
 
     let copyAllBadges = document.querySelector(".copy");
-    let badgesAsMarkdown = "";
-
     removeChildren(copyAllBadges);
-    badges.badges.filter((badge) => badge.featured).forEach((badge) => {
-        badgesAsMarkdown += badge.markdown;
-    });
-    copyAllBadges.appendChild(makeCopyAllBadgesButtonElement(badgesAsMarkdown));
+    copyAllBadges.appendChild(makeElement(renderCopyAllBadgesButton(badges.all)));
 }
 
 const searchInput = document.getElementById("search-package");
