@@ -37,6 +37,6 @@ class PackagistControllerTest extends WebTestCase
 
         $responseContent = \json_decode((string) $client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
-        self::assertCount(10, $responseContent);
+        self::assertCount(15, $responseContent);
     }
 }
