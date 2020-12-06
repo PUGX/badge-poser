@@ -1,11 +1,11 @@
 # Contributing
 
-Active contribution and patches are very welcome.  
-See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open). 
-There are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).  
+Active contribution and patches are very welcome.
+See the [github issues](https://github.com/PUGX/badge-poser/issues?state=open).
+There are some tagged as [easy-pick](https://github.com/PUGX/badge-poser/issues?labels=easy-pick&page=1&state=open).
 To keep things in shape we have a bunch of unit tests. If you're submitting pull requests please
 make sure that they are still passing and if you add functionality please
-take a look at the coverage as well, it should be pretty high. :)  
+take a look at the coverage as well, it should be pretty high. :)
 Last, but not least, respect coding standards
 (we use [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) for that);
 
@@ -24,7 +24,7 @@ $ cp .env.dist .env
 
 Follow [this link](https://github.com/settings/tokens) for generate your GitHub "Personal access token" and put them
  in `.env` file as value of `GITHUB_USERNAME`.
- 
+
 Follow [this link](https://bitbucket.org/account/settings/app-passwords/new) for generate your Bitbucket "App Password" and put them
  in `.env` file as value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
 
@@ -88,7 +88,7 @@ $ make run
 
 ### Go away
 ```bash
-$ make down
+$ make stop
 ```
 
 ### Build assets and remaining in watch
