@@ -22,13 +22,15 @@ function changePackage(packageName) {
     document.getElementById("permalink").setAttribute("href", url);
 }
 
-const renderBadge = ({img}) => `
-    <img class="badge" src="${img}">`;
+const renderBadge = ({img, imgLink}) =>
+    `<a href="${imgLink}" target="_blank">
+        <img class="badge" src="${img}">
+     </a>`;
 
-const renderBadgeContainer = ({label, img, name, markdown}) =>
+const renderBadgeContainer = ({label, img, imgLink, name, markdown}) =>
     `<div class="col-12 col-md-6">
         <h4>${label}</h4>
-        ${renderBadge({img})}
+        ${renderBadge({img, imgLink})}
         <input
             class="badge-input"
             data-badge="${name}"

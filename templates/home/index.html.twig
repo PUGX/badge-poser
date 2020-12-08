@@ -63,7 +63,9 @@
                         {% apply spaceless %}
                             {% for badge in badges.badges %}
                                 {% if badge.featured %}
-                                    <img class="badge" src="{{ badge.img }}">
+                                    <a href="{{ badge.imgLink }}" target="_blank">
+                                        <img class="badge" src="{{ badge.img }}">
+                                    </a>
                                 {% endif %}
                             {% endfor %}
                         {% endapply %}
@@ -85,7 +87,9 @@
                 {% for badge in badges.badges %}
                     <div class="col-12 col-md-6">
                         <h4>{{ badge.label }}</h4>
-                        <img class="badge" src="{{ badge.img }}">
+                        <a href="{{ badge.imgLink }}" target="_blank">
+                            <img class="badge" src="{{ badge.img }}">
+                        </a>
 
                         <input
                                 class="badge-input"
