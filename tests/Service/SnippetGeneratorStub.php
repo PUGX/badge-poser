@@ -21,7 +21,7 @@ class SnippetGeneratorStub implements SnippetGeneratorInterface
                     'label' => 'Latest Stable Version',
                     'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
                     'img' => 'http://localhost/phpunit/phpunit/v',
-                    'img-link' => 'https://packagist.org/packages/phpunit/phpunit',
+                    'imgLink' => 'https://packagist.org/packages/phpunit/phpunit',
                     'featured' => true,
                 ],
                 [
@@ -29,7 +29,7 @@ class SnippetGeneratorStub implements SnippetGeneratorInterface
                     'label' => 'Latest Stable Version',
                     'markdown' => '[![Latest Stable Version](http://localhost/phpunit/phpunit/v)](https://packagist.org/packages/phpunit/phpunit)',
                     'img' => 'http://localhost/phpunit/phpunit/v',
-                    'img-link' => 'https://packagist.org/packages/phpunit/phpunit',
+                    'imgLink' => 'https://packagist.org/packages/phpunit/phpunit',
                     'featured' => false,
                 ],
             ],
