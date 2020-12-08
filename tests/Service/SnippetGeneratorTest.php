@@ -100,6 +100,7 @@ class SnippetGeneratorTest extends TestCase
                     'label' => 'badge_1_lable',
                     'markdown' => '[![badge_1_lable](img_url)](repo_url)',
                     'img' => 'img_url',
+                    'imgLink' => 'repo_url',
                     'featured' => true,
                 ],
                 [
@@ -107,6 +108,7 @@ class SnippetGeneratorTest extends TestCase
                     'label' => 'badge_2_lable',
                     'markdown' => '[![badge_2_lable](img_url2)](repo_url)',
                     'img' => 'img_url2',
+                    'imgLink' => 'repo_url',
                     'featured' => true,
                 ],
             ],
@@ -177,6 +179,7 @@ class SnippetGeneratorTest extends TestCase
                     'label' => 'badge_lable',
                     'markdown' => '[![badge_lable](img_url)](repo_url)',
                     'img' => 'img_url',
+                    'imgLink' => 'repo_url',
                     'featured' => false,
                 ],
             ],
