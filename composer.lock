@@ -6282,16 +6282,16 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v4.4.17",
+            "version": "v4.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
-                "reference": "6dd958a0c30bdf816ddef5052655a06d87fa343c"
+                "reference": "2befc49ec50b4d6ffd100b332389260c9069ba1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/6dd958a0c30bdf816ddef5052655a06d87fa343c",
-                "reference": "6dd958a0c30bdf816ddef5052655a06d87fa343c",
+                "url": "https://api.github.com/repos/symfony/dotenv/zipball/2befc49ec50b4d6ffd100b332389260c9069ba1c",
+                "reference": "2befc49ec50b4d6ffd100b332389260c9069ba1c",
                 "shasum": ""
             },
             "require": {
@@ -6331,7 +6331,7 @@
                 "environment"
             ],
             "support": {
-                "source": "https://github.com/symfony/dotenv/tree/v4.4.17"
+                "source": "https://github.com/symfony/dotenv/tree/v4.4.18"
             },
             "funding": [
                 {
@@ -6347,7 +6347,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-14T17:10:20+00:00"
+            "time": "2020-12-08T16:59:59+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
