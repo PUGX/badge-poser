@@ -5820,16 +5820,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.58",
+            "version": "0.12.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5"
+                "reference": "23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2a4847df6047b30af28854ed9dc95304cdb56ae5",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa",
+                "reference": "23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa",
                 "shasum": ""
             },
             "require": {
@@ -5860,7 +5860,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.58"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.64"
             },
             "funding": [
                 {
@@ -5876,7 +5876,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-29T13:32:03+00:00"
+            "time": "2020-12-21T11:59:02+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
