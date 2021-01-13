@@ -4,7 +4,7 @@ ENV RUN_IN_CONTAINER="True"
 
 WORKDIR /application
 
-RUN echo "*/5 * * * *", command: "find /data/nginx/cache/ -type f -newermt '30 minutes ago' -print0 | xargs -0 /application/sys/docker/alpine-nginx/expire.sh" >> /var/spool/cron/crontabs/root
+RUN echo "*/5 * * * * find /data/nginx/cache/ -type f -newermt '30 minutes ago' -print0 | xargs -0 /application/sys/docker/alpine-nginx/expire.sh" >> /var/spool/cron/crontabs/root
 
 COPY sys/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY sys/nginx/default.conf.template /etc/nginx/templates/default.conf.template
