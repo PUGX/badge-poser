@@ -59,6 +59,7 @@ class SnippetGenerator implements SnippetGeneratorInterface
                 'label' => $badge['label'],
                 'markdown' => $markdown,
                 'img' => $img,
+                'imgLink' => $repoLink,
                 'featured' => \in_array($badge['name'], $this->allInBadges, true),
             ];
 
