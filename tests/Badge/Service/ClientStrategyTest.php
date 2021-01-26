@@ -9,7 +9,7 @@ use App\Badge\Exception\SourceClientNotFound;
 use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
 use Bitbucket\Api\Repositories;
-use Bitbucket\Api\Repositories\Users;
+use Bitbucket\Api\Repositories\Workspaces;
 use Bitbucket\Client as BitbucketClient;
 use Github\Api\Repo;
 use Github\Client as GithubClient;
@@ -34,7 +34,7 @@ class ClientStrategyTest extends TestCase
 
     private string $repositoryName;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->githubClient = $this->getMockBuilder(GithubClient::class)
@@ -76,10 +76,10 @@ class ClientStrategyTest extends TestCase
     {
         $defaultBranch = 'masterBitbucket';
 
-        $users = $this->getMockBuilder(Users::class)
+        $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $users->expects($this->once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -92,9 +92,9 @@ class ClientStrategyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $repositories->expects($this->once())
-            ->method('users')
+            ->method('workspaces')
             ->with($this->username)
-            ->willReturn($users);
+            ->willReturn($workspaces);
 
         $this->bitbucketClient->expects($this->once())
             ->method('repositories')
@@ -194,10 +194,10 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfEmptyBitbucketData(): void
     {
-        $users = $this->getMockBuilder(Users::class)
+        $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $users->expects($this->once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([]);
@@ -206,9 +206,9 @@ class ClientStrategyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $repositories->expects($this->once())
-            ->method('users')
+            ->method('workspaces')
             ->with($this->username)
-            ->willReturn($users);
+            ->willReturn($workspaces);
 
         $this->bitbucketClient->expects($this->once())
             ->method('repositories')
@@ -225,10 +225,10 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNoKeyMainBranchBitbucketData(): void
     {
-        $users = $this->getMockBuilder(Users::class)
+        $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $users->method('show')
+        $workspaces->method('show')
             ->with($this->repositoryName)
             ->willReturn([
                 'foo' => 'bar',
@@ -238,9 +238,9 @@ class ClientStrategyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $repositories->expects($this->once())
-            ->method('users')
+            ->method('workspaces')
             ->with($this->username)
-            ->willReturn($users);
+            ->willReturn($workspaces);
 
         $this->bitbucketClient->expects($this->once())
             ->method('repositories')
@@ -257,10 +257,10 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNoKeyNameBitbucketData(): void
     {
-        $users = $this->getMockBuilder(Users::class)
+        $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $users->expects($this->once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -271,9 +271,9 @@ class ClientStrategyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $repositories->expects($this->once())
-            ->method('users')
+            ->method('workspaces')
             ->with($this->username)
-            ->willReturn($users);
+            ->willReturn($workspaces);
 
         $this->bitbucketClient->expects($this->once())
             ->method('repositories')
@@ -290,10 +290,10 @@ class ClientStrategyTest extends TestCase
 
     public function testThrowExceptionIfThereIsNNameIsNotStringBitbucketData(): void
     {
-        $users = $this->getMockBuilder(Users::class)
+        $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $users->expects($this->once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -306,9 +306,9 @@ class ClientStrategyTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $repositories->expects($this->once())
-            ->method('users')
+            ->method('workspaces')
             ->with($this->username)
-            ->willReturn($users);
+            ->willReturn($workspaces);
 
         $this->bitbucketClient->expects($this->once())
             ->method('repositories')

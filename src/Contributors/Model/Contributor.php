@@ -37,8 +37,9 @@ class Contributor
         return $this->profileUrl;
     }
 
-    private function getUrlSeparator(string $url): string {
-        return strpos($url, '?')
+    private function getUrlSeparator(string $url): string
+    {
+        return \strpos($url, '?')
                ? '&'
                : '?';
     }
@@ -46,7 +47,9 @@ class Contributor
     public function getProfileImg(): string
     {
         $sep = $this->getUrlSeparator($this->profileImg);
-        return $this->profileImg.$sep.'s='.$this->size;
+        $qs = \http_build_query(['s' => $this->size]);
+
+        return $this->profileImg.$sep.$qs;
     }
 
     public function __toString()

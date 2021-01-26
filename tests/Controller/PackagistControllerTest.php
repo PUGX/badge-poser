@@ -35,7 +35,7 @@ class PackagistControllerTest extends WebTestCase
 
         self::assertTrue($client->getResponse()->isSuccessful());
 
-        $responseContent = \json_decode((string) $client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $responseContent = \json_decode((string) $client->getResponse()->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
         self::assertCount(15, $responseContent);
     }
