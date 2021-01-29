@@ -116,10 +116,6 @@ deploy_prod: .docker_img_deps ## deploy to prod
 		-f sys/docker/alpine-phpfpm/Dockerfile .; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$$VER; \
 	docker build \
-		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER \
-		-f sys/docker/alpine-phpfpm8/Dockerfile .; \
-	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm8-$$VER; \
-	docker build \
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER \
 		-f sys/docker/alpine-nginx/Dockerfile .; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER; \
