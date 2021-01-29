@@ -60,9 +60,9 @@ class Package
         return $this->getDownloads()->{$statsType}();
     }
 
-    private function comparator(Version $version1, Version $version2): bool
+    private function comparator(Version $version1, Version $version2): int
     {
-        return $version1->getTime() > $version2->getTime();
+        return $version1->getTime() <=> $version2->getTime();
     }
 
     /**

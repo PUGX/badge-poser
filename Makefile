@@ -142,4 +142,4 @@ deploy_prod: .docker_img_deps ## deploy to prod
 		--change-set-name=poser-ecs-$$VER \
 		--description="$(shell cat CHANGELOG)" \
 		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
-		--parameters=file://$$PWD/sys/cloudformation/parameters.secrets.prod.json
+		--parameters=file://$$PWD/sys/cloudformation/parameters.prod.secrets.json

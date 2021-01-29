@@ -51,7 +51,7 @@ class BadgeSubscriberTest extends TestCase
      */
     private $badgeSubscriber;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()

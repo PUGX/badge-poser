@@ -3,7 +3,7 @@ version: 2.1
 executors:
   badge_poser_executor: # declares a reusable executor
     docker:
-      - image: pugx/badge-poser:3.0
+      - image: pugx/badge-poser:4.0
         environment:
           APP_ENV: "test"
           APP_SECRET: "notReallyNeededHere"
@@ -44,7 +44,7 @@ jobs:
             - v1-php-dependencies-
       - run:
           name: install project dependencies
-          command: composer install -n --no-progress
+          command: composer install -n --no-progress --ignore-platform-reqs
       - save_cache:
           paths:
             - ~/app/vendor
@@ -81,6 +81,9 @@ jobs:
           keys:
             - v1-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: rebuild sass
+          command: npm rebuild node-sass
+      - run:
           name: build frontend
           command: yarn build
       - save_cache:
@@ -111,7 +114,7 @@ jobs:
           command: ./bin/console lint:twig templates
       - run:
           name: run php-cs-fixer checks
-          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
+          command: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
       - run:
           name: run stylelint checks
           command: yarn stylelint

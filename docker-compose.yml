@@ -48,28 +48,6 @@ services:
       - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/docker-php-zz-overrides.ini:ro
     working_dir: /application
 
-  phpfpm-darkcanary:
-    build:
-      context: .
-      dockerfile: sys/docker/alpine-phpfpm8/Dockerfile
-      network: host
-    container_name: badge-poser-phpfpm8
-    depends_on:
-      - redis
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 1024M
-    env_file:
-      - ./.env
-    environment:
-      - APP_ENV=canary
-      - ENABLE_CW=0
-    ports:
-      - 9001:9001
-    working_dir: /application
-
   node:
     container_name: badge-poser-node
     image: node:14.14.0-alpine3.12

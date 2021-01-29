@@ -418,51 +418,6 @@ Resources:
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm'
 
-        - Name: phpfpm-darkcanary
-          PortMappings:
-            - HostPort: 9001
-              Protocol: tcp
-              ContainerPort: 9001
-          Environment:
-            - Name: APP_ENV
-              Value: !Ref EnvAPPENVCanary
-            - Name: APP_DEBUG
-              Value: !Ref EnvAPPDEBUG
-            - Name: APP_SECRET
-              Value: !Ref EnvAPPSECRET
-            - Name: APP_XDEBUG
-              Value: !Ref EnvAPPXDEBUG
-            - Name: APP_XDEBUG_HOST
-              Value: !Ref EnvAPPXDEBUGHOST
-            - Name: REDIS_URL
-              Value: !Ref EnvREDISURL
-            - Name: GITHUB_AUTH_METHOD
-              Value: !Ref EnvGITHUBAUTHMETHOD
-            - Name: GITHUB_USERNAME
-              Value: !Ref EnvGITHUBUSERNAME
-            - Name: GITHUB_SECRET
-              Value: !Ref EnvGITHUBSECRET
-            - Name: CIRCLE_CI_TOKEN
-              Value: !Ref EnvCIRCLECITOKEN
-            - Name: SENTRY_DSN
-              Value: !Ref EnvSENTRYDSN
-            - Name: BITBUCKET_AUTH_METHOD
-              Value: !Ref EnvBITBUCKETAUTHMETHOD
-            - Name: BITBUCKET_SECRET
-              Value: !Ref EnvBITBUCKETSECRET
-            - Name: BITBUCKET_TOKEN
-              Value: !Ref EnvBITBUCKETTOKEN
-            - Name: TRUSTED_PROXIES
-              Value: !Ref EnvTRUSTEDPROXIES
-          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm8-${EcrImageTagPhpCanary}'
-          Essential: false
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: !Ref cloudwatchloggroup
-              awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: !Sub '${ServiceName}-phpfpm-darkcanary'
-
         - Name: 'nginx'
           PortMappings:
             - HostPort: 80
@@ -484,8 +439,6 @@ Resources:
           DependsOn:
             - Condition: START
               ContainerName: phpfpm
-            - Condition: START
-              ContainerName: 'phpfpm-darkcanary'
           LogConfiguration:
             LogDriver: awslogs
             Options:
