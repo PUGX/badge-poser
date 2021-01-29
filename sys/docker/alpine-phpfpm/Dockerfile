@@ -59,6 +59,6 @@ RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloa
     && php-fpm -t \
     && php-fpm -tt
 
-ENTRYPOINT ["/application/sys/docker/alpine-phpfpm8/start.sh"]
+ENTRYPOINT ["/application/sys/docker/alpine-phpfpm/start.sh"]
 
 CMD ["php-fpm"]
