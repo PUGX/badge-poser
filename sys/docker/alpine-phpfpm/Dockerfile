@@ -1,4 +1,4 @@
-FROM php:8.0.0RC5-fpm-alpine3.12
+FROM php:8.0.3-fpm-alpine3.13
 
 ENV RUN_IN_CONTAINER="True"
 
@@ -58,6 +58,9 @@ RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloa
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
+
+RUN mkdir -p /application/var/cache && chmod 777 /application/var/cache
+RUN mkdir -p /application/var/log && chmod 777 /application/var/log
 
 ENTRYPOINT ["/application/sys/docker/alpine-phpfpm/start.sh"]
 
