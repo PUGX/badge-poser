@@ -48,8 +48,8 @@ WORKDIR /application
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
-# REF: https://github.com/api-platform/api-platform/issues/1532
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+# REF: https://github.com/docker-library/php/issues/240
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
