@@ -12,7 +12,7 @@ class Contributor
     private string $username;
     private string $profileUrl;
     private string $profileImg;
-    private int $size;
+    private int $size = self::DEFAULT_IMG_SIZE;
 
     private function __construct(string $username, string $profileUrl, string $profileImg, int $size = self::DEFAULT_IMG_SIZE)
     {
@@ -46,11 +46,10 @@ class Contributor
 
     public function getProfileImg(): string
     {
-        //$sep = $this->getUrlSeparator($this->profileImg);
-        //$qs = \http_build_query(['s' => $this->size]);
+        $sep = $this->getUrlSeparator($this->profileImg);
+        $qs = \http_build_query(['s' => $this->size]);
 
-        //return $this->profileImg.$sep.$qs;
-        return $this->profileImg;
+        return $this->profileImg.$sep.$qs;
     }
 
     public function __toString()
