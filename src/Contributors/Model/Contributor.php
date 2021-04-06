@@ -46,10 +46,11 @@ class Contributor
 
     public function getProfileImg(): string
     {
-        $sep = $this->getUrlSeparator($this->profileImg);
-        $qs = \http_build_query(['s' => $this->size]);
+        //$sep = $this->getUrlSeparator($this->profileImg);
+        //$qs = \http_build_query(['s' => $this->size]);
 
-        return $this->profileImg.$sep.$qs;
+        //return $this->profileImg.$sep.$qs;
+        return $this->profileImg;
     }
 
     public function __toString()
