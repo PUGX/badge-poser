@@ -3,7 +3,7 @@ version: 2.1
 executors:
   badge_poser_executor: # declares a reusable executor
     docker:
-      - image: pugx/badge-poser:4.0
+      - image: pugx/badge-poser:4.1
         environment:
           APP_ENV: "test"
           APP_SECRET: "notReallyNeededHere"

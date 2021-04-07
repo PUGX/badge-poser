@@ -86,21 +86,13 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "test": [
-            "bin/phpunit"
-        ],
-        "test-coverage-no-colors": [
-            "vendor/bin/phpunit --colors=never --coverage-text"
-        ],
-        "test-coverage": [
-            "vendor/bin/phpunit --coverage-text"
-        ],
-        "php-cs-fixer": [
-            "vendor/bin/php-cs-fixer fix -v"
-        ],
-        "phpstan": [
-            "vendor/bin/phpstan analyse"
-        ]
+        "docker:build": "docker build -t pugx/badge-poser:4.1 -f .circleci/images/Dockerfile .",
+        "docker:push": "docker push pugx/badge-poser:4.1",
+        "test": "bin/phpunit",
+        "test-coverage-no-colors": "vendor/bin/phpunit --colors=never --coverage-text",
+        "test-coverage": "vendor/bin/phpunit --coverage-text",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix -v",
+        "phpstan": "vendor/bin/phpstan analyse"
     },
     "conflict": {
         "symfony/symfony": "*"
