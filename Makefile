@@ -107,8 +107,6 @@ PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | h
 
 deploy_prod: .docker_img_deps ## deploy to prod
 	git fetch --all --tags > /dev/null; \
-	git log --pretty=format:"- %B" ${START_LOG}..HEAD | tr '\r' '\n' | grep -Ev '^$$' > CHANGELOG; \
-	cat CHANGELOG | sed -e 's/^*/-/' -e 's/^[ \t]*//' -e 's/^-[ \t]*//' -e 's/^-[ \t]*//' -e 's/^/ - /' | tee CHANGELOG; \
 	aws ecr get-login-password --profile $(AWS_PROFILE) | docker login --password-stdin -u AWS $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com; \
 	VER=$(shell date +%s); \
 	docker build \
@@ -120,22 +118,21 @@ deploy_prod: .docker_img_deps ## deploy to prod
 		-f sys/docker/alpine-nginx/Dockerfile .; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$$VER; \
 	cat sys/cloudformation/parameters.prod.json \
-		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.prod.json.new; \
         mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
         mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
 	cat sys/cloudformation/parameters.secrets.prod.json \
-		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".+"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$$VER'"}/' \
+		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.secrets.prod.json.new; \
         mv sys/cloudformation/parameters.secrets.prod.json sys/cloudformation/parameters.secrets.prod.json.bak; \
         mv sys/cloudformation/parameters.secrets.prod.json.new sys/cloudformation/parameters.secrets.prod.json; \
 	aws --profile=$(AWS_PROFILE) cloudformation create-change-set \
 		--stack=poser-ecs \
 		--change-set-name=poser-ecs-$$VER \
-		--description="$(shell cat CHANGELOG)" \
 		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
 		--parameters=file://$$PWD/sys/cloudformation/parameters.secrets.prod.json
