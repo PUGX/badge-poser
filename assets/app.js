@@ -1,11 +1,19 @@
-import * as Sentry from "@sentry/browser";
+/*
+ * Welcome to your app's main JavaScript file!
+ *
+ * We recommend including the built version of this JavaScript file
+ * (and its CSS file) in your base layout (base.html.twig).
+ */
+import * as Sentry from '@sentry/browser';
 import Awesomplete from "awesomplete";
-import {debounce} from "./debounce";
-import "./clipboard";
-import {makeElement, removeChildren} from "./elements-utils";
+import {debounce} from "./js/debounce";
+import "./js/clipboard";
+import {makeElement, removeChildren} from "./js/elements-utils";
 import Promise from "promise-polyfill";
 import "whatwg-fetch";
-import "../scss/app.scss";
+
+// any CSS you import will output into a single css file (app.css in this case)
+import "./styles/app.scss";
 
 if (!window.Promise) {
     window.Promise = Promise;

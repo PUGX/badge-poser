@@ -42,7 +42,7 @@ class DownloadsController extends AbstractBadgeController
         $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = $request->query->get('format');
+            $format = (string) $request->query->get('format');
         }
 
         return $this->serveBadge(

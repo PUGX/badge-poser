@@ -92,7 +92,7 @@ class BadgeSubscriberTest extends TestCase
 
     public function testItIsSubscribedToKernelExceptionEvent(): void
     {
-        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $this->badgeSubscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $this->badgeSubscriber::getSubscribedEvents());
     }
 
     public function testDontHandleErrorsForNotBadgeControllers(): void
