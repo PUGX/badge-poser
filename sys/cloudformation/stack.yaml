@@ -150,7 +150,7 @@ Parameters:
     Description: Specifies the volume of traffic to go to the dark canary.
   EnvGITHUBAUTHMETHOD:
     Type: String
-    Default: 'http_token'
+    Default: 'access_token_header'
     Description: Environment variable for GITHUB_AUTH_METHOD
   EnvGITHUBSECRET:
     Type: String
