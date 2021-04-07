@@ -19,7 +19,19 @@ parameters:
 			message: "#^Unable to resolve the template type T in call to method PHPUnit\\\\Framework\\\\TestCase\\:\\:getMockBuilder\\(\\)$#"
 			count: 1
 			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
+
 		-
-		    message: "#^Method App\\\\Tests\\\\Stats\\\\Reader\\\\RedisReaderTest::testItReadsTotalAccess\\(\\) has parameter \\$total with no typehint specified.$#"
-		    count: 1
-		    path: tests/Stats/Reader/RedisReaderTest.php
+			message: "#^Cannot call method getStatusCode\\(\\) on Symfony\\\\Component\\\\HttpFoundation\\\\Response\\|null\\.$#"
+			count: 1
+			path: tests/EventListener/BadgeSubscriberTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of class Symfony\\\\Component\\\\HttpFoundation\\\\Response constructor expects string\\|null, App\\\\Badge\\\\Model\\\\Image&PHPUnit\\\\Framework\\\\MockObject\\\\MockObject given\\.$#"
+			count: 1
+			path: tests/EventListener/BadgeSubscriberTest.php
+
+		-
+			message: "#^Method App\\\\Tests\\\\Stats\\\\Reader\\\\RedisReaderTest\\:\\:testItReadsTotalAccess\\(\\) has parameter \\$total with no typehint specified\\.$#"
+			count: 1
+			path: tests/Stats/Reader/RedisReaderTest.php
+

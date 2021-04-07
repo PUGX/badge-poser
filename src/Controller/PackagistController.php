@@ -25,7 +25,7 @@ class PackagistController extends AbstractController
     public function search(Request $request, PackagistClient $packagistClient): JsonResponse
     {
         $responseContent = [];
-        $packageName = $request->query->get('name');
+        $packageName = (string) $request->query->get('name');
         $pages = $request->query->getInt('pages', 1);
 
         $packagistResponse = $packagistClient->search($packageName, [], $pages);

@@ -53,7 +53,7 @@ pugx_badge_download_type:
 
 pugx_badge_composerlock:
     path: /{repository}/composerlock.{_ext}
-    controller: App\Controller\Badge\ComposerLockController:composerLock
+    controller: App\Controller\Badge\ComposerLockController::composerLock
     methods: GET
     defaults:
         _ext: "svg"
