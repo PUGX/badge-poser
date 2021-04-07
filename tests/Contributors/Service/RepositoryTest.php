@@ -4,7 +4,7 @@ namespace App\Tests\Contributors\Service;
 
 use App\Contributors\Model\Contributor;
 use App\Contributors\Service\Repository;
-use Github\Api\ApiInterface;
+use Github\Api\AbstractApi;
 use Github\Client;
 use Github\ResultPager;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -26,7 +26,7 @@ final class RepositoryTest extends TestCase
         $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()->getMock();
 
-        $api = $this->getMockBuilder(ApiInterface::class)
+        $api = $this->getMockBuilder(AbstractApi::class)
             ->disableOriginalConstructor()->getMock();
 
         $client
