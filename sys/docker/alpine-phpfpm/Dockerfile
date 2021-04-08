@@ -1,4 +1,4 @@
-FROM php:8.0.0RC5-fpm-alpine3.12
+FROM php:8.0.3-fpm-alpine3.13
 
 ENV RUN_IN_CONTAINER="True"
 
@@ -48,8 +48,8 @@ WORKDIR /application
 COPY . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
-# REF: https://github.com/api-platform/api-platform/issues/1532
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+# REF: https://github.com/docker-library/php/issues/240
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
@@ -58,6 +58,9 @@ RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloa
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
+
+RUN mkdir -p /application/var/cache && chmod 777 /application/var/cache
+RUN mkdir -p /application/var/log && chmod 777 /application/var/log
 
 ENTRYPOINT ["/application/sys/docker/alpine-phpfpm/start.sh"]
 

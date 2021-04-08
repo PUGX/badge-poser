@@ -3,14 +3,14 @@ version: 2.1
 executors:
   badge_poser_executor: # declares a reusable executor
     docker:
-      - image: pugx/badge-poser:4.0
+      - image: pugx/badge-poser:4.1
         environment:
           APP_ENV: "test"
           APP_SECRET: "notReallyNeededHere"
           REDIS_URL: "redis://localhost"
           SYMFONY_DEPRECATIONS_HELPER: "max[self]=0"
           SENTRY_DSN: ""
-          GITHUB_AUTH_METHOD: "http_token"
+          GITHUB_AUTH_METHOD: "access_token_header"
           GITHUB_USERNAME: $GITHUB_TOKEN
           GITHUB_SECRET: ""
           BITBUCKET_AUTH_METHOD: "http_password"
@@ -114,7 +114,7 @@ jobs:
           command: ./bin/console lint:twig templates
       - run:
           name: run php-cs-fixer checks
-          command: PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
+          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
       - run:
           name: run stylelint checks
           command: yarn stylelint

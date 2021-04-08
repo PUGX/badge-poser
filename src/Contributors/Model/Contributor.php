@@ -12,7 +12,7 @@ class Contributor
     private string $username;
     private string $profileUrl;
     private string $profileImg;
-    private int $size;
+    private int $size = self::DEFAULT_IMG_SIZE;
 
     private function __construct(string $username, string $profileUrl, string $profileImg, int $size = self::DEFAULT_IMG_SIZE)
     {

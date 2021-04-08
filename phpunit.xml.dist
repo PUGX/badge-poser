@@ -20,7 +20,7 @@
         <!-- ###- snc/redis-bundle ### -->
 
         <!-- ###+ knplabs/github-api ### -->
-        <env name="GITHUB_AUTH_METHOD" value="http_token"/>
+        <env name="GITHUB_AUTH_METHOD" value="access_token_header"/>
         <env name="GITHUB_USERNAME" value="token"/>
         <env name="GITHUB_SECRET" value=""/>
         <!-- ###- knplabs/github-api ### -->

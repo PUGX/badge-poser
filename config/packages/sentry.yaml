@@ -5,5 +5,12 @@ sentry:
         capture_soft_fails: true # captures exceptions marked for retry too
     options:
         environment: '%kernel.environment%'
-        excluded_exceptions: #exclude validation errors
-            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+        integrations:
+            - 'Sentry\Integration\IgnoreErrorsIntegration'
+
+services:
+    Sentry\Integration\IgnoreErrorsIntegration:
+        arguments:
+            $options:
+                ignore_exceptions:
+                    - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
