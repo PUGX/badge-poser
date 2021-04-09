@@ -1,16 +1,18 @@
 services:
     Github\Client:
-        class: Github\Client
+        arguments:
+            - '@Github\HttpClient\Builder'
+        # Uncomment to enable authentication
         calls:
-            - method: authenticate
-              arguments:
-                  - '%env(GITHUB_USERNAME)%'
-                  - '%env(GITHUB_SECRET)%'
-                  - '%env(GITHUB_AUTH_METHOD)%'
-            - method: addCache
-              arguments:
-                  - '@Cache\Adapter\Predis\PredisCachePool'
+            - ['authenticate', ['%env(GITHUB_USERNAME)%', '%env(GITHUB_SECRET)%', '%env(GITHUB_AUTH_METHOD)%']]
+            - ['addCache', ['@Cache\Adapter\Predis\PredisCachePool']]
+
+    Github\HttpClient\Builder:
+        arguments:
+            - '@?Http\Client\HttpClient'
+            - '@?Http\Message\RequestFactory'
+            - '@?Http\Message\StreamFactory'
 
     Github\ResultPager:
         arguments:
-          - '@Github\Client'
+            - '@Github\Client'

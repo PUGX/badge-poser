@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- https://phpunit.readthedocs.io/en/9.3/configuration.html -->
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <env name="KERNEL_CLASS" value="App\Kernel" />
-        <env name="APP_DEBUG" value="1" />
-        <env name="SHELL_VERBOSITY" value="-1" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <!-- define your env variables for the test env here -->
 
         <!-- ###+ snc/redis-bundle ### -->
@@ -21,7 +22,7 @@
 
         <!-- ###+ knplabs/github-api ### -->
         <env name="GITHUB_AUTH_METHOD" value="access_token_header"/>
-        <env name="GITHUB_USERNAME" value="token"/>
+        <env name="GITHUB_USERNAME" value=""/>
         <env name="GITHUB_SECRET" value=""/>
         <!-- ###- knplabs/github-api ### -->
 
@@ -34,29 +35,26 @@
         <env name="BITBUCKET_AUTH_METHOD" value="http_password"/>
         <env name="BITBUCKET_TOKEN" value=""/>
         <env name="BITBUCKET_SECRET" value=""/>
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="test"/>
-        <env name="APP_SECRET" value="6d878195836abc1bd87b92206d7db9d8"/>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
-        <!-- env name="TRUSTED_HOSTS" value="'^localhost|example\.com$'" -->
-        <!-- ###- symfony/framework-bundle ### -->
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests/</directory>
+        <testsuite name="BadgePoser Test Suite">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 
     <coverage>
         <include>
-            <directory suffix=".php">./src/</directory>
+            <directory suffix=".php">src</directory>
         </include>
     </coverage>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+
+    <!-- see https://www.tomasvotruba.cz/blog/2019/03/28/how-to-mock-final-classes-in-phpunit/ -->
+    <extensions>
+        <extension class="App\Tests\Hook\BypassFinalHook"/>
+    </extensions>
 </phpunit>

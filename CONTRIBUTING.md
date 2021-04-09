@@ -16,20 +16,22 @@ git clone git://github.com/PUGX/badge-poser.git
 cd badge-poser
 ```
 
-## Configure your `.env` file
+## Configure your `.env.local` file
 
 ```bash
-$ cp .env.dist .env
+$ cp .env .env.local
 ```
 
 Follow [this link](https://github.com/settings/tokens) for generate your GitHub "Personal access token" and put them
- in `.env` file as value of `GITHUB_USERNAME`.
+ in `.env.local` file as value of `GITHUB_USERNAME`.
 
 Follow [this link](https://bitbucket.org/account/settings/app-passwords/new) for generate your Bitbucket "App Password" and put them
- in `.env` file as value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
+ in `.env.local` file as value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
 
 Follow [this link](https://circleci.com/account/api) for generate your CircleCI "Personal API Token" and put them
- in `.env` file as value of `CIRCLE_CI_TOKEN`.
+ in `.env.local` file as value of `CIRCLE_CI_TOKEN`.
+
+Make the same for the `.env.test.local` to run test suite.
 
 ## Manage App with docker-compose
 
@@ -60,15 +62,6 @@ DEV
 PROD
   install_prod          install php and node dependencies for production environment
   build_prod            build assets for production environment
-
-DARK-CANARY
-  install_canary        install php and node dependencies (dark-canary)
-  build_canary          build assets (dark-canary)
-  build_watch_canary    build assets and watch (dark-canary)
-  phpunit_canary        run suite of tests (dark-canary)
-  php_cs_fixer_canary   run php-cs-fixer (dark-canary)
-  phpstan_canary        run phpstan (dark-canary)
-  analyse_canary        run php-cs-fixer and phpstan (dark-canary)
 ```
 
 ### For the first initialize of the app

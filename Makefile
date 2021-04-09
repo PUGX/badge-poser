@@ -11,7 +11,7 @@ help:
 ##@ GENERIC
 
 init: ## initialize app (For the first initialize of the app)
-	- cp .env.dist .env
+	- cp .env .env.local
 	- make run
 
 run: ## run app
@@ -39,7 +39,7 @@ status: ## docker containers status
 ##@ DEV
 
 install: ## install php and node dependencies
-	- docker-compose exec phpfpm composer install --ignore-platform-reqs
+	- docker-compose exec phpfpm composer install
 	- docker-compose run --rm node yarn install
 
 build: ## build assets
@@ -49,7 +49,7 @@ build_watch: ## build assets and watch
 	- docker-compose run --rm node yarn watch
 
 phpunit: ## run suite of tests
-	- docker-compose exec phpfpm ./bin/phpunit
+	- docker-compose exec phpfpm bin/phpunit -d memory_limit=-1
 
 php_cs_fixer: ## run php-cs-fixer
 	- docker-compose exec phpfpm ./vendor/bin/php-cs-fixer fix -v
@@ -69,31 +69,6 @@ install_prod: ## install php and node dependencies for production environment
 
 build_prod: ## build assets for production environment
 	- docker-compose run --rm node yarn build
-
-##@ DARK-CANARY
-
-install_canary: ## install php and node dependencies (dark-canary)
-	- docker-compose exec phpfpm-darkcanary composer install --ignore-platform-reqs
-	- docker-compose run --rm node yarn install
-
-build_canary: ## build assets (dark-canary)
-	- docker-compose run --rm node yarn dev
-
-build_watch_canary: ## build assets and watch (dark-canary)
-	- docker-compose run --rm node yarn watch
-
-phpunit_canary: ## run suite of tests (dark-canary)
-	- docker-compose exec phpfpm-darkcanary ./bin/phpunit
-
-php_cs_fixer_canary: ## run php-cs-fixer (dark-canary)
-	- docker-compose exec phpfpm-darkcanary ./vendor/bin/php-cs-fixer fix -v
-
-phpstan_canary: ## run phpstan (dark-canary)
-	- docker-compose exec phpfpm-darkcanary ./vendor/bin/phpstan analyse
-
-analyse_canary: ## run php-cs-fixer and phpstan (dark-canary)
-	- make php_cs_fixer_canary
-	- make phpstan_canary
 
 ##@ DEPLOY
 
