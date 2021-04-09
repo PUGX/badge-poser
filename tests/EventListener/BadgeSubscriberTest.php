@@ -95,6 +95,6 @@ class BadgeSubscriberTest extends TestCase
             ->willReturn('App\Controller\Badge\ABadgeController');
 
         $this->badgeSubscriber->onKernelException($event);
-        self::assertNotEmpty($event->getResponse());
+        self::assertEquals(500, $event->getResponse()->getStatusCode());
     }
 }
