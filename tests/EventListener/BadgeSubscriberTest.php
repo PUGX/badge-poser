@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class BadgeSubscriberTest extends TestCase
@@ -20,11 +21,6 @@ class BadgeSubscriberTest extends TestCase
      * @var Request&MockObject
      */
     private $request;
-
-    /**
-     * @var ExceptionEvent&MockObject
-     */
-    private $event;
 
     /**
      * @var CacheableBadge&MockObject
@@ -46,43 +42,22 @@ class BadgeSubscriberTest extends TestCase
      */
     private $img;
 
-    /**
-     * @var BadgeSubscriber
-     */
-    private $badgeSubscriber;
+    private BadgeSubscriber $badgeSubscriber;
 
     protected function setUp(): void
     {
-        $this->request = $this->getMockBuilder(Request::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->request = $this->createMock(Request::class);
 
-        $exception = new \Exception('An exception msg');
-        $this->event = $this->getMockBuilder(ExceptionEvent::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->event->method('getRequest')
-            ->willReturn($this->request);
-        $this->event->method('getThrowable')
-            ->willReturn($exception);
+        $this->errorBadge = $this->createMock(CacheableBadge::class);
 
-        $this->errorBadge = $this->getMockBuilder(CacheableBadge::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->useCase = $this->getMockBuilder(CreateErrorBadge::class)
-            ->getMock();
+        $this->useCase = $this->createMock(CreateErrorBadge::class);
         $this->useCase->method('createErrorBadge')
-            ->with($exception, 'svg')
+            ->with(new \Exception('An exception msg'), 'svg')
             ->willReturn($this->errorBadge);
 
-        $this->img = $this->getMockBuilder(Image::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->img = $this->createMock(Image::class);
 
-        $this->imgFactory = $this->getMockBuilder(ImageFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->imgFactory = $this->createMock(ImageFactory::class);
         $this->imgFactory->method('createFromBadge')
             ->with($this->errorBadge)
             ->willReturn($this->img);
@@ -92,7 +67,7 @@ class BadgeSubscriberTest extends TestCase
 
     public function testItIsSubscribedToKernelExceptionEvent(): void
     {
-        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $this->badgeSubscriber->getSubscribedEvents());
+        $this->assertArrayHasKey(KernelEvents::EXCEPTION, $this->badgeSubscriber::getSubscribedEvents());
     }
 
     public function testDontHandleErrorsForNotBadgeControllers(): void
@@ -100,29 +75,26 @@ class BadgeSubscriberTest extends TestCase
         $this->request->method('get')
             ->with('_controller')
             ->willReturn('notABadgeController');
+        $exception = new \Exception('An exception msg');
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new ExceptionEvent($kernel, $this->request, 1, $exception);
 
-        $this->event->expects($this->never())
-            ->method('setResponse');
-
-        $this->badgeSubscriber->onKernelException($this->event);
+        $this->badgeSubscriber->onKernelException($event);
+        self::assertEmpty($event->getResponse());
     }
 
     public function testHandleErrorsForBadgeControllers(): void
     {
+        $exception = new \Exception('An exception msg');
+        $kernel = $this->createMock(HttpKernelInterface::class);
+        $event = new ExceptionEvent($kernel, $this->request, 1, $exception);
+        $event->setResponse(new Response($this->img, Response::HTTP_INTERNAL_SERVER_ERROR));
+
         $this->request->method('get')
             ->with('_controller')
             ->willReturn('App\Controller\Badge\ABadgeController');
 
-        $this->event->expects($this->once())
-            ->method('setResponse')
-            ->with($this->callback(function (Response $response) {
-                if ($response->getContent() != (string) $this->img) {
-                    return false;
-                }
-
-                return Response::HTTP_INTERNAL_SERVER_ERROR === $response->getStatusCode();
-            }));
-
-        $this->badgeSubscriber->onKernelException($this->event);
+        $this->badgeSubscriber->onKernelException($event);
+        self::assertEquals(500, $event->getResponse()->getStatusCode());
     }
 }
