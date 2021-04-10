@@ -16,10 +16,9 @@ use App\Badge\Model\Package;
 use InvalidArgumentException;
 
 /**
- * Class CreateLicenseBadge
  * Create the 'license' image using a generator `Poser`.
  */
-class CreateLicenseBadge extends BaseCreatePackagistImage
+final class CreateLicenseBadge extends BaseCreatePackagistImage
 {
     private const COLOR = '428F7E';
     private const SUBJECT = 'license';

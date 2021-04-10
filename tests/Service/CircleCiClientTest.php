@@ -9,29 +9,26 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class CircleCiClientTest extends TestCase
+final class CircleCiClientTest extends TestCase
 {
-    /** @var UrlGeneratorInterface|MockObject */
-    protected $router;
-
     /** @var HttpClientInterface|MockObject */
-    protected $httpClient;
+    private MockObject $httpClient;
 
-    protected CircleCiClient $circleCiClient;
+    private CircleCiClient $circleCiClient;
 
     protected function setUp(): void
     {
-        $this->router = $this->getMockBuilder(UrlGeneratorInterface::class)
+        $router = $this->getMockBuilder(UrlGeneratorInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->router->expects($this->any())
+        $router
             ->method('generate')
             ->willReturn('fake-url-circleci-api');
 
         $this->httpClient = $this->getMockBuilder(HttpClientInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $this->circleCiClient = new CircleCiClient($this->router, $this->httpClient, 'fake-token');
+        $this->circleCiClient = new CircleCiClient($router, $this->httpClient, 'fake-token');
     }
 
     public function testGetBuilds(): void
@@ -39,26 +36,26 @@ class CircleCiClientTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects($this->any())
+        $response
             ->method('getContent')
             ->willReturn(\json_encode([['status' => 'success']]));
 
-        $response->expects($this->any())
+        $response
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $this->httpClient->expects($this->any())
+        $this->httpClient
             ->method('request')
             ->willReturn($response);
 
         $responseBuilds = $this->circleCiClient->getBuilds('pugx/badge-poser');
 
-        $this->assertInstanceOf(ResponseInterface::class, $responseBuilds);
-        $this->assertEquals($responseBuilds->getStatusCode(), 200);
+        self::assertInstanceOf(ResponseInterface::class, $responseBuilds);
+        self::assertEquals($responseBuilds->getStatusCode(), 200);
         $content = $responseBuilds->getContent();
-        $this->assertNotEmpty($content);
-        $this->assertIsString($content);
+        self::assertNotEmpty($content);
+        self::assertIsString($content);
         $contentToArray = \json_decode($content, true);
-        $this->assertIsArray($contentToArray);
+        self::assertIsArray($contentToArray);
     }
 }

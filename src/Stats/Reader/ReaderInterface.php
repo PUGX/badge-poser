@@ -2,9 +2,6 @@
 
 namespace App\Stats\Reader;
 
-/**
- * Interface ReaderInterface.
- */
 interface ReaderInterface
 {
     /**

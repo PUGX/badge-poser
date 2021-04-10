@@ -6,30 +6,27 @@ use App\Badge\Model\Badge;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class BadgeTest.
- */
-class BadgeTest extends TestCase
+final class BadgeTest extends TestCase
 {
     public function testCreation(): void
     {
         $badge = new Badge('sub', 'status', 'FFFFFF', 'svg');
 
-        $this->assertEquals('sub-status-FFFFFF.svg', (string) $badge);
+        self::assertEquals('sub-status-FFFFFF.svg', (string) $badge);
     }
 
     public function testDashesAndUnderscores(): void
     {
         $badge = new Badge('su--b', 'st-a_tu__s', 'FFFFFF', 'svg');
 
-        $this->assertEquals('su-b-st-a tu_s-FFFFFF.svg', (string) $badge);
+        self::assertEquals('su-b-st-a tu_s-FFFFFF.svg', (string) $badge);
     }
 
     public function testShouldUseDefaultImageFormat(): void
     {
         $badge = new Badge('sub', 'status', 'FFFFFF');
 
-        $this->assertEquals('svg', $badge->getFormat());
+        self::assertEquals('svg', $badge->getFormat());
     }
 
     /** @dataProvider  invalidColorProvider */

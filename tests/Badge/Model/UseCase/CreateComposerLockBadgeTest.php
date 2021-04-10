@@ -22,16 +22,13 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
-/**
- * Class CreateComposerLockBadgeTest.
- */
 final class CreateComposerLockBadgeTest extends TestCase
 {
     private CreateComposerLockBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
-    private $repository;
+    private MockObject $repository;
     /** @var ClientInterface|MockObject */
-    private $client;
+    private MockObject $client;
     /** @var ClientStrategy|MockObject */
     private $clientStrategy;
 
@@ -41,9 +38,7 @@ final class CreateComposerLockBadgeTest extends TestCase
         $this->client = $this->getMockBuilder(ClientInterface::class)
             ->setMethods(['request'])
             ->getMockForAbstractClass();
-        $this->clientStrategy = $this->getMockBuilder(ClientStrategy::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->clientStrategy = $this->createMock(ClientStrategy::class);
         $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy);
     }
 
@@ -64,7 +59,7 @@ final class CreateComposerLockBadgeTest extends TestCase
     public function testShouldCreateComposerLockBadge(int $returnCode, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            '\App\Badge\Model\Package',
+            AppPackage::class,
             ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject', 'getDefaultBranch']
         );
 
@@ -76,15 +71,15 @@ final class CreateComposerLockBadgeTest extends TestCase
             Package::class,
             ['getRepository']
         );
-        $repo->expects($this->once())
+        $repo->expects(self::once())
             ->method('getRepository')
             ->willReturn('https://github.com/user/repository');
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getOriginalObject')
             ->willReturn($repo);
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getDefaultBranch')
             ->willReturn('master');
 
@@ -92,17 +87,17 @@ final class CreateComposerLockBadgeTest extends TestCase
             ResponseInterface::class,
             ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
         );
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getStatusCode')
             ->willReturn($returnCode);
 
-        $this->client->expects($this->once())
+        $this->client->expects(self::once())
             ->method('request')
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
-        $this->assertEquals($expected, $badge->getStatus());
+        self::assertEquals($expected, $badge->getStatus());
     }
 
     public function testShouldCreateDefaultBadgeOnError(): void
@@ -120,20 +115,20 @@ final class CreateComposerLockBadgeTest extends TestCase
             Package::class,
             ['getRepository']
         );
-        $repo->expects($this->once())
+        $repo->expects(self::once())
             ->method('getRepository')
-            ->will($this->throwException(new RuntimeException()));
+            ->will(self::throwException(new RuntimeException()));
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getOriginalObject')
             ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
     /**

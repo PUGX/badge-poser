@@ -19,10 +19,9 @@ use App\Badge\Service\TextNormalizer;
 use InvalidArgumentException;
 
 /**
- * Class CreateDownloadsBadge
  * Create the 'downloads' image with the standard Font and standard Image.
  */
-class CreateDownloadsBadge extends BaseCreatePackagistImage
+final class CreateDownloadsBadge extends BaseCreatePackagistImage
 {
     private const COLOR = '007ec6';
     private const SUBJECT = 'downloads';
@@ -79,7 +78,7 @@ class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function prepareText(Package $package, ?string $context): string
     {

@@ -26,11 +26,8 @@ abstract class BaseCreatePackagistImage
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
     private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
-    protected PackageRepositoryInterface $packageRepository;
-
-    public function __construct(PackageRepositoryInterface $packageRepository)
+    public function __construct(protected PackageRepositoryInterface $packageRepository)
     {
-        $this->packageRepository = $packageRepository;
     }
 
     /**
@@ -48,7 +45,7 @@ abstract class BaseCreatePackagistImage
         try {
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->createDefaultBadge($format);
         }
 

@@ -8,19 +8,10 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class CircleCiClient implements CircleCiClientInterface
+final class CircleCiClient implements CircleCiClientInterface
 {
-    protected UrlGeneratorInterface $router;
-
-    protected HttpClientInterface $httpClient;
-
-    protected string $circleToken;
-
-    public function __construct(UrlGeneratorInterface $router, HttpClientInterface $httpClient, string $circleToken)
+    public function __construct(private UrlGeneratorInterface $router, private HttpClientInterface $httpClient, private string $circleToken)
     {
-        $this->router = $router;
-        $this->httpClient = $httpClient;
-        $this->circleToken = $circleToken;
     }
 
     /**

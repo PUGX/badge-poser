@@ -16,7 +16,7 @@ use Github\Client as GithubClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class ClientStrategyTest extends TestCase
+final class ClientStrategyTest extends TestCase
 {
     /**
      * @var GithubClient|MockObject
@@ -55,19 +55,19 @@ class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects($this->once())
+        $apiInterface->expects(self::once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'default_branch' => $defaultBranch,
             ]);
 
-        $this->githubClient->expects($this->once())
+        $this->githubClient->expects(self::once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
         $source = 'github.com';
-        $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
+        self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
             Repository::create($source, $this->username, $this->repositoryName)
         ));
     }
@@ -79,7 +79,7 @@ class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects($this->once())
+        $workspaces->expects(self::once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -91,16 +91,16 @@ class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects($this->once())
+        $repositories->expects(self::once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects($this->once())
+        $this->bitbucketClient->expects(self::once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
-        $this->assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
+        self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
             Repository::create($source, $this->username, $this->repositoryName)
         ));
     }
@@ -122,11 +122,11 @@ class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects($this->once())
+        $apiInterface->expects(self::once())
             ->method('show')
             ->with($this->username, $this->repositoryName)->willReturn([]);
 
-        $this->githubClient->expects($this->once())
+        $this->githubClient->expects(self::once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -145,14 +145,14 @@ class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects($this->once())
+        $apiInterface->expects(self::once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'foo' => 'bar',
             ]);
 
-        $this->githubClient->expects($this->once())
+        $this->githubClient->expects(self::once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -171,14 +171,14 @@ class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects($this->once())
+        $apiInterface->expects(self::once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'foo' => ['bar'],
             ]);
 
-        $this->githubClient->expects($this->once())
+        $this->githubClient->expects(self::once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -197,7 +197,7 @@ class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects($this->once())
+        $workspaces->expects(self::once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([]);
@@ -205,12 +205,12 @@ class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects($this->once())
+        $repositories->expects(self::once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects($this->once())
+        $this->bitbucketClient->expects(self::once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -237,12 +237,12 @@ class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects($this->once())
+        $repositories->expects(self::once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects($this->once())
+        $this->bitbucketClient->expects(self::once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -260,7 +260,7 @@ class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects($this->once())
+        $workspaces->expects(self::once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -270,12 +270,12 @@ class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects($this->once())
+        $repositories->expects(self::once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects($this->once())
+        $this->bitbucketClient->expects(self::once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -293,7 +293,7 @@ class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects($this->once())
+        $workspaces->expects(self::once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -305,12 +305,12 @@ class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects($this->once())
+        $repositories->expects(self::once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects($this->once())
+        $this->bitbucketClient->expects(self::once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -333,7 +333,7 @@ class ClientStrategyTest extends TestCase
             $repoUrl
         );
 
-        $this->assertEquals($repoUrl.'/blob', $composerLockLinkNormalized);
+        self::assertEquals($repoUrl.'/blob', $composerLockLinkNormalized);
     }
 
     public function testShouldGetBitbucketComposerLink(): void
@@ -346,7 +346,7 @@ class ClientStrategyTest extends TestCase
             $repoUrl
         );
 
-        $this->assertEquals('https://api.bitbucket.org/2.0/repositories/user/repo/src', $composerLockLinkNormalized);
+        self::assertEquals('https://api.bitbucket.org/2.0/repositories/user/repo/src', $composerLockLinkNormalized);
     }
 
     public function testShouldThrowExceptionIfSourceNotFoundForGetComposerLockLinkNormalized(): void

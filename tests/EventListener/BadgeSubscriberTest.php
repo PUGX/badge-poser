@@ -15,31 +15,12 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class BadgeSubscriberTest extends TestCase
+final class BadgeSubscriberTest extends TestCase
 {
-    /**
-     * @var Request&MockObject
-     */
+    /** @var Request&MockObject */
     private $request;
 
-    /**
-     * @var CacheableBadge&MockObject
-     */
-    private $errorBadge;
-
-    /**
-     * @var CreateErrorBadge&MockObject
-     */
-    private $useCase;
-
-    /**
-     * @var ImageFactory&MockObject
-     */
-    private $imgFactory;
-
-    /**
-     * @var Image&MockObject
-     */
+    /** @var Image|MockObject */
     private $img;
 
     private BadgeSubscriber $badgeSubscriber;
@@ -48,21 +29,21 @@ class BadgeSubscriberTest extends TestCase
     {
         $this->request = $this->createMock(Request::class);
 
-        $this->errorBadge = $this->createMock(CacheableBadge::class);
+        $errorBadge = $this->createMock(CacheableBadge::class);
 
-        $this->useCase = $this->createMock(CreateErrorBadge::class);
-        $this->useCase->method('createErrorBadge')
+        $useCase = $this->createMock(CreateErrorBadge::class);
+        $useCase->method('createErrorBadge')
             ->with(new \Exception('An exception msg'), 'svg')
-            ->willReturn($this->errorBadge);
+            ->willReturn($errorBadge);
 
         $this->img = $this->createMock(Image::class);
 
-        $this->imgFactory = $this->createMock(ImageFactory::class);
-        $this->imgFactory->method('createFromBadge')
-            ->with($this->errorBadge)
+        $imgFactory = $this->createMock(ImageFactory::class);
+        $imgFactory->method('createFromBadge')
+            ->with($errorBadge)
             ->willReturn($this->img);
 
-        $this->badgeSubscriber = new BadgeSubscriber($this->useCase, $this->imgFactory);
+        $this->badgeSubscriber = new BadgeSubscriber($useCase, $imgFactory);
     }
 
     public function testItIsSubscribedToKernelExceptionEvent(): void

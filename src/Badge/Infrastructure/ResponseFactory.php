@@ -16,10 +16,7 @@ use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-/**
- * Class ResponseFactory.
- */
-class ResponseFactory
+final class ResponseFactory
 {
     /**
      * @throws InvalidArgumentException

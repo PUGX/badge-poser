@@ -6,7 +6,7 @@ use App\Stats\Reader\RedisReader;
 use PHPUnit\Framework\TestCase;
 use Predis\Client as Redis;
 
-class RedisReaderTest extends TestCase
+final class RedisReaderTest extends TestCase
 {
     /**
      * @dataProvider readsTotalAccess
@@ -23,7 +23,7 @@ class RedisReaderTest extends TestCase
 
         $reader = new RedisReader($redis);
 
-        $this->assertEquals($expectedTotal, $reader->totalAccess());
+        self::assertEquals($expectedTotal, $reader->totalAccess());
     }
 
     public function readsTotalAccess(): array
@@ -61,6 +61,6 @@ class RedisReaderTest extends TestCase
 
         $reader = new RedisReader($redis, $prefixKey, $totalKey);
 
-        $this->assertEquals(10, $reader->totalAccess());
+        self::assertEquals(10, $reader->totalAccess());
     }
 }

@@ -20,10 +20,9 @@ use Throwable;
 use UnexpectedValueException;
 
 /**
- * Class CreateErrorBadge
  * Create the 'error' badge with the standard Font and standard Image.
  */
-class CreateErrorBadge
+final class CreateErrorBadge
 {
     private const COLOR = 'e05d44';
     private const ERROR_TEXT_GENERIC = 'generic';
@@ -48,7 +47,7 @@ class CreateErrorBadge
     /**
      * @throws InvalidArgumentException
      */
-    protected function createBadge(Throwable $throwable, string $format): BadgeInterface
+    private function createBadge(Throwable $throwable, string $format): BadgeInterface
     {
         $status = self::ERROR_TEXT_GENERIC;
         if ($throwable instanceof BadResponseException) {

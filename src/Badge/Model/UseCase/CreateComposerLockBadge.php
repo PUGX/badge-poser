@@ -22,10 +22,9 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
- * Class CreateComposerLockBadge
  * Create the 'license' image using a generator `Poser`.
  */
-class CreateComposerLockBadge extends BaseCreatePackagistImage
+final class CreateComposerLockBadge extends BaseCreatePackagistImage
 {
     private const COLOR_COMMITTED = 'e60073';
     private const COLOR_UNCOMMITTED = '99004d';
@@ -43,18 +42,12 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
 
     protected string $text = self::LOCK_ERROR;
 
-    protected ClientInterface $client;
-
-    private ClientStrategy $clientStrategy;
-
     public function __construct(
         PackageRepositoryInterface $packageRepository,
-        ClientInterface $client,
-        ClientStrategy $clientStrategy
+        protected ClientInterface $client,
+        private ClientStrategy $clientStrategy
     ) {
         parent::__construct($packageRepository);
-        $this->client = $client;
-        $this->clientStrategy = $clientStrategy;
     }
 
     /**
@@ -65,10 +58,9 @@ class CreateComposerLockBadge extends BaseCreatePackagistImage
     public function createComposerLockBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
         try {
-            /** @var Package $package */
             $package = $this->fetchPackage($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->createDefaultBadge($format);
         }
 

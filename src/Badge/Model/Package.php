@@ -16,10 +16,9 @@ use Packagist\Api\Result\Package\Maintainer;
 use Packagist\Api\Result\Package\Version;
 
 /**
- * Class Package
  * Decorates the Packagist Package.
  */
-class Package
+final class Package
 {
     private static string $modifierRegex = '[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\d+))?)?([.-]?dev)?';
     private ?string $license = null;
@@ -68,7 +67,7 @@ class Package
     /**
      * Set the latest Stable and the latest Unstable version from a Package.
      */
-    private function calculateLatestVersions(): self
+    private function calculateLatestVersions(): void
     {
         $versions = $this->getVersions();
 
@@ -97,8 +96,6 @@ class Package
                 $this->setLicense($this->normalizeLicense($license));
             }
         }
-
-        return $this;
     }
 
     /**
@@ -128,7 +125,7 @@ class Package
     {
         $version = \preg_replace('{#.+$}i', '', $version) ?? '';
 
-        if ('dev-' === \substr($version, 0, 4) || '-dev' === \substr($version, -4)) {
+        if (\str_starts_with($version, 'dev-') || '-dev' === \substr($version, -4)) {
             return 'dev';
         }
 
@@ -279,9 +276,9 @@ class Package
     }
 
     /**
-     * @param string|string[] $licenseData
+     * @param array<string>|string $licenseData
      */
-    private function normalizeLicense($licenseData): string
+    private function normalizeLicense(array | string $licenseData): string
     {
         if (!\is_array($licenseData)) {
             return $licenseData;

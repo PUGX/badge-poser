@@ -20,24 +20,18 @@ use Packagist\Api\Result\Package as ApiPackage;
 use UnexpectedValueException;
 
 /**
- * Class PackageRepository
  * This class is intended to load ApiPackage, create, and work with the Package object.
  */
-class PackageRepository implements PackageRepositoryInterface
+final class PackageRepository implements PackageRepositoryInterface
 {
     private static string $packageClass;
-    private PackagistClient $packagistClient;
-
-    private ClientStrategy $clientStrategy;
 
     public function __construct(
-        PackagistClient $packagistClient,
-        ClientStrategy $clientStrategy,
+        private PackagistClient $packagistClient,
+        private ClientStrategy $clientStrategy,
         string $packageClass = Package::class
     ) {
         self::$packageClass = $packageClass;
-        $this->packagistClient = $packagistClient;
-        $this->clientStrategy = $clientStrategy;
     }
 
     /**

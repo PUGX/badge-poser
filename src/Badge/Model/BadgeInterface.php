@@ -11,9 +11,6 @@
 
 namespace App\Badge\Model;
 
-/**
- * Interface BadgeInterface.
- */
 interface BadgeInterface
 {
     public function getSubject(): string;
@@ -24,5 +21,5 @@ interface BadgeInterface
 
     public function getFormat(): string;
 
-    public function __toString();
+    public function __toString(): string;
 }

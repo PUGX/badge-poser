@@ -18,18 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class VersionController
  * Version action for badges.
  */
-class VersionController extends AbstractBadgeController
+final class VersionController extends AbstractBadgeController
 {
     /**
-     * Version action.
-     *
-     * @param string $repository repository
-     * @param string $latest     latest
-     * @param string $format
-     *
      * @throws \InvalidArgumentException
      */
     public function version(
@@ -37,9 +30,9 @@ class VersionController extends AbstractBadgeController
         Poser $poser,
         ImageFactory $imageFactory,
         CreateVersionBadge $createVersionBadge,
-        $repository,
-        $latest,
-        $format = 'svg'
+        string $repository,
+        string $latest,
+        string $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = $request->query->get('format');

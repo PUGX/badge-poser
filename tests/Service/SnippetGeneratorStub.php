@@ -4,10 +4,7 @@ namespace App\Tests\Service;
 
 use App\Service\SnippetGeneratorInterface;
 
-/**
- * Class SnippetGeneratorStub.
- */
-class SnippetGeneratorStub implements SnippetGeneratorInterface
+final class SnippetGeneratorStub implements SnippetGeneratorInterface
 {
     public function generateAllSnippets(string $repository): array
     {

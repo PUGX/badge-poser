@@ -17,14 +17,11 @@ use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class CreateDownloadsBadgeTest.
- */
 final class CreateDownloadsBadgeTest extends TestCase
 {
     private CreateDownloadsBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
-    private $repository;
+    private MockObject $repository;
 
     protected function setUp(): void
     {
@@ -39,11 +36,11 @@ final class CreateDownloadsBadgeTest extends TestCase
             ->setMethods(['getPackageDownloads'])
             ->getMock();
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getPackageDownloads')
             ->willReturn(102);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
@@ -51,20 +48,20 @@ final class CreateDownloadsBadgeTest extends TestCase
 
         $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
 
-        $this->assertEquals('102 today', $badge->getStatus());
+        self::assertEquals('102 today', $badge->getStatus());
     }
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
-            ->will($this->throwException(new \RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg');
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

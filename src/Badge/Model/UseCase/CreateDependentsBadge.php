@@ -20,7 +20,7 @@ use App\Badge\Service\TextNormalizer;
 /**
  * Create the 'dependents' image with the standard Font and standard Image.
  */
-class CreateDependentsBadge extends BaseCreatePackagistImage
+final class CreateDependentsBadge extends BaseCreatePackagistImage
 {
     public const COLOR = '007ec6';
     public const SUBJECT = 'dependents';
@@ -28,14 +28,8 @@ class CreateDependentsBadge extends BaseCreatePackagistImage
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
     private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
-    /**
-     * @var NormalizerInterface
-     */
-    private $normalizer;
+    private NormalizerInterface $normalizer;
 
-    /**
-     * @param NormalizerInterface $textNormalizer
-     */
     public function __construct(
         PackageRepositoryInterface $packageRepository,
         NormalizerInterface $textNormalizer = null

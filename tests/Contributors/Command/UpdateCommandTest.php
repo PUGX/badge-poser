@@ -10,7 +10,7 @@ final class UpdateCommandTest extends KernelTestCase
 {
     public function testExecute(): void
     {
-        $kernel = static::createKernel();
+        $kernel = self::createKernel();
         $kernel->boot();
 
         $application = new Application($kernel);
@@ -25,7 +25,7 @@ final class UpdateCommandTest extends KernelTestCase
         $output = $commandTester->getDisplay();
         $numbers = $this->getNumbers($output);
         $count = $numbers[0] ?? 0;
-        $this->assertGreaterThanOrEqual(30, $count);
+        self::assertGreaterThanOrEqual(30, $count);
     }
 
     /**

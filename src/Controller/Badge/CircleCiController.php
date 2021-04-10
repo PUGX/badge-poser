@@ -17,10 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CircleCiController
  * CircleCi action for badges.
  */
-class CircleCiController extends AbstractBadgeController
+final class CircleCiController extends AbstractBadgeController
 {
     /**
      * CircleCi action.

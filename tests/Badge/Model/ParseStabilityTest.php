@@ -6,17 +6,14 @@ use App\Badge\Model\Package;
 use Packagist\Api\Result\Package\Version;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class ParseStabilityTest.
- */
-class ParseStabilityTest extends TestCase
+final class ParseStabilityTest extends TestCase
 {
     /**
      * @dataProvider getVersionAndStability
      */
     public function testParseStability(string $version, string $stable): void
     {
-        $this->assertEquals(Package::parseStability($version), $stable);
+        self::assertEquals(Package::parseStability($version), $stable);
     }
 
     /**

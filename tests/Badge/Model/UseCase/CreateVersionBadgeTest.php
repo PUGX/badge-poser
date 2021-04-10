@@ -19,9 +19,6 @@ use App\Badge\Model\UseCase\CreateVersionBadge;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class CreateVersionBadgeTest.
- */
 final class CreateVersionBadgeTest extends TestCase
 {
     private CreateVersionBadge $useCase;
@@ -40,18 +37,18 @@ final class CreateVersionBadgeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getLatestStableVersion')
             ->willReturn('v2.0');
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge('stable', 'v2.0', '28a3df'), 3600, 3600);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateNoStableReleaseBadgeWhenNoStableVersionAvailable(): void
@@ -63,26 +60,26 @@ final class CreateVersionBadgeTest extends TestCase
         $package->method('getLatestStableVersion')
             ->willReturn(null);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge('stable', 'No Release', '28a3df'), 3600, 3600);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateDefaultBadgeOnErrorWhenCreatingLicenseBadge(): void
     {
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
-            ->will($this->throwException(new \RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateUnstableBadge(): void
@@ -91,18 +88,18 @@ final class CreateVersionBadgeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getLatestUnstableVersion')
             ->willReturn('v2.0');
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge('unstable', 'v2.0', 'e68718'), 3600, 3600);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateNoUnstableReleaseBadgeWhenNoUnstableVersionAvailable(): void
@@ -114,25 +111,25 @@ final class CreateVersionBadgeTest extends TestCase
         $package->method('getLatestUnstableVersion')
             ->willReturn(null);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge('unstable', 'No Release', 'e68718'), 3600, 3600);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testShouldCreateDefaultBadgeOnErrorWhenCreatingUnstableReleaseBadge(): void
     {
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
-            ->will($this->throwException(new \RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 }

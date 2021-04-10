@@ -13,29 +13,26 @@ namespace App\Tests\Controller\Badge;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class SuggestersControllerTest.
- */
-class SuggestersControllerTest extends WebTestCase
+final class SuggestersControllerTest extends WebTestCase
 {
     public function testSuggestersAction(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('GET', '/pugx/badge-poser/suggesters');
-        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testSuggestersActionSvgExplicit(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/pugx/badge-poser/suggesters.svg');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertResponseIsSuccessful();
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

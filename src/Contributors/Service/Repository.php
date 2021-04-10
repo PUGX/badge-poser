@@ -7,24 +7,16 @@ use Github\Client;
 use Github\ResultPager;
 use Predis\Client as Redis;
 
-/**
- * Class Repository.
- */
-class Repository implements RepositoryInterface
+final class Repository implements RepositoryInterface
 {
     private const REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';
 
-    /** @var Redis<string, Redis> */
-    protected Redis $redis;
-    protected Client $client;
-    protected ResultPager $resultPager;
-
-    /** @param Redis<string, Redis> $redis */
-    public function __construct(Redis $redis, Client $client, ResultPager $resultPager)
-    {
-        $this->redis = $redis;
-        $this->client = $client;
-        $this->resultPager = $resultPager;
+    public function __construct(
+        /* @var Redis<string, Redis> */
+        private Redis $redis,
+        private Client $client,
+        private ResultPager $resultPager
+    ) {
     }
 
     public function all(): array
@@ -37,7 +29,7 @@ class Repository implements RepositoryInterface
             }
 
             return $this->getContributors();
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return [];
         }
     }
@@ -65,7 +57,7 @@ class Repository implements RepositoryInterface
     /**
      * @return array<Contributor>
      */
-    private function getContributors(bool $setCache = true): array
+    private function getContributors(): array
     {
         $contributors = [];
 
@@ -78,9 +70,7 @@ class Repository implements RepositoryInterface
             $contributors[$result['login']] = Contributor::create($result['login'], $result['html_url'], $result['avatar_url']);
         }
 
-        if ($setCache) {
-            $this->setContributorsInCache($contributors);
-        }
+        $this->setContributorsInCache($contributors);
 
         return $contributors;
     }
@@ -92,12 +82,11 @@ class Repository implements RepositoryInterface
     {
         $repoApi = $this->client->api('repo');
         $parameters = [$username, $repoName];
-        $results = $this->resultPager->fetchAll(
+
+        return $this->resultPager->fetchAll(
             $repoApi,
             'contributors',
             $parameters
         );
-
-        return $results;
     }
 }

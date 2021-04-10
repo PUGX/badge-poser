@@ -12,19 +12,13 @@ use Github\Api\Repo;
 use Github\Client as GithubClient;
 use Http\Client\Exception;
 
-class ClientStrategy
+final class ClientStrategy
 {
     private const GITHUB_REPOSITORY_PREFIX = 'blob';
     private const BITBUCKET_REPOSITORY_PREFIX = 'src';
 
-    private GithubClient $githubClient;
-
-    private BitbucketClient $bitbucketClient;
-
-    public function __construct(GithubClient $githubClient, BitbucketClient $bitbucketClient)
+    public function __construct(private GithubClient $githubClient, private BitbucketClient $bitbucketClient)
     {
-        $this->githubClient = $githubClient;
-        $this->bitbucketClient = $bitbucketClient;
     }
 
     /**
@@ -47,7 +41,7 @@ class ClientStrategy
             $repoApi = $this->githubClient->api('repo');
             $repoGitHubData = $repoApi->show($username, $repositoryName);
             if (!$this->isValidGithubRepository($repoGitHubData)) {
-                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoGitHubData));
+                throw new RepositoryDataNotValid('Repository data not valid: '.\json_encode($repoGitHubData));
             }
 
             $defaultBranch = (string) $repoGitHubData['default_branch'];
@@ -60,7 +54,7 @@ class ClientStrategy
                 ->show($repositoryName);
 
             if (!$this->isValidBitbucketRepository($repoBitbucketData)) {
-                throw new RepositoryDataNotValid('Repository data not valid: '.(string) \json_encode($repoBitbucketData));
+                throw new RepositoryDataNotValid('Repository data not valid: '.\json_encode($repoBitbucketData));
             }
 
             $defaultBranch = (string) $repoBitbucketData['mainbranch']['name'];
@@ -95,7 +89,7 @@ class ClientStrategy
     }
 
     /**
-     * @param mixed[] $repoGitHubData
+     * @param array<mixed> $repoGitHubData
      */
     private function isValidGithubRepository(array $repoGitHubData): bool
     {
@@ -105,7 +99,7 @@ class ClientStrategy
     }
 
     /**
-     * @param mixed[] $repoBitbucketData
+     * @param array<mixed> $repoBitbucketData
      */
     private function isValidBitbucketRepository(array $repoBitbucketData): bool
     {

@@ -16,10 +16,9 @@ use App\Badge\Model\Package;
 use InvalidArgumentException;
 
 /**
- * Class CreateVersionBadge
  * Create the 'version' image using a generator `Poser`.
  */
-class CreateVersionBadge extends BaseCreatePackagistImage
+final class CreateVersionBadge extends BaseCreatePackagistImage
 {
     private const COLOR_STABLE = '28a3df';
     private const COLOR_UNSTABLE = 'e68718';

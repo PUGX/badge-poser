@@ -2,9 +2,6 @@
 
 namespace App\Contributors\Service;
 
-/**
- * Interface RepositoryInterface.
- */
 interface RepositoryInterface
 {
     /**

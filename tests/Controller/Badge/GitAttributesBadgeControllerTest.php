@@ -13,28 +13,25 @@ namespace App\Tests\Controller\Badge;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class GitAttributesBadgeControllerTest.
- */
-class GitAttributesBadgeControllerTest extends WebTestCase
+final class GitAttributesBadgeControllerTest extends WebTestCase
 {
     public function testGitAttributesAction(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertResponseIsSuccessful();
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testGitAttributesSvgExplicit(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/pugx/badge-poser/gitattributes.svg');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertResponseIsSuccessful();
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }
