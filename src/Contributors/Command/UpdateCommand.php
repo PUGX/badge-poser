@@ -7,17 +7,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class UpdateCommand.
- */
-class UpdateCommand extends Command
+final class UpdateCommand extends Command
 {
-    private Repository $repository;
-
-    public function __construct(Repository $repository)
+    public function __construct(private Repository $repository)
     {
-        $this->repository = $repository;
-
         // you *must* call the parent constructor
         parent::__construct();
     }

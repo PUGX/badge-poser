@@ -13,43 +13,40 @@ namespace App\Tests\Controller\Badge;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class LicenseControllerTest.
- */
-class LicenseControllerTest extends WebTestCase
+final class LicenseControllerTest extends WebTestCase
 {
     public function testLicenseAction(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('GET', '/pugx/badge-poser/license');
-        $this->assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
+        self::assertTrue($client->getResponse()->isSuccessful(), (string) $client->getResponse()->getContent());
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLicenseActionSvgExplicit(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/pugx/badge-poser/license.svg');
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        self::assertResponseIsSuccessful();
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testLicenseActionPngRedirectSvg(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('GET', '/pugx/badge-poser/license.png');
         $crawler = $client->followRedirect();
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertStringContainsString('/pugx/badge-poser/license', $crawler->getUri());
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString('/pugx/badge-poser/license', $crawler->getUri());
 
-        $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

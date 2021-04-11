@@ -8,10 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class SnippetController.
- */
-class SnippetController extends AbstractController
+final class SnippetController extends AbstractController
 {
     /**
      * Returns all snippets for a package.
@@ -24,7 +21,7 @@ class SnippetController extends AbstractController
         $response = new JsonResponse();
 
         if (!$this->isValidRepositoryName($repository)) {
-            $response->setData(['msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)']);
+            $response->setData(['msg' => 'Package not found. Please check the package name. e.g. (symfony/symfony)']);
             $response->setStatusCode(404);
 
             return $response;
@@ -33,8 +30,8 @@ class SnippetController extends AbstractController
         try {
             $badges = $generator->generateAllSnippets($repository);
             $response->setData($badges);
-        } catch (BadResponseException $e) {
-            $response->setData(['msg' => 'Package not found. Please check the package name. eg. (symfony/symfony)']);
+        } catch (BadResponseException) {
+            $response->setData(['msg' => 'Package not found. Please check the package name. e.g. (symfony/symfony)']);
             $response->setStatusCode(404);
         } catch (\Exception $e) {
             $response->setData(['msg' => 'Server Error']);

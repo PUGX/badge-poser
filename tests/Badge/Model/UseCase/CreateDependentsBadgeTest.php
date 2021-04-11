@@ -17,14 +17,11 @@ use App\Badge\Model\UseCase\CreateDependentsBadge;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Class DependentsImageCreatorTest.
- */
 final class CreateDependentsBadgeTest extends TestCase
 {
     private CreateDependentsBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
-    private $repository;
+    private MockObject $repository;
 
     protected function setUp(): void
     {
@@ -39,32 +36,32 @@ final class CreateDependentsBadgeTest extends TestCase
             ->setMethods(['getDependents'])
             ->getMock();
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getDependents')
             ->willReturn(1);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDependentsBadge($repository);
-        $this->assertEquals(CreateDependentsBadge::SUBJECT, $badge->getSubject());
-        $this->assertEquals('#'.CreateDependentsBadge::COLOR, $badge->getHexColor());
-        $this->assertEquals('1', $badge->getStatus());
+        self::assertEquals(CreateDependentsBadge::SUBJECT, $badge->getSubject());
+        self::assertEquals('#'.CreateDependentsBadge::COLOR, $badge->getHexColor());
+        self::assertEquals('1', $badge->getStatus());
     }
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('fetchByRepository')
-            ->will($this->throwException(new \RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDependentsBadge($repository);
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

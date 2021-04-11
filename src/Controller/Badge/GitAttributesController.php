@@ -16,17 +16,9 @@ use App\Badge\Service\ImageFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class GitAttributesController.
- */
-class GitAttributesController extends AbstractBadgeController
+final class GitAttributesController extends AbstractBadgeController
 {
     /**
-     * .gitAttributes action.
-     *
-     * @param string $repository repository
-     * @param string $format
-     *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -34,8 +26,8 @@ class GitAttributesController extends AbstractBadgeController
         Request $request,
         CreateGitAttributesBadge $createGitAttributesBadge,
         ImageFactory $imageFactory,
-        $repository,
-        $format = 'svg'
+        string $repository,
+        string $format = 'svg'
     ): Response {
         if ('plastic' === $request->query->get('format')) {
             $format = 'plastic';

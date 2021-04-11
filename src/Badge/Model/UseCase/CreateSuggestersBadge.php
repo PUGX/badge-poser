@@ -20,7 +20,7 @@ use App\Badge\Service\TextNormalizer;
 /**
  * Create the 'suggesters' image with the standard Font and standard Image.
  */
-class CreateSuggestersBadge extends BaseCreatePackagistImage
+final class CreateSuggestersBadge extends BaseCreatePackagistImage
 {
     public const COLOR = '007ec6';
     public const SUBJECT = 'suggesters';

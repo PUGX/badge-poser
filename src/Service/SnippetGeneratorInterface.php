@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-/**
- * Interface SnippetGeneratorInterface.
- */
 interface SnippetGeneratorInterface
 {
     /**

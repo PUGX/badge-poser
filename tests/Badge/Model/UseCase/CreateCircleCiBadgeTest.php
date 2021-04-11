@@ -20,16 +20,13 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-/**
- * Class CreateCircleCiBadgeTest.
- */
 final class CreateCircleCiBadgeTest extends TestCase
 {
     private CreateCircleCiBadge $useCase;
-    /** @var PackageRepositoryInterface|MockObject */
-    private $repository;
-    /** @var CircleCiClientInterface|MockObject */
-    private $circleCiClient;
+    /** @var MockObject|PackageRepositoryInterface */
+    private MockObject $repository;
+    /** @var MockObject|CircleCiClientInterface */
+    private MockObject $circleCiClient;
 
     protected function setUp(): void
     {
@@ -70,21 +67,21 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getContent')
             ->willReturn(\json_encode([['status' => $status]]));
 
-        $this->circleCiClient->expects($this->once())
+        $this->circleCiClient->expects(self::once())
             ->method('getBuilds')
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
-        $this->assertEquals($expected, $badge->getStatus());
+        self::assertEquals($expected, $badge->getStatus());
     }
 
     /**
@@ -113,20 +110,20 @@ final class CreateCircleCiBadgeTest extends TestCase
             \Packagist\Api\Result\Package::class,
             ['getRepository']
         );
-        $repo->expects($this->once())
+        $repo->expects(self::once())
             ->method('getRepository')
-            ->will($this->throwException(new RuntimeException()));
+            ->will(self::throwException(new RuntimeException()));
 
-        $package->expects($this->once())
+        $package->expects(self::once())
             ->method('getOriginalObject')
             ->willReturn($repo);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
     public function testShouldCreateDefaultBadgeWhenNoResults(): void
@@ -145,24 +142,24 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getContent')
             ->willReturn(\json_encode([]));
 
-        $this->circleCiClient->expects($this->once())
+        $this->circleCiClient->expects(self::once())
             ->method('getBuilds')
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 
     public function testShouldCreateDefaultBadgeWhenCircleConfigNotExist(): void
@@ -185,19 +182,19 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects($this->once())
+        $response->expects(self::once())
             ->method('getStatusCode')
             ->willReturn(404);
 
-        $this->circleCiClient->expects($this->once())
+        $this->circleCiClient->expects(self::once())
             ->method('getBuilds')
             ->willReturn($response);
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
 
-        $this->assertEquals(' - ', $badge->getSubject());
-        $this->assertEquals(' - ', $badge->getStatus());
-        $this->assertEquals('#7A7A7A', $badge->getHexColor());
+        self::assertEquals(' - ', $badge->getSubject());
+        self::assertEquals(' - ', $badge->getStatus());
+        self::assertEquals('#7A7A7A', $badge->getHexColor());
     }
 }

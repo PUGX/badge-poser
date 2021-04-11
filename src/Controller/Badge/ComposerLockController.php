@@ -18,10 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use UnexpectedValueException;
 
 /**
- * Class ComposerLockController
  * Composer-lock action for badges.
  */
-class ComposerLockController extends AbstractBadgeController
+final class ComposerLockController extends AbstractBadgeController
 {
     /**
      * ComposerLock action.

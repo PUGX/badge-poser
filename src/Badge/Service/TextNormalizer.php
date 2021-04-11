@@ -11,11 +11,9 @@ use InvalidArgumentException;
 final class TextNormalizer implements NormalizerInterface
 {
     /**
-     * @param mixed $number
-     *
      * @throws InvalidArgumentException
      */
-    public function normalize($number, int $precision = 2): string
+    public function normalize(float | int | string | null $number, int $precision = 2): string
     {
         $number = $this->normalizeNumber($number);
         $units = ['', ' k', ' M', ' G', ' T'];
@@ -31,11 +29,9 @@ final class TextNormalizer implements NormalizerInterface
     /**
      * This function transform a number to a float value or raise an Exception.
      *
-     * @param mixed $number number to be normalized
-     *
      * @throws InvalidArgumentException
      */
-    private function normalizeNumber($number): float
+    private function normalizeNumber(float | int | string | null $number): float
     {
         if (!\is_numeric($number)) {
             throw new InvalidArgumentException('Number expected');
@@ -44,7 +40,7 @@ final class TextNormalizer implements NormalizerInterface
         $number = (float) $number;
 
         if ($number < 0) {
-            throw new InvalidArgumentException('The number expected was >= 0');
+            throw new InvalidArgumentException('The number expected to be >= 0');
         }
 
         return \max($number, 1);

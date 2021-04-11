@@ -21,10 +21,9 @@ use Throwable;
 use UnexpectedValueException;
 
 /**
- * Class CreateCircleCiBadge
  * Create the 'CircleCi' image using a generator `Poser`.
  */
-class CreateCircleCiBadge extends BaseCreatePackagistImage
+final class CreateCircleCiBadge extends BaseCreatePackagistImage
 {
     private const COLOR_PASSING = '42BD1B';
     private const COLOR_FAILING = 'D75B48';
@@ -37,12 +36,9 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
 
     protected string $text = self::SUBJECT;
 
-    protected CircleCiClientInterface $circleCiClient;
-
-    public function __construct(PackageRepositoryInterface $packageRepository, CircleCiClientInterface $circleCiClient)
+    public function __construct(PackageRepositoryInterface $packageRepository, protected CircleCiClientInterface $circleCiClient)
     {
         parent::__construct($packageRepository);
-        $this->circleCiClient = $circleCiClient;
     }
 
     /**
@@ -64,8 +60,8 @@ class CreateCircleCiBadge extends BaseCreatePackagistImage
                 return $this->createDefaultBadge($format);
             }
 
-            $builds = \json_decode($response->getContent(), true);
-        } catch (Throwable $e) {
+            $builds = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+        } catch (Throwable) {
             return $this->createDefaultBadge($format);
         }
 

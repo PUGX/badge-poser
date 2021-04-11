@@ -14,24 +14,17 @@ namespace App\Badge\Model;
 /**
  * Class CacheableBadge.
  */
-class CacheableBadge implements BadgeInterface
+final class CacheableBadge implements BadgeInterface, \Stringable
 {
-    const TTL_NO_CACHE = 0;
-    const TTL_ONE_HOUR = 60 * 60;
-    const TTL_SIX_HOURS = 6 * self::TTL_ONE_HOUR;
-    const TTL_TWELVE_HOURS = 12 * self::TTL_ONE_HOUR;
-    const TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
-    const TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
+    public const TTL_NO_CACHE = 0;
+    public const TTL_ONE_HOUR = 60 * 60;
+    public const TTL_SIX_HOURS = 6 * self::TTL_ONE_HOUR;
+    public const TTL_TWELVE_HOURS = 12 * self::TTL_ONE_HOUR;
+    public const TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
+    public const TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
 
-    private BadgeInterface $badge;
-    private int $maxage;
-    private int $smaxage;
-
-    public function __construct(BadgeInterface $badge, int $maxage, int $smaxage)
+    public function __construct(private BadgeInterface $badge, private int $maxage, private int $smaxage)
     {
-        $this->badge = $badge;
-        $this->maxage = $maxage;
-        $this->smaxage = $smaxage;
     }
 
     public function getSubject(): string
@@ -74,7 +67,7 @@ class CacheableBadge implements BadgeInterface
         $this->smaxage = $smaxage;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->badge->__toString();
     }

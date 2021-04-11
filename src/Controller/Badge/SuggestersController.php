@@ -8,24 +8,15 @@ use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class SuggestersController.
- */
-class SuggestersController extends AbstractBadgeController
+final class SuggestersController extends AbstractBadgeController
 {
-    /**
-     * Suggesters action.
-     *
-     * @param string $repository repository
-     * @param string $format
-     */
     public function suggesters(
         Request $request,
         Poser $poser,
         CreateSuggestersBadge $createSuggestersBadge,
         ImageFactory $imageFactory,
-        $repository,
-        $format = 'svg'
+        string $repository,
+        string $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = (string) $request->query->get('format');

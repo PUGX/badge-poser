@@ -18,17 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class LicenseController
  * License action for badges.
  */
-class LicenseController extends AbstractBadgeController
+final class LicenseController extends AbstractBadgeController
 {
     /**
-     * License action.
-     *
-     * @param string $repository repository
-     * @param string $format
-     *
      * @throws \InvalidArgumentException
      */
     public function license(
@@ -36,8 +30,8 @@ class LicenseController extends AbstractBadgeController
         Poser $poser,
         CreateLicenseBadge $createLicenseBadge,
         ImageFactory $imageFactory,
-        $repository,
-        $format = 'svg'
+        string $repository,
+        string $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = (string) $request->query->get('format');

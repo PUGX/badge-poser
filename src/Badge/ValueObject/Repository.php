@@ -6,23 +6,14 @@ namespace App\Badge\ValueObject;
 
 use UnexpectedValueException;
 
-class Repository
+final class Repository
 {
     private const GITHUB_SOURCE = 'github.com';
 
     private const BITBUCKET_SOURCE = 'bitbucket.org';
 
-    private string $source;
-
-    private string $username;
-
-    private string $name;
-
-    private function __construct(string $source, string $username, string $name)
+    private function __construct(private string $source, private string $username, private string $name)
     {
-        $this->source = $source;
-        $this->username = $username;
-        $this->name = $name;
     }
 
     public static function create(string $source, string $username, string $name): self
@@ -58,28 +49,16 @@ class Repository
 
     public function isGitHub(): bool
     {
-        if (self::GITHUB_SOURCE === $this->getSource()) {
-            return true;
-        }
-
-        return false;
+        return self::GITHUB_SOURCE === $this->getSource();
     }
 
     public function isBitbucket(): bool
     {
-        if (self::BITBUCKET_SOURCE === $this->getSource()) {
-            return true;
-        }
-
-        return false;
+        return self::BITBUCKET_SOURCE === $this->getSource();
     }
 
     public function isSupported(): bool
     {
-        if ($this->isGitHub() || $this->isBitbucket()) {
-            return true;
-        }
-
-        return false;
+        return $this->isGitHub() || $this->isBitbucket();
     }
 }

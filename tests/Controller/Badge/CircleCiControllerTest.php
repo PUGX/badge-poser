@@ -13,32 +13,29 @@ namespace App\Tests\Controller\Badge;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * Class CircleCiControllerTest.
- */
-class CircleCiControllerTest extends WebTestCase
+final class CircleCiControllerTest extends WebTestCase
 {
     public function testCircleCi(): void
     {
-        $this->markTestSkipped('Temporarly skipped due to a problem with the access key');
+        self::markTestSkipped('Temporarly skipped due to a problem with the access key');
 
-        // $client = static::createClient();
+        // $client = self::createClient();
         // $client->request('GET', '/pugx/badge-poser/circleci');
-        // $this->assertTrue($client->getResponse()->isSuccessful());
+        // self::assertTrue($client->getResponse()->isSuccessful());
 
-        // $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        // $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 
     public function testCircleCiForBranch(): void
     {
-        $this->markTestSkipped('Temporarly skipped due to a problem with the access key');
+        self::markTestSkipped('Temporarly skipped due to a problem with the access key');
 
-        // $client = static::createClient();
+        // $client = self::createClient();
         // $client->request('GET', '/pugx/badge-poser/circleci/release/v3.0.0');
-        // $this->assertTrue($client->getResponse()->isSuccessful());
+        // self::assertTrue($client->getResponse()->isSuccessful());
 
-        // $this->assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
-        // $this->assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
+        // self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
     }
 }

@@ -8,7 +8,7 @@ use App\Badge\Model\UseCase\CreateErrorBadge;
 use GuzzleHttp\Exception\BadResponseException;
 use PHPUnit\Framework\TestCase;
 
-class CreateErroreBadgeTest extends TestCase
+final class CreateErroreBadgeTest extends TestCase
 {
     public function testCreateAGenericErrorBadge(): void
     {
@@ -20,7 +20,7 @@ class CreateErroreBadgeTest extends TestCase
         $badge = $createErrorBadge->createErrorBadge($error, $format);
         $expectedBadge = new CacheableBadge(new Badge((string) $error, 'generic', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testCreateABadClientResponseErrorBadge(): void
@@ -35,7 +35,7 @@ class CreateErroreBadgeTest extends TestCase
         $badge = $createErrorBadge->createErrorBadge($badResponseEx, $format);
         $expectedBadge = new CacheableBadge(new Badge((string) $badResponseEx, 'not found?', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 
     public function testCreateAClientExceptionErrorBadge(): void
@@ -48,6 +48,6 @@ class CreateErroreBadgeTest extends TestCase
         $badge = $createErrorBadge->createErrorBadge($unexpectedValueEx, $format);
         $expectedBadge = new CacheableBadge(new Badge((string) $unexpectedValueEx, 'connection', 'e05d44', $format), 0, 0);
 
-        $this->assertEquals($expectedBadge, $badge);
+        self::assertEquals($expectedBadge, $badge);
     }
 }

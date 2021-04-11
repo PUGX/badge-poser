@@ -14,27 +14,23 @@ use Predis\Client as Redis;
 final class RepositoryTest extends TestCase
 {
     /** @var ResultPager|MockObject */
-    private $resultPager;
+    private MockObject $resultPager;
 
     private Repository $repository;
 
     protected function setUp(): void
     {
-        $redis = $this->getMockBuilder(Redis::class)
-            ->disableOriginalConstructor()->getMock();
+        $redis = $this->createMock(Redis::class);
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()->getMock();
+        $client = $this->createMock(Client::class);
 
-        $api = $this->getMockBuilder(AbstractApi::class)
-            ->disableOriginalConstructor()->getMock();
+        $api = $this->createMock(AbstractApi::class);
 
         $client
             ->method('api')
             ->willReturn($api);
 
-        $this->resultPager = $this->getMockBuilder(ResultPager::class)
-            ->disableOriginalConstructor()->getMock();
+        $this->resultPager = $this->createMock(ResultPager::class);
 
         $this->repository = new Repository($redis, $client, $this->resultPager);
     }
@@ -49,15 +45,15 @@ final class RepositoryTest extends TestCase
 
         $contributors = $this->repository->all();
 
-        $this->assertNotEmpty($contributors);
+        self::assertNotEmpty($contributors);
 
         foreach ($contributors as $k => $contributor) {
-            $this->assertInstanceOf(Contributor::class, $contributor);
+            self::assertInstanceOf(Contributor::class, $contributor);
 
             if ('liuggio' === $k) {
-                $this->assertEquals('liuggio', $contributor->getUsername());
+                self::assertEquals('liuggio', $contributor->getUsername());
             } elseif ('leopro' === $k) {
-                $this->assertEquals('leopro', $contributor->getUsername());
+                self::assertEquals('leopro', $contributor->getUsername());
             }
 
             $this->checkUrl($contributor->getProfileUrl());
@@ -75,23 +71,23 @@ final class RepositoryTest extends TestCase
 
         $count = $this->repository->updateCache();
 
-        $this->assertEquals(\count($fetchAllValueExpect), $count);
+        self::assertEquals(\count($fetchAllValueExpect), $count);
     }
 
     private function checkUrl(string $url): void
     {
         $data = \file_get_contents($url);
-        $this->assertNotFalse((bool) $data, 'Unable to open URL: '.$url);
-        $this->assertGreaterThan(0, \strlen((string) $data));
+        self::assertNotFalse((bool) $data, 'Unable to open URL: '.$url);
+        self::assertGreaterThan(0, \strlen((string) $data));
     }
 
     /**
-     * @return array<int, array<string, int|string|bool>>
+     * @return array<int, array<string, mixed>>
      */
     private function getFakeResultPagerFetchAll(): array
     {
         return [
-            0 => [
+            [
                 'login' => 'liuggio',
                 'id' => 530406,
                 'avatar_url' => 'https://avatars1.githubusercontent.com/u/530406?v=4',
@@ -111,7 +107,7 @@ final class RepositoryTest extends TestCase
                 'site_admin' => false,
                 'contributions' => 186,
             ],
-            1 => [
+            [
                 'login' => 'leopro',
                 'id' => 1370900,
                 'avatar_url' => 'https://avatars2.githubusercontent.com/u/1370900?v=4',

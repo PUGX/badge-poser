@@ -18,18 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class DownloadsController
  * Download action for badges.
  */
-class DownloadsController extends AbstractBadgeController
+final class DownloadsController extends AbstractBadgeController
 {
     /**
-     * Downloads action.
-     *
-     * @param string $repository repository
-     * @param string $type       badge type
-     * @param string $format
-     *
      * @throws \InvalidArgumentException
      */
     public function downloads(
@@ -37,9 +30,9 @@ class DownloadsController extends AbstractBadgeController
         Poser $poser,
         CreateDownloadsBadge $createDownloadsBadge,
         ImageFactory $imageFactory,
-        $repository,
-        $type,
-        $format = 'svg'
+        string $repository,
+        string $type,
+        string $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = (string) $request->query->get('format');

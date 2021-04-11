@@ -10,10 +10,7 @@ use PUGX\Poser\Poser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class HomeController.
- */
-class HomeController extends AbstractController
+final class HomeController extends AbstractController
 {
     public function index(
         string $repository,

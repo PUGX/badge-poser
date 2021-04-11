@@ -8,24 +8,15 @@ use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class DependentsController.
- */
-class DependentsController extends AbstractBadgeController
+final class DependentsController extends AbstractBadgeController
 {
-    /**
-     * Dependents action.
-     *
-     * @param string $repository repository
-     * @param string $format
-     */
     public function dependents(
         Request $request,
         Poser $poser,
         CreateDependentsBadge $createDependentsBadge,
         ImageFactory $imageFactory,
-        $repository,
-        $format = 'svg'
+        string $repository,
+        string $format = 'svg'
     ): Response {
         if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
             $format = (string) $request->query->get('format');

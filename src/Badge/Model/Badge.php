@@ -11,23 +11,18 @@
 
 namespace App\Badge\Model;
 
-/**
- * Class Badge.
- */
-class Badge implements BadgeInterface
+final class Badge implements BadgeInterface, \Stringable
 {
     private const DEFAULT_FORMAT = 'svg';
     private string $subject;
     private string $status;
-    private string $color;
     private string $format;
 
-    public function __construct(string $subject, string $status, string $color, string $format = self::DEFAULT_FORMAT)
+    public function __construct(string $subject, string $status, private string $color, string $format = self::DEFAULT_FORMAT)
     {
         $this->subject = $this->escapeValue($subject);
         $this->status = $this->escapeValue($status);
         $this->format = $this->escapeValue($format);
-        $this->color = $color;
 
         if (!$this->isValidColorHex($this->color)) {
             throw new \InvalidArgumentException(\sprintf('Color not valid %s', $this->color));
@@ -35,7 +30,7 @@ class Badge implements BadgeInterface
     }
 
     /**
-     * @return string the Hexadecimal #FFFFFF
+     * @return string the Hexadecimal color code e.g. "#FFFFFF"
      */
     public function getHexColor(): string
     {
@@ -43,7 +38,7 @@ class Badge implements BadgeInterface
     }
 
     /**
-     * @return string the format of the image eg. `svg`.
+     * @return string the format of the image e.g. "svg".
      */
     public function getFormat(): string
     {
@@ -60,7 +55,7 @@ class Badge implements BadgeInterface
         return $this->subject;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return \sprintf('%s-%s-%s.%s',
             $this->subject,
@@ -91,16 +86,12 @@ class Badge implements BadgeInterface
             throw new \RuntimeException('Error while escaping');
         }
 
-        $ret = \str_replace('_', ' ', $ret);    // this fix the php pgrep_replace is not global :(
-        $ret = \str_replace('°§*¼', '_', $ret); // this fix the php pgrep_replace is not global :(
+        // this fix the php pgrep_replace is not global :(
 
-        return $ret;
+        return \str_replace(['_', '°§*¼'], [' ', '_'], $ret);
     }
 
-    /**
-     * @return false|int
-     */
-    private function isValidColorHex(string $color)
+    private function isValidColorHex(string $color): bool | int
     {
         $color = \ltrim($color, '#');
         $regex = '/^[0-9a-fA-F]{6}$/';

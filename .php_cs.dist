@@ -7,11 +7,18 @@ $finder = (new PhpCsFixer\Finder())
 ;
 
 return (new PhpCsFixer\Config())
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
-        'array_syntax' => ['syntax' => 'short'],
+        '@Symfony:risky' => true,
+        '@PHP80Migration' => true,
+        '@PHP80Migration:risky' => true,
+        '@PHPUnit84Migration:risky' => true,
         'ordered_imports' => true,
-        'declare_strict_types' => false
+        'declare_strict_types' => false,
+        'final_class' => true,
+        'native_function_invocation' => true,
+        'no_superfluous_phpdoc_tags' => true,
     ])
     ->setFinder($finder)
 ;

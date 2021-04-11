@@ -23,10 +23,9 @@ use InvalidArgumentException;
 use UnexpectedValueException;
 
 /**
- * Class CreateGitAttributesBadge
  * Create the 'gitattributes' image using a generator `Poser`.
  */
-class CreateGitAttributesBadge extends BaseCreatePackagistImage
+final class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
     private const COLOR_COMMITTED = '96d490';
     private const COLOR_UNCOMMITTED = 'ad6c4b';
@@ -44,18 +43,12 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
 
     protected string $text = self::GITATTRIBUTES_ERROR;
 
-    protected ClientInterface $client;
-
-    private ClientStrategy $clientStrategy;
-
     public function __construct(
         PackageRepositoryInterface $packageRepository,
-        ClientInterface $client,
-        ClientStrategy $clientStrategy
+        protected ClientInterface $client,
+        private ClientStrategy $clientStrategy
     ) {
         parent::__construct($packageRepository);
-        $this->client = $client;
-        $this->clientStrategy = $clientStrategy;
     }
 
     /**
@@ -66,10 +59,9 @@ class CreateGitAttributesBadge extends BaseCreatePackagistImage
     public function createGitAttributesBadge(string $repository, string $format = 'svg'): CacheableBadge
     {
         try {
-            /** @var Package $package */
             $package = $this->fetchPackage($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $this->createDefaultBadge($format);
         }
 

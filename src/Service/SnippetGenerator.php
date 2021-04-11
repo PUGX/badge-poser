@@ -5,40 +5,21 @@ namespace App\Service;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class SnippetGenerator.
- */
-class SnippetGenerator implements SnippetGeneratorInterface
+final class SnippetGenerator implements SnippetGeneratorInterface
 {
     private const PACKAGIST_ROUTE = 'pugx_badge_packagist';
 
-    private RouterInterface $router;
-
-    /** @var array<int, array> */
-    private array $badges;
-
-    /** @var array<int, string> */
-    private array $allInBadges;
-
     private RouteCollection $routes;
 
-    private string $packagistRoute;
-
-    /**
-     * @param array<int, string> $allInBadges
-     * @param array<int, array>  $badges
-     */
     public function __construct(
-        RouterInterface $router,
-        array $allInBadges,
-        array $badges,
-        string $packagistRoute = self::PACKAGIST_ROUTE
+        private RouterInterface $router,
+        /* @var array<int, string> */
+        private array $allInBadges,
+        /* @var array<int, array> */
+        private array $badges,
+        private string $packagistRoute = self::PACKAGIST_ROUTE
     ) {
-        $this->router = $router;
         $this->routes = $router->getRouteCollection();
-        $this->allInBadges = $allInBadges;
-        $this->badges = $badges;
-        $this->packagistRoute = $packagistRoute;
     }
 
     /**

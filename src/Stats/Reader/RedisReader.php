@@ -4,25 +4,18 @@ namespace App\Stats\Reader;
 
 use Predis\Client as Redis;
 
-/**
- * Class RedisReader.
- */
 final class RedisReader implements ReaderInterface
 {
     private const KEY_PREFIX = 'STAT';
     private const KEY_TOTAL = 'TOTAL';
-
-    /** @var Redis<string, Redis> */
-    private Redis $redis;
     private string $keyTotal;
 
-    /** @param Redis<string, Redis> $redis */
     public function __construct(
-        Redis $redis,
+        /* @var Redis<string, Redis> */
+        private Redis $redis,
         string $keyTotal = self::KEY_TOTAL,
         string $keyPrefix = self::KEY_PREFIX
     ) {
-        $this->redis = $redis;
         $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
     }
 

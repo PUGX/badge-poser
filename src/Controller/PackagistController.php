@@ -17,10 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class PackagistController.
- */
-class PackagistController extends AbstractController
+final class PackagistController extends AbstractController
 {
     public function search(Request $request, PackagistClient $packagistClient): JsonResponse
     {
@@ -31,7 +28,7 @@ class PackagistController extends AbstractController
         $packagistResponse = $packagistClient->search($packageName, [], $pages);
 
         /** @var PackagistResult $package */
-        foreach ($packagistResponse as $num => $package) {
+        foreach ($packagistResponse as $package) {
             $responseContent[] = ['id' => $package->getName(), 'description' => $package->getDescription()];
         }
 

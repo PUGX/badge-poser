@@ -17,10 +17,7 @@ use App\Badge\Service\ImageFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class AbstractBadgeController.
- */
-class AbstractBadgeController extends AbstractController
+abstract class AbstractBadgeController extends AbstractController
 {
     public function serveBadge(ImageFactory $imageFactory, CacheableBadge $cacheableBadge): Response
     {

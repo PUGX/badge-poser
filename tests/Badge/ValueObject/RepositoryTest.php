@@ -8,15 +8,15 @@ use App\Badge\ValueObject\Repository;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
-class RepositoryTest extends TestCase
+final class RepositoryTest extends TestCase
 {
     public function testItShouldCreateFromRepositoryUrl(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://github.com/username/repository');
 
-        $this->assertEquals('github.com', $repository->getSource());
-        $this->assertEquals('username', $repository->getUsername());
-        $this->assertEquals('repository', $repository->getName());
+        self::assertEquals('github.com', $repository->getSource());
+        self::assertEquals('username', $repository->getUsername());
+        self::assertEquals('repository', $repository->getName());
     }
 
     public function testItThrowExceptionIfUrlNotValid(): void
@@ -31,51 +31,51 @@ class RepositoryTest extends TestCase
     {
         $repository = Repository::create('github.com', 'username', 'repository');
 
-        $this->assertEquals('github.com', $repository->getSource());
-        $this->assertEquals('username', $repository->getUsername());
-        $this->assertEquals('repository', $repository->getName());
+        self::assertEquals('github.com', $repository->getSource());
+        self::assertEquals('username', $repository->getUsername());
+        self::assertEquals('repository', $repository->getName());
     }
 
     public function testItDetectGitHubAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://github.com/username/repository');
 
-        $this->assertTrue($repository->isGitHub());
+        self::assertTrue($repository->isGitHub());
     }
 
     public function testGitHubShouldNotdetectedAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://fake-provider.com/username/repository');
 
-        $this->assertFalse($repository->isGitHub());
+        self::assertFalse($repository->isGitHub());
     }
 
     public function testItSupportGitHubAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://github.com/username/repository');
 
-        $this->assertTrue($repository->isSupported());
+        self::assertTrue($repository->isSupported());
     }
 
     public function testItDetectBitbucketAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
 
-        $this->assertTrue($repository->isBitbucket());
+        self::assertTrue($repository->isBitbucket());
     }
 
     public function testBitbucketShouldNotdetectedAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://fake-provider.com/username/repository');
 
-        $this->assertFalse($repository->isBitbucket());
+        self::assertFalse($repository->isBitbucket());
     }
 
     public function testItSupportBitbucketAsSourceProvider(): void
     {
         $repository = Repository::createFromRepositoryUrl('https://bitbucket.org/username/repository');
 
-        $this->assertTrue($repository->isSupported());
+        self::assertTrue($repository->isSupported());
     }
 
     /** @dataProvider unsupportedRepositrySourceProvider */
@@ -83,7 +83,7 @@ class RepositoryTest extends TestCase
     {
         $repository = Repository::createFromRepositoryUrl($sourceProviderUrl);
 
-        $this->assertFalse($repository->isSupported());
+        self::assertFalse($repository->isSupported());
     }
 
     /**

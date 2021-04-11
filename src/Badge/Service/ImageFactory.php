@@ -9,13 +9,10 @@ use PUGX\Poser\Poser;
 /**
  * Class ImageFactory.
  */
-class ImageFactory
+final class ImageFactory
 {
-    private Poser $generator;
-
-    public function __construct(Poser $generator)
+    public function __construct(private Poser $generator)
     {
-        $this->generator = $generator;
     }
 
     public function createFromBadge(BadgeInterface $badge): Image

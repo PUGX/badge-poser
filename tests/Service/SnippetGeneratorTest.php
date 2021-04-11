@@ -8,10 +8,7 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Class SnippetGeneratorTest.
- */
-class SnippetGeneratorTest extends TestCase
+final class SnippetGeneratorTest extends TestCase
 {
     public function testGenerateAllSnippetsWithFeaturedBadges(): void
     {
