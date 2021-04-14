@@ -6203,16 +6203,16 @@
         },
         {
             "name": "phpstan/phpstan-symfony",
-            "version": "0.12.23",
+            "version": "0.12.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-symfony.git",
-                "reference": "436ee2575622b1226c404cbc962b903f2fb58bbf"
+                "reference": "76d75e326a3b47587c44a2b3aaadeae24f86adcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/436ee2575622b1226c404cbc962b903f2fb58bbf",
-                "reference": "436ee2575622b1226c404cbc962b903f2fb58bbf",
+                "url": "https://api.github.com/repos/phpstan/phpstan-symfony/zipball/76d75e326a3b47587c44a2b3aaadeae24f86adcc",
+                "reference": "76d75e326a3b47587c44a2b3aaadeae24f86adcc",
                 "shasum": ""
             },
             "require": {
@@ -6267,9 +6267,9 @@
             "description": "Symfony Framework extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-symfony/issues",
-                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.23"
+                "source": "https://github.com/phpstan/phpstan-symfony/tree/0.12.24"
             },
-            "time": "2021-04-12T15:57:40+00:00"
+            "time": "2021-04-13T14:34:41+00:00"
         },
         {
             "name": "symfony/browser-kit",
