@@ -2833,16 +2833,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.3.0-BETA3",
+            "version": "v5.3.0-BETA4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "eac8e550585cd4264656a4585f58d7c94920d584"
+                "reference": "cbb69227421d7050e0525c96122c7f39c4e3c4fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/eac8e550585cd4264656a4585f58d7c94920d584",
-                "reference": "eac8e550585cd4264656a4585f58d7c94920d584",
+                "url": "https://api.github.com/repos/symfony/console/zipball/cbb69227421d7050e0525c96122c7f39c4e3c4fb",
+                "reference": "cbb69227421d7050e0525c96122c7f39c4e3c4fb",
                 "shasum": ""
             },
             "require": {
@@ -2911,7 +2911,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.3.0-BETA3"
+                "source": "https://github.com/symfony/console/tree/v5.3.0-BETA4"
             },
             "funding": [
                 {
@@ -2927,7 +2927,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-07T14:48:44+00:00"
+            "time": "2021-05-11T16:08:00+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -5072,16 +5072,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.3.0-BETA3",
+            "version": "v5.3.0-BETA4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "8f93c44e31d2692e782cc0bdede50cf116b01f4e"
+                "reference": "d2a6339f22cdb252d51d4359015cf1263ff187ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/8f93c44e31d2692e782cc0bdede50cf116b01f4e",
-                "reference": "8f93c44e31d2692e782cc0bdede50cf116b01f4e",
+                "url": "https://api.github.com/repos/symfony/string/zipball/d2a6339f22cdb252d51d4359015cf1263ff187ae",
+                "reference": "d2a6339f22cdb252d51d4359015cf1263ff187ae",
                 "shasum": ""
             },
             "require": {
@@ -5135,7 +5135,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.3.0-BETA3"
+                "source": "https://github.com/symfony/string/tree/v5.3.0-BETA4"
             },
             "funding": [
                 {
@@ -5151,7 +5151,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-04T17:55:50+00:00"
+            "time": "2021-05-10T14:56:30+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -7566,7 +7566,9 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {
+        "symfony/console": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
