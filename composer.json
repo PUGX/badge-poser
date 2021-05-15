@@ -40,7 +40,7 @@
     },
     "require-dev": {
         "dg/bypass-finals": "^1.3",
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "jangregor/phpstan-prophecy": "^0.8",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12",

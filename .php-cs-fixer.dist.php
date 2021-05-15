@@ -17,7 +17,7 @@ return (new PhpCsFixer\Config())
         'ordered_imports' => true,
         'declare_strict_types' => false,
         'final_class' => true,
-        'native_function_invocation' => true,
+        'native_function_invocation' => ['include' => ['@all']],
         'no_superfluous_phpdoc_tags' => true,
     ])
     ->setFinder($finder)
