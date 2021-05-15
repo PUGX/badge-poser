@@ -57,7 +57,8 @@ final class Badge implements BadgeInterface, \Stringable
 
     public function __toString(): string
     {
-        return \sprintf('%s-%s-%s.%s',
+        return \sprintf(
+            '%s-%s-%s.%s',
             $this->subject,
             $this->status,
             $this->color,
