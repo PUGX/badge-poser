@@ -45,7 +45,7 @@ abstract class BaseCreatePackagistImage
         try {
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
-        } catch (Exception) {
+        } catch (\Exception) {
             return $this->createDefaultBadge($format);
         }
 

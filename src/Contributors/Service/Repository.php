@@ -29,7 +29,7 @@ final class Repository implements RepositoryInterface
             }
 
             return $this->getContributors();
-        } catch (Exception) {
+        } catch (\Exception) {
             return [];
         }
     }

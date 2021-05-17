@@ -61,7 +61,7 @@ final class CreateGitAttributesBadge extends BaseCreatePackagistImage
         try {
             $package = $this->fetchPackage($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
-        } catch (Exception) {
+        } catch (\Exception) {
             return $this->createDefaultBadge($format);
         }
 

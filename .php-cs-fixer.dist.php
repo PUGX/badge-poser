@@ -18,6 +18,7 @@ return (new PhpCsFixer\Config())
         'declare_strict_types' => false,
         'final_class' => true,
         'native_function_invocation' => ['include' => ['@all']],
+        'native_constant_invocation' => false,  // TODO remove when https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/5684 is solved
         'no_superfluous_phpdoc_tags' => true,
     ])
     ->setFinder($finder)
