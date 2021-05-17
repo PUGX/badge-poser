@@ -49,7 +49,10 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
     {
         try {
             //check if the repo exist
-            \str_replace('.git', '', $this->packageRepository
+            \str_replace(
+                '.git',
+                '',
+                $this->packageRepository
                 ->fetchByRepository($repository)
                 ->getRepository()
             );
