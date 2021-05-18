@@ -1,5 +1,11 @@
 monolog:
+    channels: [ 'badges' ]
     handlers:
+        badges:
+            level:    info
+            type:     stream
+            path:     php://stderr
+            channels: [badges]
         main:
             type: fingers_crossed
             action_level: error
@@ -14,4 +20,4 @@ monolog:
         console:
             type: console
             process_psr_3_messages: false
-            channels: ["!event", "!doctrine"]
+            channels: ["!event", "!doctrine", "!badges"]
