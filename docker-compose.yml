@@ -16,6 +16,7 @@ services:
           memory: 128M
     env_file:
       - ./.env
+      - ./.env.local
     environment:
       - ENABLE_CW=0
     ports:
@@ -39,6 +40,7 @@ services:
           memory: 1024M
     env_file:
       - ./.env
+      - ./.env.local
     environment:
       - ENABLE_CW=0
     ports:
