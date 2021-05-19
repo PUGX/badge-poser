@@ -72,7 +72,7 @@ build_prod: ## build assets for production environment
 
 ##@ DEPLOY
 
-.docker_img_deps:
+	.docker_img_deps:
 	docker build -t jsbuilder -f sys/docker/common/Dockerfile.assets .
 	docker build -t awsbuilder -f sys/docker/common/Dockerfile.aws-ecs-ci .
 

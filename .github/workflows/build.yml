@@ -1,0 +1,93 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        php-versions: [ '8.0' ]
+        coverage-driver: [ 'pcov', 'xdebug3' ]
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      uses: php-actions/composer@v5
+      with:
+        args: --prefer-dist
+        composer_version: 2
+        php_extensions: gd
+        php_version: 8.0
+
+    - name: Yarn install
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: yarn install
+
+    - name: Rebuild sass
+      run: npm rebuild node-sass
+
+    - name: Build frontend
+      run: yarn build
+
+    - name: checks that the YAML config files contain no syntax errors
+      run: ./bin/console lint:yaml config
+
+    - name: checks that the Twig template files contain no syntax errors
+      run: ./bin/console lint:twig templates
+
+    - name: run stylelint checks
+      run: yarn stylelint
+
+    - name: Coding Standard Checks
+      run: PHP_CS_FIXER_IGNORE_ENV=1 ./vendor/bin/php-cs-fixer fix --dry-run -v
+
+    - name: "Run tests with phpunit/phpunit"
+      run: "bin/phpunit -d memory_limit=-1 --coverage-clover clover.xml"
+      env:
+        REDIS_HOST: localhost
+        REDIS_URL: "redis://localhost"
+
+    - name: PHPStan
+      run:  vendor/bin/phpstan analyse --memory-limit=2G
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
