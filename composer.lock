@@ -909,16 +909,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "v3.2.0",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "1dce0d33292eb2c4d33e2f9354b4043caf14588e"
+                "reference": "0442abd1361956e3a87e71683154c5c33c5a0dad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/1dce0d33292eb2c4d33e2f9354b4043caf14588e",
-                "reference": "1dce0d33292eb2c4d33e2f9354b4043caf14588e",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/0442abd1361956e3a87e71683154c5c33c5a0dad",
+                "reference": "0442abd1361956e3a87e71683154c5c33c5a0dad",
                 "shasum": ""
             },
             "require": {
@@ -952,7 +952,7 @@
             "extra": {
                 "branch-alias": {
                     "dev-2.x": "2.20.x-dev",
-                    "dev-master": "3.2.x-dev"
+                    "dev-master": "3.3.x-dev"
                 }
             },
             "autoload": {
@@ -985,7 +985,7 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/php-github-api/issues",
-                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.2.0"
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -993,7 +993,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-28T18:12:19+00:00"
+            "time": "2021-05-20T20:28:41+00:00"
         },
         {
             "name": "knplabs/packagist-api",
@@ -4009,7 +4009,7 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v5.3.0-BETA2",
+            "version": "v5.3.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -4058,7 +4058,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v5.3.0-BETA2"
+                "source": "https://github.com/symfony/options-resolver/tree/v5.3.0-RC1"
             },
             "funding": [
                 {
