@@ -6,7 +6,6 @@ use App\Event\BadgeEvent;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 final class BadgeLoggerSubscriber implements EventSubscriberInterface
 {
@@ -23,9 +22,14 @@ final class BadgeLoggerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ResponseEvent::class => 'onKernelResponse',
             BadgeEvent::class => 'onBadgeEvent',
+            ResponseEvent::class => 'onKernelResponse',
         ];
+    }
+
+    public function onBadgeEvent(BadgeEvent $badgeEvent): void
+    {
+        $this->badgeEventData = $badgeEvent->getData();
     }
 
     public function onKernelResponse(ResponseEvent $event): void
@@ -45,11 +49,6 @@ final class BadgeLoggerSubscriber implements EventSubscriberInterface
                 'responseHeaders' => $response->headers->all(),
             ]
         );
-    }
-
-    public function onBadgeEvent(BadgeEvent $badgeEvent): void
-    {
-        $this->badgeEventData = $badgeEvent->getData();
     }
 
     private function isABadgeController(?string $controllerName): bool
