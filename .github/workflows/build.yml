@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         php-versions: [ '8.0' ]
-        coverage-driver: [ 'pcov', 'xdebug3' ]
+        coverage-driver: [ 'pcov' ]
 
     services:
       redis:
@@ -50,14 +50,14 @@ jobs:
       uses: php-actions/composer@v5
       with:
         args: --prefer-dist
-        composer_version: 2
+        version: 2
         php_extensions: gd
         php_version: 8.0
 
     - name: Yarn install
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '14.14.0'
     - run: yarn install
 
     - name: Rebuild sass
