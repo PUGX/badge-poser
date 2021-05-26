@@ -21,6 +21,11 @@ parameters:
 			path: tests/Badge/Model/UseCase/CreateComposerLockBadgeTest.php
 
 		-
+			message: "#^Property Symfony\\\\Component\\\\HttpFoundation\\\\Response\\:\\:\\$headers \\(Symfony\\\\Component\\\\HttpFoundation\\\\ResponseHeaderBag\\) does not accept PHPUnit\\\\Framework\\\\MockObject\\\\MockObject&Symfony\\\\Component\\\\HttpFoundation\\\\HeaderBag\\.$#"
+			count: 1
+			path: tests/EventListener/BadgeLoggerSubscriberTest.php
+
+		-
 			message: "#^Cannot call method getStatusCode\\(\\) on Symfony\\\\Component\\\\HttpFoundation\\\\Response\\|null\\.$#"
 			count: 1
 			path: tests/EventListener/BadgeSubscriberTest.php
