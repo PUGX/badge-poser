@@ -3,7 +3,7 @@
 Use shields for your packagist.org repository that shows how many times your project has been downloaded from packagist.org
 or its latest stable version.
 
-[![Github actions Build](https://github.com/PUGX/badge-poser/workflows/Build/badge.svg)](https://packagist.org/packages/PUGX/badge-poser)
+[![Github actions Build](https://github.com/PUGX/badge-poser/workflows/Test/badge.svg)](https://packagist.org/packages/PUGX/badge-poser)
 [![Latest Stable Version](https://poser.pugx.org/pugx/badge-poser/version.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![Latest Unstable Version](https://poser.pugx.org/pugx/badge-poser/v/unstable.svg)](https://packagist.org/packages/pugx/badge-poser)
 [![License](https://poser.pugx.org/pugx/badge-poser/license.svg)](https://packagist.org/packages/pugx/badge-poser)
