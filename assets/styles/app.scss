@@ -242,6 +242,11 @@ section.badges {
 }
 
 @include media-breakpoint-down(sm) {
+  .container.section-top {
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+
   h1 {
     font-size: 2.4em;
   }
@@ -260,14 +265,40 @@ section.badges {
     padding: 0;
 
     .badges {
-      margin-bottom: 0;
+      margin-bottom: 15px;
     }
   }
 
   section.search,
   section.results {
     padding-bottom: 0;
-    padding-top: 3px;
+    padding-top: 10px;
+
+    .container {
+      padding-right: 0;
+      padding-left: 0;
+
+      .content {
+        padding: 15px 15px 0;
+
+        h2 {
+          font-size: 1.3em;
+        }
+
+        .copy {
+          padding: 1.5em;
+        }
+      }
+    }
+  }
+
+  section.badges {
+    padding-top: 0;
+
+    .container {
+      padding-right: 0;
+      padding-left: 0;
+    }
   }
 
   a.big {
