@@ -9,7 +9,6 @@
   border-radius: 2px;
   transition: border-color .15s ease-in-out;
 
-
   &:focus {
     border-bottom-color: $primary;
   }
@@ -42,6 +41,20 @@
   animation: loader .7s linear infinite;
   border-color: transparent transparent $primary $primary;
   margin: calc(2.4rem / 2) 0;
+}
+
+.awesomplete.loading {
+  input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+  input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
