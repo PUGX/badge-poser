@@ -4070,16 +4070,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.22.1",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e"
+                "reference": "46cd95797e9df938fdd2b03693b5fca5e64b01ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/c6c942b1ac76c82448322025e084cadc56048b4e",
-                "reference": "c6c942b1ac76c82448322025e084cadc56048b4e",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/46cd95797e9df938fdd2b03693b5fca5e64b01ce",
+                "reference": "46cd95797e9df938fdd2b03693b5fca5e64b01ce",
                 "shasum": ""
             },
             "require": {
@@ -4091,7 +4091,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.22-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4129,7 +4129,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.22.1"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.23.0"
             },
             "funding": [
                 {
@@ -4145,7 +4145,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "time": "2021-02-19T12:13:01+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -4401,16 +4401,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.22.1",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1"
+                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/5232de97ee3b75b0360528dae24e73db49566ab1",
-                "reference": "5232de97ee3b75b0360528dae24e73db49566ab1",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
+                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
                 "shasum": ""
             },
             "require": {
@@ -4422,7 +4422,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.22-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4461,7 +4461,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.22.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.23.0"
             },
             "funding": [
                 {
@@ -4477,20 +4477,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-22T09:19:47+00:00"
+            "time": "2021-05-27T09:27:20+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.22.1",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "dc3063ba22c2a1fd2f45ed856374d79114998f91"
+                "reference": "eca0bf41ed421bed1b57c4958bab16aa86b757d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/dc3063ba22c2a1fd2f45ed856374d79114998f91",
-                "reference": "dc3063ba22c2a1fd2f45ed856374d79114998f91",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/eca0bf41ed421bed1b57c4958bab16aa86b757d0",
+                "reference": "eca0bf41ed421bed1b57c4958bab16aa86b757d0",
                 "shasum": ""
             },
             "require": {
@@ -4499,7 +4499,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.22-dev"
+                    "dev-main": "1.23-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4544,7 +4544,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.22.1"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.23.0"
             },
             "funding": [
                 {
@@ -4560,7 +4560,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-07T16:49:33+00:00"
+            "time": "2021-02-19T12:13:01+00:00"
         },
         {
             "name": "symfony/polyfill-uuid",
@@ -6265,16 +6265,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v5.2.9",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "38e16b426f1a4cd663b2583111f213e0c9d9d4fe"
+                "reference": "379984e25eee9811b0a25a2105e1a2b3b8d9b734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/38e16b426f1a4cd663b2583111f213e0c9d9d4fe",
-                "reference": "38e16b426f1a4cd663b2583111f213e0c9d9d4fe",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/379984e25eee9811b0a25a2105e1a2b3b8d9b734",
+                "reference": "379984e25eee9811b0a25a2105e1a2b3b8d9b734",
                 "shasum": ""
             },
             "require": {
@@ -6316,7 +6316,7 @@
             "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/browser-kit/tree/v5.2.9"
+                "source": "https://github.com/symfony/browser-kit/tree/v5.3.0"
             },
             "funding": [
                 {
@@ -6332,7 +6332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-16T13:07:46+00:00"
+            "time": "2021-05-26T17:43:10+00:00"
         },
         {
             "name": "symfony/debug-bundle",
@@ -6460,20 +6460,21 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v5.2.9",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "8d5201206ded6f37de475b041a11bfaf3ac73d5e"
+                "reference": "55fff62b19f413f897a752488ade1bc9c8a19cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/8d5201206ded6f37de475b041a11bfaf3ac73d5e",
-                "reference": "8d5201206ded6f37de475b041a11bfaf3ac73d5e",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/55fff62b19f413f897a752488ade1bc9c8a19cdd",
+                "reference": "55fff62b19f413f897a752488ade1bc9c8a19cdd",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
+                "symfony/deprecation-contracts": "^2.1",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/polyfill-php80": "^1.15"
@@ -6514,7 +6515,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v5.2.9"
+                "source": "https://github.com/symfony/dom-crawler/tree/v5.3.0"
             },
             "funding": [
                 {
@@ -6530,7 +6531,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-16T13:07:46+00:00"
+            "time": "2021-05-26T17:43:10+00:00"
         },
         {
             "name": "symfony/dotenv",
