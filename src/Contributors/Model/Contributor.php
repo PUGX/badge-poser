@@ -6,7 +6,7 @@ final class Contributor implements \Stringable
 {
     private const DEFAULT_IMG_SIZE = 160;
 
-    private function __construct(private string $username, private string $profileUrl, private string $profileImg, private int $size = self::DEFAULT_IMG_SIZE)
+    private function __construct(private string $username, private string $profileUrl, private string $profileImg, private ?int $size = null)
     {
     }
 
@@ -34,8 +34,11 @@ final class Contributor implements \Stringable
 
     public function getProfileImg(): string
     {
+        // Very annoying bug happening only on prod, triggering the following error:
+        // Uncaught PHP Exception Error: "Typed property App\\Contributors\\Model\\Contributor::$size must not be accessed before initialization"
+        $size = empty($this->size) ? self::DEFAULT_IMG_SIZE : $this->size;
         $sep = $this->getUrlSeparator($this->profileImg);
-        $qs = \http_build_query(['s' => $this->size]);
+        $qs = \http_build_query(['s' => $size]);
 
         return $this->profileImg.$sep.$qs;
     }

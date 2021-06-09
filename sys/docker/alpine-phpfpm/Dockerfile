@@ -54,7 +54,7 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-RUN /usr/local/bin/composer install --no-plugins --no-scripts --optimize-autoloader --no-ansi --no-interaction --no-progress --ignore-platform-reqs \
+RUN /usr/local/bin/composer install --optimize-autoloader --no-ansi --no-interaction --no-progress \
     && apk del .builddeps \
     && php-fpm -t \
     && php-fpm -tt
