@@ -1,14 +1,11 @@
 version: '3.8'
 
 services:
-  nginx:
-    build:
-      context: .
-      dockerfile: sys/docker/alpine-nginx/Dockerfile
-      network: host
-    container_name: badge-poser-nginx
+  webserver:
+    image: bref/fpm-dev-gateway
+    container_name: badge-poser-bref
     depends_on:
-      - phpfpm
+      - php
     deploy:
       resources:
         limits:
@@ -22,15 +19,21 @@ services:
     ports:
       - 8001:80
     volumes:
-      - .:/application:cached
-    working_dir: /application
+      - .:/var/task
+    environment:
+      HANDLER: public/index.php
+      DOCUMENT_ROOT: public
 
-  phpfpm:
+  php:
+#    image: bref/php-80-fpm-dev
     build:
       context: .
-      dockerfile: sys/docker/alpine-phpfpm/Dockerfile
+      #dockerfile: sys/docker/alpine-phpfpm/Dockerfile
+      dockerfile: sys/docker/Dockerfile
       network: host
-    container_name: badge-poser-phpfpm
+    container_name: badge-poser-php
+    volumes:
+      - .:/var/task:ro
     depends_on:
       - redis
     deploy:
@@ -42,13 +45,20 @@ services:
       - ./.env
       - ./.env.local
     environment:
-      - ENABLE_CW=0
+      DOCKER_COMPOSE: 1
     ports:
       - 9000:9000
     volumes:
-      - .:/application:cached
-      - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/docker-php-zz-overrides.ini:ro
+      - .:/var/task:ro
+      - ./var:/var/task/var
     working_dir: /application
+
+  console:
+    container_name: badge-poser-console
+    image: bref/php-80
+    volumes:
+      - .:/var/task:ro
+    entrypoint: php
 
   node:
     container_name: badge-poser-node
