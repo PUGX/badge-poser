@@ -25,7 +25,7 @@ server {
     listen 80;
     server_name poser.pugx.org poser.packagist.org poser.local stg.poser.pugx.org;
 
-    root /application/public;
+    root /var/task/public;
 
     if ($request_uri ~ "/dark-canary/") { set $skip_cache 1; }
 
@@ -75,7 +75,7 @@ server {
             return string.gsub(ngx.var.document_uri, "/dark%-canary", "")
         }
 
-        fastcgi_pass ${PHPFPM_CANARY_HOST}:9000;
+        fastcgi_pass ${PHPFPM_CANARY_HOST}:9001;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         fastcgi_buffers 16 16k;
         fastcgi_buffer_size 32k;
@@ -83,7 +83,7 @@ server {
         fastcgi_param REQUEST_URI $request_url;
         fastcgi_param DOCUMENT_URI $document_url;
         fastcgi_param SCRIPT_NAME /index.php;
-        fastcgi_param SCRIPT_FILENAME /application/public/index.php;
+        fastcgi_param SCRIPT_FILENAME /var/task/public/index.php;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
     }
 
@@ -118,7 +118,7 @@ server {
 
         # local = phpfpm
         # aws = 127.0.0.1
-        fastcgi_pass ${PHPFPM_HOST}:9000;
+        fastcgi_pass ${PHPFPM_HOST}:9001;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;

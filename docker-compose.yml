@@ -1,37 +1,35 @@
 version: '3.8'
 
 services:
-  webserver:
-    image: bref/fpm-dev-gateway
-    container_name: badge-poser-bref
+  nginx:
+    build:
+      context: .
+      dockerfile: sys/docker/alpine-nginx/Dockerfile
+      network: host
+    container_name: badge-poser-nginx
+    env_file:
+      - ./.env
+      - ./.env.local
     depends_on:
-      - php
+      - phpfpm
     deploy:
       resources:
         limits:
           cpus: '0.25'
           memory: 128M
-    env_file:
-      - ./.env
-      - ./.env.local
     environment:
       - ENABLE_CW=0
     ports:
       - 8001:80
     volumes:
       - .:/var/task
-    environment:
-      HANDLER: public/index.php
-      DOCUMENT_ROOT: public
 
-  php:
-#    image: bref/php-80-fpm-dev
+  phpfpm:
     build:
       context: .
-      #dockerfile: sys/docker/alpine-phpfpm/Dockerfile
-      dockerfile: sys/docker/Dockerfile
+      dockerfile: sys/docker/bref-phpfpm/Dockerfile
       network: host
-    container_name: badge-poser-php
+    container_name: badge-poser-phpfpm
     volumes:
       - .:/var/task:ro
     depends_on:
