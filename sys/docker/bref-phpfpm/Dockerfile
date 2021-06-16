@@ -1,4 +1,4 @@
-FROM bref/php-80-fpm-dev
+FROM bref/php-80-fpm-dev:1.2.7
 
 ENV LD_LIBRARY_PATH=/opt/bref/lib64:/opt/bref/lib
 

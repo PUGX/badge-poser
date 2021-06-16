@@ -39,7 +39,7 @@ final class Kernel extends BaseKernel
     public function getLogDir()
     {
         // When on the lambda only /tmp is writeable
-        if (getenv('DOCKER_COMPOSE') == false && getenv('LAMBDA_TASK_ROOT') !== false) {
+        if (false == \getenv('DOCKER_COMPOSE') && false !== \getenv('LAMBDA_TASK_ROOT')) {
             return '/tmp/log/';
         }
 
@@ -49,7 +49,7 @@ final class Kernel extends BaseKernel
     public function getCacheDir()
     {
         // When on the lambda only /tmp is writeable
-        if (getenv('DOCKER_COMPOSE') == false && getenv('LAMBDA_TASK_ROOT') !== false) {
+        if (false == \getenv('DOCKER_COMPOSE') && false !== \getenv('LAMBDA_TASK_ROOT')) {
             return '/tmp/cache/'.$this->environment;
         }
 
