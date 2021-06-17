@@ -17,6 +17,18 @@
     "bref/extra-php-extensions": {
         "version": "dev-master"
     },
+    "bref/symfony-bridge": {
+        "version": "0.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.1",
+            "ref": "f20b0f232526b14d5e4734030b47ad6c887757a9"
+        },
+        "files": [
+            "serverless.yml"
+        ]
+    },
     "cache/adapter-common": {
         "version": "1.1.0"
     },

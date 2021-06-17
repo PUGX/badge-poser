@@ -2,12 +2,12 @@
 
 namespace App;
 
+use Bref\SymfonyBridge\BrefKernel;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-final class Kernel extends BaseKernel
+final class Kernel extends BrefKernel
 {
     use MicroKernelTrait;
 
@@ -36,23 +36,8 @@ final class Kernel extends BaseKernel
         }
     }
 
-    public function getLogDir()
+    protected function getWritableCacheDirectories(): array
     {
-        // When on the lambda only /tmp is writeable
-        if (false == \getenv('DOCKER_COMPOSE') && false !== \getenv('LAMBDA_TASK_ROOT')) {
-            return '/tmp/log/';
-        }
-
-        return parent::getLogDir();
-    }
-
-    public function getCacheDir()
-    {
-        // When on the lambda only /tmp is writeable
-        if (false == \getenv('DOCKER_COMPOSE') && false !== \getenv('LAMBDA_TASK_ROOT')) {
-            return '/tmp/cache/'.$this->environment;
-        }
-
-        return parent::getCacheDir();
+        return [];
     }
 }
