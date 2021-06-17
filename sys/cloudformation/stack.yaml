@@ -375,9 +375,9 @@ Resources:
       ContainerDefinitions:
         - Name: 'phpfpm'
           PortMappings:
-            - HostPort: 9000
+            - HostPort: 9001
               Protocol: tcp
-              ContainerPort: 9000
+              ContainerPort: 9001
           Environment:
             - Name: APP_ENV
               Value: !Ref EnvAPPENV
