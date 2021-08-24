@@ -102,3 +102,14 @@ pugx_badge_circleci:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
         branch: ".+"
         _ext: "svg"
+
+pugx_badge_require:
+    path: /{repository}/require/{type}.{_ext}
+    controller: App\Controller\Badge\RequireController::require
+    methods: GET
+    defaults:
+        _ext: "svg"
+    requirements:
+        repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        type: ".+"
+        _ext: "svg"
