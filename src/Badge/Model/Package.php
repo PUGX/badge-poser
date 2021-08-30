@@ -290,4 +290,14 @@ final class Package
 
         return '';
     }
+
+    public function getLatestRequire(string $require): string
+    {
+        $latestStableVersion = $this->getLatestStableVersion();
+        /** @var Version $version */
+        $version = $this->getVersions()[$latestStableVersion];
+        $requires = $version->getRequire();
+
+        return $requires[$require] ?? '';
+    }
 }
