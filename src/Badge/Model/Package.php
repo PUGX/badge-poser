@@ -278,7 +278,7 @@ final class Package
     /**
      * @param array<string>|string $licenseData
      */
-    private function normalizeLicense(array | string $licenseData): string
+    private function normalizeLicense(array|string $licenseData): string
     {
         if (!\is_array($licenseData)) {
             return $licenseData;

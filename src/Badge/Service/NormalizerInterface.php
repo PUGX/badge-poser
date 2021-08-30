@@ -7,5 +7,5 @@ namespace App\Badge\Service;
  */
 interface NormalizerInterface
 {
-    public function normalize(float | int | string | null $number, int $precision = 2): string;
+    public function normalize(float|int|string|null $number, int $precision = 2): string;
 }

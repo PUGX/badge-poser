@@ -92,7 +92,7 @@ final class Badge implements BadgeInterface, \Stringable
         return \str_replace(['_', '°§*¼'], [' ', '_'], $ret);
     }
 
-    private function isValidColorHex(string $color): bool | int
+    private function isValidColorHex(string $color): bool|int
     {
         $color = \ltrim($color, '#');
         $regex = '/^[0-9a-fA-F]{6}$/';

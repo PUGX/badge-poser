@@ -44,7 +44,7 @@ final class LicenseControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         self::assertResponseIsSuccessful();
-        self::assertStringContainsString('/pugx/badge-poser/license', $crawler->getUri());
+        self::assertStringContainsString('/pugx/badge-poser/license', (string) $crawler->getUri());
 
         self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));

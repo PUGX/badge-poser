@@ -251,9 +251,6 @@
             "config/packages/dev/debug.yaml"
         ]
     },
-    "symfony/debug-pack": {
-        "version": "v1.0.7"
-    },
     "symfony/dependency-injection": {
         "version": "v4.2.1"
     },
@@ -389,9 +386,6 @@
     },
     "symfony/process": {
         "version": "v4.2.1"
-    },
-    "symfony/profiler-pack": {
-        "version": "v1.0.4"
     },
     "symfony/psr-http-message-bridge": {
         "version": "v2.1.0"

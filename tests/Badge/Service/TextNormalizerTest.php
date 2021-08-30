@@ -26,7 +26,7 @@ final class TextNormalizerTest extends TestCase
     /**
      * @dataProvider getBadNumberToConvert
      */
-    public function testNumberToTextConversion(int | string $input, string $output): void
+    public function testNumberToTextConversion(int|string $input, string $output): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -48,7 +48,7 @@ final class TextNormalizerTest extends TestCase
     /**
      * @dataProvider getGoodNumberToConvert
      */
-    public function testGoodNumberToTextConversion(int | string $input, string $output): void
+    public function testGoodNumberToTextConversion(int|string $input, string $output): void
     {
         $res = $this->normalizer->normalize($input);
         self::assertEquals($output, $res);

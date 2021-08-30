@@ -76,7 +76,7 @@ final class VersionControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         self::assertResponseIsSuccessful();
-        self::assertStringContainsString('/pugx/badge-poser/version', $crawler->getUri());
+        self::assertStringContainsString('/pugx/badge-poser/version', (string) $crawler->getUri());
 
         self::assertMatchesRegularExpression('/max-age=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));
         self::assertMatchesRegularExpression('/s-maxage=3600/', (string) $client->getResponse()->headers->get('Cache-Control'));

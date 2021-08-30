@@ -13,7 +13,7 @@ final class TextNormalizer implements NormalizerInterface
     /**
      * @throws InvalidArgumentException
      */
-    public function normalize(float | int | string | null $number, int $precision = 2): string
+    public function normalize(float|int|string|null $number, int $precision = 2): string
     {
         $number = $this->normalizeNumber($number);
         $units = ['', ' k', ' M', ' G', ' T'];
@@ -31,7 +31,7 @@ final class TextNormalizer implements NormalizerInterface
      *
      * @throws InvalidArgumentException
      */
-    private function normalizeNumber(float | int | string | null $number): float
+    private function normalizeNumber(float|int|string|null $number): float
     {
         if (!\is_numeric($number)) {
             throw new InvalidArgumentException('Number expected');
