@@ -2314,16 +2314,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.2.1",
+            "version": "4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "a05a849f948f6f6e5e47064ab177bc9daca8a923"
+                "reference": "64b03f6a3b2e680313712c0c84d5f4d5b9223e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/a05a849f948f6f6e5e47064ab177bc9daca8a923",
-                "reference": "a05a849f948f6f6e5e47064ab177bc9daca8a923",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/64b03f6a3b2e680313712c0c84d5f4d5b9223e5b",
+                "reference": "64b03f6a3b2e680313712c0c84d5f4d5b9223e5b",
                 "shasum": ""
             },
             "require": {
@@ -2411,7 +2411,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.1"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.2"
             },
             "funding": [
                 {
@@ -2423,7 +2423,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-08-24T10:47:16+00:00"
+            "time": "2021-08-30T09:25:22+00:00"
         },
         {
             "name": "snc/redis-bundle",
