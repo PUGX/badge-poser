@@ -294,6 +294,11 @@ final class Package
     public function getLatestRequire(string $require): string
     {
         $latestStableVersion = $this->getLatestStableVersion();
+
+        if (null === $latestStableVersion) {
+            return '';
+        }
+
         /** @var Version $version */
         $version = $this->getVersions()[$latestStableVersion];
         $requires = $version->getRequire();
