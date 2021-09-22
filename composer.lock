@@ -1192,16 +1192,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.0",
+            "version": "1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "778f722e29250c1fac0bbdef2c122fa5d038c9eb"
+                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/778f722e29250c1fac0bbdef2c122fa5d038c9eb",
-                "reference": "778f722e29250c1fac0bbdef2c122fa5d038c9eb",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/de90ab2b41d7d61609f504e031339776bc8c7223",
+                "reference": "de90ab2b41d7d61609f504e031339776bc8c7223",
                 "shasum": ""
             },
             "require": {
@@ -1254,9 +1254,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.0"
+                "source": "https://github.com/php-http/discovery/tree/1.14.1"
             },
-            "time": "2021-06-01T14:30:21+00:00"
+            "time": "2021-09-18T07:57:46+00:00"
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -2314,16 +2314,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.2.2",
+            "version": "4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "64b03f6a3b2e680313712c0c84d5f4d5b9223e5b"
+                "reference": "d1126b2feadb3299e719f39caa128abe5cf684e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/64b03f6a3b2e680313712c0c84d5f4d5b9223e5b",
-                "reference": "64b03f6a3b2e680313712c0c84d5f4d5b9223e5b",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/d1126b2feadb3299e719f39caa128abe5cf684e9",
+                "reference": "d1126b2feadb3299e719f39caa128abe5cf684e9",
                 "shasum": ""
             },
             "require": {
@@ -2411,7 +2411,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.2"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.2.3"
             },
             "funding": [
                 {
@@ -2423,7 +2423,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-08-30T09:25:22+00:00"
+            "time": "2021-09-21T08:35:04+00:00"
         },
         {
             "name": "snc/redis-bundle",
