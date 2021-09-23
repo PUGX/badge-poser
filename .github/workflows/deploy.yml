@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Prepare settings
+      run: echo "$PARAM_JSON" > sys/cloudformation/parameters.prod.json
+
+    - name: Deploy
+      run: make deploy_prod
