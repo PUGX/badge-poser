@@ -547,6 +547,47 @@ Resources:
                   - !Ref sgecs
                 Subnets: !Ref Subnets
 
+  # IAM USER
+  iamusergithubactions:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: GitHubActionsDeploy
+          PolicyDocument:
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Sid": "GitHubActionsDeploy",
+                      "Effect": "Allow",
+                      "Action": [
+                          "ecr:CompleteLayerUpload",
+                          "ecr:GetAuthorizationToken",
+                          "sts:GetCallerIdentity",
+                          "ecr:UploadLayerPart",
+                          "cloudformation:CreateChangeSet",
+                          "ecr:InitiateLayerUpload",
+                          "ecr:PutImage"
+                      ],
+                      "Resource": [
+                          "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser",
+                          "arn:aws:cloudformation:eu-west-1:478389220392:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"
+                      ]
+                  }
+              ]
+          }
+      Tags:
+        - Key: env
+          Value: !Ref ServiceName
+      UserName: github_action_deploy
+
+  # IAM ACCESS-KEY
+  iamkey:
+    Type: AWS::IAM::AccessKey
+    DependsOn:
+      - iamusergithubactions
+    Properties:
+      UserName: github_action_deploy
 
 ################################################################################
 #                                   Outputs                                    #
