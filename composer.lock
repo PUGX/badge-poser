@@ -6746,16 +6746,16 @@
         },
         {
             "name": "symfony/dotenv",
-            "version": "v5.3.7",
+            "version": "v5.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dotenv.git",
-                "reference": "99a18c2e23f4d901c36cea2012f9f1a8e25e99e4"
+                "reference": "12888c9c46ac750ec5c1381db5bf3d534e7d70cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dotenv/zipball/99a18c2e23f4d901c36cea2012f9f1a8e25e99e4",
-                "reference": "99a18c2e23f4d901c36cea2012f9f1a8e25e99e4",
+                "url": "https://api.github.com/repos/symfony/dotenv/zipball/12888c9c46ac750ec5c1381db5bf3d534e7d70cb",
+                "reference": "12888c9c46ac750ec5c1381db5bf3d534e7d70cb",
                 "shasum": ""
             },
             "require": {
@@ -6796,7 +6796,7 @@
                 "environment"
             ],
             "support": {
-                "source": "https://github.com/symfony/dotenv/tree/v5.3.7"
+                "source": "https://github.com/symfony/dotenv/tree/v5.3.8"
             },
             "funding": [
                 {
@@ -6812,7 +6812,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-02T16:35:09+00:00"
+            "time": "2021-07-29T06:18:06+00:00"
         },
         {
             "name": "symfony/monolog-bridge",
