@@ -22,16 +22,16 @@ cd badge-poser
 $ cp .env .env.local
 ```
 
-Follow [this link](https://github.com/settings/tokens) for generate your GitHub "Personal access token" and put them
- in `.env.local` file as value of `GITHUB_USERNAME`.
+Follow [this link](https://github.com/settings/tokens) to generate your GitHub "Personal access token" and put them
+ in `.env.local` file as the value of `GITHUB_USERNAME`.
 
-Follow [this link](https://bitbucket.org/account/settings/app-passwords/new) for generate your Bitbucket "App Password" and put them
- in `.env.local` file as value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
+Follow [this link](https://bitbucket.org/account/settings/app-passwords/new) to generate your Bitbucket "App Password" and put them
+ in `.env.local` file as the value of `BITBUCKET_SECRET`, add to `BITBUCKET_TOKEN` your username and into `BITBUCKET_AUTH_METHOD` value `http_password`
 
-Follow [this link](https://circleci.com/account/api) for generate your CircleCI "Personal API Token" and put them
- in `.env.local` file as value of `CIRCLE_CI_TOKEN`.
+Follow [this link](https://circleci.com/account/api) to generate your CircleCI "Personal API Token" and put them
+ in `.env.local` file as the value of `CIRCLE_CI_TOKEN`.
 
-Make the same for the `.env.test.local` to run test suite.
+Make the same for the `.env.test.local` to run the test suite.
 
 ## Manage App with docker-compose
 
@@ -60,7 +60,7 @@ DEV
   analyse               run php-cs-fixer and phpstan
 
 PROD
-  install_prod          install php and node dependencies for production environment
+  install_prod          install PHP and node dependencies for production environment
   build_prod            build assets for production environment
 ```
 
@@ -74,7 +74,7 @@ Add in `/etc/hosts`
 ```
 and now you can see the app on [http://poser.local:8001](http://poser.local:8001)
 
-### Otherwise, for the others days
+### Otherwise, for the other days
 ```bash
 $ make run
 ```
@@ -84,7 +84,7 @@ $ make run
 $ make stop
 ```
 
-### Build assets and remaining in watch
+### Build assets and remaining on watch
 ```bash
 $ make build_watch
 ```
