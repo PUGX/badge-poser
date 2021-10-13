@@ -584,10 +584,8 @@ Resources:
   # IAM ACCESS-KEY
   iamkey:
     Type: AWS::IAM::AccessKey
-    DependsOn:
-      - iamusergithubactions
     Properties:
-      UserName: github_action_deploy
+      UserName: !Ref iamusergithubactions
 
 ################################################################################
 #                                   Outputs                                    #
