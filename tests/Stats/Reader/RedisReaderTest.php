@@ -11,7 +11,7 @@ final class RedisReaderTest extends TestCase
     /**
      * @dataProvider readsTotalAccess
      */
-    public function testItReadsTotalAccess(string $prefixKey, string $totalKey, $total, int $expectedTotal): void
+    public function testItReadsTotalAccess(string $prefixKey, string $totalKey, mixed $total, int $expectedTotal): void
     {
         $redis = $this->getMockBuilder(Redis::class)
             ->disableOriginalConstructor()

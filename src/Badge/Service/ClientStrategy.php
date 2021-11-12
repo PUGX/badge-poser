@@ -12,7 +12,7 @@ use Github\Api\Repo;
 use Github\Client as GithubClient;
 use Http\Client\Exception;
 
-final class ClientStrategy
+final class ClientStrategy implements ClientStrategyInterface
 {
     private const GITHUB_REPOSITORY_PREFIX = 'blob';
     private const BITBUCKET_REPOSITORY_PREFIX = 'src';

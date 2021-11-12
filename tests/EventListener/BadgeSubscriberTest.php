@@ -2,10 +2,10 @@
 
 namespace App\Tests\EventListener;
 
-use App\Badge\Model\CacheableBadge;
-use App\Badge\Model\Image;
-use App\Badge\Model\UseCase\CreateErrorBadge;
-use App\Badge\Service\ImageFactory;
+use App\Badge\Model\BadgeInterface;
+use App\Badge\Model\ImageInterface;
+use App\Badge\Model\UseCase\CreateErrorBadgeInterface;
+use App\Badge\Service\ImageFactoryInterface;
 use App\EventListener\BadgeSubscriber;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ final class BadgeSubscriberTest extends TestCase
     /** @var Request&MockObject */
     private $request;
 
-    /** @var Image|MockObject */
+    /** @var ImageInterface|MockObject */
     private $img;
 
     private BadgeSubscriber $badgeSubscriber;
@@ -29,16 +29,16 @@ final class BadgeSubscriberTest extends TestCase
     {
         $this->request = $this->createMock(Request::class);
 
-        $errorBadge = $this->createMock(CacheableBadge::class);
+        $errorBadge = $this->createMock(BadgeInterface::class);
 
-        $useCase = $this->createMock(CreateErrorBadge::class);
+        $useCase = $this->createMock(CreateErrorBadgeInterface::class);
         $useCase->method('createErrorBadge')
             ->with(new \Exception('An exception msg'), 'svg')
             ->willReturn($errorBadge);
 
-        $this->img = $this->createMock(Image::class);
+        $this->img = $this->createMock(ImageInterface::class);
 
-        $imgFactory = $this->createMock(ImageFactory::class);
+        $imgFactory = $this->createMock(ImageFactoryInterface::class);
         $imgFactory->method('createFromBadge')
             ->with($errorBadge)
             ->willReturn($this->img);

@@ -11,7 +11,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * Class ImageFactory.
  */
-final class ImageFactory
+final class ImageFactory implements ImageFactoryInterface
 {
     public function __construct(private Poser $generator, private EventDispatcherInterface $eventDispatcher)
     {
