@@ -14,7 +14,7 @@ namespace App\Badge\Model;
 /**
  * An Image value Object.
  */
-final class Image implements ImageInterface, \Stringable
+final class Image implements \Stringable
 {
     private function __construct(private string $name, private string $content, private string $format)
     {

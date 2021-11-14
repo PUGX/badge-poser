@@ -85,7 +85,11 @@ jobs:
         REDIS_URL: "redis://localhost"
 
     - name: PHPStan
-      run:  vendor/bin/phpstan analyse --memory-limit=2G
+      uses: docker://oskarstark/phpstan-ga
+      env:
+        REQUIRE_DEV: true
+      with:
+        args: analyse src/
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1

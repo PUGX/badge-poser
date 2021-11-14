@@ -22,7 +22,7 @@ use UnexpectedValueException;
 /**
  * Create the 'error' badge with the standard Font and standard Image.
  */
-final class CreateErrorBadge implements CreateErrorBadgeInterface
+final class CreateErrorBadge
 {
     private const COLOR = 'e05d44';
     private const ERROR_TEXT_GENERIC = 'generic';
