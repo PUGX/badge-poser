@@ -15,11 +15,11 @@ use App\Badge\Model\Package as AppPackage;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ClientStrategy;
+use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Package;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
@@ -42,7 +42,11 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->setMethods(['request'])
             ->getMockForAbstractClass();
         $this->clientStrategy = $this->prophesize(ClientStrategy::class);
-        $this->clientStrategy->getRepositoryPrefix(Argument::any(), Argument::any())->willReturn('');
+
+        $repoUrl = 'https://github.com/user/repository';
+        $repositoryInfo = Repository::createFromRepositoryUrl($repoUrl);
+        $this->clientStrategy->getRepositoryPrefix($repositoryInfo, $repoUrl)
+            ->willReturn('');
         $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy->reveal());
     }
 
