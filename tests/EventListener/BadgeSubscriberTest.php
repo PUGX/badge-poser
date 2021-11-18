@@ -7,8 +7,9 @@ use App\Badge\Model\Image;
 use App\Badge\Model\UseCase\CreateErrorBadge;
 use App\Badge\Service\ImageFactory;
 use App\EventListener\BadgeSubscriber;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -17,10 +18,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class BadgeSubscriberTest extends TestCase
 {
-    /** @var Request&MockObject */
+    use ProphecyTrait;
+
+    /** @var Request&ObjectProphecy */
     private $request;
 
-    /** @var Image|MockObject */
+    /** @var Image|ObjectProphecy */
     private $img;
 
     private BadgeSubscriber $badgeSubscriber;
@@ -29,21 +32,17 @@ final class BadgeSubscriberTest extends TestCase
     {
         $this->request = $this->createMock(Request::class);
 
-        $errorBadge = $this->createMock(CacheableBadge::class);
+        $errorBadge = $this->prophesize(CacheableBadge::class);
 
-        $useCase = $this->createMock(CreateErrorBadge::class);
-        $useCase->method('createErrorBadge')
-            ->with(new \Exception('An exception msg'), 'svg')
-            ->willReturn($errorBadge);
+        $useCase = $this->prophesize(CreateErrorBadge::class);
+        $useCase->createErrorBadge(new \Exception('An exception msg'), 'svg')->willReturn($errorBadge);
 
-        $this->img = $this->createMock(Image::class);
+        $this->img = Image::create('img', 'content');
 
-        $imgFactory = $this->createMock(ImageFactory::class);
-        $imgFactory->method('createFromBadge')
-            ->with($errorBadge)
-            ->willReturn($this->img);
+        $imgFactory = $this->prophesize(ImageFactory::class);
+        $imgFactory->createFromBadge($errorBadge)->willReturn($this->img);
 
-        $this->badgeSubscriber = new BadgeSubscriber($useCase, $imgFactory);
+        $this->badgeSubscriber = new BadgeSubscriber($useCase->reveal(), $imgFactory->reveal());
     }
 
     public function testItIsSubscribedToKernelExceptionEvent(): void

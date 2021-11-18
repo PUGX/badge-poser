@@ -15,21 +15,24 @@ use App\Badge\Model\Package as AppPackage;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ClientStrategy;
+use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Package;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
 final class CreateComposerLockBadgeTest extends TestCase
 {
+    use ProphecyTrait;
     private CreateComposerLockBadge $useCase;
     /** @var PackageRepositoryInterface|MockObject */
     private MockObject $repository;
     /** @var ClientInterface|MockObject */
     private MockObject $client;
-    /** @var ClientStrategy|MockObject */
+    /** @var ClientStrategy|ProphecyTrait */
     private $clientStrategy;
 
     protected function setUp(): void
@@ -38,8 +41,13 @@ final class CreateComposerLockBadgeTest extends TestCase
         $this->client = $this->getMockBuilder(ClientInterface::class)
             ->setMethods(['request'])
             ->getMockForAbstractClass();
-        $this->clientStrategy = $this->createMock(ClientStrategy::class);
-        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy);
+        $this->clientStrategy = $this->prophesize(ClientStrategy::class);
+
+        $repoUrl = 'https://github.com/user/repository';
+        $repositoryInfo = Repository::createFromRepositoryUrl($repoUrl);
+        $this->clientStrategy->getRepositoryPrefix($repositoryInfo, $repoUrl)
+            ->willReturn('');
+        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy->reveal());
     }
 
     /**
