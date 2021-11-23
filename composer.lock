@@ -3513,16 +3513,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.17.2",
+            "version": "v1.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "0170279814f86648c62aede39b100a343ea29962"
+                "reference": "acd0b5018fe9c2f5be6c67367987b5c723c0e096"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/0170279814f86648c62aede39b100a343ea29962",
-                "reference": "0170279814f86648c62aede39b100a343ea29962",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/acd0b5018fe9c2f5be6c67367987b5c723c0e096",
+                "reference": "acd0b5018fe9c2f5be6c67367987b5c723c0e096",
                 "shasum": ""
             },
             "require": {
@@ -3531,16 +3531,13 @@
             },
             "require-dev": {
                 "composer/composer": "^1.0.2|^2.0",
-                "symfony/dotenv": "^4.4|^5.0",
-                "symfony/filesystem": "^4.4|^5.0",
-                "symfony/phpunit-bridge": "^4.4.12|^5.0",
-                "symfony/process": "^3.4|^4.4|^5.0"
+                "symfony/dotenv": "^4.4|^5.0|^6.0",
+                "symfony/filesystem": "^4.4|^5.0|^6.0",
+                "symfony/phpunit-bridge": "^4.4.12|^5.0|^6.0",
+                "symfony/process": "^4.4|^5.0|^6.0"
             },
             "type": "composer-plugin",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.17-dev"
-                },
                 "class": "Symfony\\Flex\\Flex"
             },
             "autoload": {
@@ -3561,7 +3558,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v1.17.2"
+                "source": "https://github.com/symfony/flex/tree/v1.17.3"
             },
             "funding": [
                 {
@@ -3577,7 +3574,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-21T08:39:19+00:00"
+            "time": "2021-11-22T18:48:50+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -9772,5 +9769,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
