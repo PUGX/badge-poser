@@ -91,7 +91,7 @@ final class Package
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|string[] $license */
-                $license = $version->getLicense();
+                $license = $version->getLicenses();
 
                 $this->setLicense($this->normalizeLicense($license));
             }
@@ -219,7 +219,7 @@ final class Package
         return $this->getOriginalObject()->getDownloads();
     }
 
-    public function getFavers(): string
+    public function getFavers(): int
     {
         return $this->getOriginalObject()->getFavers();
     }
