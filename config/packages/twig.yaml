@@ -4,3 +4,6 @@ twig:
     strict_variables: '%kernel.debug%'
     exception_controller: ~
 
+when@test:
+    twig:
+        strict_variables: true
