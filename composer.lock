@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1541dc0984cd116b6f3230ffef2567de",
+    "content-hash": "132e550f704f6985c2d4f018702a1128",
     "packages": [
         {
             "name": "badges/poser",
@@ -1061,36 +1061,38 @@
         },
         {
             "name": "knplabs/packagist-api",
-            "version": "v1.7.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "be6295ec879cc1e822af4adf07a74f0c361888a0"
+                "reference": "8047bcdb4382f4d3ebf582b08800465cdec10e11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/be6295ec879cc1e822af4adf07a74f0c361888a0",
-                "reference": "be6295ec879cc1e822af4adf07a74f0c361888a0",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/8047bcdb4382f4d3ebf582b08800465cdec10e11",
+                "reference": "8047bcdb4382f4d3ebf582b08800465cdec10e11",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.0 || ^2.0",
+                "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.0 || ^7.0",
-                "php": "^7.1 || ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^5.1 || ^6.0 || ^7.0",
+                "phpspec/phpspec": "^6.0 || ^7.0",
                 "squizlabs/php_codesniffer": "^3.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Packagist\\Api\\": "src/"
+                "psr-4": {
+                    "Packagist\\Api\\": "src/Packagist/Api/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1112,9 +1114,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/packagist-api/issues",
-                "source": "https://github.com/KnpLabs/packagist-api/tree/v1.7.1"
+                "source": "https://github.com/KnpLabs/packagist-api/tree/master"
             },
-            "time": "2020-12-03T18:20:13+00:00"
+            "time": "2021-12-30T22:00:17+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -9848,7 +9850,9 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {
+        "knplabs/packagist-api": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
