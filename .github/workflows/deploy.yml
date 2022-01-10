@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add AWS CLI
+      run: |
+        apt-get update && apt-get install -y curl unzip sudo
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+
+    - name: Configure AWS CLI
+      run: |
+        aws --profile poser configure set region $AWS_REGION
+        aws --profile poser configure set cli_pager ''
+        aws --profile poser configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws --profile poser configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+
+    - name: Prepare settings
+      run: echo "$PARAM_JSON" > sys/cloudformation/parameters.prod.json
+
+    - name: Deploy
+      run: make deploy_prod
