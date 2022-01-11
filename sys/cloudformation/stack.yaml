@@ -65,10 +65,6 @@ Parameters:
     Type: String
     Description: >
       Specifies the ECR Image Tag for PHP-FPM container.
-  EcrImageTagPhpCanary:
-    Type: String
-    Description: >
-      Specifies the ECR Image Tag for PHP-FPM dark-canary container.
   ELBCertificateArn:
     Type: String
     Description: >
