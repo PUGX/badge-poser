@@ -20,7 +20,6 @@ if m1 or not m2 then return end
 
 local res = ngx.location.capture("/stats")
 
--- DARK CANARY
 -- math.randomseed(os.time())
 -- local odds = math.random(1, 100)
 -- if odds <= dark_canary_threshold then
