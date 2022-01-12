@@ -27,5 +27,9 @@
         "tooltip.js": "^1.3.2",
         "webpack-notifier": "^1.7.0",
         "whatwg-fetch": "^3.0.0"
+    },
+    "volta": {
+        "node": "16.13.1",
+        "yarn": "1.22.17"
     }
 }
