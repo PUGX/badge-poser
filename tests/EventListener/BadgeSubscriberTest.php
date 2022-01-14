@@ -20,7 +20,7 @@ final class BadgeSubscriberTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var Request&ObjectProphecy */
+    /** @var Request|ObjectProphecy */
     private $request;
 
     /** @var Image|ObjectProphecy */
