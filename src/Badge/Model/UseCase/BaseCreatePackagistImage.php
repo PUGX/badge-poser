@@ -37,7 +37,8 @@ abstract class BaseCreatePackagistImage
         string $repository,
         string $subject,
         string $color,
-        string $format = 'svg',
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
         ?string $context = null,
         int $maxage = self::TTL_DEFAULT_MAXAGE,
         int $smaxage = self::TTL_DEFAULT_SMAXAGE
@@ -46,10 +47,10 @@ abstract class BaseCreatePackagistImage
             $package = $this->fetchPackage($repository);
             $text = $this->prepareText($package, $context);
         } catch (\Exception) {
-            return $this->createDefaultBadge($format);
+            return $this->createDefaultBadge($format, $style);
         }
 
-        return $this->createBadge($subject, $text, $color, $format, $maxage, $smaxage);
+        return $this->createBadge($subject, $text, $color, $format, $style, $maxage, $smaxage);
     }
 
     /**
@@ -68,11 +69,12 @@ abstract class BaseCreatePackagistImage
         string $status,
         string $color,
         string $format,
+        string $style,
         int $maxage = self::TTL_DEFAULT_MAXAGE,
         int $smaxage = self::TTL_DEFAULT_SMAXAGE
     ): CacheableBadge {
         return new CacheableBadge(
-            new Badge($subject, $status, $color, $format),
+            new Badge($subject, $status, $color, $format, $style),
             $maxage,
             $smaxage
         );
@@ -81,13 +83,13 @@ abstract class BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    protected function createDefaultBadge(string $format): CacheableBadge
+    protected function createDefaultBadge(string $format, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         $subject = ' - ';
         $text = ' - ';
         $color = '7A7A7A';
 
-        return $this->createBadge($subject, $text, $color, $format, CacheableBadge::TTL_NO_CACHE, CacheableBadge::TTL_NO_CACHE);
+        return $this->createBadge($subject, $text, $color, $format, $style, CacheableBadge::TTL_NO_CACHE, CacheableBadge::TTL_NO_CACHE);
     }
 
     abstract protected function prepareText(Package $package, ?string $context): string;

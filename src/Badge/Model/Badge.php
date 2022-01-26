@@ -13,15 +13,19 @@ namespace App\Badge\Model;
 
 final class Badge implements BadgeInterface, \Stringable
 {
-    private const DEFAULT_FORMAT = 'svg';
+    public const DEFAULT_FORMAT = 'svg';
+    public const DEFAULT_STYLE = \PUGX\Poser\Badge::DEFAULT_STYLE;
+
     private string $subject;
     private string $status;
     private string $format;
+    private string $style;
 
-    public function __construct(string $subject, string $status, private string $color, string $format = self::DEFAULT_FORMAT)
+    public function __construct(string $subject, string $status, private string $color, string $format = self::DEFAULT_FORMAT, string $style = self::DEFAULT_STYLE)
     {
         $this->subject = $this->escapeValue($subject);
         $this->status = $this->escapeValue($status);
+        $this->style = $this->escapeValue($style);
         $this->format = $this->escapeValue($format);
 
         if (!$this->isValidColorHex($this->color)) {
@@ -45,6 +49,14 @@ final class Badge implements BadgeInterface, \Stringable
         return $this->format;
     }
 
+    /**
+     * @return string the style of the image e.g. "flat" or "plastic".
+     */
+    public function getStyle(): string
+    {
+        return $this->style;
+    }
+
     public function getStatus(): string
     {
         return $this->status;
@@ -58,11 +70,12 @@ final class Badge implements BadgeInterface, \Stringable
     public function __toString(): string
     {
         return \sprintf(
-            '%s-%s-%s.%s',
+            '%s-%s-%s-%s.%s',
             $this->subject,
             $this->status,
             $this->color,
-            $this->format
+            $this->style,
+            $this->format,
         );
     }
 

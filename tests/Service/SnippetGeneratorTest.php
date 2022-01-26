@@ -4,6 +4,7 @@ namespace App\Tests\Service;
 
 use App\Service\SnippetGenerator;
 use PHPUnit\Framework\TestCase;
+use PUGX\Poser\Poser;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
@@ -85,6 +86,10 @@ final class SnippetGeneratorTest extends TestCase
             )
             ->willReturnOnConsecutiveCalls('repo_url', 'img_url', 'img_url2');
 
+        $poser = $this->getMockBuilder(Poser::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $generator = new SnippetGenerator($router, ['badge_1_name', 'badge_2_name'], $badges);
 
         $expected = [
@@ -111,7 +116,7 @@ final class SnippetGeneratorTest extends TestCase
             ],
         ];
 
-        self::assertEquals($expected, $generator->generateAllSnippets('vendor/package'));
+        self::assertEquals($expected, $generator->generateAllSnippets($poser, 'vendor/package'));
     }
 
     public function testGenerateAllSnippetsWithoutFeaturedBadges(): void
@@ -164,6 +169,10 @@ final class SnippetGeneratorTest extends TestCase
             )
             ->willReturnOnConsecutiveCalls('repo_url', 'img_url');
 
+        $poser = $this->getMockBuilder(Poser::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $generator = new SnippetGenerator($router, [], $badges);
 
         $expected = [
@@ -182,7 +191,7 @@ final class SnippetGeneratorTest extends TestCase
             ],
         ];
 
-        self::assertEquals($expected, $generator->generateAllSnippets('vendor/package'));
+        self::assertEquals($expected, $generator->generateAllSnippets($poser, 'vendor/package'));
     }
 
     public function testWontGenerateAllSnippetsIfBadgeRouteDoesNotExists(): void
@@ -216,9 +225,13 @@ final class SnippetGeneratorTest extends TestCase
             )
             ->willReturn('repo_url');
 
+        $poser = $this->getMockBuilder(Poser::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->expectException(\RuntimeException::class);
 
         $generator = new SnippetGenerator($router, [], $badges);
-        $generator->generateAllSnippets('vendor/package');
+        $generator->generateAllSnippets($poser, 'vendor/package');
     }
 }

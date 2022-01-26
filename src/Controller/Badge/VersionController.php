@@ -11,6 +11,7 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateVersionBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
@@ -32,17 +33,15 @@ final class VersionController extends AbstractBadgeController
         CreateVersionBadge $createVersionBadge,
         string $repository,
         string $latest,
-        string $format = 'svg'
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = $request->query->get('format');
-        }
-
+        $style = $this->checkStyle($request, $poser, $style);
         $function = 'create'.\ucfirst($latest).'Badge';
 
         return $this->serveBadge(
             $imageFactory,
-            $createVersionBadge->{$function}($repository, $format)
+            $createVersionBadge->{$function}($repository, $format, $style)
         );
     }
 }

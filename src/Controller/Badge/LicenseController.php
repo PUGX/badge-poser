@@ -11,6 +11,7 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateLicenseBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
@@ -31,15 +32,14 @@ final class LicenseController extends AbstractBadgeController
         CreateLicenseBadge $createLicenseBadge,
         ImageFactory $imageFactory,
         string $repository,
-        string $format = 'svg'
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = (string) $request->query->get('format');
-        }
+        $style = $this->checkStyle($request, $poser, $style);
 
         return $this->serveBadge(
             $imageFactory,
-            $createLicenseBadge->createLicenseBadge($repository, $format)
+            $createLicenseBadge->createLicenseBadge($repository, $format, $style),
         );
     }
 }

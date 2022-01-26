@@ -91,12 +91,33 @@
                             <img class="badge" src="{{ badge.img }}">
                         </a>
 
+                        <input class="badge-input" data-badge="{{ badge.name }}" readonly type="text"
+                               value="{{ badge.markdown }}" title="{{ badge.label }}">
+                        <button data-clipboard-target=".badge-input[data-badge='{{ badge.name }}']">Copy</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="container-fluid badges text-center">
+        <div class="container">
+            <h2>Styles</h2>
+            <div class="row d-flex">
+                {% for badge in badges.badge_styles %}
+                    <div class="col-12 col-md-6">
+                        <h4>{{ badge.label }}</h4>
+                        <code><small>?style={{ badge.label }}</small></code>
+                        <a href="{{ badge.imgLink }}" target="_blank">
+                            <img class="badge" src="{{ badge.img }}">
+                        </a>
+
                         <input
-                                class="badge-input"
-                                data-badge="{{ badge.name }}"
-                                readonly
-                                type="text"
-                                value="{{ badge.markdown }}" title="{{ badge.label }}">
+                            class="badge-input"
+                            data-badge="{{ badge.name }}"
+                            readonly
+                            type="text"
+                            value="{{ badge.markdown }}" title="{{ badge.label }}">
                         <button data-clipboard-target=".badge-input[data-badge='{{ badge.name }}']">Copy</button>
                     </div>
                 {% endfor %}

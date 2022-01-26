@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -40,7 +41,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createDownloadsBadge(string $repository, string $type, string $format): CacheableBadge
+    public function createDownloadsBadge(string $repository, string $type, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         $maxage = self::TTL_DEFAULT_MAXAGE;
         $smaxage = self::TTL_DEFAULT_SMAXAGE;
@@ -50,6 +51,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             $type,
             $maxage,
             $smaxage

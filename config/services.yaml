@@ -90,7 +90,7 @@ services:
     PUGX\Poser\Poser:
         class: ~
         arguments:
-            $renders: [ '@PUGX\Poser\SvgPlasticRender', '@PUGX\Poser\SvgFlatRender', '@PUGX\Poser\SvgFlatSquareRender' ]
+            $renders: [ '@PUGX\Poser\SvgPlasticRender', '@PUGX\Poser\SvgFlatRender', '@PUGX\Poser\SvgFlatSquareRender', '@PUGX\Poser\SvgForTheBadgeRender' ]
 
     PUGX\Poser\SvgPlasticRender:
         class: PUGX\Poser\Render\SvgPlasticRender
@@ -100,3 +100,6 @@ services:
 
     PUGX\Poser\SvgFlatSquareRender:
         class: PUGX\Poser\Render\SvgFlatSquareRender
+
+    PUGX\Poser\SvgForTheBadgeRender:
+        class: PUGX\Poser\Render\SvgForTheBadgeRenderer

@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -56,13 +57,13 @@ final class CreateGitAttributesBadge extends BaseCreatePackagistImage
      * @throws UnexpectedValueException
      * @throws GuzzleException
      */
-    public function createGitAttributesBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createGitAttributesBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         try {
             $package = $this->fetchPackage($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
         } catch (\Exception) {
-            return $this->createDefaultBadge($format);
+            return $this->createDefaultBadge($format, $style);
         }
 
         $repositoryInfo = Repository::createFromRepositoryUrl($repo);
@@ -102,6 +103,7 @@ final class CreateGitAttributesBadge extends BaseCreatePackagistImage
             $subject,
             $color,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

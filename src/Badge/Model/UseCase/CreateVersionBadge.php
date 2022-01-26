@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use InvalidArgumentException;
@@ -32,13 +33,14 @@ final class CreateVersionBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createStableBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createStableBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT_STABLE,
             self::COLOR_STABLE,
             $format,
+            $style,
             'stable',
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE
@@ -48,13 +50,14 @@ final class CreateVersionBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createUnstableBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createUnstableBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT_UNSTABLE,
             self::COLOR_UNSTABLE,
             $format,
+            $style,
             'unstable',
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE
