@@ -40,7 +40,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createDownloadsBadge(string $repository, string $type, string $format): CacheableBadge
+    public function createDownloadsBadge(string $repository, string $type, string $format, string $style): CacheableBadge
     {
         $maxage = self::TTL_DEFAULT_MAXAGE;
         $smaxage = self::TTL_DEFAULT_SMAXAGE;
@@ -50,6 +50,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             $type,
             $maxage,
             $smaxage

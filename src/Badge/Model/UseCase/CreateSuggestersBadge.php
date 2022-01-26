@@ -38,13 +38,14 @@ final class CreateSuggestersBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    public function createSuggestersBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createSuggestersBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

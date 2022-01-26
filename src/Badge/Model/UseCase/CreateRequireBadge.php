@@ -32,13 +32,14 @@ final class CreateRequireBadge extends BaseCreatePackagistImage
         parent::__construct($packageRepository);
     }
 
-    public function createRequireBadge(string $repository, string $type, string $format = 'svg'): CacheableBadge
+    public function createRequireBadge(string $repository, string $type, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             $type,
             self::COLOR,
             $format,
+            $style,
             $type,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

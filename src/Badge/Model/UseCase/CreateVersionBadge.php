@@ -32,13 +32,14 @@ final class CreateVersionBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createStableBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createStableBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT_STABLE,
             self::COLOR_STABLE,
             $format,
+            $style,
             'stable',
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE
@@ -48,13 +49,14 @@ final class CreateVersionBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createUnstableBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createUnstableBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT_UNSTABLE,
             self::COLOR_UNSTABLE,
             $format,
+            $style,
             'unstable',
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

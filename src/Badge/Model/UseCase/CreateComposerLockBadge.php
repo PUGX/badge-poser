@@ -55,13 +55,13 @@ final class CreateComposerLockBadge extends BaseCreatePackagistImage
      * @throws UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createComposerLockBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createComposerLockBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         try {
             $package = $this->fetchPackage($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
         } catch (\Exception) {
-            return $this->createDefaultBadge($format);
+            return $this->createDefaultBadge($format, $style);
         }
 
         $repositoryInfo = Repository::createFromRepositoryUrl($repo);
@@ -100,6 +100,7 @@ final class CreateComposerLockBadge extends BaseCreatePackagistImage
             $subject,
             $color,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

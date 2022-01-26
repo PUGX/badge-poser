@@ -30,13 +30,14 @@ final class CreateLicenseBadge extends BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    public function createLicenseBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createLicenseBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

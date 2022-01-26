@@ -13,6 +13,7 @@ namespace App\Controller\Badge;
 
 use App\Badge\Model\UseCase\CreateDownloadsBadge;
 use App\Badge\Service\ImageFactory;
+use PUGX\Poser\Badge;
 use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,15 +33,16 @@ final class DownloadsController extends AbstractBadgeController
         ImageFactory $imageFactory,
         string $repository,
         string $type,
-        string $format = 'svg'
+        string $format = 'svg',
+        string $style = 'flat',
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = (string) $request->query->get('format');
+        if (!\in_array($request->query->get('style'), $poser->validStyles(), true)) {
+            $style = Badge::DEFAULT_STYLE;
         }
 
         return $this->serveBadge(
             $imageFactory,
-            $createDownloadsBadge->createDownloadsBadge($repository, $type, $format)
+            $createDownloadsBadge->createDownloadsBadge($repository, $type, $format, $style),
         );
     }
 }

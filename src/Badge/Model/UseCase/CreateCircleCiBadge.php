@@ -45,7 +45,7 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
-    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg'): CacheableBadge
+    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         try {
             //check if the repo exist
@@ -60,16 +60,16 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
             $response = $this->circleCiClient->getBuilds($repository, $branch);
 
             if (Response::HTTP_OK !== $response->getStatusCode()) {
-                return $this->createDefaultBadge($format);
+                return $this->createDefaultBadge($format, $style);
             }
 
             $builds = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
         } catch (Throwable) {
-            return $this->createDefaultBadge($format);
+            return $this->createDefaultBadge($format, $style);
         }
 
         if (\count($builds) < 1) {
-            return $this->createDefaultBadge($format);
+            return $this->createDefaultBadge($format, $style);
         }
 
         $build = \current($builds);
@@ -87,6 +87,7 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
             self::SUBJECT,
             $color,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

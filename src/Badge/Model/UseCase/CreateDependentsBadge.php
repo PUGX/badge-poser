@@ -38,7 +38,7 @@ final class CreateDependentsBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    public function createDependentsBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createDependentsBadge(string $repository, string $format = 'svg', string $style = 'flat'): CacheableBadge
     {
         $maxage = self::TTL_DEFAULT_MAXAGE;
         $smaxage = self::TTL_DEFAULT_SMAXAGE;
@@ -48,6 +48,7 @@ final class CreateDependentsBadge extends BaseCreatePackagistImage
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             null,
             $maxage,
             $smaxage
