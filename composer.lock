@@ -8675,16 +8675,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208"
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/3e2f1610a25edc2afc2f5f37cc421049d6bef208",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/0ec66df981406fd2c9e41acbb526249bd18a0123",
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123",
                 "shasum": ""
             },
             "require": {
@@ -8726,7 +8726,7 @@
             "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/browser-kit/tree/v6.0.1"
+                "source": "https://github.com/symfony/browser-kit/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -8742,7 +8742,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/debug-bundle",
@@ -8824,16 +8824,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v6.0.2",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "bf704b7d995c4908d9906d687b9d4cbfecf01b2c"
+                "reference": "24d9de5965b8b043ea13ef234087543c9740641c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/bf704b7d995c4908d9906d687b9d4cbfecf01b2c",
-                "reference": "bf704b7d995c4908d9906d687b9d4cbfecf01b2c",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/24d9de5965b8b043ea13ef234087543c9740641c",
+                "reference": "24d9de5965b8b043ea13ef234087543c9740641c",
                 "shasum": ""
             },
             "require": {
@@ -8877,7 +8877,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v6.0.2"
+                "source": "https://github.com/symfony/dom-crawler/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -8893,7 +8893,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-28T17:22:37+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/dotenv",
