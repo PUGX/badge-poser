@@ -7,9 +7,9 @@ use App\Badge\Model\Image;
 use App\Badge\Model\UseCase\CreateErrorBadge;
 use App\Badge\Service\ImageFactory;
 use App\EventListener\BadgeSubscriber;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -20,11 +20,10 @@ final class BadgeSubscriberTest extends TestCase
 {
     use ProphecyTrait;
 
-    /** @var Request|ObjectProphecy */
-    private $request;
+    /** @var Request|MockObject */
+    private MockObject $request;
 
-    /** @var Image|ObjectProphecy */
-    private $img;
+    private Image $img;
 
     private BadgeSubscriber $badgeSubscriber;
 
