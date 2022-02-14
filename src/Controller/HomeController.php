@@ -30,7 +30,7 @@ final class HomeController extends AbstractController
             'home/index.html.twig',
             [
                 'repository' => $repository,
-                'badges' => $generator->generateAllSnippets($repository),
+                'badges' => $generator->generateAllSnippets($poser, $repository),
                 'badges_served_svg' => $poser->generate($prefix, $text, 'CC0066', 'flat'),
                 'formats' => $formats,
                 'contributors' => $contributors,
