@@ -21,6 +21,7 @@ use Packagist\Api\Result\Package;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 
@@ -32,8 +33,8 @@ final class CreateComposerLockBadgeTest extends TestCase
     private MockObject $repository;
     /** @var ClientInterface|MockObject */
     private MockObject $client;
-    /** @var ClientStrategy|ProphecyTrait */
-    private $clientStrategy;
+    /** @var ClientStrategy|ObjectProphecy */
+    private ObjectProphecy $clientStrategy;
 
     protected function setUp(): void
     {
