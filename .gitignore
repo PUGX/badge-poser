@@ -35,3 +35,7 @@ yarn-error.log
 .phpunit.result.cache
 clover.xml
 ###< phpunit/phpunit ###
+
+###> custom ###
+.stylelintcache
+###< custom ###
