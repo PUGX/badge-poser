@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -45,7 +46,7 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
      * @throws InvalidArgumentException
      * @throws UnexpectedValueException
      */
-    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = 'svg', string $style = 'flat'): CacheableBadge
+    public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         try {
             //check if the repo exist

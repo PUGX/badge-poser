@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -32,7 +33,7 @@ final class CreateRequireBadge extends BaseCreatePackagistImage
         parent::__construct($packageRepository);
     }
 
-    public function createRequireBadge(string $repository, string $type, string $format = 'svg', string $style = 'flat'): CacheableBadge
+    public function createRequireBadge(string $repository, string $type, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,

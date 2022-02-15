@@ -36,9 +36,9 @@ final class VersionController extends AbstractBadgeController
         string $format = 'svg',
         string $style = 'flat',
     ): Response {
-//        if (!\in_array($request->query->get('style'), $poser->validStyles(), true)) {
-//            $style = Badge::DEFAULT_STYLE;
-//        }
+        if (!\in_array($request->query->get('style'), $poser->validStyles(), true)) {
+            $style = Badge::DEFAULT_STYLE;
+        }
 
         var_dump($style);
         die;

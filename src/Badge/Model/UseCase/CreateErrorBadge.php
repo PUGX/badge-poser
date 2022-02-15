@@ -35,10 +35,10 @@ final class CreateErrorBadge
     /**
      * @throws InvalidArgumentException
      */
-    public function createErrorBadge(Throwable $throwable, string $format): CacheableBadge
+    public function createErrorBadge(Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return new CacheableBadge(
-            $this->createBadge($throwable, $format),
+            $this->createBadge($throwable, $format, $style),
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE
         );
@@ -47,7 +47,7 @@ final class CreateErrorBadge
     /**
      * @throws InvalidArgumentException
      */
-    private function createBadge(Throwable $throwable, string $format): BadgeInterface
+    private function createBadge(Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): BadgeInterface
     {
         $status = self::ERROR_TEXT_GENERIC;
         if ($throwable instanceof BadResponseException) {
@@ -56,6 +56,6 @@ final class CreateErrorBadge
             $status = self::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 
-        return new Badge((string) $throwable, $status, self::COLOR, $format);
+        return new Badge((string) $throwable, $status, self::COLOR, $format, $style);
     }
 }

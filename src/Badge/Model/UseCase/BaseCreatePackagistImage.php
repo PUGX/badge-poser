@@ -37,8 +37,8 @@ abstract class BaseCreatePackagistImage
         string $repository,
         string $subject,
         string $color,
-        string $format = 'svg',
-        string $style = 'flat',
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
         ?string $context = null,
         int $maxage = self::TTL_DEFAULT_MAXAGE,
         int $smaxage = self::TTL_DEFAULT_SMAXAGE
@@ -83,7 +83,7 @@ abstract class BaseCreatePackagistImage
     /**
      * @throws InvalidArgumentException
      */
-    protected function createDefaultBadge(string $format, string $style = 'flat'): CacheableBadge
+    protected function createDefaultBadge(string $format, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         $subject = ' - ';
         $text = ' - ';
