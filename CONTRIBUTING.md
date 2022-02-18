@@ -46,13 +46,13 @@ GENERIC
   run                   run app
   start                 start docker containers
   stop                  stop docker containers
-  dc_build              rebuild docker compose containers
+  dc_build_prod         rebuild docker compose containers to production environment
   purge                 cleaning
   status                docker containers status
 
 DEV
   install               install php and node dependencies
-  build                 build assets
+  build_dev             build assets for dev environment
   build_watch           build assets and watch
   phpunit               run suite of tests
   php_cs_fixer          run php-cs-fixer

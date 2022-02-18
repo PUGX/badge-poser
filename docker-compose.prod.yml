@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: sys/docker/alpine-nginx/Dockerfile
+      network: host
+    container_name: badge-poser-nginx
+    depends_on:
+      - phpfpm
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+    env_file:
+      - ./.env
+      - ./.env.local
+    environment:
+      - ENABLE_CW=0
+    ports:
+      - 8001:80
+    volumes:
+      - .:/application:cached
+    working_dir: /application
+
+  phpfpm:
+    build:
+      context: .
+      dockerfile: sys/docker/alpine-phpfpm/Dockerfile
+      network: host
+    container_name: badge-poser-phpfpm
+    depends_on:
+      - redis
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1024M
+    env_file:
+      - ./.env
+      - ./.env.local
+    environment:
+      - ENABLE_CW=0
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/application:cached
+      - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/docker-php-zz-overrides.ini:ro
+    working_dir: /application
+
+  node:
+    container_name: badge-poser-node
+    image: node:16.13.1-alpine3.12
+    user: "node"
+    volumes:
+      - .:/application:cached
+    working_dir: /application
+
+  redis:
+    container_name: badge-poser-redis
+    image: redis:6.0.8-alpine3.12
+    ports:
+      - 6379:6379
+    sysctls:
+      # WARNING: The TCP backlog setting of 511 cannot be enforced because
+      # /proc/sys/net/core/somaxconn is set to the lower value of 128.
+      net.core.somaxconn: 1024
