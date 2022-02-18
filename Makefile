@@ -18,17 +18,17 @@ run: ## run app
 	- make stop
 	- make start
 	- make install
-	- make build
+	- make build_dev
 
 start: ## start docker containers
-	- docker-compose up -d
+	- docker-compose up --build -d
 
 stop: ## stop docker containers
 	- docker-compose down
 
-dc_build: ## rebuild docker compose containers
+dc_build_prod: ## rebuild docker compose containers
 	- make .docker_img_deps
-	- docker-compose up --build
+	- docker-compose -f docker-compose.prod.yml up --build
 
 purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
@@ -42,7 +42,7 @@ install: ## install php and node dependencies
 	- docker-compose exec phpfpm composer install
 	- docker-compose run --rm node yarn install
 
-build: ## build assets
+build_dev: ## build assets
 	- docker-compose run --rm node yarn dev
 
 build_watch: ## build assets and watch
@@ -64,11 +64,11 @@ analyse: ## run php-cs-fixer and phpstan
 ##@ PROD
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-	- docker-compose run --rm node yarn install --production
+	- docker-compose -f docker-compose.prod.yml exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+	- docker-compose -f docker-compose.prod.yml run --rm node yarn install --production
 
 build_prod: ## build assets for production environment
-	- docker-compose run --rm node yarn build
+	- docker-compose -f docker-compose.prod.yml run --rm node yarn build
 
 ##@ DEPLOY
 

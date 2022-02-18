@@ -6,10 +6,6 @@ COPY . /application
 
 RUN apk add --no-cache --virtual frontenddeps \
       python3 \
-      yarn \
-   && npm install -g --unsafe-perm node-sass@6.0.1 \
    && yarn config set ignore-engines true \
-   && yarn install --production \
-   && yarn add @symfony/webpack-encore --production \
-   && yarn add sass-loader@12.4.0 node-sass@6.0.1 --dev \
-   && npm run build
+   && yarn install \
+   && yarn build
