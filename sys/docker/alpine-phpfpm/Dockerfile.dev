@@ -1,8 +1,8 @@
-FROM php:8.0-fpm-alpine
+FROM php:8.0.16-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
 
-WORKDIR "/application"
+WORKDIR /application
 
 RUN apk add --no-cache --virtual .builddeps \
         autoconf \
@@ -35,10 +35,7 @@ RUN apk add --no-cache --virtual .builddeps \
     && pickle install redis@5.3.2 --defaults --no-interaction \
     && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
-## REF: https://github.com/docker-library/php/issues/240
-#RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing gnu-libiconv
-#ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
-## REF NEW: https://github.com/docker-library/php/issues/1121#issuecomment-886817367
+# REF: https://github.com/docker-library/php/issues/1121#issuecomment-886817367
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ gnu-libiconv=1.15-r3
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 

@@ -28,7 +28,7 @@ stop: ## stop docker containers
 
 dc_build_prod: ## rebuild docker compose containers
 	- make .docker_img_deps
-	- docker-compose -f docker-compose.prod.yml up --build
+	- docker-compose up --build
 
 purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
@@ -64,11 +64,11 @@ analyse: ## run php-cs-fixer and phpstan
 ##@ PROD
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose -f docker-compose.prod.yml exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-	- docker-compose -f docker-compose.prod.yml run --rm node yarn install --production
+	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+	- docker-compose run --rm node yarn install --production
 
 build_prod: ## build assets for production environment
-	- docker-compose -f docker-compose.prod.yml run --rm node yarn build
+	- docker-compose run --rm node yarn build
 
 ##@ DEPLOY
 
