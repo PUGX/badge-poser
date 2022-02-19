@@ -20,14 +20,13 @@ run: ## run app
 	- make install
 	- make build_dev
 
-start: ## start docker containers
+start: .docker_img_deps ## start docker containers
 	- docker-compose up --build -d
 
 stop: ## stop docker containers
 	- docker-compose down
 
-dc_build_prod: ## rebuild docker compose containers
-	- make .docker_img_deps
+dc_build_prod: .docker_img_deps ## rebuild docker compose containers
 	- docker-compose up --build
 
 purge: ## cleaning
