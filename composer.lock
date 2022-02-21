@@ -1043,16 +1043,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "9906308d0c0e0b551e5fd461e026592de66fe311"
+                "reference": "37b167998e8e1f318b3d99633675cfa007540565"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/9906308d0c0e0b551e5fd461e026592de66fe311",
-                "reference": "9906308d0c0e0b551e5fd461e026592de66fe311",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/37b167998e8e1f318b3d99633675cfa007540565",
+                "reference": "37b167998e8e1f318b3d99633675cfa007540565",
                 "shasum": ""
             },
             "require": {
@@ -1119,7 +1119,7 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/php-github-api/issues",
-                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.5.0"
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -1127,7 +1127,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-23T11:32:47+00:00"
+            "time": "2022-02-19T11:15:46+00:00"
         },
         {
             "name": "knplabs/packagist-api",
