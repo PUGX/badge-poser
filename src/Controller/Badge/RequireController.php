@@ -2,6 +2,7 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateRequireBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
@@ -17,15 +18,14 @@ final class RequireController extends AbstractBadgeController
         ImageFactory $imageFactory,
         string $repository,
         string $type,
-        string $format = 'svg'
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = (string) $request->query->get('format');
-        }
+        $style = $this->checkStyle($request, $poser, $style);
 
         return $this->serveBadge(
             $imageFactory,
-            $createRequireBadge->createRequireBadge($repository, $type, $format)
+            $createRequireBadge->createRequireBadge($repository, $type, $format, $style),
         );
     }
 }

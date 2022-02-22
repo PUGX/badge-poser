@@ -4,9 +4,11 @@ pugx_badge_version:
     methods: GET
     defaults:
         latest: "stable"
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_version_latest:
@@ -14,10 +16,12 @@ pugx_badge_version_latest:
     controller: App\Controller\Badge\VersionController::version
     defaults:
         latest: "stable"
+        style: "flat"
         _ext: "svg"
     requirements:
         latest: "stable|unstable"
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_license:
@@ -25,9 +29,11 @@ pugx_badge_license:
     controller: App\Controller\Badge\LicenseController::license
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_download:
@@ -36,19 +42,23 @@ pugx_badge_download:
     methods: GET
     defaults:
         type: "total"
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_download_type:
     path: /{repository}/d/{type}.{_ext}
     controller: App\Controller\Badge\DownloadsController::downloads
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         type: "total|daily|monthly"
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_composerlock:
@@ -56,9 +66,11 @@ pugx_badge_composerlock:
     controller: App\Controller\Badge\ComposerLockController::composerLock
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_gitattributes:
@@ -66,9 +78,11 @@ pugx_badge_gitattributes:
     controller: App\Controller\Badge\GitAttributesController::gitAttributes
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_dependents:
@@ -76,9 +90,11 @@ pugx_badge_dependents:
     controller: App\Controller\Badge\DependentsController::dependents
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_suggesters:
@@ -86,9 +102,11 @@ pugx_badge_suggesters:
     controller: App\Controller\Badge\SuggestersController::suggesters
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_circleci:
@@ -97,10 +115,12 @@ pugx_badge_circleci:
     methods: GET
     defaults:
         branch: "master"
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
         branch: ".+"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"
 
 pugx_badge_require:
@@ -108,8 +128,10 @@ pugx_badge_require:
     controller: App\Controller\Badge\RequireController::require
     methods: GET
     defaults:
+        style: "flat"
         _ext: "svg"
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?"
         type: ".+"
+        style: "flat|flat-square|for-the-badge|plastic"
         _ext: "svg"

@@ -10,16 +10,16 @@ final class BadgeTest extends TestCase
 {
     public function testCreation(): void
     {
-        $badge = new Badge('sub', 'status', 'FFFFFF', 'svg');
+        $badge = new Badge('sub', 'status', 'FFFFFF', 'svg', 'flat');
 
-        self::assertEquals('sub-status-FFFFFF.svg', (string) $badge);
+        self::assertEquals('sub-status-FFFFFF-flat.svg', (string) $badge);
     }
 
     public function testDashesAndUnderscores(): void
     {
-        $badge = new Badge('su--b', 'st-a_tu__s', 'FFFFFF', 'svg');
+        $badge = new Badge('su--b', 'st-a_tu__s', 'FFFFFF', 'svg', 'flat');
 
-        self::assertEquals('su-b-st-a tu_s-FFFFFF.svg', (string) $badge);
+        self::assertEquals('su-b-st-a tu_s-FFFFFF-flat.svg', (string) $badge);
     }
 
     public function testShouldUseDefaultImageFormat(): void
@@ -27,6 +27,13 @@ final class BadgeTest extends TestCase
         $badge = new Badge('sub', 'status', 'FFFFFF');
 
         self::assertEquals('svg', $badge->getFormat());
+    }
+
+    public function testShouldUseDefaultImageStyle(): void
+    {
+        $badge = new Badge('sub', 'status', 'FFFFFF');
+
+        self::assertEquals('flat', $badge->getStyle());
     }
 
     /** @dataProvider  invalidColorProvider */

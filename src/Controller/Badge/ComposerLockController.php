@@ -11,8 +11,10 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ImageFactory;
+use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use UnexpectedValueException;
@@ -26,7 +28,6 @@ final class ComposerLockController extends AbstractBadgeController
      * ComposerLock action.
      *
      * @param string $repository repository
-     * @param string $format
      *
      * @throws \InvalidArgumentException
      * @throws UnexpectedValueException
@@ -34,18 +35,18 @@ final class ComposerLockController extends AbstractBadgeController
      */
     public function composerLock(
         Request $request,
+        Poser $poser,
         ImageFactory $imageFactory,
         CreateComposerLockBadge $composerLockBadge,
-        $repository,
-        $format = 'svg'
+        string $repository,
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if ('plastic' === $request->query->get('format')) {
-            $format = 'plastic';
-        }
+        $style = $this->checkStyle($request, $poser, $style);
 
         return $this->serveBadge(
             $imageFactory,
-            $composerLockBadge->createComposerLockBadge($repository, $format)
+            $composerLockBadge->createComposerLockBadge($repository, $format, $style)
         );
     }
 }

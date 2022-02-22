@@ -11,8 +11,10 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Badge\Service\ImageFactory;
+use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,26 +25,22 @@ final class CircleCiController extends AbstractBadgeController
 {
     /**
      * CircleCi action.
-     *
-     * @param string $repository
-     * @param string $branch
-     * @param string $format
      */
     public function status(
         Request $request,
+        Poser $poser,
         ImageFactory $imageFactory,
         CreateCircleCiBadge $circleCiBadge,
-        $repository,
-        $branch = 'master',
-        $format = 'svg'
+        string $repository,
+        string $branch = 'master',
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if ('plastic' === $request->query->get('format')) {
-            $format = 'plastic';
-        }
+        $style = $this->checkStyle($request, $poser, $style);
 
         return $this->serveBadge(
             $imageFactory,
-            $circleCiBadge->createCircleCiBadge($repository, $branch, $format)
+            $circleCiBadge->createCircleCiBadge($repository, $branch, $format, $style)
         );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\SnippetGeneratorInterface;
 use GuzzleHttp\Exception\BadResponseException;
+use PUGX\Poser\Poser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,7 @@ final class SnippetController extends AbstractController
      *
      * @throws \Exception
      */
-    public function all(Request $request, SnippetGeneratorInterface $generator): JsonResponse
+    public function all(Request $request, Poser $poser, SnippetGeneratorInterface $generator): JsonResponse
     {
         $repository = $request->get('repository');
         $response = new JsonResponse();
@@ -28,7 +29,7 @@ final class SnippetController extends AbstractController
         }
 
         try {
-            $badges = $generator->generateAllSnippets($repository);
+            $badges = $generator->generateAllSnippets($poser, $repository);
             $response->setData($badges);
         } catch (BadResponseException) {
             $response->setData(['msg' => 'Package not found. Please check the package name. e.g. (symfony/symfony)']);

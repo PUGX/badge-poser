@@ -4,32 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cf8622f839ff4c64a6985a5227f7b90",
+    "content-hash": "452e794b5520af6ecd085aa72c1f84d2",
     "packages": [
         {
             "name": "badges/poser",
-            "version": "v2.2.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/badges/poser.git",
-                "reference": "49e91ea72d514ee431c5c185855a16e50a2d2030"
+                "reference": "13f4ae7998700568fe1d07c8964492ea845e675c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/badges/poser/zipball/49e91ea72d514ee431c5c185855a16e50a2d2030",
-                "reference": "49e91ea72d514ee431c5c185855a16e50a2d2030",
+                "url": "https://api.github.com/repos/badges/poser/zipball/13f4ae7998700568fe1d07c8964492ea845e675c",
+                "reference": "13f4ae7998700568fe1d07c8964492ea845e675c",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "ext-simplexml": "*",
+                "kartsims/easysvg": "^2.4",
                 "php": ">=7.4",
                 "symfony/console": "^4.0|^5.0|^6.0"
             },
             "require-dev": {
                 "behat/behat": "^3.8",
                 "friends-of-phpspec/phpspec-code-coverage": "^6.0",
-                "friendsofphp/php-cs-fixer": "^2.17",
+                "friendsofphp/php-cs-fixer": "^3.5",
                 "moave/phpspec-data-provider-extension": "dev-feat/add-compatibility-to-php80",
                 "phpspec/phpspec": "^7.0",
                 "vimeo/psalm": "^4.3"
@@ -76,7 +77,7 @@
             ],
             "support": {
                 "issues": "https://github.com/badges/poser/issues",
-                "source": "https://github.com/badges/poser/tree/v2.2.0"
+                "source": "https://github.com/badges/poser/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -92,7 +93,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-10T08:41:38+00:00"
+            "time": "2022-02-21T09:52:41+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1042,17 +1043,63 @@
             "time": "2021-10-08T21:21:46+00:00"
         },
         {
-            "name": "knplabs/github-api",
-            "version": "v3.5.0",
+            "name": "kartsims/easysvg",
+            "version": "2.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "9906308d0c0e0b551e5fd461e026592de66fe311"
+                "url": "https://github.com/kartsims/easysvg.git",
+                "reference": "c105955d9da6226a681120bcce7cdcc0e6c1d8e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/9906308d0c0e0b551e5fd461e026592de66fe311",
-                "reference": "9906308d0c0e0b551e5fd461e026592de66fe311",
+                "url": "https://api.github.com/repos/kartsims/easysvg/zipball/c105955d9da6226a681120bcce7cdcc0e6c1d8e3",
+                "reference": "c105955d9da6226a681120bcce7cdcc0e6c1d8e3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-xmlreader": "*",
+                "php": ">=7.4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Tarchichi",
+                    "email": "kartsims@gmail.com"
+                }
+            ],
+            "description": "PHP library to generate SVG XML",
+            "homepage": "https://github.com/kartsims/easysvg",
+            "support": {
+                "issues": "https://github.com/kartsims/easysvg/issues",
+                "source": "https://github.com/kartsims/easysvg/tree/master"
+            },
+            "time": "2022-02-21T09:22:32+00:00"
+        },
+        {
+            "name": "knplabs/github-api",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/php-github-api.git",
+                "reference": "37b167998e8e1f318b3d99633675cfa007540565"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/37b167998e8e1f318b3d99633675cfa007540565",
+                "reference": "37b167998e8e1f318b3d99633675cfa007540565",
                 "shasum": ""
             },
             "require": {
@@ -1119,7 +1166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/php-github-api/issues",
-                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.5.0"
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -1127,7 +1174,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-23T11:32:47+00:00"
+            "time": "2022-02-19T11:15:46+00:00"
         },
         {
             "name": "knplabs/packagist-api",
@@ -3585,16 +3632,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v2.1.4",
+            "version": "v2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "110e8928b6e719e9b9f146c8fd92c41a4b74a3ac"
+                "reference": "dd7dafe3bfebf8441e167b76d8a18974585467f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/110e8928b6e719e9b9f146c8fd92c41a4b74a3ac",
-                "reference": "110e8928b6e719e9b9f146c8fd92c41a4b74a3ac",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/dd7dafe3bfebf8441e167b76d8a18974585467f3",
+                "reference": "dd7dafe3bfebf8441e167b76d8a18974585467f3",
                 "shasum": ""
             },
             "require": {
@@ -3630,7 +3677,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v2.1.4"
+                "source": "https://github.com/symfony/flex/tree/v2.1.6"
             },
             "funding": [
                 {
@@ -3646,7 +3693,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-27T10:25:12+00:00"
+            "time": "2022-02-16T17:31:43+00:00"
         },
         {
             "name": "symfony/framework-bundle",
@@ -5613,16 +5660,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.13.2",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "509cad50878e838c879743225e0e921b3b64a3f2"
+                "reference": "1729c314574f32e49f9660a0cee870f7e603864f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/509cad50878e838c879743225e0e921b3b64a3f2",
-                "reference": "509cad50878e838c879743225e0e921b3b64a3f2",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/1729c314574f32e49f9660a0cee870f7e603864f",
+                "reference": "1729c314574f32e49f9660a0cee870f7e603864f",
                 "shasum": ""
             },
             "require": {
@@ -5664,7 +5711,7 @@
             "description": "Integration with your Symfony app & Webpack Encore!",
             "support": {
                 "issues": "https://github.com/symfony/webpack-encore-bundle/issues",
-                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.13.2"
+                "source": "https://github.com/symfony/webpack-encore-bundle/tree/v1.14.0"
             },
             "funding": [
                 {
@@ -5680,7 +5727,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-02T19:45:55+00:00"
+            "time": "2022-02-14T15:06:55+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -7290,16 +7337,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.10",
+            "version": "9.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687"
+                "reference": "665a1ac0a763c51afc30d6d130dac0813092b17f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/d5850aaf931743067f4bfc1ae4cbd06468400687",
-                "reference": "d5850aaf931743067f4bfc1ae4cbd06468400687",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/665a1ac0a763c51afc30d6d130dac0813092b17f",
+                "reference": "665a1ac0a763c51afc30d6d130dac0813092b17f",
                 "shasum": ""
             },
             "require": {
@@ -7355,7 +7402,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.10"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.11"
             },
             "funding": [
                 {
@@ -7363,7 +7410,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-05T09:12:13+00:00"
+            "time": "2022-02-18T12:46:09+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -7608,16 +7655,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.13",
+            "version": "9.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "597cb647654ede35e43b137926dfdfef0fb11743"
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/597cb647654ede35e43b137926dfdfef0fb11743",
-                "reference": "597cb647654ede35e43b137926dfdfef0fb11743",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1883687169c017d6ae37c58883ca3994cfc34189",
+                "reference": "1883687169c017d6ae37c58883ca3994cfc34189",
                 "shasum": ""
             },
             "require": {
@@ -7695,7 +7742,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.13"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.14"
             },
             "funding": [
                 {
@@ -7707,7 +7754,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-24T07:33:35+00:00"
+            "time": "2022-02-18T12:54:07+00:00"
         },
         {
             "name": "sebastian/cli-parser",

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use PUGX\Poser\Poser;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -25,7 +26,7 @@ final class SnippetGenerator implements SnippetGeneratorInterface
     /**
      * @throws \Exception
      */
-    public function generateAllSnippets(string $repository): array
+    public function generateAllSnippets(Poser $poser, string $repository): array
     {
         $repoLink = $this->generateRepositoryLink($repository);
 
@@ -50,6 +51,27 @@ final class SnippetGenerator implements SnippetGeneratorInterface
         }
 
         $snippets['all']['markdown'] = \trim($snippets['all']['markdown']);
+
+        $badge = [
+            'name' => 'latest_stable_version',
+            'route' => 'pugx_badge_version_latest',
+        ];
+        $validStyles = $poser->validStyles();
+        \sort($validStyles);
+        foreach ($validStyles as $style) {
+            $badge['style'] = $style;
+            $badge['label'] = $style;
+            $img = $this->generateImg($badge, $repository);
+            $markdown = $this->generateMarkdown($badge, $img, $repoLink);
+            $snippets['badge_styles'][] = [
+                'name' => $badge['name'],
+                'label' => $badge['label'],
+                'markdown' => $markdown,
+                'img' => $img,
+                'imgLink' => $repoLink,
+                'featured' => false,
+            ];
+        }
 
         return $snippets;
     }

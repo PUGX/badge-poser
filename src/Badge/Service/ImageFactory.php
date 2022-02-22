@@ -26,7 +26,7 @@ final class ImageFactory
             $badge->getSubject(),
             $badge->getStatus(),
             \trim($badge->getHexColor(), '#'),
-            \PUGX\Poser\Badge::DEFAULT_STYLE,
+            $badge->getStyle(),
             $badge->getFormat()
         );
 

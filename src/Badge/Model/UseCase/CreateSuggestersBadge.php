@@ -11,6 +11,7 @@
 
 namespace App\Badge\Model\UseCase;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
@@ -38,13 +39,14 @@ final class CreateSuggestersBadge extends BaseCreatePackagistImage
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
     }
 
-    public function createSuggestersBadge(string $repository, string $format = 'svg'): CacheableBadge
+    public function createSuggestersBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return $this->createBadgeFromRepository(
             $repository,
             self::SUBJECT,
             self::COLOR,
             $format,
+            $style,
             null,
             self::TTL_DEFAULT_MAXAGE,
             self::TTL_DEFAULT_SMAXAGE

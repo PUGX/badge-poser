@@ -2,6 +2,7 @@
 
 namespace App\Controller\Badge;
 
+use App\Badge\Model\Badge;
 use App\Badge\Model\UseCase\CreateDependentsBadge;
 use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
@@ -16,15 +17,14 @@ final class DependentsController extends AbstractBadgeController
         CreateDependentsBadge $createDependentsBadge,
         ImageFactory $imageFactory,
         string $repository,
-        string $format = 'svg'
+        string $format = Badge::DEFAULT_FORMAT,
+        string $style = Badge::DEFAULT_STYLE,
     ): Response {
-        if (\in_array($request->query->get('format'), $poser->validStyles(), true)) {
-            $format = (string) $request->query->get('format');
-        }
+        $style = $this->checkStyle($request, $poser, $style);
 
         return $this->serveBadge(
             $imageFactory,
-            $createDependentsBadge->createDependentsBadge($repository, $format)
+            $createDependentsBadge->createDependentsBadge($repository, $format, $style)
         );
     }
 }

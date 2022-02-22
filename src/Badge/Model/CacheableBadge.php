@@ -71,4 +71,9 @@ final class CacheableBadge implements BadgeInterface, \Stringable
     {
         return $this->badge->__toString();
     }
+
+    public function getStyle(): string
+    {
+        return $this->badge->getStyle();
+    }
 }
