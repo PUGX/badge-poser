@@ -95,14 +95,12 @@ deploy_prod: .docker_img_deps ## deploy to prod
 	cat sys/cloudformation/parameters.prod.json \
 		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
 		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.prod.json.new; \
         mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
         mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
 	cat sys/cloudformation/parameters.secrets.prod.json \
 		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$$VER'"}/' \
 		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$$VER'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhpCanary", "ParameterValue": "'$$VER'"}/' \
 		| tee sys/cloudformation/parameters.secrets.prod.json.new; \
         mv sys/cloudformation/parameters.secrets.prod.json sys/cloudformation/parameters.secrets.prod.json.bak; \
         mv sys/cloudformation/parameters.secrets.prod.json.new sys/cloudformation/parameters.secrets.prod.json; \

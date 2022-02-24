@@ -16,7 +16,6 @@ Metadata:
           - ELBCertificateArn
           - EcrImageTagNginx
           - EcrImageTagPhp
-          - EcrImageTagPhpCanary
           - Environment
           - ExecRoleArn
           - Subnets
