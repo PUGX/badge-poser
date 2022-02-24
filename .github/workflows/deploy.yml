@@ -28,7 +28,7 @@ jobs:
     - name: Prepare settings
       env:
         PARAM_JSON: ${{ secrets.PARAM_JSON }}
-      run: echo "$PARAM_JSON" > sys/cloudformation/parameters.prod.json
+      run: echo "$PARAM_JSON" > sys/cloudformation/parameters.secrets.prod.json
 
     - name: Deploy
       env:
