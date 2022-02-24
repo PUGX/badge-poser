@@ -13,6 +13,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Configure AWS CLI
+      env:
+        AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws --profile $AWS_PROFILE configure set region $AWS_REGION
+        aws --profile $AWS_PROFILE configure set cli_pager ''
+        aws --profile $AWS_PROFILE configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws --profile $AWS_PROFILE configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+
     - name: Prepare settings
       env:
         PARAM_JSON: ${{ secrets.PARAM_JSON }}
