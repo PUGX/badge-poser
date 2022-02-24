@@ -14,7 +14,15 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Prepare settings
+      env:
+        PARAM_JSON: ${{ secrets.PARAM_JSON }}
       run: echo "$PARAM_JSON" > sys/cloudformation/parameters.prod.json
 
     - name: Deploy
+      env:
+        AWS_PROFILE: ${{ secrets.AWS_PROFILE }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: make deploy_prod
