@@ -61,6 +61,7 @@ RUN /usr/local/bin/composer install --optimize-autoloader --no-ansi --no-interac
 
 RUN mkdir -p /application/var/cache && chmod 777 /application/var/cache
 RUN mkdir -p /application/var/log && chmod 777 /application/var/log
+RUN chmod -R a+rX /application
 
 ENTRYPOINT ["/application/sys/docker/alpine-phpfpm/start.sh"]
 

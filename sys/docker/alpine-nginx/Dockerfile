@@ -16,7 +16,8 @@ COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-cert
 COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 RUN mkdir -p /data/nginx/cache \
-    && chmod -R 777 /data
+    && chmod -R 777 /data \
+    && chmod -R a+rX /application
 
 ENTRYPOINT ["/application/sys/docker/alpine-nginx/start.sh"]
 
