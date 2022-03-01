@@ -24,7 +24,7 @@ services:
   phpfpm:
     build:
       context: .
-      dockerfile: sys/docker/alpine-phpfpm/Dockerfile.dev
+      dockerfile: sys/docker/alpine-phpfpm/Dockerfile
       network: host
     container_name: badge-poser-phpfpm
     depends_on:
