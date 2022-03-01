@@ -9,15 +9,14 @@ RUN echo "*/5 * * * * find /data/nginx/cache/ -type f -newermt '30 minutes ago' 
 COPY sys/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY sys/nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY sys/nginx/lua /etc/nginx/conf.d/lua
-COPY . /application
+COPY --chown=nginx:nginx . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 COPY --from=awsbuilder /tmp /tmp
 COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 RUN mkdir -p /data/nginx/cache \
-    && chmod -R 777 /data \
-    && chmod -R a+rX /application
+    && chmod -R 777 /data
 
 ENTRYPOINT ["/application/sys/docker/alpine-nginx/start.sh"]
 

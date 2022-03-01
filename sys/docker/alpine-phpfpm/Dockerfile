@@ -44,7 +44,7 @@ COPY --from=awsbuilder /tmp /tmp
 COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
-COPY . /application
+COPY --chown=www-data:www-data . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
 # REF: https://github.com/docker-library/php/issues/1121#issuecomment-886817367
