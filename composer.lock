@@ -1182,12 +1182,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "cf3906e603a701abb8b36eb3aadfebff33da6a4c"
+                "reference": "b7d41cc29e0cf74dd8ed0d4cde6b09a1fa8c1cca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/cf3906e603a701abb8b36eb3aadfebff33da6a4c",
-                "reference": "cf3906e603a701abb8b36eb3aadfebff33da6a4c",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/b7d41cc29e0cf74dd8ed0d4cde6b09a1fa8c1cca",
+                "reference": "b7d41cc29e0cf74dd8ed0d4cde6b09a1fa8c1cca",
                 "shasum": ""
             },
             "require": {
@@ -1234,7 +1234,7 @@
                 "issues": "https://github.com/KnpLabs/packagist-api/issues",
                 "source": "https://github.com/KnpLabs/packagist-api/tree/master"
             },
-            "time": "2022-01-26T17:50:21+00:00"
+            "time": "2022-03-01T08:26:33+00:00"
         },
         {
             "name": "php-http/cache-plugin",
