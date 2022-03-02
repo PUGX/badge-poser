@@ -12,6 +12,7 @@ services:
     env_file:
       - ./.env
       - ./.env.local
+      - ./.env.test
     working_dir: /application
     volumes:
       - .:/application
