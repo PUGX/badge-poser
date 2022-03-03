@@ -34,9 +34,21 @@ services:
       - ./.env
       - ./.env.local
     working_dir: /application
+    command: |
+      /bin/sh -c "
+        apk --no-cache add shadow
+        usermod -u 1000 www-data
+        groupmod -g 1000 www-data
+        chown -R www-data: /application
+        php-fpm
+      "
     volumes:
-      - .:/application
-      - ./sys/php/php.ini-dev:/etc/php/8.0/fpm/conf.d/99-overrides.ini
+      - ./config:/application/config:rw
+      - ./src:/application/src
+      - ./public:/application/public
+      - ./templates:/application/templates
+      - ./tests:/application/tests
+      - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/zz-overrides.ini
     ports:
       - "9000:9000"
     networks:

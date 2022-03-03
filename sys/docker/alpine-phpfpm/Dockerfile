@@ -36,7 +36,7 @@ RUN apk add --no-cache --virtual .builddeps \
     && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
-COPY sys/php/docker-php-ext-opcache8.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+COPY sys/php/docker-php-ext-opcache.ini /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 COPY sys/php/php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY sys/php/zz-docker8.conf /usr/local/etc/php-fpm.d/zz-docker8.conf

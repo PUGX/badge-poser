@@ -2,10 +2,13 @@ FROM node:16.13.1-alpine3.12 AS jsbuilder
 
 WORKDIR /application
 
-COPY . /application
+COPY package.json /application
 
 RUN apk add --no-cache --virtual frontenddeps \
       python3 \
    && yarn config set ignore-engines true \
-   && yarn install \
-   && yarn build
+   && yarn install
+
+COPY . /application
+
+RUN yarn build
