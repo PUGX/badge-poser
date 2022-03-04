@@ -6,7 +6,6 @@ log_format custom '$remote_addr - $remote_user [$time_local] '
                   '"$http_referer" "$http_user_agent" "$gzip_ratio" '
                   'CACHE[$request_method@@$host@@$request_uri]:$skip_cache:$upstream_cache_status';
 
-init_by_lua_file '/etc/nginx/conf.d/lua/init.lua';
 
 map $host $skip_cache {
     default 0;
@@ -50,11 +49,10 @@ server {
 
     # local = 127.0.0.11
     # aws = 169.254.169.253
-    resolver ${RESOLVER_IP} ipv6=off;
     resolver_timeout 2s;
 
-    access_log /proc/self/fd/1 custom;
-    error_log /proc/self/fd/2;
+    access_log /var/log/nginx/application_access.log;
+    error_log /var/log/nginx/application_error.log;
 
     add_header Access-Control-Allow-Origin *;
 
@@ -68,32 +66,11 @@ server {
         try_files $uri /index.php$is_args$args;
     }
 
-    location /total {
-        default_type 'text/plain';
-
-        content_by_lua_block {
-            local redis = require "resty.redis"
-            local red = redis:new()
-            local ok, err = red:connect(redis_host, 6379)
-            if ok then
-                local res, err = red:get("STAT.TOTAL")
-                ngx.say(res)
-            end
-            ngx.say(".")
-        }
-    }
-
-    location ~ ^/stats {
-        default_type 'text/plain';
-        internal;
-
-        content_by_lua_file '/etc/nginx/conf.d/lua/stats.lua';
-    }
 
     location ~ ^/index\.php(/|$) {
         # local = phpfpm
         # aws = 127.0.0.1
-        fastcgi_pass ${PHPFPM_HOST}:9000;
+        fastcgi_pass phpfpm:9000;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
@@ -103,7 +80,6 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
 
-        access_by_lua_file '/etc/nginx/conf.d/lua/hook.lua';
 
         # Prevents URIs that include the front controller. This will 404:
         # http://domain.tld/index.php/some-path

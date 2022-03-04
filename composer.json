@@ -62,6 +62,7 @@
         },
         "sort-packages": true,
         "allow-plugins": {
+            "ocramius/package-versions": true,
             "phpstan/extension-installer": true,
             "symfony/flex": true,
             "symfony/runtime": true
