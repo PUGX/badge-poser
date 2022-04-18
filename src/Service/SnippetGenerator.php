@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Dictionary\AllInBadges;
+use App\Dictionary\Badges;
 use PUGX\Poser\Poser;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
@@ -14,10 +16,6 @@ final class SnippetGenerator implements SnippetGeneratorInterface
 
     public function __construct(
         private RouterInterface $router,
-        /* @var array<int, string> */
-        private array $allInBadges,
-        /* @var array<int, array> */
-        private array $badges,
         private string $packagistRoute = self::PACKAGIST_ROUTE
     ) {
         $this->routes = $router->getRouteCollection();
@@ -32,8 +30,9 @@ final class SnippetGenerator implements SnippetGeneratorInterface
 
         $snippets = [];
         $snippets['all']['markdown'] = '';
+        $badges = Badges::getAll();
 
-        foreach ($this->badges as $badge) {
+        foreach ($badges as $badge) {
             $img = $this->generateImg($badge, $repository);
             $markdown = $this->generateMarkdown($badge, $img, $repoLink);
             $snippets['badges'][] = [
@@ -42,10 +41,10 @@ final class SnippetGenerator implements SnippetGeneratorInterface
                 'markdown' => $markdown,
                 'img' => $img,
                 'imgLink' => $repoLink,
-                'featured' => \in_array($badge['name'], $this->allInBadges, true),
+                'featured' => AllInBadges::isABadgeName($badge['name']),
             ];
 
-            if (\in_array($badge['name'], $this->allInBadges, true)) {
+            if (AllInBadges::isABadgeName($badge['name'])) {
                 $snippets['all']['markdown'] .= ' '.$markdown;
             }
         }
