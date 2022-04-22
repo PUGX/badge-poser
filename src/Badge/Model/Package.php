@@ -44,9 +44,17 @@ final class Package
      *
      * @param array{default_branch: string} $repoGitHubData
      */
-    public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
+    public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData = ['default_branch' => '']): self
     {
         return new self($apiPackage, $repoGitHubData);
+    }
+
+    /**
+     * Create a new Object based on this with a new defaultbranch.
+     */
+    public function withDefaultBranch(string $defaultBranch): self
+    {
+        return new self($this->getOriginalObject(), ['default_branch' => $defaultBranch]);
     }
 
     /**

@@ -61,6 +61,11 @@ abstract class BaseCreatePackagistImage
         return $this->packageRepository->fetchByRepository($repository);
     }
 
+    protected function fetchPackageWithRepo(string $repository): Package
+    {
+        return $this->packageRepository->fetchByRepository($repository, true);
+    }
+
     /**
      * @throws InvalidArgumentException
      */

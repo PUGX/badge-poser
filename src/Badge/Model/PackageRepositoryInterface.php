@@ -23,5 +23,5 @@ interface PackageRepositoryInterface
      *
      * @throws UnexpectedValueException
      */
-    public function fetchByRepository(string $repository): Package;
+    public function fetchByRepository(string $repository, bool $withDefaultBranch = false): Package;
 }
