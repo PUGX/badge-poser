@@ -84,6 +84,6 @@ final class BadgesTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expected, Badges::getAll());
+        self::assertEquals($expected, Badges::getAll());
     }
 }
