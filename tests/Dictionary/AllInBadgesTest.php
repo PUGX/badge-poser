@@ -13,13 +13,13 @@ final class AllInBadgesTest extends TestCase
     {
         $badgeName = 'latest_stable_version';
 
-        $this->assertTrue(AllInBadges::isABadgeName($badgeName));
+        self::assertTrue(AllInBadges::isABadgeName($badgeName));
     }
 
     public function testIsNotABadge(): void
     {
         $badgeName = 'not_a_badge_name';
 
-        $this->assertFalse(AllInBadges::isABadgeName($badgeName));
+        self::assertFalse(AllInBadges::isABadgeName($badgeName));
     }
 }
