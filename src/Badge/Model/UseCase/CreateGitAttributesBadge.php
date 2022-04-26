@@ -60,7 +60,7 @@ final class CreateGitAttributesBadge extends BaseCreatePackagistImage
     public function createGitAttributesBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         try {
-            $package = $this->fetchPackage($repository);
+            $package = $this->fetchPackageWithRepo($repository);
             $repo = \str_replace('.git', '', $package->getRepository());
         } catch (\Exception) {
             return $this->createDefaultBadge($format, $style);

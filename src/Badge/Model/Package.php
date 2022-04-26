@@ -44,7 +44,7 @@ final class Package
      *
      * @param array{default_branch: string} $repoGitHubData
      */
-    public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData): self
+    public static function createFromApi(ApiPackage $apiPackage, array $repoGitHubData = ['default_branch' => '']): self
     {
         return new self($apiPackage, $repoGitHubData);
     }

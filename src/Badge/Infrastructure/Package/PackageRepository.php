@@ -39,7 +39,7 @@ final class PackageRepository implements PackageRepositoryInterface
      *
      * @throws UnexpectedValueException
      */
-    public function fetchByRepository(string $repository): Package
+    public function fetchByRepository(string $repository, bool $withDefaultBranch = false): Package
     {
         $apiPackage = $this->packagistClient->get($repository);
         if (!$apiPackage instanceof ApiPackage) {
@@ -48,11 +48,15 @@ final class PackageRepository implements PackageRepositoryInterface
 
         $repositoryInfo = Repository::createFromRepositoryUrl($apiPackage->getRepository());
 
-        $defaultBranch = $this->clientStrategy->getDefaultBranch($repositoryInfo);
-
         /** @var Package $class */
         $class = self::$packageClass;
 
-        return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
+        if (true === $withDefaultBranch) {
+            $defaultBranch = $this->clientStrategy->getDefaultBranch($repositoryInfo);
+
+            return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
+        }
+
+        return $class::createFromApi($apiPackage);
     }
 }
