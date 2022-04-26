@@ -50,14 +50,6 @@ final class Package
     }
 
     /**
-     * Create a new Object based on this with a new defaultbranch.
-     */
-    public function withDefaultBranch(string $defaultBranch): self
-    {
-        return new self($this->getOriginalObject(), ['default_branch' => $defaultBranch]);
-    }
-
-    /**
      * Take the Type of the Downloads (total, monthly or daily).
      */
     public function getPackageDownloads(?string $type = 'total'): ?int

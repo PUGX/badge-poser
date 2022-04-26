@@ -51,12 +51,12 @@ final class PackageRepository implements PackageRepositoryInterface
         /** @var Package $class */
         $class = self::$packageClass;
 
-        $package = $class::createFromApi($apiPackage);
         if (true === $withDefaultBranch) {
             $defaultBranch = $this->clientStrategy->getDefaultBranch($repositoryInfo);
-            $package = $package->withDefaultBranch($defaultBranch);
+
+            return $class::createFromApi($apiPackage, ['default_branch' => $defaultBranch]);
         }
 
-        return $package;
+        return $class::createFromApi($apiPackage);
     }
 }
