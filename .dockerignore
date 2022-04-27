@@ -4,3 +4,4 @@ node_modules/
 tests/
 var/cache/
 var/log/
+vendor/

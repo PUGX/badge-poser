@@ -43,11 +43,7 @@ services:
         php-fpm
       "
     volumes:
-      - ./config:/application/config:rw
-      - ./src:/application/src
-      - ./public:/application/public
-      - ./templates:/application/templates
-      - ./tests:/application/tests
+      - .:/application
       - ./sys/php/php.ini-dev:/usr/local/etc/php/conf.d/zz-overrides.ini
     ports:
       - "9000:9000"
