@@ -1,7 +1,7 @@
 [
   {"ParameterKey": "ELBCertificateArn", "ParameterValue": ""},
-  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1646139764"},
-  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1646139764"},
+  {"ParameterKey": "EcrImageTagNginx", "ParameterValue": "1651561039"},
+  {"ParameterKey": "EcrImageTagPhp", "ParameterValue": "1651561039"},
   {"ParameterKey": "Environment", "ParameterValue": "prod"},
   {"ParameterKey": "ExecRoleArn", "ParameterValue": ""},
   {"ParameterKey": "Subnets", "ParameterValue": ""},
