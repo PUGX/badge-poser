@@ -7,7 +7,7 @@ COPY package.json /application
 RUN apk add --no-cache --virtual frontenddeps \
       python3 \
    && yarn config set ignore-engines true \
-   && yarn install
+   && yarn install --ignore-platform
 
 COPY . /application
 
