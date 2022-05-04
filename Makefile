@@ -81,7 +81,7 @@ AWS_REGION ?= eu-west-1
 AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) | jq -r '.Account')
 PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | head -n 1 | cut -d "/" -f3)
 
-deploy_prod: .docker_img_deps build_prod push_prod ## deploy to prod
+deploy_prod: .docker_img_deps build_prod_images push_prod_images ## deploy to prod
 	cat sys/cloudformation/parameters.prod.json \
 		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$(VER)'"}/' \
 		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$(VER)'"}/' \
@@ -100,7 +100,7 @@ deploy_prod: .docker_img_deps build_prod push_prod ## deploy to prod
 		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
 		--parameters=file://sys/cloudformation/parameters.secrets.prod.json
 
-build_prod:
+build_prod_images:
 	docker build \
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:phpfpm-$(VER) \
 		-f sys/docker/alpine-phpfpm/Dockerfile .; \
@@ -108,7 +108,7 @@ build_prod:
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:nginx-$(VER) \
 		-f sys/docker/alpine-nginx/Dockerfile .
 
-push_prod:
+push_prod_images:
 	aws ecr get-login-password --profile $(AWS_PROFILE) | docker login --password-stdin -u AWS $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com; \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:phpfpm-$(VER); \
 	docker push $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:nginx-$(VER)
