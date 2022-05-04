@@ -26,6 +26,7 @@
         "cache/predis-adapter": "^1.1",
         "knplabs/github-api": "^3.3",
         "knplabs/packagist-api": "2.x-dev",
+        "m4tthumphrey/php-gitlab-api": "^11.8",
         "php-http/guzzle6-adapter": "^2.0",
         "predis/predis": "^1.1",
         "sentry/sentry-symfony": "^4.2",

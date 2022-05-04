@@ -12,6 +12,8 @@ final class Repository
 
     private const BITBUCKET_SOURCE = 'bitbucket.org';
 
+    private const GITLAB_SOURCE = 'gitlab.com';
+
     private function __construct(private string $source, private string $username, private string $name)
     {
     }
@@ -57,8 +59,13 @@ final class Repository
         return self::BITBUCKET_SOURCE === $this->getSource();
     }
 
+    public function isGitLab(): bool
+    {
+        return self::GITLAB_SOURCE === $this->getSource();
+    }
+
     public function isSupported(): bool
     {
-        return $this->isGitHub() || $this->isBitbucket();
+        return $this->isGitHub() || $this->isBitbucket() || $this->isGitLab();
     }
 }
