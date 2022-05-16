@@ -113,6 +113,9 @@
             "config/packages/knp_packagist_api.yaml"
         ]
     },
+    "m4tthumphrey/php-gitlab-api": {
+        "version": "11.8.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

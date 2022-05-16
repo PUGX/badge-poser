@@ -8,6 +8,7 @@ use App\Badge\Exception\RepositoryDataNotValid;
 use App\Badge\Exception\SourceClientNotFound;
 use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
+use App\Service\GitLabClient;
 use Bitbucket\Api\Repositories;
 use Bitbucket\Api\Repositories\Workspaces;
 use Bitbucket\Client as BitbucketClient;
@@ -28,6 +29,11 @@ final class ClientStrategyTest extends TestCase
      */
     private $bitbucketClient;
 
+    /**
+     * @var GitLabClient|MockObject
+     */
+    private $gitlabClient;
+
     private ClientStrategy $clientStrategy;
 
     private string $username;
@@ -43,7 +49,10 @@ final class ClientStrategyTest extends TestCase
         $this->bitbucketClient = $this->getMockBuilder(BitbucketClient::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->clientStrategy = new ClientStrategy($this->githubClient, $this->bitbucketClient);
+        $this->gitlabClient = $this->getMockBuilder(GitLabClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->clientStrategy = new ClientStrategy($this->githubClient, $this->bitbucketClient, $this->gitlabClient);
         $this->username = 'username';
         $this->repositoryName = 'repositoryName';
     }
@@ -100,6 +109,20 @@ final class ClientStrategyTest extends TestCase
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
+        self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
+            Repository::create($source, $this->username, $this->repositoryName)
+        ));
+    }
+
+    public function testGetDefaultBranchFromGitlab(): void
+    {
+        $defaultBranch = 'masterGitlab';
+
+        $this->gitlabClient->expects(self::once())
+            ->method('show')
+            ->with('repositoryName')
+            ->willReturn(['default_branch' => 'masterGitlab']);
+        $source = 'gitlab.com';
         self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
             Repository::create($source, $this->username, $this->repositoryName)
         ));
@@ -323,6 +346,38 @@ final class ClientStrategyTest extends TestCase
         );
     }
 
+    public function testThrowExceptionIfRepositoryDataIsEmptyFromGitlab(): void
+    {
+        $this->expectException(RepositoryDataNotValid::class);
+        $this->expectExceptionMessage('Repository data not valid: []');
+        $defaultBranch = 'masterGitlab';
+
+        $this->gitlabClient->expects(self::once())
+            ->method('show')
+            ->with('repositoryName')
+            ->willReturn([]);
+        $source = 'gitlab.com';
+        self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
+            Repository::create($source, $this->username, $this->repositoryName)
+        ));
+    }
+
+    public function testThrowExceptionIfThereIsNoDefaultBranchKeyFromGitlab(): void
+    {
+        $this->expectException(RepositoryDataNotValid::class);
+        $this->expectExceptionMessage('Repository data not valid: {"data":"someData"}');
+        $defaultBranch = 'masterGitlab';
+
+        $this->gitlabClient->expects(self::once())
+            ->method('show')
+            ->with('repositoryName')
+            ->willReturn(['data' => 'someData']);
+        $source = 'gitlab.com';
+        self::assertEquals($defaultBranch, $this->clientStrategy->getDefaultBranch(
+            Repository::create($source, $this->username, $this->repositoryName)
+        ));
+    }
+
     public function testShouldGetGithubComposerLink(): void
     {
         $source = 'github.com';
@@ -347,6 +402,19 @@ final class ClientStrategyTest extends TestCase
         );
 
         self::assertEquals('https://api.bitbucket.org/2.0/repositories/user/repo/src', $composerLockLinkNormalized);
+    }
+
+    public function testShouldGetGitlabComposerLink(): void
+    {
+        $source = 'gitlab.com';
+        $repoUrl = 'https://gitlab.com/user/repo';
+
+        $composerLockLinkNormalized = $this->clientStrategy->getRepositoryPrefix(
+            Repository::create($source, $this->username, $this->repositoryName),
+            $repoUrl
+        );
+
+        self::assertEquals($repoUrl.'/blob', $composerLockLinkNormalized);
     }
 
     public function testShouldThrowExceptionIfSourceNotFoundForGetComposerLockLinkNormalized(): void

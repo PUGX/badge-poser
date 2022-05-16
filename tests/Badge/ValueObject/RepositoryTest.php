@@ -86,6 +86,13 @@ final class RepositoryTest extends TestCase
         self::assertFalse($repository->isSupported());
     }
 
+    public function testItDetectGitLabAsSourceProvider(): void
+    {
+        $repository = Repository::createFromRepositoryUrl('https://gitlab.com/username/repository');
+
+        self::assertTrue($repository->isGitLab());
+    }
+
     /**
      * @return \Generator<array<string>>
      */

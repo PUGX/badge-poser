@@ -48,6 +48,7 @@ Metadata:
           - EnvRESOLVERIP
           - EnvSENTRYDSN
           - EnvTRUSTEDPROXIES
+          - EnvGITLABTOKEN
 
 
 ################################################################################
@@ -186,6 +187,10 @@ Parameters:
     Type: String
     Default: 'REMOTE_ADDR'
     Description: Environment variable for TRUSTED_PROXIES
+  EnvGITLABTOKEN:
+    Type: String
+    Default: ''
+    Description: Environment variable for GITLAB_TOKEN
 
 
 ################################################################################
@@ -404,6 +409,8 @@ Resources:
               Value: !Ref EnvBITBUCKETTOKEN
             - Name: TRUSTED_PROXIES
               Value: !Ref EnvTRUSTEDPROXIES
+            - Name: GITLAB_TOKEN
+              Value: !Ref EnvGITLABTOKEN
           Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:phpfpm-${EcrImageTagPhp}'
           Essential: true
           LogConfiguration:
