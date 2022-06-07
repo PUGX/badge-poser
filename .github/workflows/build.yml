@@ -85,12 +85,7 @@ jobs:
         REDIS_URL: "redis://localhost"
 
     - name: PHPStan
-      uses: docker://oskarstark/phpstan-ga
-      env:
-        REQUIRE_DEV: true
-        CHECK_PLATFORM_REQUIREMENTS: false
-      with:
-        args: analyse src/
+      run: ./vendor/bin/phpstan analyse -c phpstan.neon --level=8 "src"
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
