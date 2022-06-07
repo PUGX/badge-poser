@@ -214,7 +214,7 @@ final class Package
         return $this->getOriginalObject()->getDescription();
     }
 
-    public function getDownloads(): ApiPackage\Downloads
+    public function getDownloads(): ApiPackage\Downloads|null
     {
         return $this->getOriginalObject()->getDownloads();
     }

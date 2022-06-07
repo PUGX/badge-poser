@@ -89,7 +89,7 @@ final class Badge implements BadgeInterface, \Stringable
             '/--+/',
         ];
         $replacement = [
-            //'$1 $2',
+            // '$1 $2',
             '$1 ',
             ' $1',
             '°§*¼',

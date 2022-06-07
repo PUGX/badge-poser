@@ -49,7 +49,7 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
     public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         try {
-            //check if the repo exist
+            // check if the repo exist
             \str_replace(
                 '.git',
                 '',
