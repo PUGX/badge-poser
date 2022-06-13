@@ -2743,16 +2743,16 @@
         },
         {
             "name": "snc/redis-bundle",
-            "version": "4.1.6",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snc/SncRedisBundle.git",
-                "reference": "34d6e3b8c676bf13d71675726179bca0d5de1069"
+                "reference": "be8d131e0aed4c60ed0f22e2eab902973982bd03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/34d6e3b8c676bf13d71675726179bca0d5de1069",
-                "reference": "34d6e3b8c676bf13d71675726179bca0d5de1069",
+                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/be8d131e0aed4c60ed0f22e2eab902973982bd03",
+                "reference": "be8d131e0aed4c60ed0f22e2eab902973982bd03",
                 "shasum": ""
             },
             "require": {
@@ -2763,7 +2763,7 @@
             },
             "conflict": {
                 "ext-redis": "<5.3",
-                "predis/predis": "<1.1"
+                "predis/predis": "<1.1,>=2.0"
             },
             "require-dev": {
                 "doctrine/annotations": "^1.13",
@@ -2773,7 +2773,7 @@
                 "friendsofphp/proxy-manager-lts": "^1.0.6",
                 "monolog/monolog": "*",
                 "phpunit/phpunit": "^8.5 || ^9.5",
-                "predis/predis": "^1.1",
+                "predis/predis": ">=1.1",
                 "symfony/browser-kit": "^4.4 || ^5.3 || ^6.0",
                 "symfony/cache": "^4.4 || ^5.3 || ^6.0",
                 "symfony/console": "^4.4 || ^5.3 || ^6.0",
@@ -2826,9 +2826,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snc/SncRedisBundle/issues",
-                "source": "https://github.com/snc/SncRedisBundle/tree/4.1.6"
+                "source": "https://github.com/snc/SncRedisBundle/tree/4.2.0"
             },
-            "time": "2022-03-05T09:40:24+00:00"
+            "time": "2022-06-12T10:59:58+00:00"
         },
         {
             "name": "symfony/asset",
