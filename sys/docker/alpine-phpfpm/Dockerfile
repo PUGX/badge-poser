@@ -1,4 +1,4 @@
-FROM php:8.0.16-fpm-alpine
+FROM php:8.1.11-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
 
@@ -29,10 +29,10 @@ RUN apk add --no-cache --virtual .builddeps \
         mbstring \
         opcache \
         zip \
-    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.6.0/pickle.phar -O /usr/local/bin/pickle \
+    && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.11/pickle.phar -O /usr/local/bin/pickle \
     && chmod +x /usr/local/bin/pickle \
     && pickle install yaml@2.1.0 --defaults --no-interaction \
-    && pickle install redis@5.3.2 --defaults --no-interaction \
+    && pickle install redis@5.3.7 --defaults --no-interaction \
     && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
