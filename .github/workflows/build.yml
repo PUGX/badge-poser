@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        php-versions: [ '8.0', '8.1' ]
+        php-versions: [ '8.1' ]
         coverage-driver: [ 'pcov' ]
 
     services:
@@ -52,7 +52,7 @@ jobs:
         args: --prefer-dist
         version: 2
         php_extensions: gd
-        php_version: 8.0
+        php_version: 8.1
 
     - name: Yarn install
       uses: actions/setup-node@v2
