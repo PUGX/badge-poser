@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53793ff9c7d9cd9775b9eac8b1d60ea2",
+    "content-hash": "57878ae0d71d9e65401eada438b5af99",
     "packages": [
         {
             "name": "badges/poser",
@@ -2709,16 +2709,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "4.3.0",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893"
+                "reference": "a0c76b8026282a3046da47e96139958814c1c88a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893",
-                "reference": "12d0f9674b8a829fdf1a2cfbb3fd6b94ec4de893",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/a0c76b8026282a3046da47e96139958814c1c88a",
+                "reference": "a0c76b8026282a3046da47e96139958814c1c88a",
                 "shasum": ""
             },
             "require": {
@@ -2808,7 +2808,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/4.3.0"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/4.3.1"
             },
             "funding": [
                 {
@@ -2820,7 +2820,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-05-30T12:09:35+00:00"
+            "time": "2022-10-10T09:52:04+00:00"
         },
         {
             "name": "snc/redis-bundle",
@@ -10020,11 +10020,11 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
