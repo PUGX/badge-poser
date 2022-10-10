@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "beta",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -115,6 +115,9 @@
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
             "require": "6.1.*"
+        },
+        "branch-alias": {
+            "dev-master": "3.x-dev"
         }
     },
     "funding": [
