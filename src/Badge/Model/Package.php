@@ -73,7 +73,7 @@ final class Package
 
         \usort($versions, [$this, 'comparator']);
 
-        foreach ($versions as $name => $version) {
+        foreach ($versions as $version) {
             $currentVersionName = $version->getVersion();
             $versionNormalized = $version->getVersionNormalized();
 
@@ -87,7 +87,11 @@ final class Package
                 $functionName = 'Stable';
             }
 
-            if (\version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
+            if (null === $latest = $this->{'getLatest'.$functionName.'VersionNormalized'}()) {
+                continue;
+            }
+
+            if (\version_compare($versionNormalized, $latest) > 0) {
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|string[] $license */
