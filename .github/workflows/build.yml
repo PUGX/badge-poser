@@ -57,7 +57,7 @@ jobs:
     - name: Yarn install
       uses: actions/setup-node@v2
       with:
-        node-version: '16.13.1'
+        node-version: '16.17.1'
     - run: yarn install
 
     - name: Rebuild sass
