@@ -1,4 +1,4 @@
-FROM node:16.13.1-alpine3.12 AS jsbuilder
+FROM node:16.17.1-alpine3.16 AS jsbuilder
 
 WORKDIR /application
 
