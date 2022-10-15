@@ -52,7 +52,7 @@ services:
 
   node:
     container_name: badge-poser-node
-    image: node:16.13.1-alpine3.12
+    image: node:18.11.0-alpine3.16
     user: "node"
     working_dir: /application
     volumes:
@@ -62,7 +62,7 @@ services:
 
   redis:
     container_name: badge-poser-redis
-    image: redis:6.0.8-alpine3.12
+    image: redis:7.0.5-alpine3.16
     ports:
       - "6379:6379"
     networks:
