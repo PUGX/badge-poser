@@ -87,11 +87,7 @@ final class Package
                 $functionName = 'Stable';
             }
 
-            if (null === $latest = $this->{'getLatest'.$functionName.'VersionNormalized'}()) {
-                continue;
-            }
-
-            if (\version_compare($versionNormalized, $latest) > 0) {
+            if (\version_compare($versionNormalized, $this->{'getLatest'.$functionName.'VersionNormalized'}()) > 0) {
                 $this->{'setLatest'.$functionName.'Version'}($currentVersionName);
                 $this->{'setLatest'.$functionName.'VersionNormalized'}($versionNormalized);
                 /** @var string|string[] $license */
