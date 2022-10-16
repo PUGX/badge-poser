@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class HealthController extends AbstractController
 {
+    // sample repo taken from https://github.com/PUGX/badge-poser/issues/337
+    private const BITBUCKET_HEALTHCHECK_WORKSPACE = 'wirbelwild';
+    private const BITBUCKET_HEALTHCHECK_REPO = 'kiwa-core';
+
     public function health(
         PackagistClient $packagistClient,
         CircleCiClientInterface $circleCiClient,
@@ -26,8 +30,7 @@ final class HealthController extends AbstractController
         $gitlabHealth = $gitlabClient->health();
         $gitlabSuccessRequest = !empty($gitlabHealth) && !empty($gitlabHealth['id']);
 
-        // sample repo taken from https://github.com/PUGX/badge-poser/issues/337
-        $bitbucketHealth = $bitbucketClient->repositories()->workspaces('wirbelwild')->show('kiwa-core');
+        $bitbucketHealth = $bitbucketClient->repositories()->workspaces(self::BITBUCKET_HEALTHCHECK_WORKSPACE)->show(self::BITBUCKET_HEALTHCHECK_REPO);
         $bitbucketSuccessRequest = !empty($bitbucketHealth) && !empty($bitbucketHealth['full_name']);
 
         $response = $this->render(
