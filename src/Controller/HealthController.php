@@ -33,10 +33,10 @@ final class HealthController extends AbstractController
         $response = $this->render(
             'health/index.txt.twig',
             [
-                'packagist' => $packagistSuccessRequest ? 'OK' : 'KO',
-                'circleci' => $circleciSuccessRequest ? 'OK' : 'KO',
-                'gitlab' => $gitlabSuccessRequest ? 'OK' : 'KO',
-                'bitbucket' => $bitbucketSuccessRequest ? 'OK' : 'KO',
+                'packagist' => $packagistSuccessRequest,
+                'circleci' => $circleciSuccessRequest,
+                'gitlab' => $gitlabSuccessRequest,
+                'bitbucket' => $bitbucketSuccessRequest,
             ]
         );
         $response->headers->set('Content-Type', 'text/plain');

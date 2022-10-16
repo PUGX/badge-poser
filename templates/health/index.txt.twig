@@ -1,4 +1,4 @@
-packagist: {{ packagist }}
-circleci:  {{ circleci }}
-gitlab:    {{ gitlab }}
-bitbucket: {{ bitbucket }}
+packagist: {{ packagist ? 'OK' : 'KO' }}
+circleci:  {{ circleci ? 'OK' : 'KO' }}
+gitlab:    {{ gitlab ? 'OK' : 'KO' }}
+bitbucket: {{ bitbucket ? 'OK' : 'KO' }}
