@@ -49,8 +49,12 @@ final class SnippetController extends AbstractController
     /**
      * Validates a repository name.
      */
-    private function isValidRepositoryName(string $repository): bool
+    private function isValidRepositoryName(?string $repository): bool
     {
+        if (null === $repository) {
+            return false;
+        }
+
         return 1 === \preg_match('/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+?/', $repository);
     }
 }
