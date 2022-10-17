@@ -1,4 +1,4 @@
-FROM fabiocicerchia/nginx-lua:1.21.6-alpine3.15.0
+FROM fabiocicerchia/nginx-lua:1.23.1-alpine3.16.2
 
 ENV RUN_IN_CONTAINER="True"
 
