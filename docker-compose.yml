@@ -33,6 +33,7 @@ services:
     env_file:
       - ./.env
       - ./.env.local
+      - ./.env.test
     working_dir: /application
     command: |
       /bin/sh -c "

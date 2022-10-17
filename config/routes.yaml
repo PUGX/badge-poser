@@ -12,6 +12,10 @@ home:
     defaults:
         repository: "phpunit/phpunit"
 
+health:
+    path: /health
+    controller: App\Controller\HealthController::health
+
 show:
     path: /show/{repository}
     controller: App\Controller\HomeController::index
@@ -36,10 +40,14 @@ search_packagist:
 
 # https://circleci.com/api/v1.1/project/github/PUGX/badge-poser?filter=completed&limit=1
 # https://circleci.com/api/v1.1/project/github/PUGX/badge-poser/tree/release%2Fv3.0.0?filter=completed&limit=1
-circleci_api:
+circleci_api_repository:
     path: /api/v1.1/project/github/{repository}/tree/{branch}
     host: "circleci.com"
     schemes:  [https]
     requirements:
         repository: "[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+"
         branch: ".+"
+circleci_api_health:
+    path: /api/v2/me
+    host: "circleci.com"
+    schemes:  [https]
