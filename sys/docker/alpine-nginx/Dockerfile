@@ -12,7 +12,11 @@ COPY sys/nginx/lua /etc/nginx/conf.d/lua
 COPY --chown=nginx:nginx . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 COPY --from=awsbuilder /tmp /tmp
+# HACK Ref: https://github.com/moby/moby/issues/37965
+RUN true
 COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+# HACK Ref: https://github.com/moby/moby/issues/37965
+RUN true
 COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 RUN mkdir -p /data/nginx/cache \
