@@ -564,7 +564,6 @@ Resources:
                       "Effect": "Allow",
                       "Action": [
                           "ecr:CompleteLayerUpload",
-                          "ecr:GetAuthorizationToken",
                           "sts:GetCallerIdentity",
                           "ecr:UploadLayerPart",
                           "cloudformation:CreateChangeSet",
@@ -575,6 +574,14 @@ Resources:
                           "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser",
                           "arn:aws:cloudformation:eu-west-1:478389220392:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"
                       ]
+                  },
+                  {
+                      "Sid": "GitHubActionsDeployECRToken",
+                      "Effect": "Allow",
+                      "Action": [
+                          "ecr:GetAuthorizationToken"
+                      ],
+                      "Resource": "*"
                   }
               ]
           }
