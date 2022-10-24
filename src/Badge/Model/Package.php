@@ -56,7 +56,7 @@ final class Package
     {
         $statsType = 'get'.\ucfirst($type ?? 'total');
 
-        return $this->getDownloads()->{$statsType}();
+        return $this->getDownloads()?->{$statsType}();
     }
 
     private function comparator(Version $version1, Version $version2): int
