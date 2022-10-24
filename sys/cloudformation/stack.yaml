@@ -563,17 +563,30 @@ Resources:
                       "Sid": "GitHubActionsDeploy",
                       "Effect": "Allow",
                       "Action": [
-                          "ecr:CompleteLayerUpload",
-                          "sts:GetCallerIdentity",
-                          "ecr:UploadLayerPart",
                           "cloudformation:CreateChangeSet",
-                          "ecr:InitiateLayerUpload",
-                          "ecr:PutImage"
+                          "sts:GetCallerIdentity"
                       ],
                       "Resource": [
                           "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser",
                           "arn:aws:cloudformation:eu-west-1:478389220392:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"
                       ]
+                  },
+                  {
+                    "Sid": "GitHubActionsDeployECR",
+                    "Effect": "Allow",
+                    "Action": [
+                      "ecr:BatchCheckLayerAvailability",
+                      "ecr:BatchGetImage",
+                      "ecr:CompleteLayerUpload",
+                      "ecr:DescribeImages",
+                      "ecr:DescribeRepositories",
+                      "ecr:GetDownloadUrlForLayer",
+                      "ecr:InitiateLayerUpload",
+                      "ecr:ListImages",
+                      "ecr:PutImage",
+                      "ecr:UploadLayerPart"
+                    ],
+                    "Resource": "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser"
                   },
                   {
                       "Sid": "GitHubActionsDeployECRToken",
