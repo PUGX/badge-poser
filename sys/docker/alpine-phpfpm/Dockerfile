@@ -42,10 +42,10 @@ COPY sys/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY sys/php/zz-docker8.conf /usr/local/etc/php-fpm.d/zz-docker8.conf
 COPY --from=awsbuilder /tmp /tmp
 # HACK Ref: https://github.com/moby/moby/issues/37965
-RUN true
+# RUN true
 COPY --from=awsbuilder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 # HACK Ref: https://github.com/moby/moby/issues/37965
-RUN true
+# RUN true
 COPY --from=awsbuilder /opt/aws/amazon-cloudwatch-agent /opt/aws/amazon-cloudwatch-agent
 
 COPY --chown=www-data:www-data . /application

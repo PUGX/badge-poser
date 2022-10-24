@@ -101,10 +101,10 @@ deploy_prod: .docker_img_deps build_prod_images push_prod_images ## deploy to pr
 		--parameters=file://sys/cloudformation/parameters.secrets.prod.json
 
 build_prod_images:
-	docker build \
+	DOCKER_BUILDKIT=1 docker build \
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:phpfpm-$(VER) \
 		-f sys/docker/alpine-phpfpm/Dockerfile .; \
-	docker build \
+	DOCKER_BUILDKIT=1 docker build \
 		-t $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/badge-poser:nginx-$(VER) \
 		-f sys/docker/alpine-nginx/Dockerfile .
 
