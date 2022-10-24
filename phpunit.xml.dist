@@ -18,7 +18,7 @@
 
         <!-- ###+ snc/redis-bundle ### -->
         <!-- passwords that contain special characters (@, %, :, +) must be urlencoded -->
-        <env name="REDIS_URL" value="redis://redis"/>
+        <env name="REDIS_HOST" value="redis"/>
         <!-- ###- snc/redis-bundle ### -->
 
         <!-- ###+ knplabs/github-api ### -->

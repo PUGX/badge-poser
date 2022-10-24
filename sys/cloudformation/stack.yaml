@@ -26,23 +26,19 @@ Metadata:
       - Label: {default: 'Required ENV variables'}
         Parameters:
           - EnvAPPSECRET
-          - EnvREDISURL
       - Label: {default: 'Optional ENV variables'}
         Parameters:
           - EnvAPPDEBUG
           - EnvAPPENV
-          - EnvAPPENVCanary
           - EnvAPPXDEBUG
           - EnvAPPXDEBUGHOST
           - EnvBITBUCKETAUTHMETHOD
           - EnvBITBUCKETSECRET
           - EnvBITBUCKETTOKEN
           - EnvCIRCLECITOKEN
-          - EnvDARKCANARYTHRESHOLD
           - EnvGITHUBAUTHMETHOD
           - EnvGITHUBSECRET
           - EnvGITHUBUSERNAME
-          - EnvPHPFPMCANARYHOST
           - EnvPHPFPMHOST
           - EnvREDISHOST
           - EnvRESOLVERIP
@@ -105,10 +101,6 @@ Parameters:
     Type: String
     Default: 'prod'
     Description: Environment variable for APP_ENV
-  EnvAPPENVCanary:
-    Type: String
-    Default: 'canary'
-    Description: Environment variable for APP_ENV (used to identify as production dark canary instance)
   EnvAPPSECRET:
     Type: String
     Default: ''
@@ -138,12 +130,6 @@ Parameters:
     Type: String
     Default: ''
     Description: Environment variable for CIRCLE_CI_TOKEN
-  EnvDARKCANARYTHRESHOLD:
-    Type: Number
-    Default: 10
-    MinValue: 0
-    MaxValue: 100
-    Description: Specifies the volume of traffic to go to the dark canary.
   EnvGITHUBAUTHMETHOD:
     Type: String
     Default: 'access_token_header'
@@ -156,25 +142,14 @@ Parameters:
     Type: String
     Default: ''
     Description: Environment variable for GITHUB_USERNAME
-  EnvPHPFPMCANARYHOST:
-    Type: String
-    Default: '127.0.0.1'
-    Description: Environment variable for PHPFPM_CANARY_HOST
   EnvREDISHOST:
     Type: String
     Default: ''
     Description: Environment variable for REDIS_HOST
-  EnvREDISURL:
-    Type: String
-    Description: Environment variable for REDIS_URL
   EnvPHPFPMHOST:
     Type: String
     Default: '127.0.0.1'
     Description: Environment variable for PHPFPM_HOST
-  EnvPHPFPMCANARYHOST:
-    Type: String
-    Default: '127.0.0.1'
-    Description: Environment variable for PHPFPM_CANARY_HOST
   EnvRESOLVERIP:
     Type: String
     Default: '169.254.169.253'
@@ -389,8 +364,6 @@ Resources:
               Value: !Ref EnvAPPXDEBUG
             - Name: APP_XDEBUG_HOST
               Value: !Ref EnvAPPXDEBUGHOST
-            - Name: REDIS_URL
-              Value: !Ref EnvREDISURL
             - Name: GITHUB_AUTH_METHOD
               Value: !Ref EnvGITHUBAUTHMETHOD
             - Name: GITHUB_USERNAME
@@ -428,14 +401,10 @@ Resources:
           Environment:
             - Name: PHPFPM_HOST
               Value: !Ref EnvPHPFPMHOST
-            - Name: PHPFPM_CANARY_HOST
-              Value: !Ref EnvPHPFPMCANARYHOST
             - Name: REDIS_HOST
               Value: !Ref EnvREDISHOST
             - Name: RESOLVER_IP
               Value: !Ref EnvRESOLVERIP
-            - Name: DARK_CANARY_THRESHOLD
-              Value: !Ref EnvDARKCANARYTHRESHOLD
           Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ServiceName}:nginx-${EcrImageTagNginx}'
           Essential: true
           DependsOn:

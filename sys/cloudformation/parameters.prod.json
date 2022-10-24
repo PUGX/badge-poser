@@ -8,8 +8,6 @@
   {"ParameterKey": "VpcId", "ParameterValue": ""},
 
   {"ParameterKey": "EnvAPPENV", "ParameterValue": "prod"},
-  {"ParameterKey": "EnvAPPENVCanary", "ParameterValue": "canary"},
-  {"ParameterKey": "EnvREDISURL", "ParameterValue": ""},
   {"ParameterKey": "EnvREDISHOST", "ParameterValue": ""},
   {"ParameterKey": "EnvAPPSECRET", "ParameterValue": ""},
   {"ParameterKey": "EnvBITBUCKETSECRET", "ParameterValue": ""},
@@ -17,6 +15,5 @@
   {"ParameterKey": "EnvGITLABTOKEN", "ParameterValue": ""},
   {"ParameterKey": "EnvCIRCLECITOKEN", "ParameterValue": ""},
   {"ParameterKey": "EnvGITHUBUSERNAME", "ParameterValue": ""},
-  {"ParameterKey": "EnvSENTRYDSN", "ParameterValue": ""},
-  {"ParameterKey": "EnvDARKCANARYTHRESHOLD", "ParameterValue": "0"}
+  {"ParameterKey": "EnvSENTRYDSN", "ParameterValue": ""}
 ]
