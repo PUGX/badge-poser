@@ -567,8 +567,8 @@ Resources:
                           "sts:GetCallerIdentity"
                       ],
                       "Resource": [
-                          "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser",
-                          "arn:aws:cloudformation:eu-west-1:478389220392:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"
+                          "arn:aws:ecr:eu-west-1:*:repository/badge-poser",
+                          "arn:aws:cloudformation:eu-west-1:*:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"
                       ]
                   },
                   {
@@ -586,7 +586,7 @@ Resources:
                       "ecr:PutImage",
                       "ecr:UploadLayerPart"
                     ],
-                    "Resource": "arn:aws:ecr:eu-west-1:478389220392:repository/badge-poser"
+                    "Resource": "arn:aws:ecr:eu-west-1:*:repository/badge-poser"
                   },
                   {
                       "Sid": "GitHubActionsDeployECRToken",
