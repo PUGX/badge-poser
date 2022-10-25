@@ -1215,16 +1215,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "v3.8.0",
+            "version": "v3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "a43662d7c9d4032768ec829dde2cf143878a4104"
+                "reference": "665ba275dbf36f9e9ef78876f27ca87796e3599c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/a43662d7c9d4032768ec829dde2cf143878a4104",
-                "reference": "a43662d7c9d4032768ec829dde2cf143878a4104",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/665ba275dbf36f9e9ef78876f27ca87796e3599c",
+                "reference": "665ba275dbf36f9e9ef78876f27ca87796e3599c",
                 "shasum": ""
             },
             "require": {
@@ -1258,7 +1258,7 @@
             "extra": {
                 "branch-alias": {
                     "dev-2.x": "2.20.x-dev",
-                    "dev-master": "3.4.x-dev"
+                    "dev-master": "3.9.x-dev"
                 }
             },
             "autoload": {
@@ -1291,7 +1291,7 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/php-github-api/issues",
-                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.8.0"
+                "source": "https://github.com/KnpLabs/php-github-api/tree/v3.9.0"
             },
             "funding": [
                 {
@@ -1299,7 +1299,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-01T18:58:16+00:00"
+            "time": "2022-10-24T12:42:09+00:00"
         },
         {
             "name": "knplabs/packagist-api",
@@ -4413,16 +4413,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v6.1.0",
+            "version": "v6.2.0-BETA1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "a3016f5442e28386ded73c43a32a5b68586dd1c4"
+                "reference": "f0761ca5a11489471711140edc127e5431963e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/a3016f5442e28386ded73c43a32a5b68586dd1c4",
-                "reference": "a3016f5442e28386ded73c43a32a5b68586dd1c4",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/f0761ca5a11489471711140edc127e5431963e6a",
+                "reference": "f0761ca5a11489471711140edc127e5431963e6a",
                 "shasum": ""
             },
             "require": {
@@ -4460,7 +4460,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v6.1.0"
+                "source": "https://github.com/symfony/options-resolver/tree/v6.2.0-BETA1"
             },
             "funding": [
                 {
@@ -4476,7 +4476,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-25T11:15:52+00:00"
+            "time": "2022-10-09T08:55:40+00:00"
         },
         {
             "name": "symfony/password-hasher",
