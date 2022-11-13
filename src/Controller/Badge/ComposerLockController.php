@@ -17,7 +17,6 @@ use App\Badge\Service\ImageFactory;
 use PUGX\Poser\Poser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use UnexpectedValueException;
 
 /**
  * Composer-lock action for badges.
@@ -30,7 +29,7 @@ final class ComposerLockController extends AbstractBadgeController
      * @param string $repository repository
      *
      * @throws \InvalidArgumentException
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function composerLock(

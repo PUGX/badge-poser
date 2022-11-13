@@ -17,7 +17,6 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Service\NormalizerInterface;
 use App\Badge\Service\TextNormalizer;
-use InvalidArgumentException;
 
 /**
  * Create the 'downloads' image with the standard Font and standard Image.
@@ -39,7 +38,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function createDownloadsBadge(string $repository, string $type, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
@@ -80,7 +79,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function prepareText(Package $package, ?string $context): string
     {

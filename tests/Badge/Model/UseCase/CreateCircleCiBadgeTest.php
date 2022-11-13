@@ -17,7 +17,6 @@ use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Service\CircleCiClientInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 final class CreateCircleCiBadgeTest extends TestCase
@@ -112,7 +111,7 @@ final class CreateCircleCiBadgeTest extends TestCase
         );
         $repo->expects(self::once())
             ->method('getRepository')
-            ->will(self::throwException(new RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $package->expects(self::once())
             ->method('getOriginalObject')

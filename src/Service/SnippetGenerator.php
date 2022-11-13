@@ -15,8 +15,8 @@ final class SnippetGenerator implements SnippetGeneratorInterface
     private RouteCollection $routes;
 
     public function __construct(
-        private RouterInterface $router,
-        private string $packagistRoute = self::PACKAGIST_ROUTE
+        private readonly RouterInterface $router,
+        private readonly string $packagistRoute = self::PACKAGIST_ROUTE,
     ) {
         $this->routes = $router->getRouteCollection();
     }

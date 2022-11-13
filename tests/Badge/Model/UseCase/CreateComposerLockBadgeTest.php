@@ -23,7 +23,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
-use RuntimeException;
 
 final class CreateComposerLockBadgeTest extends TestCase
 {
@@ -126,7 +125,7 @@ final class CreateComposerLockBadgeTest extends TestCase
         );
         $repo->expects(self::once())
             ->method('getRepository')
-            ->will(self::throwException(new RuntimeException()));
+            ->will(self::throwException(new \RuntimeException()));
 
         $package->expects(self::once())
             ->method('getOriginalObject')

@@ -15,8 +15,6 @@ use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
-use InvalidArgumentException;
-use UnexpectedValueException;
 
 /**
  * Class BaseCreatePackagistImage.
@@ -31,7 +29,7 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function createBadgeFromRepository(
         string $repository,
@@ -54,7 +52,7 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     protected function fetchPackage(string $repository): Package
     {
@@ -67,7 +65,7 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function createBadge(
         string $subject,
@@ -86,7 +84,7 @@ abstract class BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function createDefaultBadge(string $format, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {

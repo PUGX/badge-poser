@@ -2,8 +2,6 @@
 
 namespace App\Badge\Service;
 
-use InvalidArgumentException;
-
 /**
  * Class TextNormalizer
  * Transform numbers to readable format.
@@ -11,7 +9,7 @@ use InvalidArgumentException;
 final class TextNormalizer implements NormalizerInterface
 {
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function normalize(float|int|string|null $number, int $precision = 2): string
     {
@@ -29,18 +27,18 @@ final class TextNormalizer implements NormalizerInterface
     /**
      * This function transform a number to a float value or raise an Exception.
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     private function normalizeNumber(float|int|string|null $number): float
     {
         if (!\is_numeric($number)) {
-            throw new InvalidArgumentException('Number expected');
+            throw new \InvalidArgumentException('Number expected');
         }
 
         $number = (float) $number;
 
         if ($number < 0) {
-            throw new InvalidArgumentException('The number expected to be >= 0');
+            throw new \InvalidArgumentException('The number expected to be >= 0');
         }
 
         return \max($number, 1);

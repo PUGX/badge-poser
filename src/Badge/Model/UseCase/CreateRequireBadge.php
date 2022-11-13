@@ -14,7 +14,6 @@ namespace App\Badge\Model\UseCase;
 use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
-use App\Badge\Model\PackageRepositoryInterface;
 
 /**
  * Create the 'require' image with the standard Font and standard Image.
@@ -26,12 +25,6 @@ final class CreateRequireBadge extends BaseCreatePackagistImage
 
     private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
     private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
-
-    public function __construct(
-        PackageRepositoryInterface $packageRepository
-    ) {
-        parent::__construct($packageRepository);
-    }
 
     public function createRequireBadge(string $repository, string $type, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {

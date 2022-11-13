@@ -20,8 +20,6 @@ use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
-use InvalidArgumentException;
-use UnexpectedValueException;
 
 /**
  * Create the 'gitattributes' image using a generator `Poser`.
@@ -47,14 +45,14 @@ final class CreateGitAttributesBadge extends BaseCreatePackagistImage
     public function __construct(
         PackageRepositoryInterface $packageRepository,
         protected ClientInterface $client,
-        private ClientStrategy $clientStrategy
+        private readonly ClientStrategy $clientStrategy,
     ) {
         parent::__construct($packageRepository);
     }
 
     /**
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      * @throws GuzzleException
      */
     public function createGitAttributesBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge

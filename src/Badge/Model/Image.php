@@ -16,8 +16,11 @@ namespace App\Badge\Model;
  */
 final class Image implements \Stringable
 {
-    private function __construct(private string $name, private string $content, private string $format)
-    {
+    private function __construct(
+        private readonly string $name,
+        private readonly string $content,
+        private readonly string $format,
+    ) {
     }
 
     /**

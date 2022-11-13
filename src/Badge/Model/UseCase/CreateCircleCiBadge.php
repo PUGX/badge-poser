@@ -16,10 +16,8 @@ use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Service\CircleCiClientInterface;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
-use UnexpectedValueException;
 
 /**
  * Create the 'CircleCi' image using a generator `Poser`.
@@ -43,8 +41,8 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
     }
 
     /**
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function createCircleCiBadge(string $repository, string $branch = 'master', string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {

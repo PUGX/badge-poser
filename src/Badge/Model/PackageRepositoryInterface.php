@@ -11,8 +11,6 @@
 
 namespace App\Badge\Model;
 
-use UnexpectedValueException;
-
 /**
  * This interface is intended to load ApiPackage, create, and work with the Package object.
  */
@@ -21,7 +19,7 @@ interface PackageRepositoryInterface
     /**
      * Returns package if found.
      *
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     public function fetchByRepository(string $repository, bool $withDefaultBranch = false): Package;
 }

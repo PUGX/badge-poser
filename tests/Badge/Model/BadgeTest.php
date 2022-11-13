@@ -3,7 +3,6 @@
 namespace App\Tests\Badge\Model;
 
 use App\Badge\Model\Badge;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class BadgeTest extends TestCase
@@ -39,7 +38,7 @@ final class BadgeTest extends TestCase
     /** @dataProvider  invalidColorProvider */
     public function testShouldThrowExceptionForInvalidColors(string $color): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(\sprintf('Color not valid %s', $color));
 
         new Badge('sub', 'status', $color);

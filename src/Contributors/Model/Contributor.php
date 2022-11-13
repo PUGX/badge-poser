@@ -6,8 +6,12 @@ final class Contributor implements \Stringable
 {
     private const DEFAULT_IMG_SIZE = 160;
 
-    private function __construct(private string $username, private string $profileUrl, private string $profileImg, private ?int $size = null)
-    {
+    private function __construct(
+        private readonly string $username,
+        private readonly string $profileUrl,
+        private readonly string $profileImg,
+        private readonly ?int $size = null,
+    ) {
     }
 
     public static function create(string $username, string $profileUrl, string $profileImg, int $size = self::DEFAULT_IMG_SIZE): self

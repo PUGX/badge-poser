@@ -107,7 +107,7 @@ final class Package
     private function getBranchAliases(Version $version): ?array
     {
         $extra = $version->getExtra();
-        if (null !== $extra && isset($extra['branch-alias']) && \is_array($extra['branch-alias'])) {
+        if (isset($extra['branch-alias']) && \is_array($extra['branch-alias'])) {
             return $extra['branch-alias'];
         }
 
@@ -126,7 +126,7 @@ final class Package
     {
         $version = \preg_replace('{#.+$}i', '', $version) ?? '';
 
-        if (\str_starts_with($version, 'dev-') || '-dev' === \substr($version, -4)) {
+        if (\str_starts_with($version, 'dev-') || \str_ends_with($version, '-dev')) {
             return 'dev';
         }
 
@@ -300,7 +300,6 @@ final class Package
             return '';
         }
 
-        /** @var Version $version */
         $version = $this->getVersions()[$latestStableVersion];
         $requires = $version->getRequire();
 

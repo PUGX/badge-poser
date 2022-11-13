@@ -20,9 +20,9 @@ final class ClientStrategy
     private const GITLAB_REPOSITORY_PREFIX = 'blob';
 
     public function __construct(
-        private GithubClient $githubClient,
-        private BitbucketClient $bitbucketClient,
-        private GitLabClientInterface $gitlabClient
+        private readonly GithubClient $githubClient,
+        private readonly BitbucketClient $bitbucketClient,
+        private readonly GitLabClientInterface $gitlabClient,
     ) {
     }
 
