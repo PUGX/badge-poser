@@ -21,8 +21,13 @@ final class Badge implements BadgeInterface, \Stringable
     private string $format;
     private string $style;
 
-    public function __construct(string $subject, string $status, private string $color, string $format = self::DEFAULT_FORMAT, string $style = self::DEFAULT_STYLE)
-    {
+    public function __construct(
+        string $subject,
+        string $status,
+        private readonly string $color,
+        string $format = self::DEFAULT_FORMAT,
+        string $style = self::DEFAULT_STYLE,
+    ) {
         $this->subject = $this->escapeValue($subject);
         $this->status = $this->escapeValue($status);
         $this->style = $this->escapeValue($style);

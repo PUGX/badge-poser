@@ -7,7 +7,7 @@ use Gitlab\Client;
 
 final class GitLabClient implements GitLabClientInterface
 {
-    public function __construct(private Client $gitlabClient, private string $gitLabToken)
+    public function __construct(private readonly Client $gitlabClient, private readonly string $gitLabToken)
     {
         $this->gitlabClient->authenticate($this->gitLabToken, Client::AUTH_HTTP_TOKEN);
     }

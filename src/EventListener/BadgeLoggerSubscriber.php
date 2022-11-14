@@ -13,7 +13,7 @@ final class BadgeLoggerSubscriber implements EventSubscriberInterface
      * BadgeLoggerSubscriber constructor.
      * https://symfony.com/doc/current/logging/channels_handlers.html#configure-additional-channels-without-tagged-services.
      */
-    public function __construct(private LoggerInterface $badgesLogger, private array $badgeEventData = [])
+    public function __construct(private readonly LoggerInterface $badgesLogger, private array $badgeEventData = [])
     {
     }
 

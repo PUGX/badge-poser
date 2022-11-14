@@ -17,7 +17,6 @@ use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
 use Packagist\Api\Client as PackagistClient;
 use Packagist\Api\Result\Package as ApiPackage;
-use UnexpectedValueException;
 
 /**
  * This class is intended to load ApiPackage, create, and work with the Package object.
@@ -27,8 +26,8 @@ final class PackageRepository implements PackageRepositoryInterface
     private static string $packageClass;
 
     public function __construct(
-        private PackagistClient $packagistClient,
-        private ClientStrategy $clientStrategy,
+        private readonly PackagistClient $packagistClient,
+        private readonly ClientStrategy $clientStrategy,
         string $packageClass = Package::class
     ) {
         self::$packageClass = $packageClass;
@@ -37,13 +36,13 @@ final class PackageRepository implements PackageRepositoryInterface
     /**
      * Returns package if founded.
      *
-     * @throws UnexpectedValueException
+     * @throws \UnexpectedValueException
      */
     public function fetchByRepository(string $repository, bool $withDefaultBranch = false): Package
     {
         $apiPackage = $this->packagistClient->get($repository);
         if (!$apiPackage instanceof ApiPackage) {
-            throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
+            throw new \UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repository));
         }
 
         $repositoryInfo = Repository::createFromRepositoryUrl($apiPackage->getRepository());

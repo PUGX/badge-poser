@@ -10,11 +10,13 @@ final class RedisReader implements ReaderInterface
     private const KEY_TOTAL = 'TOTAL';
     private string $keyTotal;
 
+    /**
+     * @param Redis<string, Redis> $redis
+     */
     public function __construct(
-        /* @var Redis<string, Redis> */
-        private Redis $redis,
+        private readonly Redis $redis,
         string $keyTotal = self::KEY_TOTAL,
-        string $keyPrefix = self::KEY_PREFIX
+        string $keyPrefix = self::KEY_PREFIX,
     ) {
         $this->keyTotal = $this->concatenateKeys($keyPrefix, $keyTotal);
     }

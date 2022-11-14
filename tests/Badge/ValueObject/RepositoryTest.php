@@ -6,7 +6,6 @@ namespace App\Tests\Badge\ValueObject;
 
 use App\Badge\ValueObject\Repository;
 use PHPUnit\Framework\TestCase;
-use UnexpectedValueException;
 
 final class RepositoryTest extends TestCase
 {
@@ -21,7 +20,7 @@ final class RepositoryTest extends TestCase
 
     public function testItThrowExceptionIfUrlNotValid(): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('Impossible to fetch package by "https://google.it" repository.');
 
         Repository::createFromRepositoryUrl('https://google.it');

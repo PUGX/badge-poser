@@ -15,9 +15,6 @@ use App\Badge\Model\Badge;
 use App\Badge\Model\BadgeInterface;
 use App\Badge\Model\CacheableBadge;
 use GuzzleHttp\Exception\BadResponseException;
-use InvalidArgumentException;
-use Throwable;
-use UnexpectedValueException;
 
 /**
  * Create the 'error' badge with the standard Font and standard Image.
@@ -33,9 +30,9 @@ final class CreateErrorBadge
     private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_NO_CACHE;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function createErrorBadge(Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
+    public function createErrorBadge(\Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {
         return new CacheableBadge(
             $this->createBadge($throwable, $format, $style),
@@ -45,14 +42,14 @@ final class CreateErrorBadge
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    private function createBadge(Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): BadgeInterface
+    private function createBadge(\Throwable $throwable, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): BadgeInterface
     {
         $status = self::ERROR_TEXT_GENERIC;
         if ($throwable instanceof BadResponseException) {
             $status = self::ERROR_TEXT_CLIENT_BAD_RESPONSE;
-        } elseif ($throwable instanceof UnexpectedValueException) {
+        } elseif ($throwable instanceof \UnexpectedValueException) {
             $status = self::ERROR_TEXT_CLIENT_EXCEPTION;
         }
 

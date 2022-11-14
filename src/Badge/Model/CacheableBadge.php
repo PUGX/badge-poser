@@ -23,7 +23,7 @@ final class CacheableBadge implements BadgeInterface, \Stringable
     public const TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
     public const TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
 
-    public function __construct(private BadgeInterface $badge, private int $maxage, private int $smaxage)
+    public function __construct(private readonly BadgeInterface $badge, private int $maxage, private int $smaxage)
     {
     }
 

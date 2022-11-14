@@ -14,7 +14,6 @@ namespace App\Badge\Model\UseCase;
 use App\Badge\Model\Badge;
 use App\Badge\Model\CacheableBadge;
 use App\Badge\Model\Package;
-use InvalidArgumentException;
 
 /**
  * Create the 'license' image using a generator `Poser`.
@@ -29,7 +28,7 @@ final class CreateLicenseBadge extends BaseCreatePackagistImage
     private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function createLicenseBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {

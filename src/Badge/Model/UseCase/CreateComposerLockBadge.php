@@ -19,8 +19,6 @@ use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
-use InvalidArgumentException;
-use UnexpectedValueException;
 
 /**
  * Create the 'license' image using a generator `Poser`.
@@ -46,14 +44,14 @@ final class CreateComposerLockBadge extends BaseCreatePackagistImage
     public function __construct(
         PackageRepositoryInterface $packageRepository,
         protected ClientInterface $client,
-        private ClientStrategy $clientStrategy
+        private readonly ClientStrategy $clientStrategy,
     ) {
         parent::__construct($packageRepository);
     }
 
     /**
-     * @throws InvalidArgumentException
-     * @throws UnexpectedValueException
+     * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function createComposerLockBadge(string $repository, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge

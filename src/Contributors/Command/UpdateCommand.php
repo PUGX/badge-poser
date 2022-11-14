@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class UpdateCommand extends Command
 {
-    public function __construct(private Repository $repository)
+    public function __construct(private readonly Repository $repository)
     {
         // you *must* call the parent constructor
         parent::__construct();

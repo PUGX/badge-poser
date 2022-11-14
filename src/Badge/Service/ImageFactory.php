@@ -13,8 +13,10 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 final class ImageFactory
 {
-    public function __construct(private Poser $generator, private EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly Poser $generator,
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {
     }
 
     public function createFromBadge(BadgeInterface $badge): Image

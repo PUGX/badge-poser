@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Badge\ValueObject;
 
-use UnexpectedValueException;
-
 final class Repository
 {
     private const GITHUB_SOURCE = 'github.com';
@@ -14,8 +12,11 @@ final class Repository
 
     private const GITLAB_SOURCE = 'gitlab.com';
 
-    private function __construct(private string $source, private string $username, private string $name)
-    {
+    private function __construct(
+        private readonly string $source,
+        private readonly string $username,
+        private readonly string $name,
+    ) {
     }
 
     public static function create(string $source, string $username, string $name): self
@@ -28,7 +29,7 @@ final class Repository
         \preg_match('/(https)(:\/\/|@)([^\/:]+)[\/:]([^\/:]+)\/(.+)$/', $repositoryUrl, $matches);
 
         if (!isset($matches[3], $matches[4], $matches[5])) {
-            throw new UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repositoryUrl));
+            throw new \UnexpectedValueException(\sprintf('Impossible to fetch package by "%s" repository.', $repositoryUrl));
         }
 
         return new self($matches[3], $matches[4], $matches[5]);
