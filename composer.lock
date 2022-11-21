@@ -9184,16 +9184,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v6.2.0-BETA1",
+            "version": "v6.2.0-BETA3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "458475eb9d09a3b1974bc2dbf3a1432a43ac2eda"
+                "reference": "099fc6c8bbd5bf0cecc42374c8713a1783601f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/458475eb9d09a3b1974bc2dbf3a1432a43ac2eda",
-                "reference": "458475eb9d09a3b1974bc2dbf3a1432a43ac2eda",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/099fc6c8bbd5bf0cecc42374c8713a1783601f74",
+                "reference": "099fc6c8bbd5bf0cecc42374c8713a1783601f74",
                 "shasum": ""
             },
             "require": {
@@ -9247,7 +9247,7 @@
             "description": "Provides utilities for PHPUnit, especially user deprecation notices management",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/phpunit-bridge/tree/v6.2.0-BETA1"
+                "source": "https://github.com/symfony/phpunit-bridge/tree/v6.2.0-BETA3"
             },
             "funding": [
                 {
@@ -9263,7 +9263,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-07T08:04:14+00:00"
+            "time": "2022-11-14T10:13:36+00:00"
         },
         {
             "name": "symfony/polyfill-php81",
@@ -10018,7 +10018,9 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {
+        "symfony/phpunit-bridge": 10
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -10028,5 +10030,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
