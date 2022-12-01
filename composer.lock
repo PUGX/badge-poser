@@ -5229,16 +5229,16 @@
         },
         {
             "name": "symfony/runtime",
-            "version": "v6.1.3",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/runtime.git",
-                "reference": "e5d4d848656cbb1812d5f911b1bdec205c6e2fac"
+                "reference": "45a63a5885f92741c8def9cbd81c925e6b5b891d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/runtime/zipball/e5d4d848656cbb1812d5f911b1bdec205c6e2fac",
-                "reference": "e5d4d848656cbb1812d5f911b1bdec205c6e2fac",
+                "url": "https://api.github.com/repos/symfony/runtime/zipball/45a63a5885f92741c8def9cbd81c925e6b5b891d",
+                "reference": "45a63a5885f92741c8def9cbd81c925e6b5b891d",
                 "shasum": ""
             },
             "require": {
@@ -5285,7 +5285,7 @@
             "description": "Enables decoupling PHP applications from global state",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/runtime/tree/v6.1.3"
+                "source": "https://github.com/symfony/runtime/tree/v6.2.0"
             },
             "funding": [
                 {
@@ -5301,7 +5301,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-27T17:24:16+00:00"
+            "time": "2022-11-02T09:08:04+00:00"
         },
         {
             "name": "symfony/security-core",
@@ -10028,5 +10028,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
