@@ -114,7 +114,7 @@
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
-            "require": "6.1.*"
+            "require": "6.2.*"
         },
         "branch-alias": {
             "dev-master": "3.x-dev"
