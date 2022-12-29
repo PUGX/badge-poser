@@ -2824,16 +2824,16 @@
         },
         {
             "name": "snc/redis-bundle",
-            "version": "4.4.1",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/snc/SncRedisBundle.git",
-                "reference": "feec42e459cf74c938074a7b6ca4051d3f2a0275"
+                "reference": "ca4c173e2f0c350309e536c832b766e2b299c5d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/feec42e459cf74c938074a7b6ca4051d3f2a0275",
-                "reference": "feec42e459cf74c938074a7b6ca4051d3f2a0275",
+                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/ca4c173e2f0c350309e536c832b766e2b299c5d2",
+                "reference": "ca4c173e2f0c350309e536c832b766e2b299c5d2",
                 "shasum": ""
             },
             "require": {
@@ -2909,9 +2909,9 @@
             ],
             "support": {
                 "issues": "https://github.com/snc/SncRedisBundle/issues",
-                "source": "https://github.com/snc/SncRedisBundle/tree/4.4.1"
+                "source": "https://github.com/snc/SncRedisBundle/tree/4.4.2"
             },
-            "time": "2022-12-10T10:06:29+00:00"
+            "time": "2022-12-16T13:30:45+00:00"
         },
         {
             "name": "symfony/asset",
