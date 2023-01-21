@@ -1303,16 +1303,16 @@
         },
         {
             "name": "knplabs/packagist-api",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/packagist-api.git",
-                "reference": "90002e56b6242b00bb802023604baf1ba770328c"
+                "reference": "31d67acf42c2123d58f0c8e6ba503085f7fc5c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/90002e56b6242b00bb802023604baf1ba770328c",
-                "reference": "90002e56b6242b00bb802023604baf1ba770328c",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/31d67acf42c2123d58f0c8e6ba503085f7fc5c03",
+                "reference": "31d67acf42c2123d58f0c8e6ba503085f7fc5c03",
                 "shasum": ""
             },
             "require": {
@@ -1357,9 +1357,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KnpLabs/packagist-api/issues",
-                "source": "https://github.com/KnpLabs/packagist-api/tree/v2.0.1"
+                "source": "https://github.com/KnpLabs/packagist-api/tree/v2.0.2"
             },
-            "time": "2022-12-08T08:29:28+00:00"
+            "time": "2023-01-18T17:02:59+00:00"
         },
         {
             "name": "m4tthumphrey/php-gitlab-api",
