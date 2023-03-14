@@ -8826,16 +8826,16 @@
         },
         {
             "name": "symfony/debug-bundle",
-            "version": "v6.2.5",
+            "version": "v6.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug-bundle.git",
-                "reference": "c365a0f0f6bf80f17ae9a16bc6989548746071cc"
+                "reference": "8ff6c96d09c462beade7512137899e400c76d994"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug-bundle/zipball/c365a0f0f6bf80f17ae9a16bc6989548746071cc",
-                "reference": "c365a0f0f6bf80f17ae9a16bc6989548746071cc",
+                "url": "https://api.github.com/repos/symfony/debug-bundle/zipball/8ff6c96d09c462beade7512137899e400c76d994",
+                "reference": "8ff6c96d09c462beade7512137899e400c76d994",
                 "shasum": ""
             },
             "require": {
@@ -8884,7 +8884,7 @@
             "description": "Provides a tight integration of the Symfony VarDumper component and the ServerLogCommand from MonologBridge into the Symfony full-stack framework",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/debug-bundle/tree/v6.2.5"
+                "source": "https://github.com/symfony/debug-bundle/tree/v6.2.7"
             },
             "funding": [
                 {
@@ -8900,7 +8900,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-01T08:38:09+00:00"
+            "time": "2023-02-14T08:44:56+00:00"
         },
         {
             "name": "symfony/dom-crawler",
