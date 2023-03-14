@@ -97,39 +97,45 @@
         },
         {
             "name": "bitbucket/client",
-            "version": "v4.2.0",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BitbucketPHP/Client.git",
-                "reference": "88e0b6f1d4a85297a193e444616f04534b65ed78"
+                "reference": "781512e3f4782d5cf6a124aa2e21a7e0c22975a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BitbucketPHP/Client/zipball/88e0b6f1d4a85297a193e444616f04534b65ed78",
-                "reference": "88e0b6f1d4a85297a193e444616f04534b65ed78",
+                "url": "https://api.github.com/repos/BitbucketPHP/Client/zipball/781512e3f4782d5cf6a124aa2e21a7e0c22975a8",
+                "reference": "781512e3f4782d5cf6a124aa2e21a7e0c22975a8",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "php": "^7.4.15 || ^8.0.2",
                 "php-http/cache-plugin": "^1.7.5",
-                "php-http/client-common": "^2.5",
-                "php-http/discovery": "^1.14",
-                "php-http/httplug": "^2.2",
+                "php-http/client-common": "^2.6",
+                "php-http/discovery": "^1.15",
+                "php-http/httplug": "^2.3",
                 "php-http/multipart-stream-builder": "^1.2",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "psr/http-client-implementation": "^1.0",
                 "psr/http-factory-implementation": "^1.0",
                 "psr/http-message": "^1.0",
-                "symfony/polyfill-php80": "^1.17"
+                "symfony/polyfill-php80": "^1.26"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
-                "guzzlehttp/guzzle": "^7.4",
-                "http-interop/http-factory-guzzle": "^1.0",
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "guzzlehttp/guzzle": "^7.5",
+                "http-interop/http-factory-guzzle": "^1.2",
                 "php-http/mock-client": "^1.5"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Bitbucket\\": "src/"
@@ -158,7 +164,7 @@
             ],
             "support": {
                 "issues": "https://github.com/BitbucketPHP/Client/issues",
-                "source": "https://github.com/BitbucketPHP/Client/tree/v4.2.0"
+                "source": "https://github.com/BitbucketPHP/Client/tree/v4.3.0"
             },
             "funding": [
                 {
@@ -170,7 +176,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-24T02:53:45+00:00"
+            "time": "2023-02-27T12:27:28+00:00"
         },
         {
             "name": "cache/adapter-common",
