@@ -1369,16 +1369,16 @@
         },
         {
             "name": "m4tthumphrey/php-gitlab-api",
-            "version": "11.8.0",
+            "version": "11.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GitLabPHP/Client.git",
-                "reference": "38380c933ada8fd2099bc611f0de23c339cdb04a"
+                "reference": "00d5d0fd16dfe9d16259d630f06c959451b0c6f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GitLabPHP/Client/zipball/38380c933ada8fd2099bc611f0de23c339cdb04a",
-                "reference": "38380c933ada8fd2099bc611f0de23c339cdb04a",
+                "url": "https://api.github.com/repos/GitLabPHP/Client/zipball/00d5d0fd16dfe9d16259d630f06c959451b0c6f2",
+                "reference": "00d5d0fd16dfe9d16259d630f06c959451b0c6f2",
                 "shasum": ""
             },
             "require": {
@@ -1386,23 +1386,29 @@
                 "ext-xml": "*",
                 "php": "^7.4.15 || ^8.0.2",
                 "php-http/cache-plugin": "^1.7.5",
-                "php-http/client-common": "^2.5",
-                "php-http/discovery": "^1.14",
-                "php-http/httplug": "^2.2",
+                "php-http/client-common": "^2.6",
+                "php-http/discovery": "^1.15",
+                "php-http/httplug": "^2.3",
                 "php-http/multipart-stream-builder": "^1.2",
                 "psr/cache": "^1.0 || ^2.0 || ^3.0",
                 "psr/http-client-implementation": "^1.0",
                 "psr/http-factory-implementation": "^1.0",
                 "psr/http-message": "^1.0",
                 "symfony/options-resolver": "^4.4 || ^5.0 || ^6.0",
-                "symfony/polyfill-php80": "^1.17"
+                "symfony/polyfill-php80": "^1.26"
             },
             "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
-                "guzzlehttp/guzzle": "^7.4",
+                "bamarni/composer-bin-plugin": "^1.8.2",
+                "guzzlehttp/guzzle": "^7.5",
                 "http-interop/http-factory-guzzle": "^1.0"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": false
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Gitlab\\": "src/"
@@ -1441,7 +1447,7 @@
             ],
             "support": {
                 "issues": "https://github.com/GitLabPHP/Client/issues",
-                "source": "https://github.com/GitLabPHP/Client/tree/11.8.0"
+                "source": "https://github.com/GitLabPHP/Client/tree/11.9.0"
             },
             "funding": [
                 {
@@ -1449,7 +1455,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-24T19:04:02+00:00"
+            "time": "2023-03-06T12:10:16+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -3439,12 +3445,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "0121954c80fd17c18cf050fe73360e63bb43d4fb"
+                "reference": "e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/0121954c80fd17c18cf050fe73360e63bb43d4fb",
-                "reference": "0121954c80fd17c18cf050fe73360e63bb43d4fb",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e",
+                "reference": "e2d1534420bd723d0ef5aec58a22c5fe60ce6f5e",
                 "shasum": ""
             },
             "require": {
@@ -3498,7 +3504,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-02T07:48:03+00:00"
+            "time": "2023-03-01T10:25:55+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -4433,16 +4439,16 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v6.2.5",
+            "version": "v6.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "e8324d44f5af99ec2ccec849934a242f64458f86"
+                "reference": "aa0e85b53bbb2b4951960efd61d295907eacd629"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/e8324d44f5af99ec2ccec849934a242f64458f86",
-                "reference": "e8324d44f5af99ec2ccec849934a242f64458f86",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/aa0e85b53bbb2b4951960efd61d295907eacd629",
+                "reference": "aa0e85b53bbb2b4951960efd61d295907eacd629",
                 "shasum": ""
             },
             "require": {
@@ -4480,7 +4486,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v6.2.5"
+                "source": "https://github.com/symfony/options-resolver/tree/v6.2.7"
             },
             "funding": [
                 {
@@ -4496,7 +4502,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-01T08:38:09+00:00"
+            "time": "2023-02-14T08:44:56+00:00"
         },
         {
             "name": "symfony/password-hasher",
