@@ -9304,7 +9304,7 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v6.3.0-BETA1",
+            "version": "v6.3.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
@@ -9365,7 +9365,7 @@
             "description": "Provides utilities for PHPUnit, especially user deprecation notices management",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/phpunit-bridge/tree/v6.3.0-BETA1"
+                "source": "https://github.com/symfony/phpunit-bridge/tree/v6.3.0-RC1"
             },
             "funding": [
                 {
