@@ -86,7 +86,7 @@ final class CreateCircleCiBadgeTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function shouldCreateCircleCiBadgeProvider(): array
+    public static function shouldCreateCircleCiBadgeProvider(): array
     {
         return [
             ['success', 'passing'],

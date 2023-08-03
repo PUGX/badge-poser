@@ -39,3 +39,5 @@ clover.xml
 ###> custom ###
 .stylelintcache
 ###< custom ###
+
+.idea/

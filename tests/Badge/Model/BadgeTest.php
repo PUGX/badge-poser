@@ -47,7 +47,7 @@ final class BadgeTest extends TestCase
     /**
      * @return \Generator<array<string>>
      */
-    public function invalidColorProvider(): \Generator
+    public static function invalidColorProvider(): \Generator
     {
         yield [''];
         yield ['null'];

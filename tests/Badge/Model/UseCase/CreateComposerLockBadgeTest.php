@@ -142,7 +142,7 @@ final class CreateComposerLockBadgeTest extends TestCase
     /**
      * @return array<int, array<int, int|string>>
      */
-    public function shouldCreateComposerLockBadgeProvider(): array
+    public static function shouldCreateComposerLockBadgeProvider(): array
     {
         return [
             [200, 'committed'],

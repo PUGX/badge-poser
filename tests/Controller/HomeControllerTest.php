@@ -19,7 +19,7 @@ final class HomeControllerTest extends WebTestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             ['/'],

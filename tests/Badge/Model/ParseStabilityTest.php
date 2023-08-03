@@ -17,29 +17,27 @@ final class ParseStabilityTest extends TestCase
     }
 
     /**
-     * @return array<int, array<int, string>>
+     * @return \Generator<array<int, string>>
      */
-    public static function getVersionAndStability(): array
+    public static function getVersionAndStability(): \Generator
     {
-        return [
-            ['1.0.0', 'stable'],
-            ['1.1.0', 'stable'],
-            ['2.0.0', 'stable'],
-            ['3.0.x-dev', 'dev'],
-            ['v3.0.0-RC1', 'RC'],
-            ['2.3.x-dev', 'dev'],
-            ['2.2.x-dev', 'dev'],
-            ['dev-master', 'dev'],
-            ['2.1.x-dev', 'dev'],
-            ['2.0.x-dev', 'dev'],
-            ['v2.3.0-rc2', 'RC'],
-            ['v2.3.0-RC1', 'RC'],
-            ['v2.3.0-BETA2', 'beta'],
-            ['v2.1.10', 'stable'],
-            ['v2.2.1', 'stable'],
-            ['0.1.0-alpha1', 'alpha'],
-            ['0.1.0-alpha', 'alpha'],
-        ];
+        yield ['1.0.0', 'stable'];
+        yield ['1.1.0', 'stable'];
+        yield ['2.0.0', 'stable'];
+        yield ['3.0.x-dev', 'dev'];
+        yield ['v3.0.0-RC1', 'RC'];
+        yield ['2.3.x-dev', 'dev'];
+        yield ['2.2.x-dev', 'dev'];
+        yield ['dev-master', 'dev'];
+        yield ['2.1.x-dev', 'dev'];
+        yield ['2.0.x-dev', 'dev'];
+        yield ['v2.3.0-rc2', 'RC'];
+        yield ['v2.3.0-RC1', 'RC'];
+        yield ['v2.3.0-BETA2', 'beta'];
+        yield ['v2.1.10', 'stable'];
+        yield ['v2.2.1', 'stable'];
+        yield ['0.1.0-alpha1', 'alpha'];
+        yield ['0.1.0-alpha', 'alpha'];
     }
 
     /**
