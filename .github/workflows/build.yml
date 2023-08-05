@@ -17,7 +17,7 @@ jobs:
 
     services:
       redis:
-        image: redis:7.0.12
+        image: redis:7.0
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -27,10 +27,10 @@ jobs:
           - 6379:6379
 
     steps:
-    - uses: actions/checkout@v3.5.2
+    - uses: actions/checkout@v3
 
     - name: Install PHP
-      uses: shivammathur/setup-php@v2.25.5
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
 
@@ -39,7 +39,7 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3.3.1
+      uses: actions/cache@v3.3
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      uses: php-actions/composer@v6.1.1
+      uses: php-actions/composer@v6
       with:
         args: --prefer-dist
         version: 2
@@ -55,7 +55,7 @@ jobs:
         php_version: 8.1
 
     - name: Yarn install
-      uses: actions/setup-node@v3.7.0
+      uses: actions/setup-node@v3
       with:
         node-version: '16.17.1'
     - run: yarn install
@@ -88,7 +88,7 @@ jobs:
       run: ./vendor/bin/phpstan analyse -c phpstan.neon --level=8 "src"
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3.1.4
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3.5.2
+    - uses: actions/checkout@v3
 
     - name: Check Docker Version
       run: docker --version

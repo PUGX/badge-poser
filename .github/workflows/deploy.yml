@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Check Docker Version
       run: docker --version
@@ -20,7 +20,7 @@ jobs:
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
         sudo apt-get update
-        sudo apt-get install docker-ce=24.0.5
+        sudo apt-get install docker-ce=5:24.0.5-1~ubuntu.22.04~jammy
     - name: Check Docker Version
       run: docker --version
 
