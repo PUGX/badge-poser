@@ -17,7 +17,7 @@ jobs:
 
     services:
       redis:
-        image: redis
+        image: redis:7.0
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -39,7 +39,7 @@ jobs:
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v3.3
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         args: --prefer-dist
         version: 2
@@ -88,13 +88,13 @@ jobs:
       run: ./vendor/bin/phpstan analyse -c phpstan.neon --level=8 "src"
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
   docker:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v3
@@ -106,7 +106,7 @@ jobs:
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
         sudo apt-get update
-        sudo apt-get install docker-ce
+        sudo apt-get install docker-ce=5:24.0.5-1~ubuntu.22.04~jammy
     - name: Check Docker Version
       run: docker --version
 
