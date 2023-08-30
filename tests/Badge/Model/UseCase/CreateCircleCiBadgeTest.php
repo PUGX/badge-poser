@@ -174,10 +174,10 @@ final class CreateCircleCiBadgeTest extends TestCase
             ['getRepository']
         );
 
-//        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-//            ResponseInterface::class,
-//            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
-//        );
+        //        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
+        //            ResponseInterface::class,
+        //            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
+        //        );
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
