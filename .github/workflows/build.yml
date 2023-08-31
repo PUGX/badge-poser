@@ -82,7 +82,6 @@ jobs:
       run: "bin/phpunit -d memory_limit=-1 --coverage-clover clover.xml"
       env:
         REDIS_HOST: localhost
-        REDIS_URL: "redis://localhost"
 
     - name: PHPStan
       run: ./vendor/bin/phpstan analyse -c phpstan.neon --level=8 "src"

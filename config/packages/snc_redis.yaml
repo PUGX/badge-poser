@@ -8,4 +8,4 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: "%env(resolve:REDIS_URL)%"
+            dsn: "redis://%env(resolve:REDIS_HOST)%:6379"
