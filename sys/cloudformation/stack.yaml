@@ -364,6 +364,8 @@ Resources:
               Value: !Ref EnvAPPXDEBUG
             - Name: APP_XDEBUG_HOST
               Value: !Ref EnvAPPXDEBUGHOST
+            - Name: REDIS_HOST
+              Value: !Ref EnvREDISHOST
             - Name: GITHUB_AUTH_METHOD
               Value: !Ref EnvGITHUBAUTHMETHOD
             - Name: GITHUB_USERNAME
