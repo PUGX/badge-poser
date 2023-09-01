@@ -33,7 +33,7 @@ final class CreateSuggestersBadge extends BaseCreatePackagistImage
 
     public function __construct(
         PackageRepositoryInterface $packageRepository,
-        ?NormalizerInterface $textNormalizer = null
+        NormalizerInterface $textNormalizer = null
     ) {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer ?? new TextNormalizer();

@@ -31,7 +31,7 @@ final class CreateDownloadsBadge extends BaseCreatePackagistImage
 
     private NormalizerInterface $normalizer;
 
-    public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
+    public function __construct(PackageRepositoryInterface $packageRepository, NormalizerInterface $textNormalizer = null)
     {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer ?? new TextNormalizer();
