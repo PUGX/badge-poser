@@ -580,6 +580,20 @@ Resources:
     Properties:
       UserName: !Ref iamusergithubactions
 
+  # REDIS
+  rediscluster:
+    Type: AWS::ElastiCache::CacheCluster
+    Properties:
+      AutoMinorVersionUpgrade: True
+      CacheNodeType: cache.t3.micro # TODO: cache.t4g.micro
+      ClusterName: poser-stats
+      Engine: redis
+      EngineVersion: 5.0.6 # TODO: 7.0
+      NumCacheNodes: 1
+      SnapshotRetentionLimit: 1
+      TransitEncryptionEnabled: False
+      VpcSecurityGroupIds: !Ref sgredis
+
 ################################################################################
 #                                   Outputs                                    #
 ################################################################################
