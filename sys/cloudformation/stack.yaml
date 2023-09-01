@@ -309,6 +309,12 @@ Resources:
       CapacityProviders:
         - FARGATE
         - FARGATE_SPOT
+      DefaultCapacityProviderStrategy:
+        - CapacityProvider: FARGATE_SPOT
+          Weight: 2
+        - Base: 1
+          CapacityProvider: FARGATE
+          Weight: 1
       ClusterSettings:
         - Name: containerInsights
           Value: enabled
@@ -323,7 +329,6 @@ Resources:
       Cluster: !Ref ecscluster
       DesiredCount: 1
       HealthCheckGracePeriodSeconds: 15
-      LaunchType: FARGATE
       LoadBalancers:
         - ContainerName: 'nginx'
           ContainerPort: 80
