@@ -17,7 +17,6 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Service\CircleCiClientInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 /**
  * Create the 'CircleCi' image using a generator `Poser`.
@@ -63,7 +62,7 @@ final class CreateCircleCiBadge extends BaseCreatePackagistImage
             }
 
             $builds = \json_decode($response->getContent(), true, 512, \JSON_THROW_ON_ERROR);
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return $this->createDefaultBadge($format, $style);
         }
 
