@@ -6005,16 +6005,16 @@
         },
         {
             "name": "dg/bypass-finals",
-            "version": "v1.4.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/bypass-finals.git",
-                "reference": "4c424c3ed359220fce044f35cdf9f48b0089b2ca"
+                "reference": "7df37b7342d7d25ab906e53eb4e92d83542f46c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/4c424c3ed359220fce044f35cdf9f48b0089b2ca",
-                "reference": "4c424c3ed359220fce044f35cdf9f48b0089b2ca",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/7df37b7342d7d25ab906e53eb4e92d83542f46c1",
+                "reference": "7df37b7342d7d25ab906e53eb4e92d83542f46c1",
                 "shasum": ""
             },
             "require": {
@@ -6052,9 +6052,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dg/bypass-finals/issues",
-                "source": "https://github.com/dg/bypass-finals/tree/v1.4.1"
+                "source": "https://github.com/dg/bypass-finals/tree/v1.5.0"
             },
-            "time": "2022-09-13T17:27:26+00:00"
+            "time": "2023-08-23T11:20:33+00:00"
         },
         {
             "name": "doctrine/annotations",
