@@ -53,7 +53,7 @@ services:
 
   node:
     container_name: badge-poser-node
-    image: node:18.16.0-alpine3.16
+    image: node:18.17.1-alpine3.18
     user: "node"
     working_dir: /application
     volumes:
