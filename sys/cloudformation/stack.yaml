@@ -582,17 +582,28 @@ Resources:
 
   # REDIS
   rediscluster:
-    Type: AWS::ElastiCache::CacheCluster
+    Type: AWS::ElastiCache::ReplicationGroup
     Properties:
+      AtRestEncryptionEnabled: False
       AutoMinorVersionUpgrade: True
-      CacheNodeType: cache.t3.micro # TODO: cache.t4g.micro
-      ClusterName: poser-stats
+      CacheNodeType: cache.t4g.micro
+      CacheSubnetGroupName: !Ref redissubnet
+      ClusterMode: Disabled
       Engine: redis
-      EngineVersion: 5.0.6 # TODO: 7.0
-      NumCacheNodes: 1
+      EngineVersion: 7.0.7
+      MultiAZEnabled: False
+      NumNodeGroups: 1
+      PrimaryClusterId: poser-stats
+      ReplicationGroupDescription: poser-stats
+      SecurityGroupIds: !Ref sgredis
       SnapshotRetentionLimit: 1
       TransitEncryptionEnabled: False
-      VpcSecurityGroupIds: !Ref sgredis
+  redissubnet:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: poser-subnet
+      Description: poser-subnet
+      SubnetIds: !Ref Subnets
 
 ################################################################################
 #                                   Outputs                                    #
