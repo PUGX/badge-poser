@@ -77,7 +77,7 @@ final class RepositoryTest extends TestCase
         self::assertTrue($repository->isSupported());
     }
 
-    /** @dataProvider unsupportedRepositrySourceProvider */
+    /** @dataProvider unsupportedRepositorySourceProvider */
     public function testItDetectUnsupportedSourceProvider(string $sourceProviderUrl): void
     {
         $repository = Repository::createFromRepositoryUrl($sourceProviderUrl);
@@ -95,7 +95,7 @@ final class RepositoryTest extends TestCase
     /**
      * @return \Generator<array<string>>
      */
-    public function unsupportedRepositrySourceProvider(): \Generator
+    public static function unsupportedRepositorySourceProvider(): \Generator
     {
         yield ['https://www.gitlab.com/username/repository'];
         yield ['https://www.my-self-hosted-git.com/acme/foo'];

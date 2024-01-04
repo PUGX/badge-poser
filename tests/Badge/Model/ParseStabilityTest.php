@@ -8,9 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ParseStabilityTest extends TestCase
 {
-    /**
-     * @dataProvider getVersionAndStability
-     */
+    /** @dataProvider getVersionAndStability */
     public function testParseStability(string $version, string $stable): void
     {
         self::assertEquals(Package::parseStability($version), $stable);

@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        php-versions: [ '8.1', '8.2' ]
+        php-versions: [ '8.3' ]
         coverage-driver: [ 'pcov' ]
 
     services:
@@ -27,7 +27,7 @@ jobs:
           - 6379:6379
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install PHP
       uses: shivammathur/setup-php@v2
@@ -52,7 +52,7 @@ jobs:
         args: --prefer-dist
         version: 2
         php_extensions: gd
-        php_version: 8.1
+        php_version: 8.3
 
     - name: Yarn install
       uses: actions/setup-node@v3
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Check Docker Version
       run: docker --version
@@ -104,8 +104,8 @@ jobs:
       run: |
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
         sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-        sudo apt-get update
-        sudo apt-get install docker-ce=5:24.0.5-1~ubuntu.22.04~jammy
+        sudo apt-get update --allow-downgrades
+        sudo apt-get install docker-ce=5:24.0.5-1~ubuntu.22.04~jammy --allow-downgrades
     - name: Check Docker Version
       run: docker --version
 

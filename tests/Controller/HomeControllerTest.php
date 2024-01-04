@@ -6,9 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class HomeControllerTest extends WebTestCase
 {
-    /**
-     * @dataProvider provider
-     */
+    /** @dataProvider provider */
     public function testHome(string $path): void
     {
         $client = self::createClient();
@@ -19,7 +17,7 @@ final class HomeControllerTest extends WebTestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             ['/'],

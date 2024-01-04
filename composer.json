@@ -17,45 +17,46 @@
     ],
     "minimum-stability": "beta",
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ext-gd": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "badges/poser": "^2.3.1",
+        "badges/poser": "^3.0",
         "bitbucket/client": "^4.2",
-        "cache/predis-adapter": "^1.2",
         "knplabs/github-api": "^3.9",
         "knplabs/packagist-api": "^2.0",
         "m4tthumphrey/php-gitlab-api": "^11.8",
         "php-http/guzzle6-adapter": "^2.0",
-        "predis/predis": "^1.1",
-        "sentry/sentry-symfony": "^4.4",
-        "snc/redis-bundle": "^4.3",
-        "symfony/asset": "^6.1",
-        "symfony/console": "^6.1",
+        "predis/predis": "^2.2",
+        "sentry/sentry-symfony": "^4.13",
+        "snc/redis-bundle": "^4.7",
+        "symfony/asset": "^7.0",
+        "symfony/console": "^7.0",
         "symfony/flex": "^2.2",
-        "symfony/framework-bundle": "^6.1",
-        "symfony/http-client": "^6.1",
-        "symfony/runtime": "^6.1",
-        "symfony/webpack-encore-bundle": "^1.16",
-        "symfony/yaml": "^6.1"
+        "symfony/framework-bundle": "^7.0",
+        "symfony/http-client": "^7.0",
+        "symfony/runtime": "^7.0",
+        "symfony/webpack-encore-bundle": "^2.1",
+        "symfony/yaml": "^7.0"
     },
     "require-dev": {
         "dg/bypass-finals": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.13",
         "jangregor/phpstan-prophecy": "^1.0",
-        "phpspec/prophecy-phpunit": "^2.0",
+        "phpspec/prophecy-phpunit": "^2.1",
         "phpstan/extension-installer": "^1.2",
         "phpstan/phpstan": "^1.9",
         "phpstan/phpstan-phpunit": "^1.2",
         "phpstan/phpstan-symfony": "^1.2",
-        "symfony/browser-kit": "^6.1",
-        "symfony/debug-bundle": "^6.1",
-        "symfony/dotenv": "^6.1",
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-latest",
+        "symfony/browser-kit": "^7.0",
+        "symfony/debug-bundle": "^7.0",
+        "symfony/dotenv": "^7.0",
         "symfony/monolog-bundle": "^3.8",
-        "symfony/phpunit-bridge": "^6.1",
-        "symfony/stopwatch": "^6.1",
-        "symfony/web-profiler-bundle": "^6.1"
+        "symfony/phpunit-bridge": "^7.0",
+        "symfony/stopwatch": "^7.0",
+        "symfony/web-profiler-bundle": "^7.0"
     },
     "config": {
         "preferred-install": {
@@ -82,10 +83,13 @@
     },
     "replace": {
         "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-ctype": "*",
         "symfony/polyfill-php72": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*"
+        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php82": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -115,7 +119,7 @@
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
-            "require": "6.3.*"
+            "require": "7.0.*"
         },
         "branch-alias": {
             "dev-master": "3.x-dev"

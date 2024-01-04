@@ -5,7 +5,7 @@ services:
         # Uncomment to enable authentication
         calls:
             - ['authenticate', ['%env(GITHUB_USERNAME)%', '%env(GITHUB_SECRET)%', '%env(GITHUB_AUTH_METHOD)%']]
-            - ['addCache', ['@Cache\Adapter\Predis\PredisCachePool']]
+            - ['addCache', ['@cache.app']]
 
     Github\HttpClient\Builder:
         arguments:
@@ -16,3 +16,11 @@ services:
     Github\ResultPager:
         arguments:
             - '@Github\Client'
+
+when@test:
+    services:
+        Github\Client: ~
+
+        Github\ResultPager:
+            arguments:
+                - '@Github\Client'

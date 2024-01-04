@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     app.circle_ci_token: '%env(CIRCLE_CI_TOKEN)%'
-    app.gitlab_client: '%env(GITLAB_TOKEN)%'
+    app.gitlab_token: '%env(GITLAB_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -55,10 +55,6 @@ services:
 
 
     # Vendor services
-    Cache\Adapter\Predis\PredisCachePool:
-        arguments:
-          - '@Predis\Client'
-
     GuzzleHttp\Client: ~
     GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
 
@@ -86,8 +82,6 @@ services:
     App\Service\GitLabClient:
         arguments:
             - '@Gitlab\Client'
-            - '%app.gitlab_client%'
+            - '%app.gitlab_token%'
 
     App\Service\GitLabClientInterface: '@App\Service\GitLabClient'
-
-
