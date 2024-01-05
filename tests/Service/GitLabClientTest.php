@@ -7,9 +7,12 @@ use App\Service\GitLabClient;
 use Gitlab\Api\Projects;
 use Gitlab\Client;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 final class GitLabClientTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGetDataFromClient(): void
     {
         $apiProjects = $this->prophesize(Projects::class);

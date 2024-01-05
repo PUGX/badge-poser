@@ -61,9 +61,7 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->getMock();
     }
 
-    /**
-     * @dataProvider shouldCreateComposerLockBadgeProvider
-     */
+    /** @dataProvider shouldCreateComposerLockBadgeProvider */
     public function testShouldCreateComposerLockBadge(int $returnCode, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(
@@ -142,7 +140,7 @@ final class CreateComposerLockBadgeTest extends TestCase
     /**
      * @return array<int, array<int, int|string>>
      */
-    public function shouldCreateComposerLockBadgeProvider(): array
+    public static function shouldCreateComposerLockBadgeProvider(): array
     {
         return [
             [200, 'committed'],

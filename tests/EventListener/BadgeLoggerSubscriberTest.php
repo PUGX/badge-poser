@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -60,7 +61,7 @@ final class BadgeLoggerSubscriberTest extends TestCase
             ->getMock();
 
         $response = $this->createMock(Response::class);
-        $response->headers = $this->getMockBuilder(HeaderBag::class)
+        $response->headers = $this->getMockBuilder(ResponseHeaderBag::class)
             ->disableOriginalConstructor()
             ->getMock();
 

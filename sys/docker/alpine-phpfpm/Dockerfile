@@ -1,26 +1,26 @@
-FROM php:8.1.11-fpm-alpine
+FROM php:8.3-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
 
 WORKDIR /application
 
 RUN apk add --no-cache --virtual .builddeps \
-        autoconf=2.71-r0 \
-        g++=11.2.1_git20220219-r2 \
-        gcc=11.2.1_git20220219-r2 \
-        make=4.3-r0 \
-        unzip=6.0-r9 \
-        wget=1.21.3-r0 \
+        autoconf \
+        g++ \
+        gcc \
+        make \
+        unzip \
+        wget \
     && apk add --no-cache \
-        freetype-dev=2.12.1-r0 \
-        git=2.36.6-r0 \
-        icu-dev=71.1-r2 \
-        jpeg-dev=9d-r1 \
-        libpng-dev=1.6.37-r1 \
-        libzip-dev=1.8.0-r1 \
-        oniguruma-dev=6.9.8-r0 \
-        yaml-dev=0.2.5-r0 \
-        zlib-dev=1.2.12-r3 \
+        freetype-dev \
+        git \
+        icu-dev \
+        jpeg-dev \
+        libpng-dev \
+        libzip-dev \
+        oniguruma-dev \
+        yaml-dev \
+        zlib-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
         bcmath \

@@ -27,7 +27,7 @@ final class UpdateCommand extends Command
             ->setHelp('This command update contributors of badge poser...');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): ?int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([

@@ -22,10 +22,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 final class CreateCircleCiBadgeTest extends TestCase
 {
     private CreateCircleCiBadge $useCase;
-    /** @var MockObject|PackageRepositoryInterface */
-    private MockObject $repository;
-    /** @var MockObject|CircleCiClientInterface */
-    private MockObject $circleCiClient;
+    private MockObject|PackageRepositoryInterface $repository;
+    private MockObject|CircleCiClientInterface $circleCiClient;
 
     protected function setUp(): void
     {
@@ -47,9 +45,7 @@ final class CreateCircleCiBadgeTest extends TestCase
             ->getMock();
     }
 
-    /**
-     * @dataProvider shouldCreateCircleCiBadgeProvider
-     */
+    /** @dataProvider shouldCreateCircleCiBadgeProvider */
     public function testShouldCreateCircleCiBadge(string $status, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
@@ -86,7 +82,7 @@ final class CreateCircleCiBadgeTest extends TestCase
     /**
      * @return array<int, array<int, string>>
      */
-    public function shouldCreateCircleCiBadgeProvider(): array
+    public static function shouldCreateCircleCiBadgeProvider(): array
     {
         return [
             ['success', 'passing'],
