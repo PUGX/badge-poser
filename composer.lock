@@ -1097,23 +1097,23 @@
         },
         {
             "name": "m4tthumphrey/php-gitlab-api",
-            "version": "11.13.0",
+            "version": "11.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GitLabPHP/Client.git",
-                "reference": "66742709f2de1e14acfd232358b4f0c1b51b43c8"
+                "reference": "6b805882e1478873cc89ee62d2decf74eee2d5f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GitLabPHP/Client/zipball/66742709f2de1e14acfd232358b4f0c1b51b43c8",
-                "reference": "66742709f2de1e14acfd232358b4f0c1b51b43c8",
+                "url": "https://api.github.com/repos/GitLabPHP/Client/zipball/6b805882e1478873cc89ee62d2decf74eee2d5f2",
+                "reference": "6b805882e1478873cc89ee62d2decf74eee2d5f2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-xml": "*",
                 "php": "^7.4.15 || ^8.0.2",
-                "php-http/cache-plugin": "^1.8.1",
+                "php-http/cache-plugin": "^1.8.1 || ^2.0",
                 "php-http/client-common": "^2.7.1",
                 "php-http/discovery": "^1.19.2",
                 "php-http/httplug": "^2.4",
@@ -1175,7 +1175,7 @@
             ],
             "support": {
                 "issues": "https://github.com/GitLabPHP/Client/issues",
-                "source": "https://github.com/GitLabPHP/Client/tree/11.13.0"
+                "source": "https://github.com/GitLabPHP/Client/tree/11.14.0"
             },
             "funding": [
                 {
@@ -1183,7 +1183,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-12-03T22:42:01+00:00"
+            "time": "2024-03-17T21:35:56+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -1512,16 +1512,16 @@
         },
         {
             "name": "php-http/message",
-            "version": "1.16.0",
+            "version": "1.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/message.git",
-                "reference": "47a14338bf4ebd67d317bf1144253d7db4ab55fd"
+                "reference": "5997f3289332c699fa2545c427826272498a2088"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/47a14338bf4ebd67d317bf1144253d7db4ab55fd",
-                "reference": "47a14338bf4ebd67d317bf1144253d7db4ab55fd",
+                "url": "https://api.github.com/repos/php-http/message/zipball/5997f3289332c699fa2545c427826272498a2088",
+                "reference": "5997f3289332c699fa2545c427826272498a2088",
                 "shasum": ""
             },
             "require": {
@@ -1575,9 +1575,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/message/issues",
-                "source": "https://github.com/php-http/message/tree/1.16.0"
+                "source": "https://github.com/php-http/message/tree/1.16.1"
             },
-            "time": "2023-05-17T06:43:38+00:00"
+            "time": "2024-03-07T13:22:09+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -1692,16 +1692,16 @@
         },
         {
             "name": "php-http/promise",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/promise.git",
-                "reference": "2916a606d3b390f4e9e8e2b8dd68581508be0f07"
+                "reference": "fc85b1fba37c169a69a07ef0d5a8075770cc1f83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/promise/zipball/2916a606d3b390f4e9e8e2b8dd68581508be0f07",
-                "reference": "2916a606d3b390f4e9e8e2b8dd68581508be0f07",
+                "url": "https://api.github.com/repos/php-http/promise/zipball/fc85b1fba37c169a69a07ef0d5a8075770cc1f83",
+                "reference": "fc85b1fba37c169a69a07ef0d5a8075770cc1f83",
                 "shasum": ""
             },
             "require": {
@@ -1738,9 +1738,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/promise/issues",
-                "source": "https://github.com/php-http/promise/tree/1.3.0"
+                "source": "https://github.com/php-http/promise/tree/1.3.1"
             },
-            "time": "2024-01-04T18:49:48+00:00"
+            "time": "2024-03-15T13:55:21+00:00"
         },
         {
             "name": "predis/predis",
