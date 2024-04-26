@@ -21,13 +21,13 @@ use GuzzleHttp\Exception\BadResponseException;
  */
 final class CreateErrorBadge
 {
-    private const COLOR = 'e05d44';
-    private const ERROR_TEXT_GENERIC = 'generic';
-    private const ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
-    private const ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
+    private const string COLOR = 'e05d44';
+    private const string ERROR_TEXT_GENERIC = 'generic';
+    private const string ERROR_TEXT_CLIENT_EXCEPTION = 'connection';
+    private const string ERROR_TEXT_CLIENT_BAD_RESPONSE = 'not found?';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_NO_CACHE;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_NO_CACHE;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_NO_CACHE;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_NO_CACHE;
 
     /**
      * @throws \InvalidArgumentException

@@ -4,7 +4,7 @@ namespace App\Contributors\Model;
 
 final class Contributor implements \Stringable
 {
-    private const DEFAULT_IMG_SIZE = 160;
+    private const int DEFAULT_IMG_SIZE = 160;
 
     private function __construct(
         private readonly string $username,

@@ -23,15 +23,15 @@ use App\Badge\Service\TextNormalizer;
  */
 final class CreateDownloadsBadge extends BaseCreatePackagistImage
 {
-    private const COLOR = '007ec6';
-    private const SUBJECT = 'downloads';
+    private const string COLOR = '007ec6';
+    private const string SUBJECT = 'downloads';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     private NormalizerInterface $normalizer;
 
-    public function __construct(PackageRepositoryInterface $packageRepository, NormalizerInterface $textNormalizer = null)
+    public function __construct(PackageRepositoryInterface $packageRepository, ?NormalizerInterface $textNormalizer = null)
     {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer ?? new TextNormalizer();

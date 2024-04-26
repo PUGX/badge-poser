@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-final class BadgeSubscriber implements EventSubscriberInterface
+final readonly class BadgeSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly CreateErrorBadge $useCase, private readonly ImageFactory $imageFactory)
+    public function __construct(private CreateErrorBadge $useCase, private ImageFactory $imageFactory)
     {
     }
 

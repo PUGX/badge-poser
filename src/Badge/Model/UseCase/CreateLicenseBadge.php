@@ -20,12 +20,12 @@ use App\Badge\Model\Package;
  */
 final class CreateLicenseBadge extends BaseCreatePackagistImage
 {
-    private const COLOR = '428F7E';
-    private const SUBJECT = 'license';
-    private const TEXT_NO_LICENSE = 'no';
+    private const string COLOR = '428F7E';
+    private const string SUBJECT = 'license';
+    private const string TEXT_NO_LICENSE = 'no';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     /**
      * @throws \InvalidArgumentException

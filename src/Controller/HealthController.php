@@ -8,13 +8,15 @@ use Bitbucket\Client as BitbucketClient;
 use Packagist\Api\Client as PackagistClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class HealthController extends AbstractController
 {
     // sample repo taken from https://github.com/PUGX/badge-poser/issues/337
-    private const BITBUCKET_HEALTHCHECK_WORKSPACE = 'wirbelwild';
-    private const BITBUCKET_HEALTHCHECK_REPO = 'kiwa-core';
+    private const string BITBUCKET_HEALTHCHECK_WORKSPACE = 'wirbelwild';
+    private const string BITBUCKET_HEALTHCHECK_REPO = 'kiwa-core';
 
+    #[Route('/health', name: 'health')]
     public function health(
         PackagistClient $packagistClient,
         CircleCiClientInterface $circleCiClient,

@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Contributors\Model\Contributor;
 use App\Contributors\Service\Repository as ContributorsRepository;
 use App\Service\SnippetGeneratorInterface;
 use App\Stats\Reader\ReaderInterface;
 use PUGX\Poser\Poser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
+    #[Route('/', name: 'home', defaults: ['repository' => 'phpunit/phpunit'])]
+    #[Route('/show/{repository}', name: 'show', requirements: ['repository' => '[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+?'])]
     public function index(
         string $repository,
         ContributorsRepository $contributorsRepository,
@@ -21,9 +23,7 @@ final class HomeController extends AbstractController
     ): Response {
         $prefix = \sprintf('More than %s', \number_format($redisReader->totalAccess()));
         $text = 'badges served!!!';
-        $formats = \array_diff($poser->validStyles(), ['svg']);
 
-        /** @var Contributor[] $contributors */
         $contributors = $contributorsRepository->all();
 
         $response = $this->render(

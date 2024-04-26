@@ -13,8 +13,8 @@ namespace App\Badge\Model;
 
 final class Badge implements BadgeInterface, \Stringable
 {
-    public const DEFAULT_FORMAT = 'svg';
-    public const DEFAULT_STYLE = \PUGX\Poser\Badge::DEFAULT_STYLE;
+    public const string DEFAULT_FORMAT = 'svg';
+    public const string DEFAULT_STYLE = \PUGX\Poser\Badge::DEFAULT_STYLE;
 
     private string $subject;
     private string $status;

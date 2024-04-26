@@ -37,7 +37,7 @@ abstract class BaseCreatePackagistImage
         string $color,
         string $format = Badge::DEFAULT_FORMAT,
         string $style = Badge::DEFAULT_STYLE,
-        string $context = null,
+        ?string $context = null,
         int $maxage = self::TTL_DEFAULT_MAXAGE,
         int $smaxage = self::TTL_DEFAULT_SMAXAGE
     ): CacheableBadge {

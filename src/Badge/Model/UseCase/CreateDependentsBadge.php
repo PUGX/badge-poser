@@ -23,17 +23,17 @@ use App\Badge\Service\TextNormalizer;
  */
 final class CreateDependentsBadge extends BaseCreatePackagistImage
 {
-    public const COLOR = '007ec6';
-    public const SUBJECT = 'dependents';
+    public const string COLOR = '007ec6';
+    public const string SUBJECT = 'dependents';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     private NormalizerInterface $normalizer;
 
     public function __construct(
         PackageRepositoryInterface $packageRepository,
-        NormalizerInterface $textNormalizer = null
+        ?NormalizerInterface $textNormalizer = null
     ) {
         parent::__construct($packageRepository);
         $this->normalizer = $textNormalizer ?? new TextNormalizer();

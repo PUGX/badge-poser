@@ -16,12 +16,12 @@ namespace App\Badge\Model;
  */
 final class CacheableBadge implements BadgeInterface, \Stringable
 {
-    public const TTL_NO_CACHE = 0;
-    public const TTL_ONE_HOUR = 60 * 60;
-    public const TTL_SIX_HOURS = 6 * self::TTL_ONE_HOUR;
-    public const TTL_TWELVE_HOURS = 12 * self::TTL_ONE_HOUR;
-    public const TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
-    public const TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
+    public const int TTL_NO_CACHE = 0;
+    public const int TTL_ONE_HOUR = 60 * 60;
+    public const int TTL_SIX_HOURS = 6 * self::TTL_ONE_HOUR;
+    public const int TTL_TWELVE_HOURS = 12 * self::TTL_ONE_HOUR;
+    public const int TTL_ONE_DAY = 24 * self::TTL_ONE_HOUR;
+    public const int TTL_ONE_WEEK = 7 * self::TTL_ONE_DAY;
 
     public function __construct(private readonly BadgeInterface $badge, private int $maxage, private int $smaxage)
     {

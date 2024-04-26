@@ -8,15 +8,15 @@ use PUGX\Poser\Poser;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
-final class SnippetGenerator implements SnippetGeneratorInterface
+final readonly class SnippetGenerator implements SnippetGeneratorInterface
 {
-    private const PACKAGIST_ROUTE = 'pugx_badge_packagist';
+    private const string PACKAGIST_ROUTE = 'pugx_badge_packagist';
 
     private RouteCollection $routes;
 
     public function __construct(
-        private readonly RouterInterface $router,
-        private readonly string $packagistRoute = self::PACKAGIST_ROUTE,
+        private RouterInterface $router,
+        private string $packagistRoute = self::PACKAGIST_ROUTE,
     ) {
         $this->routes = $router->getRouteCollection();
     }

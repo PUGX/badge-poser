@@ -26,19 +26,19 @@ use GuzzleHttp\RequestOptions;
  */
 final class CreateGitAttributesBadge extends BaseCreatePackagistImage
 {
-    private const COLOR_COMMITTED = '96d490';
-    private const COLOR_UNCOMMITTED = 'ad6c4b';
-    private const COLOR_ERROR = 'aa0000';
-    private const GITATTRIBUTES_COMMITTED = 'committed';
-    private const GITATTRIBUTES_UNCOMMITTED = 'uncommitted';
-    private const GITATTRIBUTES_ERROR = 'checking';
-    private const SUBJECT = '.gitattributes';
-    private const SUBJECT_ERROR = 'Error';
-    private const TIMEOUT_SECONDS = 8;
-    private const CONNECT_TIMEOUT_SECONDS = 5;
+    private const string COLOR_COMMITTED = '96d490';
+    private const string COLOR_UNCOMMITTED = 'ad6c4b';
+    private const string COLOR_ERROR = 'aa0000';
+    private const string GITATTRIBUTES_COMMITTED = 'committed';
+    private const string GITATTRIBUTES_UNCOMMITTED = 'uncommitted';
+    private const string GITATTRIBUTES_ERROR = 'checking';
+    private const string SUBJECT = '.gitattributes';
+    private const string SUBJECT_ERROR = 'Error';
+    private const int TIMEOUT_SECONDS = 8;
+    private const int CONNECT_TIMEOUT_SECONDS = 5;
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     protected string $text = self::GITATTRIBUTES_ERROR;
 

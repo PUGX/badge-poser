@@ -20,14 +20,14 @@ use App\Badge\Model\Package;
  */
 final class CreateVersionBadge extends BaseCreatePackagistImage
 {
-    private const COLOR_STABLE = '28a3df';
-    private const COLOR_UNSTABLE = 'e68718';
-    private const SUBJECT_STABLE = 'stable';
-    private const SUBJECT_UNSTABLE = 'unstable';
-    private const TEXT_NO_STABLE_RELEASE = 'No Release';
+    private const string COLOR_STABLE = '28a3df';
+    private const string COLOR_UNSTABLE = 'e68718';
+    private const string SUBJECT_STABLE = 'stable';
+    private const string SUBJECT_UNSTABLE = 'unstable';
+    private const string TEXT_NO_STABLE_RELEASE = 'No Release';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     /**
      * @throws \InvalidArgumentException
