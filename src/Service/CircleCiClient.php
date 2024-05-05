@@ -8,12 +8,12 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-final class CircleCiClient implements CircleCiClientInterface
+final readonly class CircleCiClient implements CircleCiClientInterface
 {
     public function __construct(
-        private readonly UrlGeneratorInterface $router,
-        private readonly HttpClientInterface $httpClient,
-        private readonly string $circleToken,
+        private UrlGeneratorInterface $router,
+        private HttpClientInterface $httpClient,
+        private string $circleToken,
     ) {
     }
 

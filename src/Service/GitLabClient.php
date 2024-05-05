@@ -5,9 +5,9 @@ namespace App\Service;
 use App\Badge\Exception\RepositoryDataNotValid;
 use Gitlab\Client;
 
-final class GitLabClient implements GitLabClientInterface
+final readonly class GitLabClient implements GitLabClientInterface
 {
-    public function __construct(private readonly Client $gitlabClient, private readonly string $gitLabToken)
+    public function __construct(private Client $gitlabClient, private string $gitLabToken)
     {
         $this->gitlabClient->authenticate($this->gitLabToken, Client::AUTH_HTTP_TOKEN);
     }

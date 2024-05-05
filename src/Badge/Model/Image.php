@@ -14,12 +14,12 @@ namespace App\Badge\Model;
 /**
  * An Image value Object.
  */
-final class Image implements \Stringable
+final readonly class Image implements \Stringable
 {
     private function __construct(
-        private readonly string $name,
-        private readonly string $content,
-        private readonly string $format,
+        private string $name,
+        private string $content,
+        private string $format,
     ) {
     }
 

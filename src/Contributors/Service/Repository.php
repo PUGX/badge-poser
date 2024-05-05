@@ -7,17 +7,17 @@ use Github\Client;
 use Github\ResultPager;
 use Predis\Client as Redis;
 
-final class Repository implements RepositoryInterface
+final readonly class Repository implements RepositoryInterface
 {
-    private const REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';
+    private const string REDIS_KEY_CONTRIBUTORS = 'CONTRIBUTORS';
 
     /**
      * @param Redis<string, Redis> $redis
      */
     public function __construct(
-        private readonly Redis $redis,
-        private readonly Client $client,
-        private readonly ResultPager $resultPager,
+        private Redis $redis,
+        private Client $client,
+        private ResultPager $resultPager,
     ) {
     }
 

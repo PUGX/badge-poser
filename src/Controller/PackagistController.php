@@ -16,9 +16,11 @@ use Packagist\Api\Result\Result as PackagistResult;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class PackagistController extends AbstractController
 {
+    #[Route('/search_packagist', name: 'search_packagist', methods: 'GET')]
     public function search(Request $request, PackagistClient $packagistClient): JsonResponse
     {
         $responseContent = [];

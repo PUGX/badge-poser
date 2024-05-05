@@ -6,7 +6,7 @@ namespace App\Dictionary;
 
 final class Badges
 {
-    private const BADGES = [
+    private const array BADGES = [
         [
             'name' => 'latest_stable_version',
             'label' => 'Latest Stable Version',

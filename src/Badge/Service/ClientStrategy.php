@@ -15,9 +15,9 @@ use Http\Client\Exception;
 
 final class ClientStrategy
 {
-    private const GITHUB_REPOSITORY_PREFIX = 'blob';
-    private const BITBUCKET_REPOSITORY_PREFIX = 'src';
-    private const GITLAB_REPOSITORY_PREFIX = 'blob';
+    private const string GITHUB_REPOSITORY_PREFIX = 'blob';
+    private const string BITBUCKET_REPOSITORY_PREFIX = 'src';
+    private const string GITLAB_REPOSITORY_PREFIX = 'blob';
 
     public function __construct(
         private readonly GithubClient $githubClient,

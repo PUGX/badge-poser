@@ -23,14 +23,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class CreateCircleCiBadge extends BaseCreatePackagistImage
 {
-    private const COLOR_PASSING = '42BD1B';
-    private const COLOR_FAILING = 'D75B48';
-    private const TEXT_PASSING = 'passing';
-    private const TEXT_FAILING = 'failing';
-    private const SUBJECT = 'build';
+    private const string COLOR_PASSING = '42BD1B';
+    private const string COLOR_FAILING = 'D75B48';
+    private const string TEXT_PASSING = 'passing';
+    private const string TEXT_FAILING = 'failing';
+    private const string SUBJECT = 'build';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     protected string $text = self::SUBJECT;
 

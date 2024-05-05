@@ -11,11 +11,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * Class ImageFactory.
  */
-final class ImageFactory
+final readonly class ImageFactory
 {
     public function __construct(
-        private readonly Poser $generator,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        private Poser $generator,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

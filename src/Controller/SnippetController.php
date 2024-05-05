@@ -8,6 +8,7 @@ use PUGX\Poser\Poser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 final class SnippetController extends AbstractController
 {
@@ -16,6 +17,7 @@ final class SnippetController extends AbstractController
      *
      * @throws \Exception
      */
+    #[Route('/snippet/all/', name: 'snippet_all')]
     public function all(Request $request, Poser $poser, SnippetGeneratorInterface $generator): JsonResponse
     {
         $repository = $request->get('repository');

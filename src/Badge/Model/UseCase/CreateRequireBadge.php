@@ -20,11 +20,11 @@ use App\Badge\Model\Package;
  */
 final class CreateRequireBadge extends BaseCreatePackagistImage
 {
-    public const COLOR = '787CB5';
-    public const TEXT_NO_REQUIRE = ' - ';
+    public const string COLOR = '787CB5';
+    public const string TEXT_NO_REQUIRE = ' - ';
 
-    private const TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
-    private const TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_MAXAGE = CacheableBadge::TTL_ONE_HOUR;
+    private const int TTL_DEFAULT_SMAXAGE = CacheableBadge::TTL_ONE_HOUR;
 
     public function createRequireBadge(string $repository, string $type, string $format = Badge::DEFAULT_FORMAT, string $style = Badge::DEFAULT_STYLE): CacheableBadge
     {

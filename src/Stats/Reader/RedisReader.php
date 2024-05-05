@@ -6,8 +6,8 @@ use Predis\Client as Redis;
 
 final class RedisReader implements ReaderInterface
 {
-    private const KEY_PREFIX = 'STAT';
-    private const KEY_TOTAL = 'TOTAL';
+    private const string KEY_PREFIX = 'STAT';
+    private const string KEY_TOTAL = 'TOTAL';
     private string $keyTotal;
 
     /**

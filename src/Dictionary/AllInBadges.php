@@ -6,7 +6,7 @@ namespace App\Dictionary;
 
 final class AllInBadges
 {
-    private const ALL_IN_BADGES = [
+    private const array ALL_IN_BADGES = [
         'latest_stable_version',
         'total',
         'latest_unstable_version',

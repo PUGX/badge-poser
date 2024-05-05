@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Badge\ValueObject;
 
-final class Repository
+final readonly class Repository
 {
-    private const GITHUB_SOURCE = 'github.com';
+    private const string GITHUB_SOURCE = 'github.com';
 
-    private const BITBUCKET_SOURCE = 'bitbucket.org';
+    private const string BITBUCKET_SOURCE = 'bitbucket.org';
 
-    private const GITLAB_SOURCE = 'gitlab.com';
+    private const string GITLAB_SOURCE = 'gitlab.com';
 
     private function __construct(
-        private readonly string $source,
-        private readonly string $username,
-        private readonly string $name,
+        private string $source,
+        private string $username,
+        private string $name,
     ) {
     }
 
