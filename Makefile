@@ -22,40 +22,40 @@ run: ## run app
 	- make build_dev
 
 start: .docker_img_deps ## start docker containers
-	- docker-compose up --build -d
+	- docker compose up --build -d
 
 stop: ## stop docker containers
-	- docker-compose down
+	- docker compose down
 
 dc_build_prod: .docker_img_deps ## rebuild docker compose containers
-	- docker-compose up --build
+	- docker compose up --build
 
 purge: ## cleaning
 	- rm -rf node_modules vendor var/cache var/log public/build
 
 status: ## docker containers status
-	- docker-compose ps
+	- docker compose ps
 
 ##@ DEV
 
 install: ## install php and node dependencies
-	- docker-compose exec phpfpm composer install
-	- docker-compose run --rm node yarn install
+	- docker compose exec phpfpm composer install
+	- docker compose run --rm node yarn install
 
 build_dev: ## build assets
-	- docker-compose run --rm node yarn dev
+	- docker compose run --rm node yarn dev
 
 build_watch: ## build assets and watch
-	- docker-compose run --rm node yarn watch
+	- docker compose run --rm node yarn watch
 
 phpunit: ## run suite of tests
-	- docker-compose exec phpfpm bin/phpunit -d memory_limit=-1
+	- docker compose exec phpfpm bin/phpunit -d memory_limit=-1
 
 php_cs_fixer: ## run php-cs-fixer
-	- docker-compose exec phpfpm ./vendor/bin/php-cs-fixer fix -v
+	- docker compose exec phpfpm ./vendor/bin/php-cs-fixer fix -v
 
 phpstan: ## run phpstan
-	- docker-compose exec phpfpm ./vendor/bin/phpstan analyse
+	- docker compose exec phpfpm ./vendor/bin/phpstan analyse
 
 analyse: ## run php-cs-fixer and phpstan
 	- make php_cs_fixer
@@ -64,11 +64,11 @@ analyse: ## run php-cs-fixer and phpstan
 ##@ PROD
 
 install_prod: ## install php and node dependencies for production environment
-	- docker-compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
-	- docker-compose run --rm node yarn install --production
+	- docker compose exec phpfpm composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+	- docker compose run --rm node yarn install --production
 
 build_prod: ## build assets for production environment
-	- docker-compose run --rm node yarn build
+	- docker compose run --rm node yarn build
 
 ##@ DEPLOY
 
