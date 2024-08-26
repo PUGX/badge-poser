@@ -41,7 +41,7 @@ Update the task definition and switch version in the service.
 ### Stable
 
 ```
-docker-compose up
+docker compose up
 npm install artillery
 ./node_modules/.bin/artillery run sys/docker/artillery.yml
 ```

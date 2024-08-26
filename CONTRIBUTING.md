@@ -33,7 +33,7 @@ Follow [this link](https://circleci.com/account/api) to generate your CircleCI "
 
 Make the same for the `.env.test.local` to run the test suite.
 
-## Manage App with docker-compose
+## Manage App with Docker Compose
 
 ### Show the help
 
