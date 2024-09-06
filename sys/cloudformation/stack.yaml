@@ -580,6 +580,31 @@ Resources:
     Properties:
       UserName: !Ref iamusergithubactions
 
+  # REDIS
+  rediscluster:
+    Type: AWS::ElastiCache::ReplicationGroup
+    Properties:
+      AtRestEncryptionEnabled: False
+      AutoMinorVersionUpgrade: True
+      CacheNodeType: cache.t4g.micro
+      CacheSubnetGroupName: !Ref redissubnet
+      ClusterMode: Disabled
+      Engine: redis
+      EngineVersion: 7.0.7
+      MultiAZEnabled: False
+      NumNodeGroups: 1
+      PrimaryClusterId: poser-stats
+      ReplicationGroupDescription: poser-stats
+      SecurityGroupIds: !Ref sgredis
+      SnapshotRetentionLimit: 1
+      TransitEncryptionEnabled: False
+  redissubnet:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: poser-subnet
+      Description: poser-subnet
+      SubnetIds: !Ref Subnets
+
 ################################################################################
 #                                   Outputs                                    #
 ################################################################################
