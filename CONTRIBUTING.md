@@ -72,7 +72,8 @@ Add in `/etc/hosts`
 ```console
 127.0.0.1 poser.local
 ```
-and now you can see the app on [http://poser.local:8001](http://poser.local:8001)
+and now you can see the app on [https://poser.local:8002](https://poser.local:8002)
+(or if needed to test the HTTP procol use [http://poser.local:8001](http://poser.local:8001)).
 
 ### Otherwise, for the other days
 ```bash

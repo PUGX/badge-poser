@@ -39,6 +39,7 @@ status: ## docker containers status
 ##@ DEV
 
 install: ## install php and node dependencies
+	- ./sys/nginx/certs/gen-selfsigned-cert.sh poser.local
 	- docker compose exec phpfpm composer install
 	- docker compose run --rm node yarn install
 

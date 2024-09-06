@@ -24,6 +24,16 @@ server {
     listen 80;
     server_name poser.pugx.org poser.packagist.org poser.local stg.poser.pugx.org;
 
+    return https://$server_name;
+}
+
+server {
+    listen 443 ssl;
+    server_name poser.pugx.org poser.packagist.org poser.local stg.poser.pugx.org;
+
+    ssl_certificate /application/sys/nginx/certs/server.pem;
+    ssl_certificate_key /application/sys/nginx/certs/server.key;
+
     root /application/public;
 
     fastcgi_cache cached_badges;
