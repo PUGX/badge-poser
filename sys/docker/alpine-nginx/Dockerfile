@@ -1,14 +1,14 @@
 # AWSBUILDER
 ################################################################################
-FROM debian:latest as awsbuilder
+FROM debian:12.7 as awsbuilder
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update &&  \
-    apt-get install -y ca-certificates curl && \
+    apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl -O https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --print-architecture)/latest/amazon-cloudwatch-agent.deb && \
+RUN curl -O "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --print-architecture)/latest/amazon-cloudwatch-agent.deb" && \
     dpkg -i -E amazon-cloudwatch-agent.deb && \
     rm -rf /tmp/* && \
     rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard && \
