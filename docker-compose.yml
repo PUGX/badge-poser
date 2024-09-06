@@ -1,11 +1,8 @@
-version: "3.8"
-
 services:
   nginx:
     build:
       context: .
       dockerfile: sys/docker/alpine-nginx/Dockerfile
-      network: host
     container_name: badge-poser-nginx
     depends_on:
       - phpfpm
@@ -26,7 +23,6 @@ services:
     build:
       context: .
       dockerfile: sys/docker/alpine-phpfpm/Dockerfile
-      network: host
     container_name: badge-poser-phpfpm
     depends_on:
       - redis

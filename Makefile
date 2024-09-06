@@ -21,13 +21,13 @@ run: ## run app
 	- make install
 	- make build_dev
 
-start: .docker_img_deps ## start docker containers
+start: ## start docker containers
 	- docker compose up --build -d
 
 stop: ## stop docker containers
 	- docker compose down
 
-dc_build_prod: .docker_img_deps ## rebuild docker compose containers
+dc_build_prod: ## rebuild docker compose containers
 	- docker compose up --build
 
 purge: ## cleaning
@@ -72,17 +72,13 @@ build_prod: ## build assets for production environment
 
 ##@ DEPLOY
 
-.docker_img_deps:
-	docker build -t jsbuilder -f sys/docker/common/Dockerfile.assets .
-	docker build -t awsbuilder -f sys/docker/common/Dockerfile.aws-ecs-ci .
-
 AWS_PROFILE ?= poser
 AWS_REGION ?= eu-west-1
 AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) | jq -r '.Account')
 PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | head -n 1 | cut -d "/" -f3)
 ECR_REGISTRY = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 
-deploy_prod: .docker_img_deps build_prod_images push_prod_images ## deploy to prod
+deploy_prod: build_prod_images push_prod_images ## deploy to prod
 	cat sys/cloudformation/parameters.prod.json \
 		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$(VER)'"}/' \
 		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$(VER)'"}/' \
