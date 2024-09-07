@@ -510,7 +510,7 @@ Resources:
     Properties:
       Name: 'app-contributors-update'
       ScheduleExpression: 'rate(24 hours)'
-      State: DISABLED
+      State: ENABLED
       Targets:
         - Id: phpfpm
           Arn: !GetAtt ecscluster.Arn
