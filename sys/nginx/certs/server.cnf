@@ -11,7 +11,7 @@ CN                     = poser.local
 
 [ v3_req ]
 
-subjectAltName = DNS:poser.local
+subjectAltName = DNS:poser.pugx.org, DNS:poser.packagist.org, DNS:stg.poser.pugx.org
 
 [ req_attributes ]
 challengePassword      = password
