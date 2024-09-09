@@ -1,3 +1,43 @@
+# AWSBUILDER
+################################################################################
+FROM debian:12.7 as awsbuilder
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update &&  \
+    apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl -O "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --print-architecture)/latest/amazon-cloudwatch-agent.deb" && \
+    dpkg -i -E amazon-cloudwatch-agent.deb && \
+    rm -rf /tmp/* && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/config-downloader
+
+# JSBUILDER
+################################################################################
+FROM node:18.20.4-alpine3.20 AS jsbuilder
+
+WORKDIR /application
+
+COPY package.json /application
+
+RUN apk add --no-cache --virtual frontenddeps \
+        python3 \
+    && yarn config set ignore-engines true \
+    && yarn install --ignore-platform
+
+COPY . /application
+
+RUN yarn build
+
+# COMPOSER
+################################################################################
+FROM composer:2 AS composer
+
+# MAIN
+################################################################################
 FROM php:8.3-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
@@ -51,7 +91,7 @@ COPY --from=jsbuilder /application/public/build /application/public/build
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ gnu-libiconv=1.15-r3
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
-COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN /usr/local/bin/composer install --optimize-autoloader --no-ansi --no-interaction --no-progress \
     && apk del .builddeps \
