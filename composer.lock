@@ -5750,16 +5750,16 @@
         },
         {
             "name": "dg/bypass-finals",
-            "version": "v1.6.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/bypass-finals.git",
-                "reference": "efe2fe04bae9f0de271dd462afc049067889e6d1"
+                "reference": "86b00f0d900c7e15d3341e687e0df89e8c2d4632"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/efe2fe04bae9f0de271dd462afc049067889e6d1",
-                "reference": "efe2fe04bae9f0de271dd462afc049067889e6d1",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/86b00f0d900c7e15d3341e687e0df89e8c2d4632",
+                "reference": "86b00f0d900c7e15d3341e687e0df89e8c2d4632",
                 "shasum": ""
             },
             "require": {
@@ -5778,8 +5778,8 @@
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
-                "GPL-2.0",
-                "GPL-3.0"
+                "GPL-2.0-only",
+                "GPL-3.0-only"
             ],
             "authors": [
                 {
@@ -5797,9 +5797,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dg/bypass-finals/issues",
-                "source": "https://github.com/dg/bypass-finals/tree/v1.6.0"
+                "source": "https://github.com/dg/bypass-finals/tree/v1.8.0"
             },
-            "time": "2023-11-19T22:19:30+00:00"
+            "time": "2024-07-02T22:24:43+00:00"
         },
         {
             "name": "doctrine/deprecations",
