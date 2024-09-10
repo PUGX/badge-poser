@@ -24,7 +24,7 @@ server {
     listen 80;
     server_name poser.pugx.org poser.packagist.org poser.local stg.poser.pugx.org;
 
-    return https://$server_name;
+    return https://$host;
 }
 
 server {
