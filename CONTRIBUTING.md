@@ -73,7 +73,7 @@ Add in `/etc/hosts`
 127.0.0.1 poser.local
 ```
 and now you can see the app on [https://poser.local:8002](https://poser.local:8002)
-(or if needed to test the HTTP procol use [http://poser.local:8001](http://poser.local:8001)).
+(or if needed to test the HTTP protocol use [http://poser.local:8001](http://poser.local:8001)).
 
 ### Otherwise, for the other days
 ```bash
