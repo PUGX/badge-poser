@@ -39,4 +39,10 @@ clover.xml
 
 ###> custom ###
 .stylelintcache
+sys/nginx/certs/ca-crt.pem
+sys/nginx/certs/ca-crt.srl
+sys/nginx/certs/ca-key.pem
+sys/nginx/certs/server.csr
+sys/nginx/certs/server.key
+sys/nginx/certs/server.pem
 ###< custom ###
