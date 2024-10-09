@@ -16,6 +16,7 @@ services:
       - ./sys/nginx/default.conf.template.dev:/etc/nginx/templates/default.conf.template
     ports:
       - "8001:80"
+      - "8002:443"
     networks:
       - application-network
 
@@ -70,7 +71,7 @@ services:
       net.core.somaxconn: 1024
 
 
-#Docker Networks
+# Docker Networks
 networks:
   application-network:
     driver: bridge

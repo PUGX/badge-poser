@@ -72,7 +72,16 @@ Add in `/etc/hosts`
 ```console
 127.0.0.1 poser.local
 ```
-and now you can see the app on [http://poser.local:8001](http://poser.local:8001)
+and now you can see the app on [https://poser.local:8002](https://poser.local:8002)
+(or if needed to test the HTTP protocol use [http://poser.local:8001](http://poser.local:8001)).
+
+**Note:** The HTTP-to-HTTPS redirect is managed by nginx using the default 443 port,
+but since the container is exposed on the host on port 8001, the container is
+unaware of what the host port is. This means that [http://poser.local:8001](http://poser.local:8001)
+will redirect to [https://poser.local](https://poser.local), but your browser won't be able to
+handle the request.
+The nginx template could be changed to redirect to `:8002` instead of `:443`,
+but it'll be coupled to the specific value used in the `docker-compose.yaml`.
 
 ### Otherwise, for the other days
 ```bash
