@@ -20,7 +20,6 @@
         "php": "^8.3",
         "ext-gd": "*",
         "ext-iconv": "*",
-        "ext-json": "*",
         "badges/poser": "^3.1",
         "bitbucket/client": "^4.7",
         "knplabs/github-api": "^3.15",
