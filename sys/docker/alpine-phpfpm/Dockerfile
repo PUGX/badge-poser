@@ -5,7 +5,7 @@ FROM debian:12.7 as awsbuilder
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update &&  \
-    apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 && \
+    apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u8 && \
     rm -rf /var/lib/apt/lists/*
 
 RUN curl -O "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --print-architecture)/latest/amazon-cloudwatch-agent.deb" && \
@@ -71,7 +71,7 @@ RUN apk add --no-cache --virtual .builddeps \
         zip \
     && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.11/pickle.phar -O /usr/local/bin/pickle \
     && chmod +x /usr/local/bin/pickle \
-    && pickle install yaml@2.1.0 --defaults --no-interaction \
+    && pickle install yaml@2.2.4 --defaults --no-interaction \
     && pickle install redis@5.3.7 --defaults --no-interaction \
     && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
