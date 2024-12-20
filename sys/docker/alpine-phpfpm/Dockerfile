@@ -1,6 +1,6 @@
 # AWSBUILDER
 ################################################################################
-FROM debian:12.7 as awsbuilder
+FROM debian:12.8 as awsbuilder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -17,7 +17,7 @@ RUN curl -O "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --pri
 
 # JSBUILDER
 ################################################################################
-FROM node:18.20.4-alpine3.20 AS jsbuilder
+FROM node:20.18.1-alpine3.21 AS jsbuilder
 
 WORKDIR /application
 
@@ -38,7 +38,7 @@ FROM composer:2 AS composer
 
 # MAIN
 ################################################################################
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
 
@@ -72,7 +72,7 @@ RUN apk add --no-cache --virtual .builddeps \
     && wget https://github.com/FriendsOfPHP/pickle/releases/download/v0.7.11/pickle.phar -O /usr/local/bin/pickle \
     && chmod +x /usr/local/bin/pickle \
     && pickle install yaml@2.2.4 --defaults --no-interaction \
-    && pickle install redis@5.3.7 --defaults --no-interaction \
+    && pickle install redis@6.1.0 --defaults --no-interaction \
     && ln -nfs /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 
 COPY sys/php/php.ini /usr/local/etc/php/php.ini
@@ -88,8 +88,8 @@ COPY --chown=www-data:www-data . /application
 COPY --from=jsbuilder /application/public/build /application/public/build
 
 # REF: https://github.com/docker-library/php/issues/1121#issuecomment-886817367
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ gnu-libiconv=1.15-r3
-ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+# RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ gnu-libiconv=1.15-r3
+# ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
