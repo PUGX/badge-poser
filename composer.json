@@ -41,7 +41,7 @@
         "dg/bypass-finals": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.13",
         "jangregor/phpstan-prophecy": "^1.0",
-        "phpspec/prophecy-phpunit": "^2.1",
+        "phpspec/prophecy-phpunit": "^2.3",
         "phpstan/extension-installer": "^1.2",
         "phpstan/phpstan": "^1.9",
         "phpstan/phpstan-phpunit": "^1.2",
