@@ -46,3 +46,5 @@ sys/nginx/certs/server.csr
 sys/nginx/certs/server.key
 sys/nginx/certs/server.pem
 ###< custom ###
+
+.idea/
