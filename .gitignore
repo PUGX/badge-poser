@@ -45,4 +45,6 @@ sys/nginx/certs/ca-key.pem
 sys/nginx/certs/server.csr
 sys/nginx/certs/server.key
 sys/nginx/certs/server.pem
+sys/terraform/.terraform
+sys/terraform/terraform.tfvars
 ###< custom ###
