@@ -8,9 +8,6 @@ resource "aws_security_group" "sgredis" {
     to_port     = 0
   }
   vpc_id = var.vpc_id
-  tags = {
-    env = var.service_name
-  }
 }
 
 resource "aws_security_group_rule" "sgredis_ingress_redis" {
@@ -32,12 +29,6 @@ resource "aws_elasticache_cluster" "rediscluster" {
   security_group_ids         = [aws_security_group.sgredis.id]
   snapshot_retention_limit   = 1
   transit_encryption_enabled = false
-  tags = {
-    "env" = "badge-poser"
-  }
-  tags_all = {
-    "env" = "badge-poser"
-  }
 }
 
 resource "aws_elasticache_subnet_group" "redissubnet" {

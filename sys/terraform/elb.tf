@@ -8,9 +8,6 @@ resource "aws_security_group" "sgelb" {
     to_port     = 0
   }
   vpc_id = var.vpc_id
-  tags = {
-    env = var.service_name
-  }
 }
 
 resource "aws_security_group_rule" "sgelb_ingress_http" {
@@ -36,35 +33,18 @@ resource "aws_lb_target_group" "elbtargetgroup" {
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
-  tags = {
-    "env" = "badge-poser"
-  }
-  tags_all = {
-    "env" = "badge-poser"
-  }
 }
 
 resource "aws_lb" "elb" {
-  name    = "${var.service_name}-elb"
-  subnets = var.subnets
-  // CF Property(SecurityGroups) = [
-  //   aws_security_group.sgelb.arn
-  // ]
-  // CF Property(tags) = {
-  //   env = var.service_name
-  // }
-  tags = {
-    "env" = "badge-poser"
-  }
-  tags_all = {
-    "env" = "badge-poser"
-  }
+  name            = "${var.service_name}-elb"
+  subnets         = var.subnets
+  security_groups = [aws_security_group.sgelb.name]
 }
 
 resource "aws_lb_listener" "elblistener80" {
   load_balancer_arn = aws_lb.elb.arn
   port              = 80
-  // CF Property(Protocol) = "HTTP"
+  protocol          = "HTTP"
   default_action {
     type = "fixed-response"
     fixed_response {

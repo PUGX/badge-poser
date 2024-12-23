@@ -8,9 +8,6 @@ resource "aws_security_group" "sgecs" {
     to_port     = 0
   }
   vpc_id = var.vpc_id
-  tags = {
-    env = var.service_name
-  }
 }
 
 resource "aws_security_group_rule" "sgecs_ingress_http" {
@@ -45,17 +42,12 @@ resource "aws_ecs_cluster" "ecscluster" {
     name  = "containerInsights"
     value = "disabled"
   }
-  tags = {
-    env = var.service_name
-  }
 }
 
 resource "aws_ecs_service" "ecsservice" {
   cluster                           = aws_ecs_cluster.ecscluster.arn
   desired_count                     = 1
   health_check_grace_period_seconds = 15
-  #   launch_type                       = "FARGATE"
-
 
   capacity_provider_strategy {
     base              = 0
@@ -80,175 +72,37 @@ resource "aws_ecs_service" "ecsservice" {
     security_groups  = [aws_security_group.sgecs.id]
     subnets          = var.subnets
   }
-  tags = {
-    env = var.service_name
-  }
 }
 
 resource "aws_ecs_task_definition" "ecstask" {
   execution_role_arn = var.exec_role_arn
-  container_definitions = jsonencode([
-    {
-      name = "phpfpm"
-      portMappings = [
-        {
-          hostPort      = 9000
-          protocol      = "tcp"
-          containerPort = 9000
-        }
-      ]
-      command               = []
-      credentialSpecs       = []
-      dnsSearchDomains      = []
-      dnsServers            = []
-      dockerLabels          = {}
-      dockerSecurityOptions = []
-      entryPoint            = []
-      environment = [
-        {
-          name  = "APP_ENV"
-          value = var.env_appenv
-        },
-        {
-          name  = "APP_DEBUG"
-          value = var.env_appdebug
-        },
-        {
-          name  = "APP_SECRET"
-          value = var.env_appsecret
-        },
-        {
-          name  = "APP_XDEBUG"
-          value = var.env_appxdebug
-        },
-        {
-          name  = "APP_XDEBUG_HOST"
-          value = var.env_appxdebughost
-        },
-        {
-          name  = "REDIS_HOST"
-          value = var.env_redishost
-        },
-        {
-          name  = "GITHUB_AUTH_METHOD"
-          value = var.env_githubauthmethod
-        },
-        {
-          name  = "GITHUB_USERNAME"
-          value = var.env_githubusername
-        },
-        {
-          name  = "GITHUB_SECRET"
-          value = var.env_githubsecret
-        },
-        {
-          name  = "CIRCLE_CI_TOKEN"
-          value = var.env_circlecitoken
-        },
-        {
-          name  = "SENTRY_DSN"
-          value = var.env_sentrydsn
-        },
-        {
-          name  = "BITBUCKET_AUTH_METHOD"
-          value = var.env_bitbucketauthmethod
-        },
-        {
-          name  = "BITBUCKET_SECRET"
-          value = var.env_bitbucketsecret
-        },
-        {
-          name  = "BITBUCKET_TOKEN"
-          value = var.env_bitbuckettoken
-        },
-        {
-          name  = "TRUSTED_PROXIES"
-          value = var.env_trustedproxies
-        },
-        {
-          name  = "GITLAB_TOKEN"
-          value = var.env_gitlabtoken
-        }
-      ]
-      image            = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${var.service_name}:phpfpm-${var.ecr_image_tag_php}"
-      essential        = true
-      environmentFiles = []
-      extraHosts       = []
-      links            = []
-      mountPoints      = []
-      secrets          = []
-      systemControls   = []
-      ulimits          = []
-      volumesFrom      = []
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = aws_cloudwatch_log_group.cloudwatchloggroup.name
-          awslogs-region        = data.aws_region.current.name
-          awslogs-stream-prefix = "${var.service_name}-phpfpm"
-        }
-        secretOptions = []
-      }
-    },
-    {
-      name = "nginx"
-
-      dependsOn = [
-        {
-
-          condition     = "START"
-          containerName = "phpfpm"
-        }
-      ]
-      command               = []
-      credentialSpecs       = []
-      dnsSearchDomains      = []
-      dnsServers            = []
-      dockerLabels          = {}
-      dockerSecurityOptions = []
-      entryPoint            = []
-      portMappings = [
-        {
-          hostPort      = 80
-          protocol      = "tcp"
-          containerPort = 80
-        }
-      ]
-      environment = [
-        {
-          name  = "PHPFPM_HOST"
-          value = var.env_phpfpmhost
-        },
-        {
-          name  = "REDIS_HOST"
-          value = var.env_redishost
-        },
-        {
-          name  = "RESOLVER_IP"
-          value = var.env_resolverip
-        }
-      ]
-      image            = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${var.service_name}:nginx-${var.ecr_image_tag_nginx}"
-      essential        = true
-      environmentFiles = []
-      extraHosts       = []
-      links            = []
-      mountPoints      = []
-      secrets          = []
-      systemControls   = []
-      ulimits          = []
-      volumesFrom      = []
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = aws_cloudwatch_log_group.cloudwatchloggroup.name
-          awslogs-region        = data.aws_region.current.name
-          awslogs-stream-prefix = "${var.service_name}-nginx"
-        }
-        secretOptions = []
-      }
-    }
-  ])
+  container_definitions = templatefile("ecs/task-definition.json", {
+    account_id = data.aws_caller_identity.current.account_id
+    aws_region = data.aws_region.current.name
+    service_name = var.service_name
+    ecr_image_tag_nginx = var.ecr_image_tag_nginx
+    ecr_image_tag_php = var.ecr_image_tag_php
+    cloudwatchloggroup = aws_cloudwatch_log_group.cloudwatchloggroup.name
+    env_appdebug = var.env_appdebug
+    env_appenv = var.env_appenv
+    env_appsecret = var.env_appsecret
+    env_appxdebug = var.env_appxdebug
+    env_appxdebughost = var.env_appxdebughost
+    env_bitbucketauthmethod = var.env_bitbucketauthmethod
+    env_bitbucketsecret = var.env_bitbucketsecret
+    env_bitbuckettoken = var.env_bitbuckettoken
+    env_circlecitoken = var.env_circlecitoken
+    env_githubauthmethod = var.env_githubauthmethod
+    env_githubsecret = var.env_githubsecret
+    env_githubusername = var.env_githubusername
+    env_gitlabtoken = var.env_gitlabtoken
+    env_phpfpmhost = var.env_phpfpmhost
+    env_redishost = var.env_redishost
+    env_redishost = var.env_redishost
+    env_resolverip = var.env_resolverip
+    env_sentrydsn = var.env_sentrydsn
+    env_trustedproxies = var.env_trustedproxies
+  })
   memory = "2048"
   family = var.service_name
   requires_compatibilities = [
@@ -256,7 +110,4 @@ resource "aws_ecs_task_definition" "ecstask" {
   ]
   network_mode = "awsvpc"
   cpu          = "1024"
-  tags = {
-    env = var.service_name
-  }
 }

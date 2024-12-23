@@ -21,4 +21,9 @@ terraform {
 
 provider "aws" {
   profile = "poser"
+  default_tags {
+    tags = {
+      "env" = var.service_name
+    }
+  }
 }
