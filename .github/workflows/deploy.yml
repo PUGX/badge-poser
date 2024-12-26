@@ -38,8 +38,8 @@ jobs:
 
     - name: Prepare settings
       env:
-        PARAM_JSON: ${{ secrets.PARAM_JSON }}
-      run: echo "$PARAM_JSON" > sys/cloudformation/parameters.secrets.prod.json
+        PARAM_TFVARS: ${{ secrets.PARAM_TFVARS }}
+      run: echo "$PARAM_TFVARS" > sys/terraform/terraform.tfvars
 
     - name: Deploy
       env:

@@ -80,23 +80,9 @@ PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | h
 ECR_REGISTRY = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 
 deploy_prod: build_prod_images push_prod_images ## deploy to prod
-	cat sys/cloudformation/parameters.prod.json \
-		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$(VER)'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$(VER)'"}/' \
-		| tee sys/cloudformation/parameters.prod.json.new; \
-        mv sys/cloudformation/parameters.prod.json sys/cloudformation/parameters.prod.json.bak; \
-        mv sys/cloudformation/parameters.prod.json.new sys/cloudformation/parameters.prod.json; \
-	cat sys/cloudformation/parameters.secrets.prod.json \
-		| sed -e 's/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagNginx", "ParameterValue": "'$(VER)'"}/' \
-		      -e 's/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": ".*"}/{"ParameterKey": "EcrImageTagPhp", "ParameterValue": "'$(VER)'"}/' \
-		| tee sys/cloudformation/parameters.secrets.prod.json.new; \
-        mv sys/cloudformation/parameters.secrets.prod.json sys/cloudformation/parameters.secrets.prod.json.bak; \
-        mv sys/cloudformation/parameters.secrets.prod.json.new sys/cloudformation/parameters.secrets.prod.json; \
-	aws --profile=$(AWS_PROFILE) cloudformation create-change-set --capabilities CAPABILITY_NAMED_IAM \
-		--stack=poser-ecs \
-		--change-set-name=poser-ecs-$(VER) \
-		--template-body=file://$$PWD/sys/cloudformation/stack.yaml \
-		--parameters=file://sys/cloudformation/parameters.secrets.prod.json
+# TODO: convert to terraform apply
+# TODO: modify IAM policy to allow only the creation of ECS tasks via pipelines
+	terraform plan -var="ecr_image_tag_nginx=$(VER)" -var="ecr_image_tag_php=$(VER)"
 
 build_%: export BADGE_POSER_REGISTRY = $(ECR_REGISTRY)/badge-poser
 build_%: export DOCKER_BUILDKIT = 1

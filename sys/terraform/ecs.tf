@@ -110,4 +110,5 @@ resource "aws_ecs_task_definition" "ecstask" {
   ]
   network_mode = "awsvpc"
   cpu          = "1024"
+  skip_destroy = true
 }
