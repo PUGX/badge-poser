@@ -38,7 +38,7 @@ resource "aws_lb_target_group" "elbtargetgroup" {
 resource "aws_lb" "elb" {
   name            = "${var.service_name}-elb"
   subnets         = var.subnets
-  security_groups = [aws_security_group.sgelb.name]
+  security_groups = [aws_security_group.sgelb.id]
 }
 
 resource "aws_lb_listener" "elblistener80" {
