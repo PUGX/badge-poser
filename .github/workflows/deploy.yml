@@ -36,10 +36,16 @@ jobs:
         aws --profile $AWS_PROFILE configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws --profile $AWS_PROFILE configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 
+    - name: Configure Terraform
+      uses: hashicorp/setup-terraform@v3
+
     - name: Prepare settings
       env:
         PARAM_TFVARS: ${{ secrets.PARAM_TFVARS }}
       run: echo "$PARAM_TFVARS" > sys/terraform/terraform.tfvars
+
+    - name: Terraform init
+      run: terraform init
 
     - name: Deploy
       env:
