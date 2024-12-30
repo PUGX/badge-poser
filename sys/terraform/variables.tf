@@ -18,11 +18,6 @@ variable "environment" {
   type        = string
 }
 
-variable "exec_role_arn" {
-  description = "Specifies the ARN of the Execution Role for ECS."
-  type        = string
-}
-
 variable "exec_role_arn_autoscale" {
   description = "Specifies the ARN of the Execution Role for Autoscaling."
   type        = string

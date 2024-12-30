@@ -75,7 +75,7 @@ resource "aws_ecs_service" "ecsservice" {
 }
 
 resource "aws_ecs_task_definition" "ecstask" {
-  execution_role_arn = var.exec_role_arn
+  execution_role_arn = aws_iam_role.ecs_task_role.arn
   container_definitions = templatefile("ecs/task-definition.json", {
     account_id              = data.aws_caller_identity.current.account_id
     aws_region              = data.aws_region.current.name
