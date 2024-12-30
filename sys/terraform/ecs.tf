@@ -90,8 +90,7 @@ resource "aws_ecs_task_definition" "ecstask" {
     env_bitbucketauthmethod = var.env_bitbucketauthmethod
     env_githubauthmethod    = var.env_githubauthmethod
     env_phpfpmhost          = var.env_phpfpmhost
-    env_redishost           = var.env_redishost
-    env_redishost           = var.env_redishost
+    env_redishost           = aws_elasticache_cluster.rediscluster.cache_nodes[0].address
     env_resolverip          = var.env_resolverip
     env_sentrydsn           = var.env_sentrydsn
     env_trustedproxies      = var.env_trustedproxies

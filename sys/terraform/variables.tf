@@ -104,11 +104,6 @@ variable "env_githubusername" {
   type        = string
 }
 
-variable "env_redishost" {
-  description = "Environment variable for REDIS_HOST"
-  type        = string
-}
-
 variable "env_phpfpmhost" {
   description = "Environment variable for PHPFPM_HOST"
   type        = string
