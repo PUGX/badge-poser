@@ -23,6 +23,11 @@ variable "exec_role_arn" {
   type        = string
 }
 
+variable "exec_role_arn_autoscale" {
+  description = "Specifies the ARN of the Execution Role for Autoscaling."
+  type        = string
+}
+
 variable "service_name" {
   description = "The name of the service being created. It identifies all the resources related to it."
   type        = string

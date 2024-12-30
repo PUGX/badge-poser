@@ -85,17 +85,10 @@ resource "aws_ecs_task_definition" "ecstask" {
     cloudwatchloggroup      = aws_cloudwatch_log_group.cloudwatchloggroup.name
     env_appdebug            = var.env_appdebug
     env_appenv              = var.env_appenv
-    env_appsecret           = var.env_appsecret
     env_appxdebug           = var.env_appxdebug
     env_appxdebughost       = var.env_appxdebughost
     env_bitbucketauthmethod = var.env_bitbucketauthmethod
-    env_bitbucketsecret     = var.env_bitbucketsecret
-    env_bitbuckettoken      = var.env_bitbuckettoken
-    env_circlecitoken       = var.env_circlecitoken
     env_githubauthmethod    = var.env_githubauthmethod
-    env_githubsecret        = var.env_githubsecret
-    env_githubusername      = var.env_githubusername
-    env_gitlabtoken         = var.env_gitlabtoken
     env_phpfpmhost          = var.env_phpfpmhost
     env_redishost           = var.env_redishost
     env_redishost           = var.env_redishost

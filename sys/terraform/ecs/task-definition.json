@@ -24,10 +24,6 @@
       "value": "${env_appdebug}"
     },
     {
-      "name": "APP_SECRET",
-      "value": "${env_appsecret}"
-    },
-    {
       "name": "APP_XDEBUG",
       "value": "${env_appxdebug}"
     },
@@ -44,18 +40,6 @@
       "value": "${env_githubauthmethod}"
     },
     {
-      "name": "GITHUB_USERNAME",
-      "value": "${env_githubusername}"
-    },
-    {
-      "name": "GITHUB_SECRET",
-      "value": "${env_githubsecret}"
-    },
-    {
-      "name": "CIRCLE_CI_TOKEN",
-      "value": "${env_circlecitoken}"
-    },
-    {
       "name": "SENTRY_DSN",
       "value": "${env_sentrydsn}"
     },
@@ -64,20 +48,8 @@
       "value": "${env_bitbucketauthmethod}"
     },
     {
-      "name": "BITBUCKET_SECRET",
-      "value": "${env_bitbucketsecret}"
-    },
-    {
-      "name": "BITBUCKET_TOKEN",
-      "value": "${env_bitbuckettoken}"
-    },
-    {
       "name": "TRUSTED_PROXIES",
       "value": "${env_trustedproxies}"
-    },
-    {
-      "name": "GITLAB_TOKEN",
-      "value": "${env_gitlabtoken}"
     }
   ],
   "image": "${account_id}.dkr.ecr.${aws_region}.amazonaws.com/${service_name}:phpfpm-${ecr_image_tag_php}",
@@ -86,7 +58,36 @@
   "extraHosts": [],
   "links": [],
   "mountPoints": [],
-  "secrets": [],
+  "secrets": [
+    {
+      "name": "APP_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:APP_SECRET::"
+    },
+    {
+      "name": "GITHUB_USERNAME",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITHUB_USERNAME::"
+    },
+    {
+      "name": "GITHUB_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITHUB_SECRET::"
+    },
+    {
+      "name": "CIRCLE_CI_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:CIRCLE_CI_TOKEN::"
+    },
+    {
+      "name": "BITBUCKET_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:BITBUCKET_SECRET::"
+    },
+    {
+      "name": "BITBUCKET_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:BITBUCKET_TOKEN::"
+    },
+    {
+      "name": "GITLAB_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITLAB_TOKEN::"
+    }
+  ],
   "systemControls": [],
   "ulimits": [],
   "volumesFrom": [],
