@@ -102,3 +102,9 @@ import {
   to = aws_iam_user_policy.lb_ro
   id = "github_action_deploy:GitHubActionsDeploy"
 }
+
+# ACM
+import {
+    to = aws_acm_certificate.cert
+    id = "arn:aws:acm:eu-west-1:478389220392:certificate/2225440f-8847-4834-a90b-4b81a0105955"
+}

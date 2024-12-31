@@ -8,11 +8,6 @@ variable "ecr_image_tag_php" {
   type        = string
 }
 
-variable "elb_certificate_arn" {
-  description = "Specifies the ARN of the Certificate."
-  type        = string
-}
-
 variable "environment" {
   description = "The Environment"
   type        = string

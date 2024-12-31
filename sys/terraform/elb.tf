@@ -57,7 +57,7 @@ resource "aws_lb_listener" "elblistener80" {
 
 resource "aws_lb_listener" "elblistener443" {
   load_balancer_arn = aws_lb.elb.arn
-  certificate_arn   = "arn:aws:acm:eu-west-1:478389220392:certificate/2225440f-8847-4834-a90b-4b81a0105955"
+  certificate_arn   = aws_acm_certificate.cert.arn
   port              = 443
   default_action {
     type = "fixed-response"
