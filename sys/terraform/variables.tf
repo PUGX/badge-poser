@@ -34,95 +34,95 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "env_appdebug" {
+variable "env_app_debug" {
   description = "Environment variable for APP_DEBUG"
   type        = string
   default     = "0"
 }
 
-variable "env_appenv" {
+variable "env_app_env" {
   description = "Environment variable for APP_ENV"
   type        = string
   default     = "prod"
 }
 
-variable "env_appsecret" {
+variable "env_app_secret" {
   description = "Environment variable for APP_SECRET"
   type        = string
 }
 
-variable "env_appxdebug" {
+variable "env_app_xdebug" {
   description = "Environment variable for APP_XDEBUG"
   type        = string
   default     = "0"
 }
 
-variable "env_appxdebughost" {
+variable "env_app_xdebug_host" {
   description = "Environment variable for APP_XDEBUG_HOST"
   type        = string
 }
 
-variable "env_bitbucketauthmethod" {
+variable "env_bitbucket_auth_method" {
   description = "Environment variable for BITBUCKET_AUTH_METHOD"
   type        = string
   default     = "http_password"
 }
 
-variable "env_bitbucketsecret" {
+variable "env_bitbucket_secret" {
   description = "Environment variable for BITBUCKET_SECRET"
   type        = string
 }
 
-variable "env_bitbuckettoken" {
+variable "env_bitbucket_token" {
   description = "Environment variable for BITBUCKET_TOKEN"
   type        = string
 }
 
-variable "env_circlecitoken" {
+variable "env_circleci_token" {
   description = "Environment variable for CIRCLE_CI_TOKEN"
   type        = string
 }
 
-variable "env_githubauthmethod" {
+variable "env_github_auth_method" {
   description = "Environment variable for GITHUB_AUTH_METHOD"
   type        = string
   default     = "access_token_header"
 }
 
-variable "env_githubsecret" {
+variable "env_github_secret" {
   description = "Environment variable for GITHUB_SECRET"
   type        = string
 }
 
-variable "env_githubusername" {
+variable "env_github_username" {
   description = "Environment variable for GITHUB_USERNAME"
   type        = string
 }
 
-variable "env_phpfpmhost" {
+variable "env_phpfpm_host" {
   description = "Environment variable for PHPFPM_HOST"
   type        = string
   default     = "127.0.0.1"
 }
 
-variable "env_resolverip" {
+variable "env_resolver_ip" {
   description = "Environment variable for RESOLVER_IP"
   type        = string
   default     = "169.254.169.253"
 }
 
-variable "env_sentrydsn" {
+variable "env_sentry_dsn" {
   description = "Environment variable for SENTRY_DSN"
   type        = string
 }
 
-variable "env_trustedproxies" {
+variable "env_trusted_proxies" {
   description = "Environment variable for TRUSTED_PROXIES"
   type        = string
   default     = "REMOTE_ADDR"
 }
 
-variable "env_gitlabtoken" {
+variable "env_gitlab_token" {
   description = "Environment variable for GITLAB_TOKEN"
   type        = string
 }

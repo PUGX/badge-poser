@@ -69,11 +69,11 @@ resource "aws_iam_role_policy" "read_secrets_policy" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-    {
+      {
         Action   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
         Effect   = "Allow"
         Resource = aws_secretsmanager_secret.poser.arn
-    },
+      },
     ]
   })
 }
