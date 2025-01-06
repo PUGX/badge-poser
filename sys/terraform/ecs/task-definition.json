@@ -1,0 +1,160 @@
+[{
+  "name": "phpfpm",
+  "portMappings": [
+    {
+      "hostPort": 9000,
+      "protocol": "tcp",
+      "containerPort": 9000
+    }
+  ],
+  "command": [],
+  "credentialSpecs": [],
+  "dnsSearchDomains": [],
+  "dnsServers": [],
+  "dockerLabels": {},
+  "dockerSecurityOptions": [],
+  "entryPoint": [],
+  "environment": [
+    {
+      "name": "APP_ENV",
+      "value": "${env_app_env}"
+    },
+    {
+      "name": "APP_DEBUG",
+      "value": "${env_app_debug}"
+    },
+    {
+      "name": "APP_XDEBUG",
+      "value": "${env_appxdebug}"
+    },
+    {
+      "name": "APP_XDEBUG_HOST",
+      "value": "${env_app_xdebug_host}"
+    },
+    {
+      "name": "REDIS_HOST",
+      "value": "${env_redis_host}"
+    },
+    {
+      "name": "GITHUB_AUTH_METHOD",
+      "value": "${env_github_auth_method}"
+    },
+    {
+      "name": "SENTRY_DSN",
+      "value": "${env_sentry_dsn}"
+    },
+    {
+      "name": "BITBUCKET_AUTH_METHOD",
+      "value": "${env_bitbucket_auth_method}"
+    },
+    {
+      "name": "TRUSTED_PROXIES",
+      "value": "${env_trusted_proxies}"
+    }
+  ],
+  "image": "${account_id}.dkr.ecr.${aws_region}.amazonaws.com/${service_name}:phpfpm-${ecr_image_tag_php}",
+  "essential": true,
+  "environmentFiles": [],
+  "extraHosts": [],
+  "links": [],
+  "mountPoints": [],
+  "secrets": [
+    {
+      "name": "APP_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:APP_SECRET::"
+    },
+    {
+      "name": "GITHUB_USERNAME",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITHUB_USERNAME::"
+    },
+    {
+      "name": "GITHUB_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITHUB_SECRET::"
+    },
+    {
+      "name": "CIRCLE_CI_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:CIRCLE_CI_TOKEN::"
+    },
+    {
+      "name": "BITBUCKET_SECRET",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:BITBUCKET_SECRET::"
+    },
+    {
+      "name": "BITBUCKET_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:BITBUCKET_TOKEN::"
+    },
+    {
+      "name": "GITLAB_TOKEN",
+      "valueFrom": "arn:aws:secretsmanager:${aws_region}:${account_id}:secret:${service_name}:GITLAB_TOKEN::"
+    }
+  ],
+  "systemControls": [],
+  "ulimits": [],
+  "volumesFrom": [],
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "${cloudwatch_log_group}",
+      "awslogs-region": "${aws_region}",
+      "awslogs-stream-prefix": "${service_name}-phpfpm"
+    },
+    "secretOptions": []
+  }
+},
+{
+  "name": "nginx",
+  "dependsOn": [
+    {
+      "condition": "START",
+      "containerName": "phpfpm"
+    }
+  ],
+  "command": [],
+  "credentialSpecs": [],
+  "dnsSearchDomains": [],
+  "dnsServers": [],
+  "dockerLabels": {},
+  "dockerSecurityOptions": [],
+  "entryPoint": [],
+  "portMappings": [
+    {
+      "hostPort": 80,
+      "protocol": "tcp",
+      "containerPort": 80
+    }
+  ],
+  "environment": [
+    {
+      "name": "PHPFPM_HOST",
+      "value": "${env_phpfpm_host}"
+    },
+    {
+      "name": "REDIS_HOST",
+      "value": "${env_redis_host}"
+    },
+    {
+      "name": "RESOLVER_IP",
+      "value": "${env_resolver_ip}"
+    }
+  ],
+  "image": "${account_id}.dkr.ecr.${aws_region}.amazonaws.com/${service_name}:nginx-${ecr_image_tag_nginx}",
+  "essential": true,
+  "environmentFiles": [],
+  "extraHosts": [],
+  "links": [],
+  "mountPoints": [],
+  "secrets": [],
+  "systemControls": [],
+  "ulimits": [],
+  "volumesFrom": [],
+  "logConfiguration": {
+    "logDriver": "awslogs",
+    "options": {
+      "awslogs-group": "${cloudwatchloggroup}",
+      "awslogs-region": "${aws_region}",
+      "awslogs-stream-prefix": "${service_name}-nginx"
+    },
+    "secretOptions": []
+  }
+}
+]
