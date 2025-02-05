@@ -49,3 +49,5 @@ sys/terraform/.terraform
 sys/terraform/terraform.tfvars
 sys/terraform/terraform.tfstate
 ###< custom ###
+
+.idea/
