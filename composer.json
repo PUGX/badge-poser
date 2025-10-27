@@ -3,7 +3,7 @@
     "description": "Poser, add badges on your readme, such as downloads number or latest version.",
     "keywords": ["composer", "packagist", "badge", "pin"],
     "homepage": "https://poser.pugx.org",
-    "type": "symfony-project",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
