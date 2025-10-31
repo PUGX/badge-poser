@@ -31,12 +31,9 @@ final class CreateLicenseBadgeTest extends TestCase
 
     public function testShouldCreateLicenseBadge(): void
     {
-        $package = $this->getMockBuilder(Package::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getLicense'])
-            ->getMock();
+        $package = $this->createMock(Package::class);
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getLicense')
             ->willReturn('MIT');
 
@@ -53,7 +50,7 @@ final class CreateLicenseBadgeTest extends TestCase
     {
         $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createLicenseBadge($repository);

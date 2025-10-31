@@ -147,27 +147,21 @@ final class SnippetGeneratorTest extends TestCase
                 '_ext' => 'svg',
             ]);
 
-        $routeCollection = $this->getMockBuilder(RouteCollection::class)
-            ->getMock();
+        $routeCollection = $this->createMock(RouteCollection::class);
         $routeCollection->method('get')
-            ->withConsecutive(
-                ['pugx_badge_version_latest'],
-            )
-            ->willReturnOnConsecutiveCalls(
-                $routePugxBadgeVersionLatest,
-                $routePugxBadgeDownload,
-                $routePugxBadgeVersionLatestUnstable,
-                $routePugxBadgeLicense,
-                $routepugxBadgeDownloadTypeMonthly,
-                $routepugxBadgeDownloadTypeDaily,
-                $routePugxBadgeVersion,
-                $routePugxBadgeRequire,
-                $routePugxBadgeComposerlock,
-                $routePugxBadgeGitAttributes,
-                $routePugxBadgeDependents,
-                $routePugxBadgeSuggesters,
-                $routePugxBadgeCircleci
-            );
+            ->willReturnMap([
+                ['pugx_badge_version_latest', $routePugxBadgeVersionLatest],
+                ['pugx_badge_download', $routePugxBadgeDownload],
+                ['pugx_badge_license', $routePugxBadgeLicense],
+                ['pugx_badge_download_type', $routepugxBadgeDownloadTypeMonthly],
+                ['pugx_badge_version', $routePugxBadgeVersion],
+                ['pugx_badge_require', $routePugxBadgeRequire],
+                ['pugx_badge_composerlock', $routePugxBadgeComposerlock],
+                ['pugx_badge_gitattributes', $routePugxBadgeGitAttributes],
+                ['pugx_badge_dependents', $routePugxBadgeDependents],
+                ['pugx_badge_suggesters', $routePugxBadgeSuggesters],
+                ['pugx_badge_circleci', $routePugxBadgeCircleci],
+            ]);
 
         $router = $this->getMockBuilder(RouterInterface::class)
             ->getMock();
@@ -175,78 +169,45 @@ final class SnippetGeneratorTest extends TestCase
             ->willReturn($routeCollection);
         $router
             ->method('generate')
-            ->withConsecutive(
-                [
-                    'pugx_badge_packagist',
-                    ['repository' => 'vendor/package'],
-                ],
-                [
-                    'pugx_badge_version_latest',
-                    ['latest' => 'stable', 'repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_download',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_version_latest',
-                    ['latest' => 'unstable', 'repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_license',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_download_type',
-                    ['repository' => 'vendor/package', 'type' => 'monthly'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_download_type',
-                    ['repository' => 'vendor/package', 'type' => 'daily'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_version',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_require',
-                    ['repository' => 'vendor/package', 'type' => 'php'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_composerlock',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_gitattributes',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_dependents',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_suggesters',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ],
-                [
-                    'pugx_badge_circleci',
-                    ['repository' => 'vendor/package'],
-                    RouterInterface::ABSOLUTE_URL,
-                ]
-            )
-            ->willReturnOnConsecutiveCalls('repo_url', 'img_url0', 'img_url1', 'img_url2', 'img_url3', 'img_url4', 'img_url5', 'img_url6', 'img_url7', 'img_url8', 'img_url9', 'img_url10', 'img_url11', 'img_url12');
+            ->willReturnCallback(function (string $name, array $params = []) {
+                if ('pugx_badge_packagist' === $name) {
+                    return 'repo_url';
+                }
+
+                if ('pugx_badge_version_latest' === $name) {
+                    return ($params['latest'] ?? 'stable') === 'unstable' ? 'img_url2' : 'img_url0';
+                }
+
+                if ('pugx_badge_download' === $name) {
+                    return 'img_url1';
+                }
+
+                if ('pugx_badge_license' === $name) {
+                    return 'img_url3';
+                }
+
+                if ('pugx_badge_download_type' === $name) {
+                    return ($params['type'] ?? 'monthly') === 'daily' ? 'img_url5' : 'img_url4';
+                }
+
+                if ('pugx_badge_version' === $name) {
+                    return 'img_url6';
+                }
+
+                if ('pugx_badge_require' === $name) {
+                    return 'img_url7';
+                }
+
+                $map = [
+                    'pugx_badge_composerlock' => 'img_url8',
+                    'pugx_badge_gitattributes' => 'img_url9',
+                    'pugx_badge_dependents' => 'img_url10',
+                    'pugx_badge_suggesters' => 'img_url11',
+                    'pugx_badge_circleci' => 'img_url12',
+                ];
+
+                return $map[$name] ?? 'repo_url';
+            });
 
         $poser = $this->getMockBuilder(Poser::class)
             ->disableOriginalConstructor()

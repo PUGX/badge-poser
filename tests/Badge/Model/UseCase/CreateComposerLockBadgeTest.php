@@ -18,86 +18,62 @@ use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
 use Packagist\Api\Result\Package;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ResponseInterface;
 
 final class CreateComposerLockBadgeTest extends TestCase
 {
     use ProphecyTrait;
     private CreateComposerLockBadge $useCase;
-    /** @var PackageRepositoryInterface|MockObject */
+    /** @var PackageRepositoryInterface&MockObject */
     private MockObject $repository;
-    /** @var ClientInterface|MockObject */
+    /** @var ClientInterface&MockObject */
     private MockObject $client;
-    /** @var ClientStrategy|ObjectProphecy */
-    private ObjectProphecy $clientStrategy;
 
     protected function setUp(): void
     {
-        $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
-        $this->client = $this->getMockBuilder(ClientInterface::class)
-            ->setMethods(['request'])
-            ->getMockForAbstractClass();
-        $this->clientStrategy = $this->prophesize(ClientStrategy::class);
+        $this->repository = $this->createMock(PackageRepositoryInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
+        $clientStrategy = $this->prophesize(ClientStrategy::class);
 
         $repoUrl = 'https://github.com/user/repository';
         $repositoryInfo = Repository::createFromRepositoryUrl($repoUrl);
-        $this->clientStrategy->getRepositoryPrefix($repositoryInfo, $repoUrl)
+        $clientStrategy->getRepositoryPrefix($repositoryInfo, $repoUrl)
             ->willReturn('');
-        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $this->clientStrategy->reveal());
+        $this->useCase = new CreateComposerLockBadge($this->repository, $this->client, $clientStrategy->reveal());
     }
 
-    /**
-     * @param array<int, mixed> $methods
-     */
-    private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = []): MockObject
-    {
-        return $this->getMockBuilder($classname)
-            ->disableOriginalConstructor()
-            ->setMethods($methods)
-            ->getMock();
-    }
-
-    /** @dataProvider shouldCreateComposerLockBadgeProvider */
+    #[DataProvider('shouldCreateComposerLockBadgeProvider')]
     public function testShouldCreateComposerLockBadge(int $returnCode, string $expected): void
     {
-        $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            AppPackage::class,
-            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject', 'getDefaultBranch']
-        );
+        $package = $this->createMock(AppPackage::class);
 
         $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            Package::class,
-            ['getRepository']
-        );
-        $repo->expects(self::once())
+        $repo = $this->createMock(Package::class);
+        $repo->expects($this->once())
             ->method('getRepository')
             ->willReturn('https://github.com/user/repository');
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getOriginalObject')
             ->willReturn($repo);
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getDefaultBranch')
             ->willReturn('master');
 
-        $response = $this->createMockWithoutInvokingTheOriginalConstructor(
-            ResponseInterface::class,
-            ['getStatusCode', 'withStatus', 'getReasonPhrase', 'getProtocolVersion', 'withProtocolVersion', 'getHeaders', 'hasHeader', 'getHeader', 'getHeaderLine', 'withHeader', 'withAddedHeader', 'withoutHeader', 'getBody', 'withBody']
-        );
-        $response->expects(self::once())
+        $response = $this->createMock(ResponseInterface::class);
+        $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn($returnCode);
 
-        $this->client->expects(self::once())
+        $this->client->expects($this->once())
             ->method('request')
             ->willReturn($response);
 
@@ -108,24 +84,18 @@ final class CreateComposerLockBadgeTest extends TestCase
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            AppPackage::class,
-            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
-        );
+        $package = $this->createMock(AppPackage::class);
 
         $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            Package::class,
-            ['getRepository']
-        );
-        $repo->expects(self::once())
+        $repo = $this->createMock(Package::class);
+        $repo->expects($this->once())
             ->method('getRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getOriginalObject')
             ->willReturn($repo);
 

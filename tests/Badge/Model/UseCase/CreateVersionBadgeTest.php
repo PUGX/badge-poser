@@ -37,7 +37,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getLatestStableVersion')
             ->willReturn('v2.0');
 
@@ -74,7 +74,7 @@ final class CreateVersionBadgeTest extends TestCase
     {
         $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createStableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);
@@ -88,7 +88,7 @@ final class CreateVersionBadgeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getLatestUnstableVersion')
             ->willReturn('v2.0');
 
@@ -125,7 +125,7 @@ final class CreateVersionBadgeTest extends TestCase
     {
         $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $badge = $this->useCase->createUnstableBadge('PUGX/badge-poser');
         $expectedBadge = new CacheableBadge(new Badge(' - ', ' - ', '7A7A7A'), 0, 0);

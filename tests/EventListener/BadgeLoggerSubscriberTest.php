@@ -40,7 +40,7 @@ final class BadgeLoggerSubscriberTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $badgeEvent->expects(self::once())
+        $badgeEvent->expects($this->once())
             ->method('getData');
 
         $this->badgeLoggerSubscriber->onBadgeEvent($badgeEvent);
@@ -67,8 +67,8 @@ final class BadgeLoggerSubscriberTest extends TestCase
 
         $responseEvent = new ResponseEvent($kernel, $request, 1, $response);
 
-        $request->expects(self::once())->method('getRequestUri');
-        $this->logger->expects(self::once())->method('info');
+        $request->expects($this->once())->method('getRequestUri');
+        $this->logger->expects($this->once())->method('info');
 
         $this->badgeLoggerSubscriber->onKernelResponse($responseEvent);
     }

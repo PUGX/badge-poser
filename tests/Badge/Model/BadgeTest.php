@@ -3,6 +3,7 @@
 namespace App\Tests\Badge\Model;
 
 use App\Badge\Model\Badge;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BadgeTest extends TestCase
@@ -35,7 +36,7 @@ final class BadgeTest extends TestCase
         self::assertEquals('flat', $badge->getStyle());
     }
 
-    /** @dataProvider  invalidColorProvider */
+    #[DataProvider('invalidColorProvider')]
     public function testShouldThrowExceptionForInvalidColors(string $color): void
     {
         $this->expectException(\InvalidArgumentException::class);

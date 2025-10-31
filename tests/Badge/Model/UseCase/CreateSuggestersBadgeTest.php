@@ -31,12 +31,9 @@ final class CreateSuggestersBadgeTest extends TestCase
 
     public function testShouldCreateSuggestersBadge(): void
     {
-        $package = $this->getMockBuilder(Package::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getSuggesters'])
-            ->getMock();
+        $package = $this->createMock(Package::class);
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getSuggesters')
             ->willReturn(3);
 
@@ -53,9 +50,9 @@ final class CreateSuggestersBadgeTest extends TestCase
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $this->repository->expects(self::any())
+        $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createSuggestersBadge($repository);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Badge\ValueObject;
 
 use App\Badge\ValueObject\Repository;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class RepositoryTest extends TestCase
@@ -77,7 +78,7 @@ final class RepositoryTest extends TestCase
         self::assertTrue($repository->isSupported());
     }
 
-    /** @dataProvider unsupportedRepositorySourceProvider */
+    #[DataProvider('unsupportedRepositorySourceProvider')]
     public function testItDetectUnsupportedSourceProvider(string $sourceProviderUrl): void
     {
         $repository = Repository::createFromRepositoryUrl($sourceProviderUrl);

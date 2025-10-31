@@ -15,46 +15,45 @@
             "homepage": "https://github.com/PUGX/badge-poser/contributors"
         }
     ],
-    "minimum-stability": "beta",
     "require": {
         "php": "^8.3",
         "ext-gd": "*",
         "ext-iconv": "*",
         "badges/poser": "^3.1",
         "bitbucket/client": "^4.7",
-        "knplabs/github-api": "^3.15",
+        "knplabs/github-api": "^3.16",
         "knplabs/packagist-api": "^2.1",
         "m4tthumphrey/php-gitlab-api": "^11.14",
-        "predis/predis": "^2.2",
-        "sentry/sentry-symfony": "^5.0",
-        "snc/redis-bundle": "^4.7",
-        "symfony/asset": "^7.1",
-        "symfony/console": "^7.1",
-        "symfony/flex": "^2.4",
-        "symfony/framework-bundle": "^7.1",
-        "symfony/http-client": "^7.1",
-        "symfony/runtime": "^7.1",
-        "symfony/webpack-encore-bundle": "^2.2",
-        "symfony/yaml": "^7.1"
+        "predis/predis": "^2.3",
+        "sentry/sentry-symfony": "^5.6",
+        "snc/redis-bundle": "^4.10",
+        "symfony/asset": "^7.3",
+        "symfony/console": "^7.3",
+        "symfony/flex": "^2.8",
+        "symfony/framework-bundle": "^7.3",
+        "symfony/http-client": "^7.3",
+        "symfony/runtime": "^7.3",
+        "symfony/webpack-encore-bundle": "^2.3",
+        "symfony/yaml": "^7.3"
     },
     "require-dev": {
-        "dg/bypass-finals": "^1.4",
-        "friendsofphp/php-cs-fixer": "^3.13",
+        "dg/bypass-finals": "^1.9",
+        "friendsofphp/php-cs-fixer": "^3.89",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpspec/prophecy-phpunit": "^2.3",
         "phpstan/extension-installer": "^1.2",
-        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-phpunit": "^1.2",
         "phpstan/phpstan-symfony": "^1.2",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^12.4",
         "roave/security-advisories": "dev-latest",
-        "symfony/browser-kit": "^7.1",
-        "symfony/debug-bundle": "^7.1",
-        "symfony/dotenv": "^7.1",
-        "symfony/monolog-bundle": "^3.8",
-        "symfony/phpunit-bridge": "^7.1",
-        "symfony/stopwatch": "^7.1",
-        "symfony/web-profiler-bundle": "^7.1"
+        "symfony/browser-kit": "^7.3",
+        "symfony/debug-bundle": "^7.3",
+        "symfony/dotenv": "^7.3",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/phpunit-bridge": "^7.3",
+        "symfony/stopwatch": "^7.3",
+        "symfony/web-profiler-bundle": "^7.3"
     },
     "config": {
         "preferred-install": {
@@ -117,7 +116,7 @@
         "symfony": {
             "id": "01C6YZAVV83WQGHCHEWX2SA6KC",
             "allow-contrib": false,
-            "require": "7.1.*"
+            "require": "7.3.*"
         },
         "branch-alias": {
             "dev-master": "3.x-dev"

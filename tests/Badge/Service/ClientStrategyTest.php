@@ -64,14 +64,14 @@ final class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects(self::once())
+        $apiInterface->expects($this->once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'default_branch' => $defaultBranch,
             ]);
 
-        $this->githubClient->expects(self::once())
+        $this->githubClient->expects($this->once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -88,7 +88,7 @@ final class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects(self::once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -100,12 +100,12 @@ final class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects(self::once())
+        $repositories->expects($this->once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects(self::once())
+        $this->bitbucketClient->expects($this->once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -118,7 +118,7 @@ final class ClientStrategyTest extends TestCase
     {
         $defaultBranch = 'masterGitlab';
 
-        $this->gitlabClient->expects(self::once())
+        $this->gitlabClient->expects($this->once())
             ->method('show')
             ->with('repositoryName')
             ->willReturn(['default_branch' => 'masterGitlab']);
@@ -145,11 +145,11 @@ final class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects(self::once())
+        $apiInterface->expects($this->once())
             ->method('show')
             ->with($this->username, $this->repositoryName)->willReturn([]);
 
-        $this->githubClient->expects(self::once())
+        $this->githubClient->expects($this->once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -168,14 +168,14 @@ final class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects(self::once())
+        $apiInterface->expects($this->once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'foo' => 'bar',
             ]);
 
-        $this->githubClient->expects(self::once())
+        $this->githubClient->expects($this->once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -194,14 +194,14 @@ final class ClientStrategyTest extends TestCase
         $apiInterface = $this->getMockBuilder(Repo::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $apiInterface->expects(self::once())
+        $apiInterface->expects($this->once())
             ->method('show')
             ->with($this->username, $this->repositoryName)
             ->willReturn([
                 'foo' => ['bar'],
             ]);
 
-        $this->githubClient->expects(self::once())
+        $this->githubClient->expects($this->once())
             ->method('api')
             ->with('repo')
             ->willReturn($apiInterface);
@@ -220,7 +220,7 @@ final class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects(self::once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([]);
@@ -228,12 +228,12 @@ final class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects(self::once())
+        $repositories->expects($this->once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects(self::once())
+        $this->bitbucketClient->expects($this->once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -260,12 +260,12 @@ final class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects(self::once())
+        $repositories->expects($this->once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects(self::once())
+        $this->bitbucketClient->expects($this->once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -283,7 +283,7 @@ final class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects(self::once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -293,12 +293,12 @@ final class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects(self::once())
+        $repositories->expects($this->once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects(self::once())
+        $this->bitbucketClient->expects($this->once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -316,7 +316,7 @@ final class ClientStrategyTest extends TestCase
         $workspaces = $this->getMockBuilder(Workspaces::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $workspaces->expects(self::once())
+        $workspaces->expects($this->once())
             ->method('show')
             ->with($this->repositoryName)
             ->willReturn([
@@ -328,12 +328,12 @@ final class ClientStrategyTest extends TestCase
         $repositories = $this->getMockBuilder(Repositories::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $repositories->expects(self::once())
+        $repositories->expects($this->once())
             ->method('workspaces')
             ->with($this->username)
             ->willReturn($workspaces);
 
-        $this->bitbucketClient->expects(self::once())
+        $this->bitbucketClient->expects($this->once())
             ->method('repositories')
             ->willReturn($repositories);
         $source = 'bitbucket.org';
@@ -352,7 +352,7 @@ final class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: []');
         $defaultBranch = 'masterGitlab';
 
-        $this->gitlabClient->expects(self::once())
+        $this->gitlabClient->expects($this->once())
             ->method('show')
             ->with('repositoryName')
             ->willReturn([]);
@@ -368,7 +368,7 @@ final class ClientStrategyTest extends TestCase
         $this->expectExceptionMessage('Repository data not valid: {"data":"someData"}');
         $defaultBranch = 'masterGitlab';
 
-        $this->gitlabClient->expects(self::once())
+        $this->gitlabClient->expects($this->once())
             ->method('show')
             ->with('repositoryName')
             ->willReturn(['data' => 'someData']);

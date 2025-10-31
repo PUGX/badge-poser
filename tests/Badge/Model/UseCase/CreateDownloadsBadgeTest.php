@@ -31,12 +31,9 @@ final class CreateDownloadsBadgeTest extends TestCase
 
     public function testShouldCreateDownloadsBadge(): void
     {
-        $package = $this->getMockBuilder(Package::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getPackageDownloads'])
-            ->getMock();
+        $package = $this->createMock(Package::class);
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getPackageDownloads')
             ->willReturn(102);
 
@@ -55,7 +52,7 @@ final class CreateDownloadsBadgeTest extends TestCase
     {
         $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createDownloadsBadge($repository, 'daily', 'svg', 'flat');
