@@ -17,7 +17,6 @@ use App\Badge\Model\UseCase\CreateComposerLockBadge;
 use App\Badge\Service\ClientStrategy;
 use App\Badge\ValueObject\Repository;
 use GuzzleHttp\ClientInterface;
-use Packagist\Api\Result\Package;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -55,14 +54,9 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMock(Package::class);
-        $repo->expects($this->once())
+        $package->expects($this->once())
             ->method('getRepository')
             ->willReturn('https://github.com/user/repository');
-
-        $package->expects($this->once())
-            ->method('getOriginalObject')
-            ->willReturn($repo);
 
         $package->expects($this->once())
             ->method('getDefaultBranch')
@@ -90,14 +84,9 @@ final class CreateComposerLockBadgeTest extends TestCase
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMock(Package::class);
-        $repo->expects($this->once())
-            ->method('getRepository')
-            ->will($this->throwException(new \RuntimeException()));
-
         $package->expects($this->once())
-            ->method('getOriginalObject')
-            ->willReturn($repo);
+            ->method('getRepository')
+            ->willThrowException(new \RuntimeException());
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createComposerLockBadge($repository);

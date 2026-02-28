@@ -169,7 +169,7 @@ final class SnippetGeneratorTest extends TestCase
             ->willReturn($routeCollection);
         $router
             ->method('generate')
-            ->willReturnCallback(function (string $name, array $params = []) {
+            ->willReturnCallback(function (string $name, array $params = [], int $referenceType = RouterInterface::ABSOLUTE_URL) {
                 if ('pugx_badge_packagist' === $name) {
                     return 'repo_url';
                 }
@@ -206,7 +206,11 @@ final class SnippetGeneratorTest extends TestCase
                     'pugx_badge_circleci' => 'img_url12',
                 ];
 
-                return $map[$name] ?? 'repo_url';
+                if (!\array_key_exists($name, $map)) {
+                    throw new \InvalidArgumentException(\sprintf('Unexpected route name "%s" in SnippetGeneratorTest router mock.', $name));
+                }
+
+                return $map[$name];
             });
 
         $poser = $this->getMockBuilder(Poser::class)
