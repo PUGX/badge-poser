@@ -88,26 +88,15 @@ final class CreateCircleCiBadgeTest extends TestCase
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            Package::class,
-            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
-        );
+        $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 
         $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            \Packagist\Api\Result\Package::class,
-            ['getRepository']
-        );
-        $repo->expects($this->once())
-            ->method('getRepository')
-            ->will($this->throwException(new \RuntimeException()));
-
         $package->expects($this->once())
-            ->method('getOriginalObject')
-            ->willReturn($repo);
+            ->method('getRepository')
+            ->willThrowException(new \RuntimeException());
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
