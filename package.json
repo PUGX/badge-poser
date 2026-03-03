@@ -12,7 +12,7 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@hotwired/stimulus": "^3.0.0",
-        "@sentry/browser": "^7.66.0",
+        "@sentry/browser": "^7.119.1",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.0.0",
         "artillery": "^2.0.0-11",
