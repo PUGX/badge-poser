@@ -15,6 +15,7 @@ use App\Badge\Model\Package;
 use App\Badge\Model\PackageRepositoryInterface;
 use App\Badge\Model\UseCase\CreateCircleCiBadge;
 use App\Service\CircleCiClientInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -27,10 +28,8 @@ final class CreateCircleCiBadgeTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->repository = $this->getMockForAbstractClass(PackageRepositoryInterface::class);
-        $this->circleCiClient = $this->getMockBuilder(CircleCiClientInterface::class)
-            ->setMethods(['getBuilds'])
-            ->getMockForAbstractClass();
+        $this->repository = $this->createMock(PackageRepositoryInterface::class);
+        $this->circleCiClient = $this->createMock(CircleCiClientInterface::class);
         $this->useCase = new CreateCircleCiBadge($this->repository, $this->circleCiClient);
     }
 
@@ -39,13 +38,10 @@ final class CreateCircleCiBadgeTest extends TestCase
      */
     private function createMockWithoutInvokingTheOriginalConstructor(string $classname, array $methods = []): MockObject
     {
-        return $this->getMockBuilder($classname)
-            ->disableOriginalConstructor()
-            ->setMethods($methods)
-            ->getMock();
+        return $this->createMock($classname);
     }
 
-    /** @dataProvider shouldCreateCircleCiBadgeProvider */
+    #[DataProvider('shouldCreateCircleCiBadgeProvider')]
     public function testShouldCreateCircleCiBadge(string $status, string $expected): void
     {
         $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
@@ -62,15 +58,15 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects(self::once())
+        $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $response->expects(self::once())
+        $response->expects($this->once())
             ->method('getContent')
             ->willReturn(\json_encode([['status' => $status]]));
 
-        $this->circleCiClient->expects(self::once())
+        $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
             ->willReturn($response);
 
@@ -92,26 +88,15 @@ final class CreateCircleCiBadgeTest extends TestCase
 
     public function testShouldCreateDefaultBadgeOnError(): void
     {
-        $package = $this->createMockWithoutInvokingTheOriginalConstructor(
-            Package::class,
-            ['hasStableVersion', 'getLatestStableVersion', 'getOriginalObject']
-        );
+        $package = $this->createMockWithoutInvokingTheOriginalConstructor(Package::class);
 
         $this->repository
             ->method('fetchByRepository')
             ->willReturn($package);
 
-        $repo = $this->createMockWithoutInvokingTheOriginalConstructor(
-            \Packagist\Api\Result\Package::class,
-            ['getRepository']
-        );
-        $repo->expects(self::once())
+        $package->expects($this->once())
             ->method('getRepository')
-            ->will(self::throwException(new \RuntimeException()));
-
-        $package->expects(self::once())
-            ->method('getOriginalObject')
-            ->willReturn($repo);
+            ->willThrowException(new \RuntimeException());
 
         $repository = 'PUGX/badge-poser';
         $badge = $this->useCase->createCircleCiBadge($repository);
@@ -137,15 +122,15 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects(self::once())
+        $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(200);
 
-        $response->expects(self::once())
+        $response->expects($this->once())
             ->method('getContent')
             ->willReturn(\json_encode([]));
 
-        $this->circleCiClient->expects(self::once())
+        $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
             ->willReturn($response);
 
@@ -177,11 +162,11 @@ final class CreateCircleCiBadgeTest extends TestCase
         $response = $this->getMockBuilder(ResponseInterface::class)
             ->disableOriginalConstructor()->getMock();
 
-        $response->expects(self::once())
+        $response->expects($this->once())
             ->method('getStatusCode')
             ->willReturn(404);
 
-        $this->circleCiClient->expects(self::once())
+        $this->circleCiClient->expects($this->once())
             ->method('getBuilds')
             ->willReturn($response);
 

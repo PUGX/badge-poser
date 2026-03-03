@@ -22,12 +22,9 @@ final class CreateRequireBadgeTest extends TestCase
 
     public function testShouldCreateRequireBadge(): void
     {
-        $package = $this->getMockBuilder(Package::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getLatestRequire'])
-            ->getMock();
+        $package = $this->createMock(Package::class);
 
-        $package->expects(self::once())
+        $package->expects($this->once())
             ->method('getLatestRequire')
             ->willReturn('^8.0');
 
@@ -47,7 +44,7 @@ final class CreateRequireBadgeTest extends TestCase
     {
         $this->repository
             ->method('fetchByRepository')
-            ->will(self::throwException(new \RuntimeException()));
+            ->will($this->throwException(new \RuntimeException()));
 
         $repository = 'PUGX/badge-poser';
         $type = 'php';

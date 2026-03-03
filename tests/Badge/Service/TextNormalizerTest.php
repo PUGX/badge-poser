@@ -12,6 +12,7 @@
 namespace App\Tests\Badge\Service;
 
 use App\Badge\Service\TextNormalizer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class TextNormalizerTest extends TestCase
@@ -23,7 +24,7 @@ final class TextNormalizerTest extends TestCase
         $this->normalizer = new TextNormalizer();
     }
 
-    /** @dataProvider getBadNumberToConvert */
+    #[DataProvider('getBadNumberToConvert')]
     public function testNumberToTextConversion(int|string $input, string $output): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -43,7 +44,7 @@ final class TextNormalizerTest extends TestCase
         ];
     }
 
-    /** @dataProvider getGoodNumberToConvert */
+    #[DataProvider('getGoodNumberToConvert')]
     public function testGoodNumberToTextConversion(int|string $input, string $output): void
     {
         $res = $this->normalizer->normalize($input);

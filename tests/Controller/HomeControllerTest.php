@@ -2,11 +2,12 @@
 
 namespace App\Tests\Controller;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 final class HomeControllerTest extends WebTestCase
 {
-    /** @dataProvider provider */
+    #[DataProvider('provider')]
     public function testHome(string $path): void
     {
         $client = self::createClient();
