@@ -25,7 +25,7 @@
     },
     {
       "name": "APP_XDEBUG",
-      "value": "${env_appxdebug}"
+      "value": "${env_app_xdebug}"
     },
     {
       "name": "APP_XDEBUG_HOST",
@@ -150,7 +150,7 @@
   "logConfiguration": {
     "logDriver": "awslogs",
     "options": {
-      "awslogs-group": "${cloudwatchloggroup}",
+      "awslogs-group": "${cloudwatch_log_group}",
       "awslogs-region": "${aws_region}",
       "awslogs-stream-prefix": "${service_name}-nginx"
     },
