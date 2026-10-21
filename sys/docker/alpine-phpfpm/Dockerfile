@@ -38,7 +38,7 @@ FROM composer:2 AS composer
 
 # MAIN
 ################################################################################
-FROM php:8.4-fpm-alpine
+FROM php:8.4.27-fpm-alpine
 
 ENV RUN_IN_CONTAINER="True"
 

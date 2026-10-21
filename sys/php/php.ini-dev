@@ -1,6 +1,8 @@
 apc.enable_cli = 1
 date.timezone = UTC
 session.auto_start = Off
+; Disabled as a mitigation for CVE-2026-109619 (PHP2Shell)
+session.upload_progress.enabled = Off
 short_open_tag = Off
 
 # http://symfony.com/doc/current/performance.html
