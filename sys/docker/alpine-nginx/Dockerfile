@@ -34,7 +34,7 @@ RUN yarn build
 
 # MAIN
 ################################################################################
-FROM fabiocicerchia/nginx-lua:1.27.3-alpine3.21.0
+FROM fabiocicerchia/nginx-lua:1.31.6-alpine3.24.2
 
 ENV RUN_IN_CONTAINER="True"
 
