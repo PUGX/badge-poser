@@ -34,10 +34,6 @@ resource "aws_cloudwatch_log_group" "cloudwatchloggroup" {
 
 resource "aws_ecs_cluster" "ecscluster" {
   name = "${var.service_name}-cluster-${var.environment}"
-  // CF Property(CapacityProviders) = [
-  //   "FARGATE",
-  //   "FARGATE_SPOT"
-  // ]
   setting {
     name  = "containerInsights"
     value = "disabled"

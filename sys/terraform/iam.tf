@@ -2,8 +2,8 @@ data "aws_iam_policy_document" "iamusergithubactions" {
   statement {
     sid       = "GitHubActionsDeploy"
     effect    = "Allow"
-    actions   = ["cloudformation:CreateChangeSet", "sts:GetCallerIdentity"]
-    resources = ["arn:aws:ecr:eu-west-1:*:repository/badge-poser", "arn:aws:cloudformation:eu-west-1:*:stack/poser-ecs/6ad34900-d679-11ea-a884-0a9b71aae734"]
+    actions   = ["sts:GetCallerIdentity"]
+    resources = ["*"]
   }
   statement {
     sid    = "GitHubActionsDeployECR"

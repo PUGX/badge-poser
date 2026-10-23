@@ -1,9 +1,3 @@
-locals {
-  mappings = {
-  }
-  stack_name = "stack"
-}
-
 terraform {
   required_providers {
     aws = {
