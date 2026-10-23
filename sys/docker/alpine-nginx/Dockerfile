@@ -5,7 +5,7 @@ FROM debian:12.8 as awsbuilder
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update &&  \
-    apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u8 && \
+    apt-get install -y --no-install-recommends ca-certificates curl && \
     rm -rf /var/lib/apt/lists/*
 
 RUN curl -O "https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/$(dpkg --print-architecture)/latest/amazon-cloudwatch-agent.deb" && \
@@ -34,7 +34,7 @@ RUN yarn build
 
 # MAIN
 ################################################################################
-FROM fabiocicerchia/nginx-lua:1.27.3-alpine3.21.0
+FROM fabiocicerchia/nginx-lua:1.31.6-alpine3.24.2
 
 ENV RUN_IN_CONTAINER="True"
 

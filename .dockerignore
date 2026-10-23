@@ -5,3 +5,12 @@ tests/
 var/cache/
 var/log/
 vendor/
+# stale untracked leftovers from old Symfony layout; break cache:clear
+config/bootstrap.php
+config/packages/assets.yaml
+config/packages/dev/
+config/packages/prod/
+config/packages/test/
+config/routes/annotations.yaml
+config/routes/dev/
+src/.htaccess

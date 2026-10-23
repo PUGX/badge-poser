@@ -82,7 +82,7 @@ ECR_REGISTRY = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 deploy_prod: build_prod_images push_prod_images ## deploy to prod
 # TODO: convert to terraform apply
 # TODO: modify IAM policy to allow only the creation of ECS tasks via pipelines
-	terraform plan -var="ecr_image_tag_nginx=$(VER)" -var="ecr_image_tag_php=$(VER)"
+	terraform -chdir=sys/terraform plan -var="ecr_image_tag_nginx=$(VER)" -var="ecr_image_tag_php=$(VER)"
 
 build_%: export BADGE_POSER_REGISTRY = $(ECR_REGISTRY)/badge-poser
 build_%: export DOCKER_BUILDKIT = 1
