@@ -21,3 +21,15 @@ provider "aws" {
     }
   }
 }
+
+# CloudFront only accepts ACM certificates from us-east-1.
+provider "aws" {
+  alias   = "us_east_1"
+  region  = "us-east-1"
+  profile = "poser"
+  default_tags {
+    tags = {
+      "env" = var.service_name
+    }
+  }
+}
