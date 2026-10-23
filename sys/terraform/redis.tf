@@ -10,13 +10,15 @@ resource "aws_security_group" "sgredis" {
   vpc_id = var.vpc_id
 }
 
+# Only the app may reach Redis. sgecs (Fargate) goes away after the cutover.
 resource "aws_security_group_rule" "sgredis_ingress_redis" {
-  type              = "ingress"
-  security_group_id = aws_security_group.sgredis.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 6379
-  protocol          = "tcp"
-  to_port           = 6379
+  for_each                 = { ecs = aws_security_group.sgecs.id, ec2 = aws_security_group.sgec2.id }
+  type                     = "ingress"
+  security_group_id        = aws_security_group.sgredis.id
+  source_security_group_id = each.value
+  from_port                = 6379
+  protocol                 = "tcp"
+  to_port                  = 6379
 }
 
 resource "aws_elasticache_cluster" "rediscluster" {
