@@ -68,10 +68,6 @@ import {
   id = "sg-09ad9402145d8eb17"
 }
 import {
-  to = aws_security_group_rule.sgredis_ingress_redis
-  id = "sg-09ad9402145d8eb17_ingress_tcp_6379_6379_0.0.0.0/0"
-}
-import {
   to = aws_elasticache_cluster.rediscluster
   id = "poser-stats"
 }

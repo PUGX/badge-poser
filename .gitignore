@@ -48,4 +48,5 @@ sys/nginx/certs/server.pem
 sys/terraform/.terraform
 sys/terraform/terraform.tfvars
 sys/terraform/terraform.tfstate
+sys/terraform/terraform.tfstate.*
 ###< custom ###

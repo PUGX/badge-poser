@@ -79,26 +79,28 @@ AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --profile=$(AWS_PROFILE) |
 PREVIOUS_TAG=$(shell git ls-remote --tags 2>&1 | awk '{print $$2}' | sort -r | head -n 1 | cut -d "/" -f3)
 ECR_REGISTRY = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 
-deploy_prod: build_prod_images push_prod_images ## deploy to prod
+deploy_prod: push_prod_images ## deploy to prod
 # TODO: convert to terraform apply
 # TODO: modify IAM policy to allow only the creation of ECS tasks via pipelines
 	terraform -chdir=sys/terraform plan -var="ecr_image_tag_nginx=$(VER)" -var="ecr_image_tag_php=$(VER)"
 
-build_%: export BADGE_POSER_REGISTRY = $(ECR_REGISTRY)/badge-poser
-build_%: export DOCKER_BUILDKIT = 1
-
-build_prod_images:
-	DOCKER_BUILDKIT=1 docker build \
-		-t $(BADGE_POSER_REGISTRY):phpfpm-$(VER) \
-		-f sys/docker/alpine-phpfpm/Dockerfile .; \
-	DOCKER_BUILDKIT=1 docker build \
-		-t $(BADGE_POSER_REGISTRY):nginx-$(VER) \
-		-f sys/docker/alpine-nginx/Dockerfile .
-
 push_%: export BADGE_POSER_REGISTRY = $(ECR_REGISTRY)/badge-poser
-push_%: export DOCKER_BUILDKIT = 1
+
+# Multi-arch images: arm64 for the Bottlerocket/Graviton service, amd64 for the
+# Fargate service until the cutover. Multi-arch images can only be pushed straight
+# from buildx, so build and push are one step. Needs qemu binfmt for arm64
+# (once per host: docker run --privileged --rm tonistiigi/binfmt --install arm64).
+PLATFORMS ?= linux/amd64,linux/arm64
 
 push_prod_images:
-	aws ecr get-login-password --profile $(AWS_PROFILE) | docker login --password-stdin -u AWS $(ECR_REGISTRY); \
-	docker push $(BADGE_POSER_REGISTRY):phpfpm-$(VER); \
-	docker push $(BADGE_POSER_REGISTRY):nginx-$(VER)
+	aws ecr get-login-password --profile $(AWS_PROFILE) | docker login --password-stdin -u AWS $(ECR_REGISTRY)
+	docker buildx inspect poser >/dev/null 2>&1 || docker buildx create --name poser --driver docker-container
+	docker buildx build --builder poser --platform $(PLATFORMS) --push \
+		-t $(BADGE_POSER_REGISTRY):phpfpm-$(VER) \
+		-f sys/docker/alpine-phpfpm/Dockerfile .
+	docker buildx build --builder poser --platform $(PLATFORMS) --push \
+		-t $(BADGE_POSER_REGISTRY):nginx-$(VER) \
+		-f sys/docker/alpine-nginx/Dockerfile .
+	docker buildx build --builder poser --platform linux/arm64 --push \
+		-t $(BADGE_POSER_REGISTRY):eip-bootstrap \
+		-f sys/docker/eip-bootstrap/Dockerfile .

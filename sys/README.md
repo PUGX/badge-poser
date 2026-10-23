@@ -1,11 +1,10 @@
 # SYS CONFIGS
 
-![AWS Stack](cloudformation/stack.png)
-
 ## REQUIREMENTS
 
  - Ansible
- - AWS CloudFormation
+ - Terraform
+ - Docker with buildx and arm64 emulation (`docker run --privileged --rm tonistiigi/binfmt --install arm64`)
 
 ## TOOLS
 
@@ -14,27 +13,20 @@
 
 ## SETUP
 
-1. Create the AWS CloudFormation Stack using `cloudformation/stack.cf.yaml`.
+Infrastructure lives in `terraform/`: CloudFront → Bottlerocket ECS host (Spot ASG of 1, Graviton) → ElastiCache.
 
-## BUILD IMAGES
+1. Request the CloudFront certificate: `terraform -chdir=sys/terraform apply -target=aws_acm_certificate.cdn`.
+2. Add the records from `terraform -chdir=sys/terraform output cdn_certificate_validation` to the `pugx.org` DNS zone.
+3. `make deploy_prod`, then `terraform apply` with the same image tag.
+4. Point `poser.pugx.org` (CNAME) to `terraform output cdn_domain_name`.
 
-### Stable
+## BUILD & DEPLOY
+
+`make deploy_prod` builds multi-arch images, pushes them to ECR and runs `terraform plan` with the new tag. Apply with the same tag:
 
 ```
-ACCOUNT="XXXXXXXXXXXX";
-aws ecr get-login-password --profile badge-poser | docker login --password-stdin -u AWS $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com
-
-VER=$(date +%s);
-docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER -f sys/docker/alpine-nginx/Dockerfile .
-docker build -t $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER -f sys/docker/alpine-phpfpm/Dockerfile .
-
-docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:nginx-$VER
-docker push $ACCOUNT.dkr.ecr.eu-west-1.amazonaws.com/badge-poser:phpfpm-$VER
+terraform -chdir=sys/terraform apply -var="ecr_image_tag_nginx=$VER" -var="ecr_image_tag_php=$VER"
 ```
-
-## DEPLOY
-
-Update the task definition and switch version in the service.
 
 ## TESTING
 

@@ -1,9 +1,3 @@
-locals {
-  mappings = {
-  }
-  stack_name = "stack"
-}
-
 terraform {
   required_providers {
     aws = {
@@ -20,6 +14,18 @@ terraform {
 }
 
 provider "aws" {
+  profile = "poser"
+  default_tags {
+    tags = {
+      "env" = var.service_name
+    }
+  }
+}
+
+# CloudFront only accepts ACM certificates from us-east-1.
+provider "aws" {
+  alias   = "us_east_1"
+  region  = "us-east-1"
   profile = "poser"
   default_tags {
     tags = {
