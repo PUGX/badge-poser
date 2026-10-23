@@ -50,7 +50,7 @@ jobs:
       run: echo "$PARAM_TFVARS" > sys/terraform/terraform.tfvars
 
     - name: Terraform init
-      run: terraform init
+      run: terraform -chdir=sys/terraform init
 
     - name: Deploy
       env:
