@@ -101,3 +101,6 @@ push_prod_images:
 	docker buildx build --builder poser --platform $(PLATFORMS) --push \
 		-t $(BADGE_POSER_REGISTRY):nginx-$(VER) \
 		-f sys/docker/alpine-nginx/Dockerfile .
+	docker buildx build --builder poser --platform linux/arm64 --push \
+		-t $(BADGE_POSER_REGISTRY):eip-bootstrap \
+		-f sys/docker/eip-bootstrap/Dockerfile .
