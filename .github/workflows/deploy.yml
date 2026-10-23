@@ -36,6 +36,11 @@ jobs:
         aws --profile $AWS_PROFILE configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws --profile $AWS_PROFILE configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: arm64
+
     - name: Configure Terraform
       uses: hashicorp/setup-terraform@v3
 
